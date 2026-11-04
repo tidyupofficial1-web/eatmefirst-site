@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Optimization Avanzata -->
+    <title>Scegli la Modalità d'Uso di EatMeFirst - Web vs Offline ZIP</title>
+    <meta name="description" content="Usa EatMeFirst online da browser o scarica la versione offline locale. Consultabile da PC, notebook e smartphone anche al supermercato.">
+    <meta name="keywords" content="EatMeFirst modalità d'uso, app casa browser, versione offline pc, lista spesa smartphone, app dispensa locale, sicurezza antivirus zip">
+    <meta name="author" content="EatMeFirst Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tidyupofficial1-web.github.io/eatmefirst-app/IT/modalita.html">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.7;
+        }
+
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #2e7d32;
+        }
+
+        .language-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            text-decoration: none;
+            padding: 3px;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-btn img {
+            width: 28px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .lang-btn.active {
+            border-color: #2e7d32;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .main-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .hero-image {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-header h1 {
+            font-size: 32px;
+            color: #1b4332;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Box dialogo Personaggi */
+        .speech-card {
+            background-color: #f1f8e9;
+            border-left: 5px solid #2e7d32;
+            padding: 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+
+        .speech-card h3 {
+            color: #1b4332;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .speech-card p {
+            color: #2b5329;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .speech-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Sezione due modalità */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .mode-box {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s;
+        }
+
+        .mode-box:hover {
+            border-color: #2e7d32;
+        }
+
+        .mode-box.recommended {
+            border-color: #2e7d32;
+            background-color: #f4fbf4;
+        }
+
+        .badge-recommended {
+            display: inline-block;
+            background-color: #2e7d32;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+
+        .mode-box h2 {
+            font-size: 20px;
+            color: #1b4332;
+            margin-bottom: 12px;
+        }
+
+        .mode-box p {
+            font-size: 15px;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .btn-action {
+            display: block;
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-green {
+            background-color: #2e7d32;
+            color: #ffffff;
+        }
+
+        .btn-green:hover {
+            background-color: #1b4332;
+        }
+
+        .btn-outline {
+            background-color: #ffffff;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .btn-outline:hover {
+            background-color: #e8f5e9;
+        }
+
+        /* Box Intervento Tecnico Leo con Avatar */
+        .leo-box {
+            background-color: #fff9e6;
+            border: 2px solid #ffe082;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 35px 0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .leo-avatar {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #ffb300;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .leo-content h3 {
+            color: #b78103;
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .leo-content p {
+            color: #5d4037;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .leo-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Come usarla al meglio (PC + Smartphone) */
+        .use-case-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid #0288d1;
+            padding: 22px;
+            border-radius: 0 8px 8px 0;
+            margin: 30px 0;
+        }
+
+        .use-case-box h3 {
+            color: #01579b;
+            font-size: 19px;
+            margin-bottom: 10px;
+        }
+
+        .use-case-box p {
+            color: #01436f;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .use-case-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .navigation-btns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 15px;
+        }
+
+        .btn-sec {
+            display: inline-block;
+            background-color: #6c757d;
+            color: #ffffff;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .btn-pri {
+            display: inline-block;
+            background-color: #2e7d32;
+            color: #ffffff;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .modes-grid {
+                grid-template-columns: 1fr;
+            }
+            .leo-box {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .main-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-container">
+            <img src="../IMG/logo_1024_white.png" alt="EatMeFirst Logo" class="logo-img">
+            <span class="logo-text">EatMeFirst</span>
+        </a>
+        <nav class="language-picker" aria-label="Seleziona Lingua">
+            <a href="../IT/index.html" class="lang-btn active" title="Italiano">
+                <img src="../IMG/bandiera_Italy.jpg" alt="Italiano">
+            </a>
+            <a href="../EN/index.html" class="lang-btn" title="English">
+                <img src="../IMG/bandiera_England.jpg" alt="England">
+            </a>
+            <a href="../DE/index.html" class="lang-btn" title="Deutsch">
+                <img src="../IMG/bandiera_Germany.jpg" alt="Deutsch">
+            </a>
+            <a href="../FR/index.html" class="lang-btn" title="Français">
+                <img src="../IMG/bandiera_France.jpg" alt="Français">
+            </a>
+            <a href="../ES/index.html" class="lang-btn" title="Español">
+                <img src="../IMG/bandiera_Espana.jpg" alt="Español">
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <article class="main-card">
+
+            <header class="content-header">
+                <h1>Scegli come usare EatMeFirst 💻📱</h1>
+            </header>
+
+            <!-- IMMAGINE OTTIMIZZATA SEO: MAX ED EVA AL SET DI REGISTRAZIONE -->
+            <img src="IMG/max-eva-presentano-app-gestione-casa.png" alt="Max ed Eva presentano l'applicazione per la gestione della casa nel loro studio casalingo" class="hero-image">
+
+            <!-- PRESENTAZIONE SPONTANEA -->
+            <div class="speech-card">
+                <h3>🎬 Ciao a tutti da Max ed Eva!</h3>
+                <p>
+                    "Ci vedete in questa veste un po' 'tecnologica' perché insieme al nostro amico programmatore <strong>Leo</strong> abbiamo realizzato <strong>EatMeFirst</strong>. All'inizio l'avevamo presa quasi come un gioco per sistemare il caos della nostra dispensa, ma strada facendo ci siamo appassionati tantissimo e l'abbiamo migliorata e arricchita giorno dopo giorno!"
+                </p>
+                <p>
+                    "Ora stiamo facendo sul serio: stiamo sviluppando il sito web e vogliamo farla conoscere a tutti sui social. Ma non vogliamo dilungarci in troppe chiacchiere: veniamo subito al sodo e vi spieghiamo come funziona e le due opzioni che avete per usarla!"
+                </p>
+            </div>
+
+            <!-- LE DUE MODALITÀ CON LINK E PULSANTI -->
+            <div class="modes-grid">
+                
+                <!-- OPZIONE 1: WEB (CONSIGLIATA) -->
+                <div class="mode-box recommended">
+                    <div>
+                        <span class="badge-recommended">CONSIGLIATA DA MAX ED EVA</span>
+                        <h2>🌐 1. Versione Web (Online)</h2>
+                        <p>
+                            Ti consigliamo questa versione perché <strong>evita qualsiasi avviso di sicurezza o blocco dell'antivirus</strong> che Windows a volte mostra quando si eseguono programmi in locale.
+                        </p>
+                        <p>
+                            Apri l'app direttamente nel tuo browser sul PC o sullo smartphone. I tuoi dati restano comunque salvati al 100% in locale nella memoria del tuo dispositivo.
+                        </p>
+                    </div>
+                    <a href="https://tidyupofficial1-web.github.io/eatmefirst-app/IT/index.html" class="btn-action btn-green" target="_blank">Apri la Versione Web ➔</a>
+                </div>
+
+                <!-- OPZIONE 2: OFFLINE ZIP -->
+                <div class="mode-box">
+                    <div>
+                        <h2>💾 2. Versione Offline (Locale ZIP)</h2>
+                        <p>
+                            Perfetta se vuoi un file portatile sul tuo computer o se non hai sempre una connessione internet disponibile.
+                        </p>
+                        <p>
+                            Scarichi un piccolo archivio ZIP (circa 200 MB), lo estrai ed esegui il programma direttamente sul tuo PC senza bisogno di essere collegato alla rete.
+                        </p>
+                    </div>
+                    <a href="../DOWNLOAD/EatMeFirst_Offline_IT.zip" class="btn-action btn-outline" download>Scarica ZIP Offline ➔</a>
+                </div>
+
+            </div>
+
+            <!-- INTERVENTO DI LEO CON AVATAR -->
+            <div class="leo-box">
+                <img src="../IMG/avatar_leo.png" alt="Leo lo sviluppatore del programma EatMeFirst" class="leo-avatar">
+                <div class="leo-content">
+                    <h3>👨‍💻 Ciao a tutti, sono Leo!</h3>
+                    <p>
+                        "Sono il programmatore che ha sviluppato EatMeFirst su richiesta di Max ed Eva. All'inizio ci eravamo concentrati solo sul far scaricare il gestionale direttamente sul PC o sul telefono, ma abbiamo incontrato diverse resistenze da parte di Windows e degli antivirus."
+                    </p>
+                    <p>
+                        "Non fraintendermi: <strong>non vogliamo assolutamente mandarti virus!</strong> Anzi, se decidi di scaricare ed installare la versione in file ZIP, ti invito caldamente a farla scansionare dal tuo programma di protezione. Se non sai come fare è semplicissimo: vai nella cartella dove hai scaricato lo ZIP, seleziona il file, fai <strong>click con il tasto destro del mouse</strong> e nella finestra che si apre scegli l'opzione <em>'Scansiona con...'</em>. Vedrai che la risposta sarà <strong>tutto OK!</strong>"
+                    </p>
+                    <p>
+                        "Se il tuo antivirus non è aggiornato ci impiegherà appena un minuto per scaricare le ultime definizioni e fare il controllo; se è già aggiornato, la risposta di assenza di virus sarà quasi immediata. Quindi, per qualsiasi allarmismo o avviso generico che dovesse comparire su Windows, non farci caso e procedi tranquillo."
+                    </p>
+                    <p>
+                        "Vedendo però la comprensibile diffidenza che le persone hanno su questi argomenti, ho pensato di realizzare anche la <strong>versione Online senza download</strong>. Le due versioni hanno esattamente le stesse identiche funzioni: l'unica vera differenza è che la versione scaricata (offline), una volta caricati i tuoi prodotti, funziona anche senza internet, mentre per la versione online devi essere per forza connesso alla rete."
+                    </p>
+                </div>
+            </div>
+
+            <!-- COME USARLA AL MEGLIO (PC + CELLULARE AL SUPERMERCATO) -->
+            <div class="use-case-box">
+                <h3>📲 Comoda a casa sul PC, imbattibile allo smartphone!</h3>
+                <p>
+                    <strong>A casa sul PC o portatile:</strong> La vista è più ampia, ideale per fare l'inventario iniziale, gestire grandi scorte o riorganizzare tutta la casa con la massima comodità visiva.
+                </p>
+                <p>
+                    <strong>Al supermercato sullo Smartphone:</strong> Puoi caricare i file aggiornati sul cellulare e consultare non solo la lista della spesa automatica, ma l'intero stato della dispensa! Sei davanti allo scaffale e non ricordi se hai ancora i biscotti o il sugo anche se non sono in scadenza? Apri l'app sul telefono e controlli al volo!
+                </p>
+            </div>
+
+            <div class="navigation-btns">
+                <a href="index.html" class="btn-sec">⬅ Torna alla Home</a>
+                <a href="funzioni.html" class="btn-pri">Scopri le Funzioni ➔</a>
+            </div>
+
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; EatMeFirst - Rispetta il cibo, organizza la casa e proteggi la tua privacy.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Optimization Avanzata -->
+    <title>EatMeFirst - Gestione Dispensa e Casa con Privacy Totale | 100% Gratis</title>
+    <meta name="description" content="L'unica app per la casa senza registrazione né password. Gestisci prodotti del mercato sfusi, affettati e detersivi in totale privacy locale.">
+    <meta name="keywords" content="gestione casa, dispensa domestica, app senza registrazione, zero password, prodotti mercato sfusi, app scadenze alimentari gratuita, privacy totale dati">
+    <meta name="author" content="EatMeFirst Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tidyupofficial1-web.github.io/eatmefirst-app/IT/index.html">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Accidenti... è scaduto di nuovo! Organizza casa e dispensa con EatMeFirst">
+    <meta property="og:description" content="Nessuna registrazione, niente password. Gestisci cibo del mercato, detersivi e igiene in totale privacy. 100% Gratis per sempre.">
+    <meta property="og:image" content="IMG/merce-avariata-frigo-puzza.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "EatMeFirst",
+      "category": "LifestyleApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "description": "Applicazione per la gestione della dispensa domestica e della casa senza registrazione né password, con privacy totale."
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.7;
+        }
+
+        /* Navbar e Bandierine Lingua */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #2e7d32;
+        }
+
+        .language-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            text-decoration: none;
+            padding: 3px;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-btn img {
+            width: 28px;
+            height: 20px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .lang-btn.active {
+            border-color: #2e7d32;
+        }
+
+        /* Layout Verticale */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .main-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* Immagini */
+        .hero-image-top {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-header h1 {
+            font-size: 34px;
+            color: #1b4332;
+            margin-bottom: 20px;
+            line-height: 1.25;
+            text-align: center;
+        }
+
+        .content-body p {
+            font-size: 17px;
+            color: #495057;
+            margin-bottom: 18px;
+        }
+
+        /* Box Differenze e Privacy */
+        .different-box {
+            background-color: #e8f4f8;
+            border-left: 5px solid #0288d1;
+            padding: 22px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+
+        .different-box h2 {
+            font-size: 21px;
+            color: #01579b;
+            margin-bottom: 12px;
+        }
+
+        .different-box p {
+            margin-bottom: 12px;
+            color: #01436f;
+        }
+
+        .different-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .different-box a {
+            color: #0277bd;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* Box Gratis per Sempre */
+        .free-forever-box {
+            background-color: #e8f5e9;
+            border: 2px dashed #2e7d32;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .free-forever-box h2 {
+            color: #2e7d32;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .free-forever-box p {
+            color: #1b4332;
+            font-size: 16px;
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+
+        /* Elenco Operazioni Incluse */
+        .features-grid-title {
+            font-size: 22px;
+            color: #1b4332;
+            margin: 30px 0 15px 0;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 35px;
+        }
+
+        .features-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 16px;
+            font-size: 17px;
+            color: #212529;
+        }
+
+        .features-list li::before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Box Assistenti (Max, Eva e Leo) */
+        .team-box {
+            background-color: #f1f8e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 30px 0;
+        }
+
+        .team-box h3 {
+            color: #1b4332;
+            font-size: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .team-box p {
+            font-size: 16px;
+            color: #33691e;
+            margin-bottom: 0;
+        }
+
+        /* Pulsante Azione Centrale */
+        .cta-wrapper {
+            text-align: center;
+            margin-top: 35px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #2e7d32;
+            color: #ffffff;
+            padding: 18px 36px;
+            font-size: 19px;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 14px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #1b4332;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-card {
+                padding: 20px;
+            }
+
+            .content-header h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR E SMISTATORE LINGUE -->
+    <header>
+        <a href="index.html" class="logo-container">
+            <img src="../IMG/logo_1024_white.png" alt="EatMeFirst Logo" class="logo-img">
+            <span class="logo-text">EatMeFirst</span>
+        </a>
+        <nav class="language-picker" aria-label="Seleziona Lingua">
+            <a href="../IT/index.html" class="lang-btn active" title="Italiano">
+                <img src="../IMG/bandiera_Italy.jpg" alt="Italiano">
+            </a>
+            <a href="../EN/index.html" class="lang-btn" title="English">
+                <img src="../IMG/bandiera_England.jpg" alt="England">
+            </a>
+            <a href="../DE/index.html" class="lang-btn" title="Deutsch">
+                <img src="../IMG/bandiera_Germany.jpg" alt="Deutsch">
+            </a>
+            <a href="../FR/index.html" class="lang-btn" title="Français">
+                <img src="../IMG/bandiera_France.jpg" alt="Français">
+            </a>
+            <a href="../ES/index.html" class="lang-btn" title="Español">
+                <img src="../IMG/bandiera_Espana.jpg" alt="Español">
+            </a>
+        </nav>
+    </header>
+
+    <!-- CONTENUTO PRINCIPALE IN LAYOUT VERTICALE -->
+    <main class="container">
+        <article class="main-card">
+            
+            <!-- IMMAGINE IN ALTO -->
+            <img src="IMG/merce-avariata-frigo-puzza.jpg" alt="Donna infastidita che scopre cibo scaduto nel frigorifero" class="hero-image-top">
+
+            <header class="content-header">
+                <h1>"Accidenti... è scaduto di nuovo!" 🤢</h1>
+            </header>
+
+            <div class="content-body">
+                <p>
+                    Quante volte ti è capitato? Apri il frigorifero per preparare la cena, ti cade l'occhio su una confezione dimenticata sul fondo, la tiri fuori e... sorpresa: scaduta da giorni! O peggio, senti quell'odore strano che ti costringe a chiuderti il naso e buttare tutto dritto nella spazzatura.
+                </p>
+
+                <p>
+                    Ogni vasetto, mozzarella o yogurt che finisce nel cestino sono soldi buttati. La vita di tutti i giorni è frenetica e tenere a memoria le scadenze e le scorte di quello che abbiamo in casa è un'impresa impossibile. Se non butti via il prodotto, hai già salvato i tuoi soldi in modo naturale!
+                </p>
+
+                <!-- DIFFERENZA, PRIVACY E ZERO REGISTRAZIONE -->
+                <div class="different-box">
+                    <h2>🛡️ Zero registrazioni, zero password e privacy totale!</h2>
+                    <p>
+                        Dimentica moduli di iscrizione infiniti o password da ricordare: <strong>con EatMeFirst non serve alcuna registrazione</strong>. Se ti farà piacere dirci il tuo nome lo useremo volentieri per personalizzare la tua esperienza, ma non è indispensabile per far girare il programma.
+                    </p>
+                    <p>
+                        A differenza di molte altre applicazioni, <strong>i tuoi dati rimangono esclusivamente sul tuo dispositivo</strong>. Non inviamo alcuna informazione a server esterni circa quello che acquisti, le tue abitudini o la tua spesa.
+                    </p>
+
+                    <!-- IMMAGINE DEL LADRO MASCHERATO PER INTERROMPERE IL TESTO -->
+                    <img src="IMG/Ladro-mascherato-ruba-spesa-digitale.png" alt="Illustrazione concettuale del furto di dati personali e della spesa da parte di app terze" class="section-image">
+
+                    <p>
+                        Il programma salva subito in automatico tutte le modifiche che fai direttamente sul tuo PC o cellulare. Puoi usarlo comodamente <strong>online dal browser</strong> oppure scaricare l'archivio locale che pesa appena un paio di centinaia di MB (praticamente un nulla sul tuo dispositivo). In entrambi i casi, i tuoi dati risiedono sempre e soltanto al sicuro da te.
+                    </p>
+                    <p>
+                        <strong>Come funziona lo scanner dei codici a barre?</strong> Sei tu che ricevi le informazioni, non sei tu a darle! Il programma si collega temporaneamente a <a href="https://it.openfoodfacts.org" target="_blank">Open Food Facts</a> (l'enciclopedia aperta mondiale dei prodotti) solo per chiedere a quale articolo corrisponde il codice a barre scansionato, ricevendo in cambio foto, descrizione, calorie e allergeni.
+                    </p>
+                </div>
+
+                <!-- BOX GRATIS PER SEMPRE -->
+                <div class="free-forever-box">
+                    <h2>🎁 100% GRATIS PER SEMPRE</h2>
+                    <p>Tutto il programma base è e rimarrà sempre completamente gratuito. Nessun trucco e nessuna sorpresa.</p>
+                </div>
+
+                <h3 class="features-grid-title">Tutto quello che puoi fare per la tua casa:</h3>
+                
+                <ul class="features-list">
+                    <li><strong>Frutta e Verdura del Mercato:</strong> Gestisci con semplicità anche i prodotti senza codice a barre acquistati sulle bancarelle del mercato rionale, oltre al salame o formaggio che tagli a fette di volta in volta.</li>
+                    <li><strong>Gestione completa della casa:</strong> Non solo alimenti, ma tutto ciò che serve in casa (detersivi, prodotti per l'igiene, pulizia e cura della persona).</li>
+                    <li><strong>Gestione Intelligente delle Confezioni:</strong> Una confezione da 18 uova? Usane 5 e distribuiscile in autonomia: 3 in frigo per la settimana e 2 già consumate, riducendo la scorta principale.</li>
+                    <li><strong>Lista Spesa Automatica:</strong> I prodotti o i detersivi che si esauriscono finiscono dritti nella lista della spesa, pronti per la prossima volta.</li>
+                    <li><strong>Promemoria Utili per le Commissioni:</strong> Ricordati cosa fare fuori casa: passare in farmacia, fare un duplicato delle chiavi o portare i coupon sconto al supermercato.</li>
+                    <li><strong>Salvataggio Sicuro su Dispositivo Esterno:</strong> Consigliamo di tenere sempre inserita una chiavetta o un dispositivo esterno per avere il salvataggio dei dati sempre aggiornato in tempo reale.</li>
+                </ul>
+
+                <!-- I NOSTRI ASSISTENTI MAX, EVA E LEO -->
+                <div class="team-box">
+                    <h3>👥 Nelle prossime pagine ci penseranno Max, Eva e Leo!</h3>
+                    <p>
+                        Niente panico o manuali difficili. Nelle prossime pagine saranno proprio <strong>Max ed Eva</strong> (la coppia reale che vive ogni giorno la casa) insieme al loro amico programmatore <strong>Leo</strong> a spiegarti passo dopo passo tutte le funzioni, svelandoti nel dettaglio il perché ti consigliamo di usare sempre una chiavetta per i tuoi salvataggi!
+                    </p>
+                </div>
+
+                <div class="cta-wrapper">
+                    <a href="modalita.html" class="btn-primary">Scegli come usare EatMeFirst ➔</a>
+                </div>
+            </div>
+
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; EatMeFirst - Rispetta il cibo, organizza la casa e proteggi la tua privacy.</p>
+    </footer>
+
+</body>
+</html>
