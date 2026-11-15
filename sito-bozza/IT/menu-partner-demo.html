@@ -1,0 +1,517 @@
+<!doctype html><html lang="it"><head><style>.sponsor-banner{display:grid;grid-template-columns:1fr 1.13fr;align-items:center;background:#f5eddb;color:#284c3c;border-radius:12px;overflow:hidden}.banner-copy{padding:26px 30px}.ad-label{font-size:9px;letter-spacing:1.5px;color:#6b715d;margin:0 0 17px}.mini-logo{font-family:Georgia,serif;font-size:25px;color:#a2533a}.mini-logo span{font:9px Arial;letter-spacing:3px;margin-left:6px}.banner-copy h3{font:38px/1.05 Georgia,serif;margin:18px 0 15px;letter-spacing:-1px}.banner-copy>p:not(.ad-label){font-size:13px;line-height:1.65}.shop-button{display:inline-flex;justify-content:space-between;gap:32px;align-items:center;color:white;background:#ac593e;border:0;border-radius:6px;padding:13px 16px;cursor:pointer;font-size:14px;font-weight:bold}.offered{font-size:10px!important;color:#6a735f;max-width:290px;margin-top:17px}.scene{display:block;width:100%;height:100%;object-fit:cover;min-height:340px}.demo-result{font-size:12px;color:#aebdc5;line-height:1.7;margin:18px 0 0}@media(max-width:700px){.sponsor-banner{grid-template-columns:1fr}.banner-copy{padding:25px}.scene{min-height:0;height:auto}}</style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il menu con la vostra pubblicità · EatMeFirst</title>
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --primary-color: #2ecc71;
+            --text-color: #e0e6ed;
+            --text-muted: #a0aec0;
+            --border-color: #2d3748;
+            --info-bg: #1a2634;
+            --info-border: #3182ce;
+            --hover-card: #253238;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar Superiore con Carta Intestata e Pulsante Abbonamento */
+        .top-navbar {
+            width: 100%;
+            background-color: #101416;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .brand-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        /* Pulsante Verde Chiaro / Scritta Nera per Abbonamento */
+        .btn-abbonamento-nav {
+            background-color: #2ecc71;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .btn-abbonamento-nav:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .language-flags {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            object-fit: cover;
+            border-radius: 3px;
+            transition: transform 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block;
+        }
+
+        .flag-icon:hover {
+            transform: scale(1.15);
+        }
+
+        /* Layout Principale */
+        .main-wrapper {
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        /* Stile Alert Lampeggiante Scadenze */
+        @keyframes blink-animation {
+            0%, 100% { box-shadow: 0 0 0 0 transparent; }
+            50% { box-shadow: 0 0 12px 2px var(--alert-color); }
+        }
+
+        .alert-banner {
+            --alert-color: #f1c40f;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 2px solid var(--alert-color);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            animation: blink-animation 3s ease-in-out infinite;
+            transition: background-color 0.2s;
+        }
+
+        .alert-banner:hover {
+            background-color: var(--light-bg);
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-icon {
+            font-size: 2rem;
+        }
+
+        .alert-text strong {
+            display: block;
+            margin: 0 0 4px 0;
+            color: var(--alert-color);
+            font-size: 1.15rem;
+        }
+
+        .alert-text .alert-description {
+            display: block;
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        @media (prefers-reduced-motion: reduce) { .alert-banner { animation: none; } }
+
+        /* Modale / Box Elenco in Sola Consultazione */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            background: #101416;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .btn-close-modal:hover { color: #fff; }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scadenza-item-card {
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .badge-tassativo {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        .badge-consigliata {
+            background-color: #f1c40f;
+            color: #000000;
+        }
+
+        /* Box Guida del Menu (Scomparabile) */
+        .welcome-guide-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .guide-banner-container {
+            width: 100%;
+            background-color: #0f1417;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .guide-banner-img {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .guide-content-area {
+            padding: 25px;
+        }
+
+        .guide-header-title {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .guide-body p {
+            margin: 0 0 12px 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .usb-tip-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .guide-footer {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hide-guide-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hide-guide-label input {
+            accent-color: var(--primary-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Griglia Funzioni Principali (6 moduli) */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .menu-card:hover {
+            background-color: var(--hover-card);
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+    </style>
+    <link rel="stylesheet" href="../../IT/../css/scadenze-it.css">
+<link rel="stylesheet" href="../../IT/../css/messaggi-programmati-it.css">
+<link rel="stylesheet" href="../../IT/../css/responsive-it.css">
+<link rel="stylesheet" href="../../IT/../css/collegamenti.css">
+<style>.partner-demo-note{box-sizing:border-box;width:100%;padding:18px 24px;background:#f5eddb;color:#234b39;display:flex;gap:22px;justify-content:space-between;align-items:center;font:14px/1.6 Arial,sans-serif}.partner-demo-note a{color:#234b39;white-space:nowrap}.partner-placement{margin:32px 0 45px}.partner-placement .sponsor-banner{width:100%}a[aria-disabled]{pointer-events:none;cursor:default}.partner-placement h3{color:#284c3c}.partner-placement .mini-logo{color:#a2533a}html{scroll-behavior:smooth}@media(max-width:700px){.partner-demo-note{flex-wrap:wrap;padding:16px}.partner-demo-note div{flex-basis:100%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style><style>.partner-demo-note{flex-wrap:wrap;align-items:flex-start}.partner-demo-note>div{flex:1 1 620px}.partner-demo-note nav{display:flex;gap:12px;flex-wrap:wrap}.partner-demo-note>p{flex-basis:100%}.partner-demo-note>p:empty{display:none}</style></head><body><div class="partner-demo-note"><div><strong>Ecco la pagina del menu con il vostro banner in fondo.</strong><br>È una copia visiva del menu attuale: le funzioni qui non si aprono. Questo banner rimane fisso per i dieci giorni concordati.<br>L’immagine e il testo sono da concordare. Se ci inviate un’immagine, il testo e alcune indicazioni di massima, sarà nostra cura sottoporvi alcune versioni tra cui scegliere.<br>Per questo esempio abbiamo usato un marchio inventato. Il pulsante del negozio è dimostrativo.</div><nav><a href="#banner-negozio">Vai al banner ↓</a><a href="anteprima-partner.html">← Rivedi la presentazione</a><a href="locandina-partner-demo.html">Guarda la locandina →</a></nav><p id="shop-result" role="status" style="margin:0"></p></div>
+
+<!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
+<header class="top-navbar">
+    <div class="brand-logo-group">
+        <a href="#" aria-disabled="true" tabindex="-1" class="brand-logo">
+            <img src="../../IT/../IMG/logo_1024_white.png" alt="EatMeFirst Logo">
+            <span>EatMeFirst</span>
+        </a>
+
+        <!-- Pulsante verde chiaro per l'Abbonamento & Backup -->
+    </div>
+
+    <div class="language-flags">
+        <a href="#" aria-disabled="true" tabindex="-1" title="Italiano"><img src="../../IT/../IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon"></a>
+        <a href="#" aria-disabled="true" tabindex="-1" title="English"><img src="../../IT/../IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
+        <a href="#" aria-disabled="true" tabindex="-1" title="Deutsch"><img src="../../IT/../IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
+        <a href="#" aria-disabled="true" tabindex="-1" title="Français"><img src="../../IT/../IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
+        <a href="#" aria-disabled="true" tabindex="-1" title="Español"><img src="../../IT/../IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon"></a>
+    </div>
+</header>
+
+<div class="main-wrapper">
+
+    <!-- ALERT LAMPEGGIANTE DINAMICO PER LE SCADENZE -->
+    <button type="button" id="alertScadenzeBanner" class="alert-banner" aria-haspopup="dialog" style="display: none;">
+        <span class="alert-content">
+            <span class="alert-icon" aria-hidden="true">⚠️</span>
+            <span class="alert-text">
+                <strong id="alertTitoloTesto">Prodotti con scadenza da controllare</strong>
+                <span class="alert-description">Apri l’elenco ordinato per urgenza. Giallo: data indicativa · Rosso: data tassativa.</span>
+            </span>
+        </span>
+        <span style="font-size:1.2rem;color:var(--alert-color);font-weight:bold" aria-hidden="true">➔</span>
+    </button>
+
+    <button type="button" id="promemoriaBanner" class="alert-banner" aria-haspopup="dialog" style="display:none;--alert-color:#79c0ff;animation:none">
+        <span class="alert-content">
+            <span class="alert-icon" aria-hidden="true">📌</span>
+            <span class="alert-text">
+                <strong id="promemoriaTitolo">Promemoria per prodotti riservati</strong>
+                <span class="alert-description">Apri gli eventi da ricordare. Le scadenze dei prodotti restano separate.</span>
+            </span>
+        </span>
+    </button>
+
+    <!-- Box Guida di Benvenuto con Banner Grande -->
+    <div class="welcome-guide-box" id="menuGuideBox">
+        <div class="guide-banner-container">
+            <img src="../../IT/IMG/organizzazione-dispensa-software.png" alt="Organizzazione Dispensa Software" class="guide-banner-img">
+        </div>
+
+        <div class="guide-content-area">
+            <div class="guide-header-title">
+                <h2 style="margin: 0; color: var(--primary-color); font-size: 1.4rem;">
+                    Ciao <span id="displayUserName">amico</span>!
+                </h2>
+                <p style="margin: 3px 0 0 0; color: var(--text-muted); font-size: 0.95rem;">
+                    Benvenuto nel pannello principale della tua dispensa
+                </p>
+            </div>
+            
+            <div class="guide-body">
+                <p>Sono qui con Leo, che ha sviluppato l'applicazione. In questa pagina trovi l'accesso rapido a tutte le funzioni principali della tua dispensa.</p>
+                <p>Ognuna di queste funzioni mette al centro la gestione intelligente delle scadenze e delle scorte per aiutarti ad azzerare gli sprechi domestici.</p>
+                
+                <div class="usb-tip-box">
+                    💡 <strong>Un consiglio prezioso per la sicurezza dei tuoi dati:</strong><br>
+                    Il programma salva tutto in automatico e in tempo reale nella memoria del tuo cellulare. Ti consigliamo di fare periodicamente un backup esterno su chiavetta USB o tramite email (dopo aver inserito un po' di prodotti): in questo modo, se ti si esaurisce la batteria del telefono, si verifica un guasto o devi cambiare dispositivo, non perderai le tue operazioni.
+                </div>
+            </div>
+
+            <div class="guide-footer">
+                <label class="hide-guide-label">
+                    <input type="checkbox" disabled>
+                    <span>Ho capito, non mostrare più questo messaggio nel menu</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6">
+        <p style="display:inline-block;margin:0 0 12px;padding:5px 12px;border-radius:6px;background:var(--primary-color);color:#101820;font-weight:bold">📣 Ultima notizia!</p>
+        <h2 id="scuola-eatmefirst" style="margin-top:0;color:var(--primary-color);font-size:1.4rem">🎓 È nata la nostra scuola guida di EatMeFirst!</h2>
+        <p><strong>Mettiti alla guida della tua dispensa, insieme a Max, Eva e Leo!</strong> Abbiamo preparato un percorso per imparare a usare l’app giocando, un passo alla volta. Niente lezioni complicate: prova il Carico, lo Scarico, le note e le copie di sicurezza con noi al tuo fianco.</p>
+        <p><strong>Puoi esercitarti senza paura di sbagliare:</strong> i prodotti sono inventati e nessun dato della tua dispensa viene letto o modificato. La prova è facoltativa e puoi ricominciarla quando vuoi.</p>
+        <a href="#" aria-disabled="true" tabindex="-1" style="display:inline-block;padding:12px 18px;border-radius:8px;background:var(--primary-color);color:#101820;font-weight:bold;text-decoration:none">🎮 Entra e impara giocando</a>
+    </aside>
+
+    <!-- Funzioni e prova guidata della Dispensa -->
+    <main class="menu-grid">
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Carico Prodotti</div>
+            <div class="card-desc">Inserisci i nuovi acquisti con lo scanner dello smartphone, la pistola USB o manualmente.</div>
+        </a>
+
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">🍳</div>
+            <div class="card-title">Scarico & Consumi</div>
+            <div class="card-desc">Registra i prodotti consumati o aperti per mantenere l'inventario sempre aggiornato.</div>
+        </a>
+
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">🔍</div>
+            <div class="card-title">Controllo Giacenze</div>
+            <div class="card-desc">Verifica la disponibilità dei prodotti e tieni d'occhio le scadenze imminenti.</div>
+        </a>
+
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">🛒</div>
+            <div class="card-title">Lista della Spesa</div>
+            <div class="card-desc">Consulta i prodotti esauriti, in esaurimento o suggeriti dall'app con i codici colore intelligenti.</div>
+        </a>
+
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">↩</div>
+            <div class="card-title">Ultime 15 operazioni</div>
+            <div class="card-desc">Consulta i movimenti recenti e annulla un’operazione senza cancellare quelle indipendenti.</div>
+        </a>
+
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">📊</div>
+            <div class="card-title">Statistiche & Risparmio</div>
+            <div class="card-desc">Consulta le scorte attuali, i consumi registrati e i negozi indicati sui prodotti.</div>
+        </a>
+
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Utilità & Sicurezza</div>
+            <div class="card-desc">Gestisci le copie della dispensa, le impostazioni e gli strumenti di sicurezza.</div>
+        </a>
+        <a href="#" aria-disabled="true" tabindex="-1" class="menu-card">
+            <div class="card-icon" aria-hidden="true">🎮</div>
+            <div class="card-title">Impara giocando</div>
+            <div class="card-desc">Prova con dati di esempio, senza toccare la tua dispensa. Max, Eva e Leo ti accompagnano passo dopo passo.</div>
+        </a>
+    </main>
+
+
+<div class="partner-placement"><aside id="banner-negozio" class="sponsor-banner" aria-label="Esempio di spazio pubblicitario"><div class="banner-copy"><div class="mini-logo">CasaLieve <span>MARKET</span></div><h3>La spesa trova<br>il suo posto.</h3><p>Alimenti e prodotti per la casa.<br>Le nostre proposte, la vostra quotidianità.</p><button type="button" class="shop-button" id="shop">Visita il negozio <span aria-hidden="true">↗</span></button></div><img class="scene" src="../assets/sponsor-market-foto.png" width="620" height="390" alt="Cliente con il carrello in un supermercato, fra scaffali di alimenti e prodotti per la casa"></aside></div></div><script src="../assets/partner-demo.js"></script></body></html>

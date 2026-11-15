@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Consumo Parziale Cibi | EatMeFirst</title>
+    <meta name="description" content="Scopri come gestire con precisione il consumo parziale e le percentuali dei prodotti nella tua dispensa con EatMeFirst.">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --text-color: #e0e6ed;
+            --text-muted: #a0aec0;
+            --accent-color: #58a6ff;
+            --border-color: #2d3748;
+            --postit-bg: #fff59d;
+            --postit-text: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .postit-card {
+            background-color: var(--postit-bg);
+            color: var(--postit-text);
+            padding: 25px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .eva-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.15);
+            padding-bottom: 12px;
+        }
+
+        .eva-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #3182ce;
+            object-fit: cover;
+        }
+
+        .eva-title {
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        .eva-sub {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        .content p {
+            margin-bottom: 12px;
+        }
+
+        .btn-close {
+            display: inline-block;
+            margin-top: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-close:hover { background: #000; }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+    <main class="container">
+        <article class="postit-card">
+            <div class="eva-header">
+                <img src="../../IMG/avatar_eva.png" alt="Eva Avatar" class="eva-avatar">
+                <div>
+                    <div class="eva-title">Consumo Parziale degli Alimenti 📌</div>
+                    <div class="eva-sub">La guida di Eva per dosare le scorte</div>
+                </div>
+            </div>
+
+            <div class="content">
+                <p><strong>Un consiglio da Eva: prima cuciniamo, poi aggiorniamo!</strong> Non serve toccare il telefono con le mani sporche o bagnate a ogni ingrediente. Segna su un foglio cosa usi e quanto: due dadi, mezzo litro di latte, 250 grammi di pasta. A memoria qualcosa può sfuggire! In un momento di pausa usa Scarica pezzi per i pezzi interi e Parziale per indicare quanto resta di quello aperto. Fino a quando registri i consumi, le quantità e i suggerimenti dell’app possono essere indietro.</p>
+                <p>Sono Eva! Hai aperto una bottiglia o tagliato qualche fetta di salame? Premi <strong>Parziale</strong> e indica <strong>quanto ne rimane</strong>: 100% è intero, 50% è metà, 0% è finito. Puoi muovere il cursore; sulle forme che lo permettono puoi anche toccare il disegno. È una stima scelta da te: l’app non pesa il salame, e Max non può usarla come bilancia!</p>
+                
+                <p><strong>Il cursore riguarda un solo pezzo</strong>, non tutta la confezione. Se hai 12 bottiglie e ne lasci una al 50%, vedrai 11 bottiglie intere e una mezza bottiglia su righe separate. Puoi anche scegliere dove conservare quella aperta. Premi <strong>Conferma e Salva</strong> e controlla il riepilogo prima della conferma finale.</p>
+                <p>Per togliere pezzi interi usa <strong>Scarica pezzi</strong>, inserisci quanti ne hai consumati e premi <strong>Prosegui al riepilogo</strong>. Solo con <strong>Conferma e salva scarico</strong> completi l’operazione. Il riepilogo indica se viene aggiunta una voce nella lista della spesa: le righe derivate da uno spostamento o dall’apertura di una confezione non creano un riacquisto per ogni singolo pezzo.</p>
+                <p>Hai sbagliato? Apri <a href="../operazioni/index.html">Ultime 15 operazioni</a> e controlla se il movimento è annullabile. L’annullamento corregge anche la lista della spesa interessata.</p>
+            </div>
+
+            <a href="javascript:window.close();" class="btn-close" onclick="if (window.opener) { window.close(); return false; }">✕ Chiudi Scheda</a>
+        </article>
+    </main>
+
+</body>
+</html>

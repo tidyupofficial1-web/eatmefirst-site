@@ -1,0 +1,4 @@
+.messaggio-programmato{box-sizing:border-box;width:min(580px,calc(100% - 28px));max-height:85dvh;overflow:auto;padding:24px;border:2px solid #58a6ff;border-radius:16px;background:#161b22;color:#e6edf3;font:17px/1.65 'Segoe UI',sans-serif}
+.messaggio-programmato::backdrop{background:rgba(0,0,0,.8)}
+.messaggio-intestazione{display:flex;align-items:center;gap:15px}.messaggio-intestazione img{width:64px;height:64px;object-fit:cover;border-radius:50%}.messaggio-intestazione h2{font-size:1.3rem;color:#79c0ff}
+.messaggio-programmato button{max-width:100%;white-space:normal;box-sizing:border-box;font:inherit;background:#238636;color:white;border:0;border-radius:8px;padding:12px 20px;cursor:pointer}.messaggio-programmato button:focus-visible{outline:3px solid #79c0ff;outline-offset:3px}

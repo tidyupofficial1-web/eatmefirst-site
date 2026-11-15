@@ -1,0 +1,1 @@
+document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{const t=document.getElementById(b.dataset.copy);try{await navigator.clipboard.writeText(t.value);b.textContent="Message copied";}catch(e){t.focus();t.select();b.textContent="Text selected: use your device\u2019s Copy command";}}));

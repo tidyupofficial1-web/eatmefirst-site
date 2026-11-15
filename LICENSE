@@ -1,0 +1,57 @@
+EatMeFirst — licenze e diritti sui contributi
+Versione locale del 13 novembre 2026
+Copyright (c) 2026 tidyupofficial1-web, per i contributi sui quali detiene i diritti.
+Contatto: tidyup.official1@gmail.com
+
+Il progetto comprende materiale soggetto a condizioni differenti.
+Questo documento non attribuisce una licenza proprietaria esclusiva all'intero
+programma e non revoca autorizzazioni precedentemente concesse.
+
+1. MATERIALE PRECEDENTEMENTE DISTRIBUITO CON MIT
+
+Restano validi i permessi MIT per il materiale distribuito con tale licenza,
+incluse le parti conservate o modificate nelle versioni successive.
+Il riferimento tecnico conservato è il commit
+08f4d996295c09484fb50e5d04b56a223ae8477c del repository eatmefirst-app,
+incluse tutte le cartelle e prove-mobile/prova-it.
+Questo riferimento non esclude altre versioni o parti già distribuite con MIT.
+Il testo MIT originale e il relativo copyright sono riprodotti integralmente
+in licenza-eatmefirst/MIT-versione-precedente.txt e accompagnano il progetto.
+L'uso, la copia, la modifica e la redistribuzione del materiale MIT restano
+consentiti alle condizioni di quella licenza, inclusa la conservazione degli avvisi.
+
+2. NUOVI CONTRIBUTI ORIGINALI RISERVATI
+
+Per i contributi originali aggiunti successivamente al materiale MIT, soltanto
+nei limiti dei diritti effettivamente detenuti e salvo licenze diverse applicabili,
+il titolare riserva i diritti di riutilizzo, modifica e distribuzione.
+Sono concessi all'utente l'uso non esclusivo di EatMeFirst per organizzare i
+prodotti domestici e le copie necessarie a tale uso, secondo le condizioni d'uso.
+Per questi contributi, distribuzione del codice, distribuzione di versioni
+modificate, rivendita e concessione a terzi del programma richiedono autorizzazione,
+salvo quanto consentito dalla legge. L'uso gratuito o l'acquisto del servizio
+facoltativo non trasferiscono la proprietà e non concedono tali ulteriori diritti.
+Restano salvi i diritti inderogabili degli utenti e le eccezioni di legge.
+
+Un file modificato non diventa interamente riservato: le parti precedenti MIT
+conservano i relativi permessi. Un percorso nuovo, una traduzione, uno spostamento
+o un cambio di nome non dimostrano da soli l'esistenza di diritti esclusivi.
+L'inventario in licenza-eatmefirst/inventario-provenienza.json è un ausilio tecnico,
+non una dichiarazione di esclusiva su tutti i file classificati come nuovi.
+
+3. COMPONENTI, DATI E CONTENUTI DI TERZI
+
+Le parti di terzi conservano le proprie licenze e i propri avvisi. Non ne è
+rivendicata la proprietà né sono limitati i diritti concessi dai rispettivi titolari.
+Questo vale anche per librerie, dati e immagini degli archivi Open Facts.
+I dati e le foto personali degli utenti restano nella loro disponibilità.
+
+4. CONDIZIONI D'USO E AMBITO
+
+Le condizioni d'uso descrivono il funzionamento dell'app, il servizio facoltativo,
+i pagamenti e i diritti degli utenti. Questo documento disciplina i permessi sul
+codice e sui contributi coperti, senza sostituire quelle condizioni o le tutele
+inderogabili di legge. Le restrizioni non rendono esclusive le idee delle funzioni.
+La presenza del codice nel browser non concede ulteriori diritti sui contributi
+riservati; non costituisce neppure una protezione tecnica contro la copia.
+Le condizioni qui indicate non modificano retroattivamente licenze o accordi.

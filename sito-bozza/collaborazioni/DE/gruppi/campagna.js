@@ -1,0 +1,1 @@
+document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{const t=document.getElementById(b.dataset.copy);try{await navigator.clipboard.writeText(t.value);b.textContent="Mitteilung kopiert";}catch(e){t.focus();t.select();b.textContent="Text ausgew\u00e4hlt: Verwenden Sie die Kopierfunktion Ihres Ger\u00e4ts";}}));

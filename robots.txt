@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /eatmefirst-site/sito-bozza/collaborazioni/
+Sitemap: https://tidyupofficial1-web.github.io/eatmefirst-site/sitemap.xml
+

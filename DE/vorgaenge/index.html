@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letzte 15 Vorgänge | EatMeFirst</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #0d1117; color: #f0f6fc; font: 16px/1.5 system-ui, sans-serif; }
+        main { max-width: 1100px; margin: auto; padding: 24px 16px; }
+        nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+        a { color: #79c0ff; }
+        h1 { font-size: 1.65rem; }
+        .intro { color: #b1bac4; }
+        .tabella { overflow-x: auto; border: 1px solid #30363d; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; background: #161b22; }
+        th, td { padding: 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #30363d; overflow-wrap: anywhere; }
+        th { color: #79c0ff; background: #21262d; }
+        td:first-child { min-width: 130px; }
+        .motivo { display: block; margin-top: 6px; max-width: 310px; font-size: 13px; color: #b1bac4; }
+        button { padding: 10px 14px; border: 1px solid #58a6ff; border-radius: 8px; background: #1f6feb; color: white; font: inherit; cursor: pointer; }
+        button:disabled { cursor: default; background: #30363d; border-color: #484f58; color: #b1bac4; }
+        .annullata { color: #b1bac4; }
+        #stato { padding: 12px 0; }
+        .overlay { position: fixed; inset: 0; padding: 18px; background: #000b; display: flex; justify-content: center; align-items: center; }
+        .overlay[hidden] { display: none; }
+        .dialogo { width: 100%; max-width: 680px; max-height: 85vh; overflow-y: auto; padding: 24px; border: 1px solid #58a6ff; border-radius: 14px; background: #161b22; }
+        .comandi { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+        #descrizioneConferma { white-space: pre-wrap; overflow-wrap: anywhere; }
+        @media (max-width: 768px) {
+            .tabella { overflow: visible; border: 0; }
+            .tabella table { display: block; min-width: 0; width: 100%; background: transparent; }
+            .tabella thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+            .tabella tbody { display: block; width: 100%; }
+            .tabella tbody tr { display: block; padding: 14px; margin-bottom: 14px; border: 1px solid #30363d; border-radius: 12px; background: #161b22; }
+            .tabella td, .tabella td:first-child { display: block; width: 100%; min-width: 0; padding: 8px 0; border: 0; }
+            .tabella td::before { display: block; margin-bottom: 4px; color: #79c0ff; font-weight: 600; }
+            .tabella td:nth-child(1)::before { content: 'Datum und Uhrzeit'; }
+            .tabella td:nth-child(2)::before { content: 'Vorgang'; }
+            .tabella td:nth-child(3)::before { content: 'Details'; }
+            .tabella td:nth-child(4)::before { content: 'Aktion'; }
+            .tabella td button { width: 100%; white-space: normal; }
+            .tabella .motivo { max-width: none; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+<main>
+    <nav aria-label="Navigazione">
+        <a href="../menu.html">← Menu</a><a href="../lagerung/einlagerung.html">Wareneingang</a>
+        <a href="../entnahme/index.html">Entnahme und Verbrauch</a><a href="../inventar/index.html">Inventar</a><a href="../einkaufsliste/index.html">Einkaufsliste</a>
+    </nav>
+    <h1>↩ Letzte 15 Vorgänge</h1>
+    <p class="intro">Hier stehen die letzten Vorgänge dieses Browsers seit Aktivierung des Verlaufs. Rückgängig gemachte Vorgänge bleiben mit ihrem Status sichtbar.</p>
+    <p class="intro">Du kannst einen Vorgang rückgängig machen und unabhängige Änderungen behalten. Betrifft ein späterer Vorgang dasselbe Produkt oder denselben Listeneintrag, wird angezeigt, welcher zuerst rückgängig gemacht werden muss.</p>
+    <p id="stato" role="status" aria-live="polite"></p>
+    <div class="tabella"><table>
+        <thead><tr><th scope="col">Datum und Uhrzeit</th><th scope="col">Vorgang</th><th scope="col">Details</th><th scope="col">Aktion</th></tr></thead>
+        <tbody id="operazioni"></tbody>
+    </table></div>
+    <p class="intro">Der Verlauf ersetzt keine Sicherung. Ältere Vorgänge als die letzten 15 lassen sich hier nicht mehr rückgängig machen.</p>
+</main>
+<div id="confermaOperazione" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="titoloConferma" onkeydown="tastieraConferma(event)">
+    <div class="dialogo">
+        <h2 id="titoloConferma">Diesen Vorgang rückgängig machen?</h2>
+        <p id="descrizioneConferma"></p>
+        <p>Nur der gewählte Vorgang wird rückgängig gemacht. Unabhängige Änderungen bleiben erhalten.</p>
+        <div class="comandi">
+            <button type="button" id="nonAnnullare" onclick="chiudiConferma()">Vorgang beibehalten</button>
+            <button type="button" id="annullaOperazione" onclick="eseguiAnnullamento()">Rückgängig machen bestätigen</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/errori-de.js"></script>
+<script>
+    let selezionata = null;
+    let focusPrecedente = null;
+    function aggiorna() {
+        const corpo = document.getElementById('operazioni');
+        corpo.replaceChildren();
+        try {
+            const voci = EatStorico.elenco();
+            const letture = {};
+            document.getElementById('stato').textContent = voci.length ? `${voci.length} letzte Vorgänge, neueste zuerst.` : 'Keine Vorgänge erfasst. Frühere Bewegungen werden nicht nachträglich rekonstruiert.';
+            voci.forEach(voce => {
+                const riga = document.createElement('tr');
+                if (voce.annullata) riga.className = 'annullata';
+                for (const testo of [new Date(voce.data).toLocaleString('de-DE'), ({Carico:'Wareneingang',Scarico:'Entnahme','Foto prodotto':'Produktfoto','Note e promemoria':'Notizen und Erinnerungen','Spostamento':'Umlagerung','Consumo parziale':'Teilverbrauch','Lista della spesa':'Einkaufsliste'})[voce.tipo] || voce.tipo, voce.descrizione]) {
+                    const cella = document.createElement('td');
+                    cella.textContent = testo;
+                    riga.appendChild(cella);
+                }
+                const scelta = document.createElement('td');
+                const motivo = EatStorico.motivo(voce.id, voci, letture);
+                const pulsante = document.createElement('button');
+                pulsante.type = 'button';
+                pulsante.textContent = voce.annullata ? 'Bereits rückgängig gemacht' : 'Vorgang rückgängig machen';
+                pulsante.disabled = !!motivo;
+                pulsante.addEventListener('click', () => apriConferma(voce.id));
+                scelta.appendChild(pulsante);
+                if (motivo) {
+                    const spiegazione = document.createElement('span');
+                    spiegazione.className = 'motivo';
+                    spiegazione.textContent = EatErroriDE(motivo);
+                    scelta.appendChild(spiegazione);
+                }
+                riga.appendChild(scelta);
+                corpo.appendChild(riga);
+            });
+        } catch (errore) { document.getElementById('stato').textContent = EatErroriDE(errore.message); }
+    }
+    function apriConferma(id) {
+        try {
+            const motivo = EatStorico.motivo(id);
+            if (motivo) { document.getElementById('stato').textContent = EatErroriDE(motivo); aggiorna(); return; }
+            const voce = EatStorico.elenco().find(v => v.id === id);
+            selezionata = id;
+            focusPrecedente = document.activeElement;
+            document.getElementById('descrizioneConferma').textContent = `${voce.tipo} — ${voce.descrizione}`;
+            document.getElementById('confermaOperazione').hidden = false;
+            document.getElementById('nonAnnullare').focus();
+        } catch (errore) { document.getElementById('stato').textContent = EatErroriDE(errore.message); }
+    }
+    function chiudiConferma() {
+        selezionata = null;
+        document.getElementById('confermaOperazione').hidden = true;
+        focusPrecedente?.focus();
+    }
+    function eseguiAnnullamento() {
+        if (!selezionata) return;
+        try {
+            EatStorico.annulla(selezionata);
+            chiudiConferma();
+            aggiorna();
+            document.getElementById('stato').textContent = 'Vorgang rückgängig gemacht. Unabhängige Änderungen bleiben erhalten.';
+        } catch (errore) { chiudiConferma(); aggiorna(); document.getElementById('stato').textContent = EatErroriDE(errore.message); }
+    }
+    function tastieraConferma(evento) {
+        if (evento.key === 'Escape') { evento.preventDefault(); chiudiConferma(); }
+        if (evento.key === 'Tab') {
+            const primo = document.getElementById('nonAnnullare'), ultimo = document.getElementById('annullaOperazione');
+            if (evento.shiftKey && document.activeElement === primo) { evento.preventDefault(); ultimo.focus(); }
+            else if (!evento.shiftKey && document.activeElement === ultimo) { evento.preventDefault(); primo.focus(); }
+        }
+    }
+    let attesaAggiornamento = null;
+    window.addEventListener('storage', () => {
+        clearTimeout(attesaAggiornamento);
+        attesaAggiornamento = setTimeout(aggiorna, 100);
+    });
+    window.addEventListener('focus', aggiorna);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) aggiorna(); });
+    aggiorna();
+</script>
+</body>
+</html>

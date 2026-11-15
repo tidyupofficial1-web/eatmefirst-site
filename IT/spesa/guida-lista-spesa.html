@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida Lista Spesa Intelligente | EatMeFirst</title>
+  <meta name="description" content="Scopri come funziona la lista della spesa intelligente di EatMeFirst, con calcolo automatico delle giacenze e spunta in tempo reale tra le corsie.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <style>
+    :root {
+      --bg-color: #12181b;
+      --card-bg: #1e272c;
+      --text-bright: #e0e6ed;
+      --text-sub: #a0aec0;
+      --warning-color: #f2b33d;
+      --accent-color: #58a6ff;
+      --success-color: #3fb950;
+      --danger-color: #e53e3e;
+      --border-color: #2d3748;
+      --postit-bg: #fff59d;
+      --postit-text: #333333;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-bright);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 10px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* CARTA POST-IT PRINCIPALE */
+    .postit-card {
+      background-color: var(--postit-bg);
+      color: var(--postit-text);
+      padding: 25px 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .postit-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+      padding-bottom: 12px;
+    }
+
+    .postit-title {
+      font-size: 1.3rem;
+      color: #1a1a1a;
+      font-weight: bold;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #222;
+      margin-bottom: 16px;
+    }
+
+    /* SCHEDE PUNTI CHIAVE */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .feature-box {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #2196f3;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+
+    .feature-box.automatic { border-left-color: #e53e3e; }
+    .feature-box.smart { border-left-color: #2196f3; }
+    .feature-box.store { border-left-color: #2e7d32; }
+
+    .feature-title {
+      font-size: 0.98rem;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.92rem;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* BOX COLORI A COLPO D'OCCHIO */
+    .color-legend-box {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+      padding: 14px;
+      margin: 16px 0;
+    }
+
+    .color-legend-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #b7791f;
+      margin-bottom: 10px;
+    }
+
+    .color-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #222;
+    }
+    .color-item:last-child { margin-bottom: 0; }
+
+    .color-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .badge-rosso { background: #e53e3e; color: #fff; }
+    .badge-verde { background: #2e7d32; color: #fff; }
+    .badge-grigio { background: #4a5568; color: #fff; }
+
+    .tip-box {
+      background: rgba(33, 150, 243, 0.15);
+      border-left: 4px solid #2196f3;
+      border-radius: 4px;
+      padding: 14px;
+      font-size: 0.92rem;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    .tip-box p {
+      margin-bottom: 10px;
+    }
+    .tip-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .btn-close {
+      display: inline-block;
+      margin-top: 20px;
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .btn-close:hover { background: #000; }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+  <main class="container">
+    <article class="postit-card">
+      <div class="postit-header">
+        <span style="font-size: 24px;">🛒</span>
+        <h1 class="postit-title">Come funziona la Lista della Spesa Intelligente</h1>
+      </div>
+
+      <p class="intro-text">
+        La funzione <strong>Lista Spesa</strong> di EatMeFirst è progettata per accompagnarti passo passo tra le corsie del supermercato, facendoti risparmiare tempo ed evitando acquisti doppi o dimenticanze.
+      </p>
+
+      <div class="feature-list">
+
+        <!-- 1. CREAZIONE INIZIALE E AUTOMATICA -->
+        <div class="feature-box automatic">
+          <div class="feature-title">
+            <span>✍️</span> 1. Dalla compilazione manuale all'automazione
+          </div>
+          <div class="feature-desc">
+            Quando usi l'app per le prime volte e la dispensa è ancora vuota, componi la lista inserendo a mano i prodotti che ti servono (come su un foglio di carta). Man mano che carichi la dispensa, <strong>la lista comincerà a crearsi da sola</strong>: quando confermi uno scarico che esaurisce una confezione da riacquistare, il riepilogo indica se il prodotto verrà aggiunto in lista. Non basta che passi la data di scadenza. La spunta di un acquisto, invece, non carica il prodotto in dispensa: per quello usa Carico.
+          </div>
+        </div>
+
+        <!-- 2. CALCOLO INTELLIGENTE SCADENZE -->
+        <div class="feature-box smart">
+          <div class="feature-title">
+            <span>🧠</span> 2. Calcolo preventivo delle giacenze
+          </div>
+          <div class="feature-desc">
+            Dopo <strong>almeno due mesi di uso e con dati sufficienti</strong>, l’app può suggerire in verde prodotti ancora in casa che potrebbero non bastare fino alla spesa successiva a quella che stai preparando. Ti dice quanta scorta rimane; decidi tu se acquistare. Se stai per partire e vuoi svuotare il frigo, nessuno ti obbliga a riempirlo: nemmeno Eva!
+          </div>
+        </div>
+
+        <!-- 3. TRA LE CORSIE DEL SUPERMERCATO -->
+        <div class="feature-box store">
+          <div class="feature-title">
+            <span>📲</span> 3. Spunta in tempo reale al supermercato
+          </div>
+          <div class="feature-desc">
+            Man mano che prendi un articolo dagli scaffali e lo metti nel carrello, sfioralo sullo schermo: <strong>il testo verrà scurito, barrato e spostato in fondo alla lista</strong>, lasciando in alto solo ciò che ti manca ancora da prendere!
+          </div>
+        </div>
+
+      </div>
+
+      <!-- LEGGENDA COLORI -->
+      <div class="color-legend-box">
+        <div class="color-legend-title">🎨 I 3 Colori della Lista Spesa:</div>
+        
+        <div class="color-item">
+          <span class="color-badge badge-rosso">🔴 Rosso</span>
+          <span><strong>Tutto finito:</strong> Confezione da riacquistare dopo lo Scarico. Potresti avere ancora singoli pezzi spostati altrove: controlla l’Inventario se hai dubbi.</span>
+        </div>
+        
+        <div class="color-item">
+          <span class="color-badge badge-verde">🟢 Verde</span>
+          <span><strong>Potrebbe non bastare:</strong> Il prodotto è ancora in casa, ma potrebbe non coprire il periodo fino alla spesa successiva a quella che stai preparando. Esempio: fai la spesa ogni settimana e consumi due uova al giorno; se al momento della spesa ne restano quattro, vengono suggerite in verde perché non bastano per la settimana seguente. Viene mostrata la quantità disponibile, anche come frazione di pezzo. Decidi tu se comprarlo: la spunta lo scurisce e lo porta in fondo. Quando viene esaurito con lo Scarico, torna rosso e non spuntato nella stessa lista.</span>
+        </div>
+        
+        <div class="color-item">
+          <span class="color-badge badge-grigio">🩶 Grigio</span>
+          <span><strong>Prodotto Nuovo:</strong> Appunto inserito a mano dall'utente.</span>
+        </div>
+      </div>
+
+      <p>Per gli appunti manuali scrivi anche la quantità nel testo, per esempio «2 barattoli di marmellata»: non c’è una casella separata per il numero. Puoi togliere una voce con la ×. Le aggiunte, le spunte e le rimozioni si possono controllare in <a href="../operazioni/index.html">Ultime 15 operazioni</a>: la pagina indica quali sono ancora annullabili.</p>
+      <p>Per imparare, l’app osserva i carichi e i consumi che registri e le giornate in cui compri più prodotti. Occorrono almeno due mesi e abitudini abbastanza regolari: se mancano informazioni, il suggerimento verde non compare ancora. Col tempo le stime possono migliorare, ma vacanze, ospiti e cambiamenti nelle abitudini possono modificarle. Sono consigli per la spesa, non date di scadenza o garanzie sulla durata dei prodotti.</p>
+      <!-- CONSIGLIO PRATICO AGGIORNATO CON RIPASSO GESTIONE PC E BACKUP USB/EMAIL -->
+      <div class="tip-box">
+        <p>💡 <strong>Consigli pratici di Eva per PC e telefono:</strong></p>
+        <p>
+          Ricorda che dal tuo computer (fisso o portatile) puoi gestire comodamente le operazioni quotidiane: registrare lo scarico dei prodotti consumati, consultare le varie funzioni dell'app e aggiungere nuovi articoli alla lista della spesa.
+        </p>
+        <p>
+          <strong>Un piccolo trucco:</strong> se vuoi caricare un prodotto dotato di codice a barre e verificare l'inserimento automatico delle informazioni dal database online, puoi farlo tranquillamente anche dal PC scrivendo a mano il codice a barre (senza bisogno di collegare lo smartphone). Se gli articoli sono pochi fare a mano è velocissimo, mentre per una spesa numerosa ti conviene usare lo smartphone come scanner!
+        </p>
+        <p>
+          <strong>Prima di uscire di casa:</strong> se hai lavorato sul PC, ricorda di portare sul cellulare una copia aggiornata. Puoi farlo in tutta semplicità utilizzando la <strong>chiavetta USB</strong> oppure <strong>inviandoti un messaggio di posta elettronica (e-mail)</strong> con il file di backup allegato. Apri Utilità sul dispositivo aggiornato e premi <strong>Esporta dispensa</strong>. Dopo aver trasferito il file, sul telefono scegli <strong>Importa dispensa</strong> e controlla l’anteprima. Il file sostituisce tutta la situazione presente: non unisce due dispense e non si aggiorna da solo.
+        </p>
+      </div>
+
+      <a href="index.html" class="btn-close">← Torna alla Lista Spesa</a>
+    </article>
+  </main>
+
+</body>
+</html>

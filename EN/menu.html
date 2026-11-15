@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatMeFirst - Main Menu</title>
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --primary-color: #2ecc71;
+            --text-color: #e0e6ed;
+            --text-muted: #a0aec0;
+            --border-color: #2d3748;
+            --info-bg: #1a2634;
+            --info-border: #3182ce;
+            --hover-card: #253238;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar Superiore con Carta Intestata e Pulsante Abbonamento */
+        .top-navbar {
+            width: 100%;
+            background-color: #101416;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .brand-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        /* Pulsante Verde Chiaro / Scritta Nera per Abbonamento */
+        .btn-abbonamento-nav {
+            background-color: #2ecc71;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .btn-abbonamento-nav:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .language-flags {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            object-fit: cover;
+            border-radius: 3px;
+            transition: transform 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block;
+        }
+
+        .flag-icon:hover {
+            transform: scale(1.15);
+        }
+
+        /* Layout Principale */
+        .main-wrapper {
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        /* Stile Alert Lampeggiante Scadenze */
+        @keyframes blink-animation {
+            0%, 100% { box-shadow: 0 0 0 0 transparent; }
+            50% { box-shadow: 0 0 12px 2px var(--alert-color); }
+        }
+
+        .alert-banner {
+            --alert-color: #f1c40f;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 2px solid var(--alert-color);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            animation: blink-animation 3s ease-in-out infinite;
+            transition: background-color 0.2s;
+        }
+
+        .alert-banner:hover {
+            background-color: var(--light-bg);
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-icon {
+            font-size: 2rem;
+        }
+
+        .alert-text strong {
+            display: block;
+            margin: 0 0 4px 0;
+            color: var(--alert-color);
+            font-size: 1.15rem;
+        }
+
+        .alert-text .alert-description {
+            display: block;
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        @media (prefers-reduced-motion: reduce) { .alert-banner { animation: none; } }
+
+        /* Modale / Box Elenco in Sola Consultazione */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            background: #101416;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .btn-close-modal:hover { color: #fff; }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scadenza-item-card {
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .badge-tassativo {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        .badge-consigliata {
+            background-color: #f1c40f;
+            color: #000000;
+        }
+
+        /* Box Guida del Menu (Scomparabile) */
+        .welcome-guide-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .guide-banner-container {
+            width: 100%;
+            background-color: #0f1417;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .guide-banner-img {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .guide-content-area {
+            padding: 25px;
+        }
+
+        .guide-header-title {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .guide-body p {
+            margin: 0 0 12px 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .usb-tip-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .guide-footer {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hide-guide-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hide-guide-label input {
+            accent-color: var(--primary-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Griglia Funzioni Principali (6 moduli) */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .menu-card:hover {
+            background-color: var(--hover-card);
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/scadenze-it.css">
+<link rel="stylesheet" href="../css/messaggi-programmati-it.css">
+<link rel="stylesheet" href="../css/responsive-it.css">
+<link rel="stylesheet" href="../css/collegamenti.css">
+</head>
+<body>
+
+<!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
+<header class="top-navbar">
+    <div class="brand-logo-group">
+        <a href="menu.html" class="brand-logo">
+            <img src="../IMG/logo_1024_white.png" alt="EatMeFirst Logo">
+            <span>EatMeFirst</span>
+        </a>
+
+        <!-- Pulsante verde chiaro per l'Abbonamento & Backup -->
+        <a href="subscription/index.html" class="btn-abbonamento-nav" title="Subscription and external backup">
+            🔑 Subscription &amp; Backup
+        </a>
+    </div>
+
+    <div class="language-flags">
+        <a href="../IT/menu.html" title="Italiano"><img src="../IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon"></a>
+        <a href="menu.html" title="English"><img src="../IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
+        <a href="../DE/menu.html" title="Deutsch"><img src="../IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
+        <a href="../FR/menu.html" title="Français"><img src="../IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
+        <a href="../ES/menu.html" title="Español"><img src="../IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon"></a>
+    </div>
+</header>
+
+<div class="main-wrapper">
+
+    <!-- ALERT LAMPEGGIANTE DINAMICO PER LE SCADENZE -->
+    <button type="button" id="alertScadenzeBanner" class="alert-banner" aria-haspopup="dialog" style="display: none;" onclick="apriModalScadenze()">
+        <span class="alert-content">
+            <span class="alert-icon" aria-hidden="true">⚠️</span>
+            <span class="alert-text">
+                <strong id="alertTitoloTesto">Products with dates to check</strong>
+                <span class="alert-description">Open the list in date order. Yellow: indicative date · Red: strict date.</span>
+            </span>
+        </span>
+        <span style="font-size:1.2rem;color:var(--alert-color);font-weight:bold" aria-hidden="true">➔</span>
+    </button>
+
+    <button type="button" id="promemoriaBanner" class="alert-banner" aria-haspopup="dialog" style="display:none;--alert-color:#79c0ff;animation:none" onclick="apriModalPromemoria()">
+        <span class="alert-content">
+            <span class="alert-icon" aria-hidden="true">📌</span>
+            <span class="alert-text">
+                <strong id="promemoriaTitolo">Reminders for reserved products</strong>
+                <span class="alert-description">Open your upcoming events. Product dates stay separate.</span>
+            </span>
+        </span>
+    </button>
+
+    <!-- Box Guida di Benvenuto con Banner Grande -->
+    <div class="welcome-guide-box" id="menuGuideBox">
+        <div class="guide-banner-container">
+            <img src="../IT/IMG/organizzazione-dispensa-software.png" alt="Max and Leo introducing pantry management" class="guide-banner-img">
+        </div>
+
+        <div class="guide-content-area">
+            <div class="guide-header-title">
+                <h2 style="margin: 0; color: var(--primary-color); font-size: 1.4rem;">
+                    Hello <span id="displayUserName">friend</span>!
+                </h2>
+                <p style="margin: 3px 0 0 0; color: var(--text-muted); font-size: 0.95rem;">
+                    Welcome to your pantry
+                </p>
+            </div>
+            
+            <div class="guide-body">
+                <p>Max here, with Leo, who developed the app! Here you can open all the main functions. Eva says a tidy pantry starts with knowing what we already have — and she is usually right!</p>
+                <p>Keep track of stock and dates to help avoid waste at home.</p>
+                
+                <div class="usb-tip-box">
+                    💡 <strong>Keep a spare copy of your data:</strong><br>
+                    Confirmed changes are saved in this browser on both phone and PC. Export inventory in Utilities to keep a separate copy, then copy the file to another device or a USB drive, or attach it to an email yourself. If the device breaks or its browser data is cleared, you can recover the situation in that file. Later changes need a new export. Your phone and PC do not synchronise automatically.
+                </div>
+            </div>
+
+            <div class="guide-footer">
+                <label class="hide-guide-label">
+                    <input type="checkbox" id="chkHideMenuGuide" onchange="disattivaGuidaMenu()">
+                    <span>Got it, do not show this introduction again</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Griglia dei 6 Moduli Operativi della Dispensa -->
+    <main class="menu-grid">
+        <a href="load/load.html" class="menu-card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Product Entry</div>
+            <div class="card-desc">Add purchases with your phone scanner, a barcode reader or by hand.</div>
+        </a>
+
+        <a href="unload/index.html" class="menu-card">
+            <div class="card-icon">🍳</div>
+            <div class="card-title">Consumption &amp; Usage</div>
+            <div class="card-desc">Record use, opened items, moves, notes and reminders.</div>
+        </a>
+
+        <a href="inventory/index.html" class="menu-card">
+            <div class="card-icon">🔍</div>
+            <div class="card-title">Inventory &amp; Product Dates</div>
+            <div class="card-desc">See what you have, where it is and which dates need attention.</div>
+        </a>
+
+        <a href="shopping/index.html" class="menu-card">
+            <div class="card-icon">🛒</div>
+            <div class="card-title">Shopping List</div>
+            <div class="card-desc">See finished products, suggestions for stock that may not last and your own shopping notes.</div>
+        </a>
+
+        <a href="operations/index.html" class="menu-card">
+            <div class="card-icon">↩</div>
+            <div class="card-title">Last 15 operations</div>
+            <div class="card-desc">Review recent operations and undo one without losing unrelated changes.</div>
+        </a>
+
+        <a href="statistics/index.html" class="menu-card">
+            <div class="card-icon">📊</div>
+            <div class="card-title">Statistics &amp; Reports</div>
+            <div class="card-desc">See current stock, recorded usage and the stores listed on your products.</div>
+        </a>
+
+        <a href="utilities/index.html" class="menu-card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Utilities &amp; Backup</div>
+            <div class="card-desc">Export, import or recover your inventory and manage a fresh start.</div>
+        </a>
+    </main>
+    <aside aria-labelledby="invito-leo" style="margin:24px 0;padding:20px;border:1px solid #39434f;border-radius:12px;background:#161b22;line-height:1.6">
+        <h2 id="invito-leo" style="font-size:1.15rem;color:#79c0ff">💬 An invitation to help Leo</h2>
+        <p>How are you getting on with EatMeFirst? Tell us what works, what is awkward and which new features you would like. Criticism helps us improve too!</p>
+        <p>This invitation is part of the app: it is not an email or a message sent by a person.</p>
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" style="color:#79c0ff">Advice and support on our website</a>
+        <p style="font-size:.9rem">Hi, Leo here! Have a suggestion, a question or something that does not work? Visit the EatMeFirst website for information on emailing us, if you wish. The app sends no message and does not attach your inventory.</p>
+    </aside>
+
+</div>
+
+<!-- MODALE IN SOLA CONSULTAZIONE PER GLI ALERT SCADENZE -->
+<div id="modalScadenze" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>⚠️ Passed dates and dates within 10 days</h2>
+            <button class="btn-close-modal" onclick="chiudiModalScadenze()">✕</button>
+        </div>
+        <div class="modal-body" id="modalScadenzeLista">
+            <!-- I prodotti vengono iniettati qui dinamicamente -->
+        </div>
+    </div>
+</div>
+
+<div id="modalPromemoria" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>📌 Events and reserved products</h2>
+            <button type="button" class="btn-close-modal" onclick="chiudiModalPromemoria()" aria-label="Close reminders">✕</button>
+        </div>
+        <div class="modal-body" id="modalPromemoriaLista"></div>
+    </div>
+</div>
+<script src="../js/scadenze-en.js"></script>
+<script src="../js/promemoria-en.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const savedName = localStorage.getItem('eatmefirst_username') || localStorage.getItem('eat_user_name');
+        if (savedName && savedName.trim() !== "") {
+            document.getElementById('displayUserName').textContent = savedName.trim();
+        }
+
+        const hideGuide = localStorage.getItem('eat_hide_menu_guide');
+        if (hideGuide === 'true') {
+            document.getElementById('menuGuideBox').style.display = 'none';
+        }
+
+        controllaAlertScadenze();
+        controllaPromemoria();
+        EatScadenze.osserva(() => { controllaAlertScadenze(); controllaPromemoria(); });
+    });
+
+    function controllaAlertScadenze() {
+        const banner = document.getElementById('alertScadenzeBanner');
+        const titolo = document.getElementById('alertTitoloTesto');
+        const lista = document.getElementById('modalScadenzeLista');
+        lista.replaceChildren();
+        try {
+            const prodotti = JSON.parse(localStorage.getItem('eat_dispensa_locale') || '[]');
+            if (!Array.isArray(prodotti)) throw Error('Dispensa non valida');
+            const interessati = prodotti.filter(p => {
+                if (p.pezzi_rimanenti !== null && p.pezzi_rimanenti !== undefined && Number(p.pezzi_rimanenti) === 0) return false;
+                return EatScadenze.descrivi(p).allerta;
+            }).sort(EatScadenze.confronta);
+            const rossi = interessati.filter(p => p.tassativo === true).length;
+            const gialli = interessati.length - rossi;
+            banner.style.setProperty('--alert-color', rossi ? '#ff7b72' : '#f1c40f');
+            banner.style.display = interessati.length ? 'flex' : 'none';
+            titolo.textContent = `Products to check: ${interessati.length} · Strict dates: ${rossi} · Indicative dates: ${gialli}`;
+            if (!interessati.length) lista.textContent = 'No passed dates or dates within 10 days.';
+            interessati.forEach(p => {
+                const scadenza = EatScadenze.descrivi(p);
+                const card = document.createElement('div');
+                card.className = 'scadenza-item-card ' + (p.tassativo === true ? 'badge-tassativo' : 'badge-consigliata') + EatScadenze.classeAllerta(p);
+                card.style.cssText = 'flex-wrap:wrap;gap:12px';
+                const info = document.createElement('div');
+                const nome = document.createElement('strong');
+                nome.textContent = p.nome || 'Unnamed product';
+                const luogo = document.createElement('div');
+                luogo.textContent = 'Location: ' + (p.ubicazione || 'Not entered');
+                info.appendChild(nome);
+                info.appendChild(luogo);
+                const data = document.createElement('div');
+                if (scadenza.giorni !== null && scadenza.giorni <= 0) {
+                    const richiamo = document.createElement('strong');
+                    richiamo.className = scadenza.giorni === 0 ? 'scadenza-badge-oggi' : 'scadenza-badge-superata';
+                    const triangolo = document.createElement('span');
+                    triangolo.className = 'scadenza-icona-superata';
+                    triangolo.setAttribute('aria-hidden', 'true');
+                    triangolo.textContent = '⚠';
+                    const etichetta = document.createElement('span');
+                    etichetta.textContent = scadenza.giorni === 0 ? 'DUE TODAY' : 'DATE PASSED';
+                    richiamo.appendChild(triangolo);
+                    richiamo.appendChild(etichetta);
+                    data.appendChild(richiamo);
+                }
+                const testoData = document.createElement('div');
+                testoData.textContent = EatScadenze.formato(scadenza.data) + ' — ' + scadenza.testo;
+                if (scadenza.posticipata) testoData.textContent += ' · ↻ Date previously postponed (original: ' + EatScadenze.formato(p.data_scadenza_iniziale) + ')';
+                data.appendChild(testoData);
+                card.appendChild(info);
+                card.appendChild(data);
+                lista.appendChild(card);
+            });
+        } catch (errore) {
+            banner.style.display = 'flex';
+            titolo.textContent = 'Could not check product dates: check local inventory.';
+            lista.textContent = 'Local data could not be read. It has not been changed.';
+            console.error('Controllo scadenze non riuscito', errore);
+        }
+    }
+
+    function apriModalScadenze() {
+        controllaAlertScadenze();
+        document.getElementById('modalScadenze').style.display = 'flex';
+    }
+
+    function chiudiModalScadenze() {
+        document.getElementById('modalScadenze').style.display = 'none';
+    }
+
+    function controllaPromemoria() {
+        const banner = document.getElementById('promemoriaBanner');
+        const lista = document.getElementById('modalPromemoriaLista');
+        lista.replaceChildren();
+        try {
+            const prodotti = JSON.parse(localStorage.getItem('eat_dispensa_locale') || '[]');
+            if (!Array.isArray(prodotti)) throw Error('Dispensa non valida');
+            const voci = prodotti.filter(p => {
+                if (p.pezzi_rimanenti !== null && p.pezzi_rimanenti !== undefined && Number(p.pezzi_rimanenti) === 0) return false;
+                return EatPromemoria.stato(p)?.attivo;
+            }).sort((a, b) => a.promemoria.data_evento.localeCompare(b.promemoria.data_evento));
+            banner.style.display = voci.length ? 'flex' : 'none';
+            document.getElementById('promemoriaTitolo').textContent = `Reminders for reserved products: ${voci.length}`;
+            if (!voci.length) lista.textContent = 'No reminders to show today.';
+            voci.forEach(p => {
+                const stato = EatPromemoria.stato(p);
+                const card = document.createElement('div');
+                card.style.cssText = 'padding:14px;border:2px solid #79c0ff;border-radius:8px;overflow-wrap:anywhere';
+                const nome = document.createElement('strong');
+                nome.textContent = p.nome || 'Unnamed product';
+                const info = document.createElement('div');
+                info.textContent = `Reserved for: ${stato.destinazione} — ${EatScadenze.formato(stato.data)}. ${stato.testo}. Location: ${p.ubicazione || 'Not entered'}`;
+                card.appendChild(nome);
+                card.appendChild(info);
+                if (p.note) {
+                    const nota = document.createElement('p');
+                    nota.textContent = 'Note: ' + p.note;
+                    card.appendChild(nota);
+                }
+                const confronto = EatPromemoria.conflitto(p, stato.data);
+                if (confronto.testo) {
+                    const avviso = document.createElement('p');
+                    avviso.textContent = '⚠ ' + confronto.testo;
+                    card.appendChild(avviso);
+                }
+                lista.appendChild(card);
+            });
+        } catch (errore) {
+            banner.style.display = 'flex';
+            document.getElementById('promemoriaTitolo').textContent = 'Could not read reminders: check local data.';
+            lista.textContent = 'Local data could not be read. It has not been changed.';
+            console.error('Lettura promemoria non riuscita', errore);
+        }
+    }
+
+    function apriModalPromemoria() {
+        controllaPromemoria();
+        document.getElementById('modalPromemoria').style.display = 'flex';
+    }
+
+    function chiudiModalPromemoria() {
+        document.getElementById('modalPromemoria').style.display = 'none';
+    }
+
+    function disattivaGuidaMenu() {
+        const chk = document.getElementById('chkHideMenuGuide');
+        if (chk.checked) {
+            localStorage.setItem('eat_hide_menu_guide', 'true');
+            const box = document.getElementById('menuGuideBox');
+            box.style.opacity = '0';
+            box.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                box.style.display = 'none';
+            }, 300);
+        }
+    }
+</script>
+
+<script src="../js/messaggi-testi-en.js"></script>
+<script src="../js/messaggi-programmati-en.js"></script>
+</body>
+</html>

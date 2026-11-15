@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script src="../../js/accettazione-it.js" data-proteggi></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistiche & Report Spesa | EatMeFirst</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <style>
+    :root {
+      --primary: #3182ce;
+      --primary-hover: #2b6cb0;
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --border-color: #334155;
+      --light-bg: #21262d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 25px;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    /* HEADER CON CARTA INTESTATA */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background: var(--card-bg);
+      padding: 12px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .logo-img { height: 36px; width: auto; filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.8)); }
+    h1 { font-size: 1.15rem; color: var(--text-main); font-weight: 700; }
+
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .flags-container {
+      display: flex; gap: 6px; align-items: center;
+      background: #0f172a; padding: 4px 8px; border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
+    .flag-link { text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+    .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+    /* BANNER INTRODUTTIVO LEO */
+    .leo-welcome-banner {
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--primary); border-radius: 16px;
+      overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+    .leo-banner-img { width: 100%; max-height: 280px; object-fit: cover; border-bottom: 2px solid var(--primary); }
+    .leo-banner-content { padding: 22px; }
+    .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
+    .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
+    .leo-banner-actions { display: flex; justify-content: flex-end; }
+    
+    .btn-dismiss {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
+      color: var(--text-main); padding: 8px 16px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-dismiss:hover { background: rgba(239, 68, 68, 0.25); border-color: #f87171; color: #fca5a5; }
+
+    /* NAVIGAZIONE SCHEDE */
+    .nav-container { text-align: center; margin-bottom: 25px; }
+    .tabs {
+      display: inline-flex; background-color: var(--card-bg);
+      padding: 6px; border-radius: 12px; gap: 8px; border: 1px solid var(--border-color);
+    }
+    .tab-btn {
+      padding: 10px 20px; border: 2px solid #58a6ff; background-color: #142c43;
+      color: #b9ddff; border-radius: 9px; font-weight: 700;
+      font-size: 0.95rem; cursor: pointer; transition: all 0.25s ease;
+    }
+    .tab-btn:hover { color: #ffffff; background-color: #244763; }
+    .tab-btn.active { background-color: #79c0ff; border-color: #79c0ff; color: #0d1117; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+    .tab-btn:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+    @media (max-width: 768px) {
+      .tabs { display: flex; flex-direction: column; width: 100%; }
+      .tab-btn { width: 100%; white-space: normal; }
+    }
+
+    /* CONTENITORE SCHEDE */
+    .tab-content {
+      display: none; background: var(--card-bg); padding: 25px;
+      border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+    }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.3rem; margin-bottom: 20px; color: var(--text-main);
+      border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+      font-weight: 600; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* ICONA POST-IT */
+    .postit-link { display: inline-block; line-height: 0; position: relative; z-index: 10; }
+    .postit-icon {
+      width: 28px; height: 28px; object-fit: contain; border-radius: 4px;
+      cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.4); transition: transform 0.2s;
+    }
+    .postit-icon:hover { transform: scale(1.2) rotate(-3deg); }
+
+    /* CARD STATISTICHE E METRICHE */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+    .stat-card { background-color: #0f172a; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; color: #38bdf8; margin-top: 6px; }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* FILTRO / SELEZIONE NEGOZI */
+    .supplier-filter-container {
+      background-color: #0f172a; border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 16px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    select {
+      flex: 1; min-width: 200px; padding: 10px 14px;
+      border: 1px solid var(--border-color); border-radius: 10px;
+      font-size: 0.95rem; background-color: #1e293b; color: var(--text-main);
+    }
+
+    /* TABELLE / LISTE STATISTICHE */
+    .ranking-list { list-style: none; margin-bottom: 20px; }
+    .ranking-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: #0f172a; border: 1px solid var(--border-color);
+      border-radius: 10px; margin-bottom: 8px; font-size: 0.95rem;
+    }
+
+    /* BOX STATO VUOTO */
+    .empty-state-box {
+      text-align: center;
+      padding: 30px 20px;
+      background: #0f172a;
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* PULSANTE RITORNO AL MENU */
+    .footer-nav { margin-top: 30px; text-align: center; padding-top: 15px; border-top: 1px solid var(--border-color); }
+    .btn-return-menu {
+      display: inline-flex; align-items: center; gap: 8px; background-color: var(--primary);
+      color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 10px;
+      font-size: 0.95rem; font-weight: 600; transition: background-color 0.2s, transform 0.1s;
+      border: 1px solid var(--border-color);
+    }
+    .btn-return-menu:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px; }
+
+    @media (max-width: 600px) {
+      .flags-container { 
+        display: flex; 
+        gap: 4px; 
+        padding: 2px 6px; 
+      }
+      .flag-img { 
+        width: 18px; 
+        height: 12px; 
+      }
+    }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+  <!-- HEADER CON CARTA INTESTATA -->
+  <header>
+    <div class="header-left">
+      <a href="../menu.html" class="btn-back" style="background: var(--light-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">← Menu</a>
+      <img src="../../IMG/logo_1024_white.png" alt="EatMeFirst Logo" class="logo-img">
+      <h1>Statistiche & Report</h1>
+    </div>
+    <div class="header-right">
+      <div class="flags-container">
+          <a href="index.html" class="flag-link active" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" alt="Italia" class="flag-img"></a>
+          <a href="../../EN/statistics/index.html" class="flag-link" title="English"><img src="../../IMG/bandiera_England.jpg" alt="UK" class="flag-img"></a>
+          <a href="../../FR/statistiques/index.html" class="flag-link" title="Français"><img src="../../IMG/bandiera_France.jpg" alt="Francia" class="flag-img"></a>
+          <a href="../../DE/statistiken/index.html" class="flag-link" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" alt="Germania" class="flag-img"></a>
+          <a href="../../ES/estadisticas/index.html" class="flag-link" title="Español"><img src="../../IMG/bandiera_Espana.jpg" alt="Spagna" class="flag-img"></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER INTRODUTTIVO LEO -->
+  <div id="leo-banner" class="leo-welcome-banner">
+    <img src="../IMG/statistiche-report-spesa-supermercato.png" alt="Statistiche e report spesa supermercato" class="leo-banner-img">
+    <div class="leo-banner-content">
+      <div class="leo-banner-title">Ecco i numeri che lavorano per voi! 📊</div>
+      <div class="leo-banner-text">
+        Mentre Eva vi aiuta tra le corsie del supermercato e Max si occupa della dispensa, io mi diverto con la parte più stimolante: i dati! Ho creato questa sezione per darvi una mappa chiara di come gestite la casa: dai negozi indicati sui prodotti presenti alle scorte disponibili e ai movimenti registrati. L’indice anti-spreco non è ancora calcolabile: occorre distinguere consumo e scarto.<br><br>
+        Nessun calcolo noioso: qui i dati si aggiornano da soli. Cliccate sulle schede per esplorare i report e usate i Post-it in alto per le guide rapide!
+      </div>
+      <div class="leo-banner-actions">
+        <button class="btn-dismiss" onclick="dismissLeoBanner()">Chiudi / Non mostrare più</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGAZIONE SCHEDE -->
+  <div class="nav-container">
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-fornitori', event)">Fornitori & Negozi</button>
+      <button class="tab-btn" onclick="switchTab('tab-consumi', event)">Consumi & Top Prodotti</button>
+      <button class="tab-btn" onclick="switchTab('tab-antispreco', event)">Indice Anti-Spreco</button>
+    </nav>
+  </div>
+
+  <p id="statistiche-stato" role="status"></p>
+  <!-- TAB 1: FORNITORI & NEGOZI -->
+  <section id="tab-fornitori" class="tab-content active">
+    <h2 class="section-title">
+      <span>Analisi Negozi e Fornitori</span>
+      <a href="guida-fornitori-negozi.html" class="postit-link">
+        <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Fornitori">
+      </a>
+    </h2>
+
+    <div class="supplier-filter-container">
+      <label for="supplier-select" style="font-weight: 500; font-size: 0.9rem; color: var(--text-muted);">Filtra per punto vendita registrato:</label>
+      <select id="supplier-select" onchange="aggiornaReportFornitori()">
+        <option value="all">Nessun punto vendita disponibile</option>
+      </select>
+    </div>
+
+    <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text-main);">Negozi dei prodotti ancora presenti</h3>
+    <ul class="ranking-list" id="supplier-ranking-list">
+    </ul>
+
+    <div class="footer-nav">
+      <a href="../menu.html" class="btn-return-menu">&#127960; Torna al Menu Principale</a>
+    </div>
+  </section>
+
+  <!-- TAB 2: CONSUMI & TOP PRODOTTI -->
+  <section id="tab-consumi" class="tab-content">
+    <h2 class="section-title">
+      <span>Scorte e consumi registrati</span>
+      <a href="guida-consumi-top-prodotti.html" class="postit-link">
+        <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Consumi">
+      </a>
+    </h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Scorta più numerosa</div>
+        <div class="stat-value" id="top-product-name" style="font-size: 1.3rem; color: #48bb78;">-</div>
+        <div class="stat-label" id="top-product-qty" style="margin-top: 6px;">Nessuna scorta presente</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Totale Prodotti in Dispensa</div>
+        <div class="stat-value" id="total-pantry-count">0</div>
+        <div class="stat-label" style="margin-top: 6px;">righe presenti in dispensa</div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 1.05rem; margin-bottom: 12px; color: var(--text-main);">Scorte disponibili per prodotto</h3>
+    <ul class="ranking-list" id="top-products-list"></ul>
+    <h3>Consumi registrati negli ultimi 30 giorni</h3>
+    <p id="nota-consumi"></p>
+    <ul class="ranking-list" id="consumi-registrati"></ul>
+
+    <div class="footer-nav">
+      <a href="../menu.html" class="btn-return-menu">&#127960; Torna al Menu Principale</a>
+    </div>
+  </section>
+
+  <!-- TAB 3: INDICE ANTI-SPRECO -->
+  <section id="tab-antispreco" class="tab-content">
+    <h2 class="section-title">
+      <span>Efficienza Dispensa & Anti-Spreco</span>
+      <a href="guida-indice-antispreco.html" class="postit-link">
+        <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Anti-Spreco">
+      </a>
+    </h2>
+
+    <div class="stats-grid">
+      <div class="stat-card" style="border-color: #38a169;">
+        <div class="stat-label">Prodotti Consumati in Tempo</div>
+        <div class="stat-value" id="stat-pct-consumati" style="color: #48bb78;"><span style="font-size:1rem">Non ancora calcolabile</span></div>
+      </div>
+      <div class="stat-card" style="border-color: #e53e3e;">
+        <div class="stat-label">Prodotti Scaduti / Sprecati</div>
+        <div class="stat-value" id="stat-pct-scaduti" style="color: #fc8181;"><span style="font-size:1rem">Non ancora calcolabile</span></div>
+      </div>
+    </div>
+
+    <div style="background: #0f172a; padding: 18px; border-radius: 12px; border: 1px solid var(--border-color); text-align: center;">
+      <div style="font-size: 1.1rem; font-weight: 700; color: #fbbf24; margin-bottom: 6px;" id="badge-titolo-efficienza">Indice non ancora disponibile</div>
+      <p style="font-size: 0.9rem; color: var(--text-muted);" id="badge-desc-efficienza">Per calcolarlo occorre distinguere ciò che viene consumato da ciò che viene buttato. Una data superata non dimostra uno spreco.</p>
+    </div>
+
+    <div class="footer-nav">
+      <a href="../menu.html" class="btn-return-menu">&#127960; Torna al Menu Principale</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>&copy; EatMeFirst &bull; Privacy 100% Locale</span>
+  </footer>
+
+  <script src="../../js/storico-it.js"></script>
+  <script src="../../js/statistiche-it.js"></script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utilitaires et sauvegarde | EatMeFirst</title>
+  <meta name="description" content="Esporta e importa la dispensa, conserva una copia dei tuoi dati e scopri come ricevere le novità di EatMeFirst dal sito.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --text-color: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent-color: #58a6ff;
+      --primary: #3182ce;
+      --primary-hover: #2b6cb0;
+      --success-color: #238636;
+      --success-hover: #2ea043;
+      --danger-color: #f85149;
+      --warning-color: #d29922;
+      --border-color: #30363d;
+      --light-bg: #21262d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .container { max-width: 850px; margin: 0 auto; width: 100%; }
+
+    /* CARTA INTESTATA SUPERIORE */
+    .app-bar {
+      background: rgba(22, 27, 34, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 40;
+      border-radius: 12px; margin-bottom: 20px;
+    }
+
+    .app-brand { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      background: var(--light-bg); color: var(--text-color);
+      border: 1px solid var(--border-color); padding: 6px 14px;
+      border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+    }
+    .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+    .language-flags {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--light-bg); padding: 4px 8px;
+      border-radius: 20px; border: 1px solid var(--border-color);
+    }
+    .flag-link { text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+    .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+    /* BANNER INTRODUTTIVO LEO */
+    .leo-welcome-banner {
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      border: 1px solid var(--primary); border-radius: 16px;
+      overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+    .leo-banner-img {
+      width: 100%; max-height: 320px; object-fit: contain;
+      background-color: #0d1117; border-bottom: 2px solid var(--primary);
+    }
+    .leo-banner-content { padding: 22px; }
+    .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
+    .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
+    .leo-banner-actions { display: flex; justify-content: flex-end; }
+    
+    .btn-dismiss {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
+      color: var(--text-color); padding: 8px 16px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-dismiss:hover { background: rgba(239, 68, 68, 0.25); border-color: #f87171; color: #fca5a5; }
+
+    /* CARD SEZIONI */
+    .section-card {
+      background: var(--card-bg); border-radius: 16px;
+      border: 1px solid var(--border-color); padding: 25px;
+      margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 1.25rem; font-weight: 700; color: var(--text-color);
+      margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+    }
+
+    /* POST-IT GUIDA ICON */
+    .postit-link { display: inline-block; line-height: 0; position: relative; z-index: 10; }
+    .postit-icon {
+      width: 28px; height: 28px; object-fit: contain; border-radius: 4px; cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4); transition: transform 0.2s;
+    }
+    .postit-icon:hover { transform: scale(1.2) rotate(-3deg); }
+
+    /* BIBLIOTECA COMPLETA GRID */
+    .guides-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px; margin-top: 15px;
+    }
+    .guide-card-link {
+      background: #0d1117; border: 1px solid var(--border-color);
+      padding: 14px 16px; border-radius: 10px; text-decoration: none; color: var(--text-color);
+      display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+    }
+    .guide-card-link:hover { border-color: var(--accent-color); background: var(--light-bg); }
+
+    /* PRICING GRID */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px; margin-top: 15px;
+    }
+    .pricing-card {
+      background: #0d1117; border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .pricing-card.featured { border-color: #68d391; background: rgba(56, 161, 105, 0.1); }
+    .pricing-title { font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 6px; }
+    .pricing-price { font-size: 1.5rem; font-weight: 800; color: #38a169; margin-bottom: 8px; }
+    .pricing-sub { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ZONA PERICOLO */
+    .danger-zone { border-color: #7f1d1d; background: rgba(127, 29, 29, 0.12); }
+    .danger-title { color: #fca5a5; }
+
+    .btn-danger-action {
+      width: 100%; background: var(--danger-color); color: #fff; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-danger-action:hover { opacity: 0.9; }
+
+    .btn-warning-action {
+      width: 100%; background: var(--warning-color); color: #0d1117; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-warning-action:hover { opacity: 0.9; }
+
+    /* MODALE */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; max-width: 450px; width: 100%; padding: 25px; text-align: center;
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+    .modal-text { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; text-align: left; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 12px; }
+    .btn-modal-cancel { flex: 1; background: var(--light-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .btn-modal-confirm { flex: 1; background: var(--danger-color); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .backup-comandi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .backup-comandi > * { min-width: 0; width: 100%; text-align: center; }
+    .backup-comandi .backup-esporta { background: #238636; border: 2px solid #3fb950; color: #fff; font-size: 16px; font-weight: 700; }
+    .backup-comandi .backup-esporta:hover { background: #196c2e; }
+    .backup-comandi .backup-importa { background: #142c43; border: 2px solid #58a6ff; }
+    .backup-importa-titolo { color: #9dceff; font-size: 16px; font-weight: 700; }
+    .backup-comandi > :focus-visible, .backup-comandi input:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .backup-comandi input[type="file"] { display: block; width: 100%; min-width: 0; max-width: 100%; margin-top: 8px; font-size: 13px; }
+    @media (max-width: 768px) {
+      .backup-comandi { grid-template-columns: minmax(0, 1fr); }
+      .backup-comandi > * { padding: 16px 12px; }
+    }
+
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px; }
+
+    @media (max-width: 600px) {
+      .language-flags { display: flex; gap: 4px; padding: 2px 6px; }
+      .flag-img { width: 18px; height: 12px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- CARTA INTESTATA SUPERIORE -->
+    <header class="app-bar">
+      <div class="app-brand">
+        <a href="../menu.html" class="btn-back">← Menu</a>
+        <div class="mini-logo" style="display: inline-flex; align-items: center;">
+          <img src="../../IMG/logo_1024_white.png" alt="Logo EatMeFirst" style="height: 32px; width: auto;">
+        </div>
+        <span class="brand-title">Utilitaires et sauvegarde</span>
+      </div>
+      <div class="app-nav-right">
+        <nav class="language-flags">
+            <a href="../../IT/utilita/index.html" class="flag-link" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" class="flag-img" alt="IT"></a>
+            <a href="../../EN/utilities/index.html" class="flag-link" title="English"><img src="../../IMG/bandiera_England.jpg" class="flag-img" alt="EN"></a>
+            <a href="../../DE/hilfsmittel/index.html" class="flag-link" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" class="flag-img" alt="DE"></a>
+            <a href="index.html" class="flag-link active" title="Français"><img src="../../IMG/bandiera_France.jpg" class="flag-img" alt="FR"></a>
+            <a href="../../ES/utilidades/index.html" class="flag-link" title="Español"><img src="../../IMG/bandiera_Espana.jpg" class="flag-img" alt="Español"></a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- BANNER INTRODUTTIVO LEO -->
+    <div id="leo-banner" class="leo-welcome-banner">
+      <img src="../../IT/IMG/utilita-famiglia-backup-dispensa.png" alt="Utilitaires et sauvegarde EatMeFirst" class="leo-banner-img">
+      <div class="leo-banner-content">
+        <div class="leo-banner-title">Garde une copie sur un autre appareil, une clé USB ou dans tes e-mails ! 🛡️💾</div>
+        <div class="leo-banner-text">
+          <p style="margin-bottom: 10px;">
+            Salut, c’est Max ! Ton téléphone est un bon compagnon de courses : <strong>pointe-le vers le code-barres</strong> et l’application cherche le produit dans les catalogues en ligne. Si les informations sont disponibles, elle propose un nom, une photo et d’autres détails. Vérifie-les avant d’enregistrer : même notre scanner a parfois besoin d’un coup de main ! Eva me dit de vérifier mon chariot avec autant de soin…
+          </p>
+          <p style="margin-bottom: 10px;">
+            Tu préfères le grand écran du PC ? Saisis le code ou utilise un lecteur de codes-barres. Pas de code ou aucun résultat ? Ajoute le produit à la main : le fromage à la coupe a aussi sa place !
+          </p>
+          <p>
+            Ton inventaire est conservé <strong>dans le navigateur de l’appareil que tu utilises</strong>. Pour garder une copie sur le PC, le téléphone ou une clé USB, utilise Exporter les réserves et transfère le fichier. <strong>La recherche en ligne demande au catalogue : « À quel produit correspond ce code-barres ? »</strong> Elle n’envoie ni ton inventaire, ni tes quantités, ni ton historique d’achats et de consommations. Les photos des produits sont aussi chargées depuis les catalogues externes. 
+          </p>
+        </div>
+        <div class="leo-banner-actions">
+          <button class="btn-dismiss" onclick="dismissLeoBanner()">Fermer / Ne plus afficher</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="section-card" id="trasferimento-dispensa">
+      <p>💬 <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" target="_blank" rel="noopener noreferrer">Conseils et aide sur le site</a></p>
+      <h2 class="section-title">💾 Exporter et importer les réserves</h2>
+      <p><strong>Max, faut-il enregistrer à chaque fois ?</strong> Quand tu confirmes une entrée, une sortie ou une autre opération, EatMeFirst conserve la modification dans le navigateur utilisé. <strong>Cela vaut sur PC comme sur téléphone.</strong> Quand un bouton Enregistrer ou Confirmer apparaît, appuie dessus pour terminer : remplir les champs ne suffit pas. Tu n’as ensuite pas besoin d’exporter pour garder cette modification sur le même appareil.</p>
+      <p><strong>Alors, à quoi sert la clé USB ?</strong> « À garder une copie de secours, Max ! » dirait Eva. Si le téléphone ou le PC tombe en panne, est perdu ou si tu effaces les données du navigateur, les données qu’il contient peuvent être perdues. Avec <strong>Exporter les réserves</strong> tu prépares un fichier à conserver ailleurs, sur une clé USB ou un autre appareil par exemple.</p>
+      <p><strong>Puis-je me l’envoyer par e-mail ?</strong> Oui : exporte le fichier, ouvre ta messagerie, joins-le et envoie-le toi-même. EatMeFirst n’envoie pas automatiquement ton inventaire par e-mail. Pour le récupérer, télécharge la pièce jointe puis choisis <strong>Importer les réserves</strong>. Tu retrouves la situation au moment de l’exportation. Pour inclure les changements suivants, exporte une nouvelle copie.</p>
+      <p style="line-height:1.6">Utilise le téléphone pour les entrées puis transfère le fichier au PC, ou utilise un lecteur sur PC et emporte une copie sur téléphone pour les courses. Le transfert remplace toute la situation : il ne fusionne pas deux inventaires.</p>
+      <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
+      <p style="margin:12px 0;line-height:1.6"><strong>Une sauvegarde, c’est comme un double des clés :</strong> si tu le laisses dans le même sac que les clés principales et que tu perds le sac, il ne t’aidera pas ! Garde le fichier hors de l’appareil et actualise-le après les changements importants. Il sert à récupérer les données après une panne ou une perte, mais aussi à passer du PC au téléphone.</p>
+      <div class="launch-export-notice"><p>Nous avons pensé qu’il pourrait être utile de retrouver tes réserves sur un autre appareil. Exporter les réserves crée un fichier avec les produits, quantités, dates, notes et listes. Avec Importer les réserves, tu peux l’ouvrir sur l’appareil de ton choix.</p><p>Ce service est actuellement gratuit.</p><p><strong><u>L’enregistrement automatique et immédiat sur le téléphone restera toujours gratuit.</u></strong></p></div>
+      <div class="backup-comandi">
+        <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">Exporter les réserves</button>
+        <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">Importer les réserves</span>
+          <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
+        </label>
+      </div>
+      <p style="font-size:14px;line-height:1.6">Exporte un fichier sur ton appareil, puis copie-le sur une clé USB ou joins-le toi-même à un e-mail. Sur l’appareil de destination, choisis Importer les réserves et sélectionne ce fichier. Aucun envoi automatique ni base d’inventaire sur un serveur.</p>
+      <p style="font-size:14px;line-height:1.6;margin-top:10px">Sont inclus : produits, catalogue mémorisé, listes, notes et rappels, préférences et 15 dernières opérations. Les photos des notes sont incluses ; les images des catalogues restent des liens vers leurs sources.</p>
+      <p id="backupEsito" role="status" aria-live="polite" style="margin:14px 0"></p>
+      <div id="anteprimaImportazione" hidden style="border:2px solid #58a6ff;border-radius:12px;padding:18px;margin-top:18px">
+        <h3 id="titoloImportazione">Vérifie le fichier avant de remplacer les données</h3>
+        <p id="nomeImportazione" style="margin:12px 0;overflow-wrap:anywhere"></p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:12px 0">
+          <div><strong>Situation actuelle</strong><p id="riepilogoLocale"></p></div>
+          <div><strong>Situation à importer</strong><p id="riepilogoFile"></p></div>
+        </div>
+        <p id="confrontoImportazione" style="font-weight:bold;line-height:1.6"></p>
+        <label id="consensoImportazioneLabel" hidden style="margin-top:14px">
+          <input type="checkbox" id="consensoImportazione" onchange="aggiornaPulsanteImportazione()">
+          J’ai lu l’avertissement et je choisis de conserver l’inventaire du fichier en remplaçant celui présent ici.
+        </label>
+        <p style="font-size:14px;margin-top:14px">Avant le remplacement, une copie locale de la situation actuelle est conservée. Les dates des produits ne changent pas.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <button type="button" class="btn-modal-cancel" onclick="annullaImportazione()">Garder la situation actuelle</button>
+          <button type="button" class="btn-modal-confirm" id="confermaImportazione" disabled onclick="confermaImportazione()">Confirmer le remplacement</button>
+        </div>
+      </div>
+      <button type="button" class="btn-modal-cancel" id="recuperaDispensa" disabled style="margin-top:18px" onclick="preparaRecupero()">Récupérer la situation avant transfert ou réinitialisation</button>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px">Une seule copie de récupération est conservée dans ce navigateur. Exporte aussi un fichier pour garder une copie hors de l’appareil.</p>
+    </section>
+
+    <!-- SEZIONE: COME FUNZIONANO I SALVATAGGI & LA CHIAVETTA USB -->
+    <section class="section-card" style="border-color: #3182ce; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
+      <h2 class="section-title">
+        <span>💾 Sauvegardes, clé USB et atelier de Leo</span>
+        <a href="guide-sauvegarde-backup.html" class="postit-link">
+          <img src="../../IMG/biglietto_info.jpg" alt="Note d’aide" class="postit-icon" title="Guide de sauvegarde">
+        </a>
+      </h2>
+      
+      <!-- PUNTO 1: PC vs CELLULARE -->
+      <div style="background: #0d1117; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; margin-bottom: 15px;">
+        <div style="font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 8px;">1. 🖥️ PC à la maison, 📱 téléphone en déplacement</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+          Le téléphone est pratique pour scanner ; le PC offre un grand écran. À toi de choisir ! Pour passer de l’un à l’autre, exporte depuis l’appareil à jour et importe le fichier sur l’autre. Avant de partir, vérifie ta liste : Eva n’accepte aucune excuse devant les rayons !
+        </p>
+      </div>
+
+      <!-- PUNTO 2: SALVATAGGIO IN CONTEMPORANEA E TRASFERIMENTO -->
+      <div style="background: #0d1117; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; margin-bottom: 15px;">
+        <div style="font-size: 1.05rem; font-weight: 700; color: #68d391; margin-bottom: 8px;">2. 💾 Sauvegarde USB sur PC ou transfert par e-mail</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+          Les modifications confirmées sont conservées dans le navigateur utilisé. Sur PC, utilise <strong>Exporter les réserves</strong> et enregistre ou copie le fichier sur une clé USB. Brancher la clé ne lance pas de sauvegarde automatique. Sur téléphone, exporte le fichier et joins-le toi-même à un <strong>e-mail</strong>.
+        </p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+          Une copie externe sert de trois façons :
+        </p>
+        <ul style="margin-left: 20px; font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-top: 6px;">
+          <li><strong>Déplacer tes données :</strong> transfère ton inventaire entre PC et téléphone.</li>
+          <li><strong>Sauvegarder :</strong> si tu perds les données de l’appareil, récupère celles du fichier conservé ailleurs.</li>
+          <li><strong>Faire les courses avec le téléphone :</strong> transfère une copie à jour avant de partir. Les modifications ultérieures sur l’autre appareil n’arrivent pas automatiquement.</li>
+        </ul>
+      </div>
+
+      
+    </section>
+
+    <!-- SEZIONE: AGGIORNAMENTI & TRASPARENZA SERVER -->
+    <section class="section-card" style="border-color: #38a169; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
+      <h2 class="section-title">
+        <span>🔄 Mettre EatMeFirst à jour</span>
+        <a href="guide-mises-a-jour-leo.html" class="postit-link">
+          <img src="../../IMG/biglietto_info.jpg" alt="Note d’aide" class="postit-icon" title="Guide des mises à jour">
+        </a>
+      </h2>
+      
+      <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+        Les nouvelles fonctions et corrections viennent du site : connecte-toi à Internet et rouvre l’application. Si tu ne vois pas les changements, recharge la page. Tu n’as pas de programme à télécharger.
+      </p>
+      <p style="font-size:0.92rem;line-height:1.6;margin-top:12px"><strong>Ton inventaire reste sur ton appareil.</strong> Exporter les réserves crée une sauvegarde ou permet le transfert vers un autre appareil. La note d’aide explique la différence.</p>
+    </section>
+
+    <!-- SEZIONE: ZONA RESET AVANZATI -->
+    <section class="section-card danger-zone">
+      <h2 class="section-title danger-title">
+        <span>⚠️ Réinitialisations avancées</span>
+        <a href="guide-reinitialisation-avancee.html" class="postit-link">
+          <img src="../../IMG/biglietto_info.jpg" alt="Note d’aide" class="postit-icon" title="Guide des réinitialisations">
+        </a>
+      </h2>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.05rem; color: #fbd38d;">1. Nouveau départ (Vider les quantités)</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+          Vide les stocks et les dates des produits en gardant codes, noms, catégories, photos, formats et magasins dans un <strong>catalogue accessible dans Entrée des produits</strong>. Les anciennes notes et réservations des produits ne sont pas reprises. Listes, notes du tableau et préférences restent ; historique et estimations de consommation repartent de zéro.
+        </p>
+        <button class="btn-warning-action" onclick="openResetModal('nuovo_inizio')">Vider les quantités et recommencer</button>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+      <div>
+        <h3 style="font-size: 1.05rem; color: #fca5a5;">2. Repartir de zéro</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+          Vide inventaire, catalogue, listes, notes, préférences. Conserve la première acceptation des conditions, la durée du service et les prolongations : la période gratuite ne recommence pas et la présentation initiale n’est pas répétée.
+        </p>
+        <button class="btn-danger-action" onclick="openResetModal('reset_totale')">Repartir de zéro</button>
+      </div>
+    </section>
+
+    <!-- SEZIONE: BIBLIOTECA DELLE GUIDE (ESATTAMENTE 4 GUIDE) -->
+    <section class="section-card">
+      <h2 class="section-title">
+        <span>📚 Guides d’aide</span>
+      </h2>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+        Ouvre un guide :
+      </p>
+      <div class="guides-grid">
+        <a href="guide-mises-a-jour-leo.html" class="guide-card-link">📌 Guide des mises à jour</a>
+        <a href="guide-sauvegarde-backup.html" class="guide-card-link">📌 Guide de sauvegarde et sécurité</a>
+        <a href="guide-exportation-donnees.html" class="guide-card-link">📌 Guide de la liste de courses et du retour à la maison</a>
+        <a href="guide-reinitialisation-avancee.html" class="guide-card-link">📌 Guide des réinitialisations et du nouveau départ</a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>© EatMeFirst · Inventaire stocké localement</span>
+  </footer>
+
+  <!-- MODALE CONFERMA RESET -->
+  <div id="confirmation-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div id="modal-title" class="modal-title">Confirmer l’opération</div>
+      <div id="modal-text" class="modal-text">Veux-tu vraiment continuer ?</div>
+      <label style="display:block;margin:14px 0"><input type="checkbox" id="confermaResetLetto"> J’ai lu quelles données seront effacées et lesquelles seront conservées.</label>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="closeResetModal()">Annuler</button>
+        <button id="btn-modal-confirm-exec" class="btn-modal-confirm" onclick="executeReset()">Confirmer et continuer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/errori-fr.js"></script>
+<script src="../../js/storico-it.js"></script>
+  <script src="../../js/backup-it.js"></script>
+  <script src="../../js/backup-interfaccia-fr.js"></script>
+  <script src="../../js/reset-it.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (localStorage.getItem("hide_leo_banner_utilita_it") === "true") {
+        const banner = document.getElementById("leo-banner");
+        if (banner) banner.style.display = "none";
+      }
+    });
+
+    function dismissLeoBanner() {
+      const banner = document.getElementById("leo-banner");
+      if (banner) banner.style.display = "none";
+      localStorage.setItem("hide_leo_banner_utilita_it", "true");
+    }
+
+    let activeResetType = null;
+    let preparazioneReset = null;
+
+    function openResetModal(type) {
+      try { preparazioneReset = EatReset.prepara(type); }
+      catch (errore) { alert('Réinitialisation non préparée. ' + EatErroriFR(errore.message)); return; }
+      activeResetType = type;
+      document.getElementById('confermaResetLetto').checked = false;
+      const modal = document.getElementById('confirmation-modal');
+      const title = document.getElementById('modal-title');
+      const text = document.getElementById('modal-text');
+      const confirmBtn = document.getElementById('btn-modal-confirm-exec');
+
+      if (type === 'nuovo_inizio') {
+        title.innerText = "⚠️ Confirmer le nouveau départ ?";
+        title.style.color = "#ed8936";
+        text.innerHTML = "L’inventaire actif sera vide : quantités, dates et anciens rappels ne seront pas repris. Codes, noms, photos, catégories, formats et magasins restent dans le catalogue des entrées. Listes et notes du tableau restent ; historique et estimations de consommation repartent de zéro.<br><br>Une copie récupérable est conservée avant l’opération, en remplaçant l’ancienne copie de récupération. Exporte aussi un fichier : une copie locale ne protège pas d’une panne.<br><br>Acceptation et abonnement restent conservés.";
+        confirmBtn.style.background = "#ed8936";
+      } else if (type === 'reset_totale') {
+        title.innerText = "🚨 Confirmer le retour à zéro ?";
+        title.style.color = "#e53e3e";
+        text.innerHTML = "Inventaire, catalogue, listes, tableau de notes, historique et préférences seront vidés. La première acceptation et le droit au service de sauvegarde externe, prolongations comprises, restent : la période gratuite ne recommence pas.<br><br>Une copie récupérable est conservée avant l’opération et remplace la précédente. Exporte aussi un fichier ailleurs : la copie locale ne protège pas d’une panne.<br><br>Les conditions restent acceptées, sans répéter la présentation initiale.";
+        confirmBtn.style.background = "#e53e3e";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    let closeResetModal = function() {
+      document.getElementById('confirmation-modal').style.display = 'none';
+      activeResetType = null;
+      preparazioneReset = null;
+    }
+
+    function executeReset() {
+      if (!activeResetType || !preparazioneReset) return;
+      if (!document.getElementById('confermaResetLetto').checked) { alert('Lis le résumé et coche la confirmation avant de continuer.'); return; }
+      try {
+        const tipo = activeResetType;
+        const risultato = EatReset.esegui(preparazioneReset);
+        closeResetModal();
+        importazioneInAttesa = null;
+        document.getElementById('anteprimaImportazione').hidden = true;
+        aggiornaSituazioneBackup();
+        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Nouveau départ terminé : inventaire vide, ${risultato.catalogo} produits dans le catalogue des entrées. La situation précédente est disponible avec le bouton de récupération.` : 'Retour à zéro terminé. Acceptation et droit au service conservés. La situation précédente est disponible avec le bouton de récupération.';
+        window.scrollTo({top:document.getElementById('trasferimento-dispensa').offsetTop,behavior:'smooth'});
+      } catch (errore) { alert('Réinitialisation non effectuée. ' + EatErroriFR(errore.message)); }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+(() => {const menu=document.querySelector('.site-menu');if(!menu)return;const narrow=window.matchMedia('(max-width: 700px)');const adapt=()=>{menu.open=!narrow.matches;};adapt();narrow.addEventListener('change',adapt);menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(narrow.matches)menu.open=false;}));})();

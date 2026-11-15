@@ -1,0 +1,15 @@
+Un cadeau de début d’année pour nos adhérents : une maison mieux organisée, moins de gaspillage.
+
+EatMeFirst est une application en ligne pour organiser les réserves alimentaires et les produits de la maison, suivre les dates de péremption, noter les consommations et préparer la liste de courses.
+
+Ces fonctions et d’autres fonctions utiles sont gratuites, sans limite de durée. L’application s’utilise en ligne sur téléphone, sans inscription et sans installer de programme.
+
+Les modifications de votre inventaire sont enregistrées automatiquement et immédiatement sur le téléphone utilisé, gratuitement. Vos données sur les produits et les consommations ne sont pas envoyées à nos serveurs.
+
+Un petit jeu pédagogique permet de découvrir les fonctions avec des produits d’exemple.
+
+Le lien destiné aux adhérents conduit au site EatMeFirst. Ils peuvent y rencontrer Max, Eva et Leo, découvrir les fonctions, essayer le jeu, puis ouvrir l’application.
+
+https://tidyupofficial1-web.github.io/eatmefirst-site/sito-bozza/FR/index.html
+
+Belle année à vous de la part de [NOM DU GROUPE] !

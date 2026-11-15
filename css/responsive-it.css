@@ -1,0 +1,55 @@
+/* Italiano: messaggi leggibili sui telefoni, senza ridurre la dimensione del testo. */
+@media (max-width: 768px) {
+    *, *::before, *::after { box-sizing: border-box; }
+    body { min-width: 0; }
+    .container, .main-wrapper, .main-container, main { min-width: 0; max-width: 100%; }
+    header, .app-bar, .top-navbar, .header-left, .header-right, .app-brand,
+    .brand-logo-group, .app-nav-right { flex-wrap: wrap; gap: 10px; min-width: 0; }
+    .app-bar, .top-navbar { padding: 10px 12px; position: relative; }
+    .brand-title, .brand-logo, .brand-logo-group { min-width: 0; overflow-wrap: anywhere; }
+    .language-flags { flex-wrap: wrap; }
+    .max-presentation-box, .eva-welcome-box, .messaggio-intestazione, .eva-header, .leo {
+        flex-direction: column; align-items: center; gap: 12px;
+    }
+    .max-text-content, .eva-welcome-content, .header-text,
+    .messaggio-intestazione h2, .eva-header > div, .leo h1 {
+        width: 100%; min-width: 0; padding-right: 0; text-align: left;
+    }
+    .max-avatar, .eva-avatar-large, .eva-avatar, .messaggio-intestazione img, .leo img {
+        flex: none; object-fit: cover;
+    }
+    .max-text-content, .eva-welcome-content, .leo-banner-content, .guide-content-area,
+    .narrative-content, .postit-card, .content, .messaggio-programmato, .modal-content,
+    .modal-body, .card, .card-box, .section-card, .avviso { overflow-wrap: anywhere; }
+    .leo-banner-content, .guide-content-area, .narrative-content { padding: 16px; }
+    .section-card, .card-box, .card { min-width: 0; padding: 16px; }
+    .messaggio-programmato { width: calc(100% - 16px); max-width: none; padding: 16px; }
+    .modal-overlay, .overlay { padding: 8px; }
+    .modal-content, .dialogo { max-height: calc(100dvh - 16px); overflow-y: auto; padding: 16px; }
+    .modal-box { max-height: calc(100dvh - 16px); }
+    .modal-header, .modal-body { padding: 14px; }
+    .modal-header h2 { min-width: 0; overflow-wrap: anywhere; }
+    .modal-header .btn-close-modal { flex: none; }
+    .modal-actions, .modal-buttons, .modal-footer, .comandi, .coupon-input-group { flex-wrap: wrap; }
+    .modal-actions > *, .modal-buttons > *, .comandi > * { max-width: 100%; }
+    .scadenza-item-card, .product-item { flex-direction: column; align-items: stretch; gap: 12px; }
+    .product-info-left, .product-info-left > div { min-width: 0; }
+    .product-thumb { flex-shrink: 0; }
+    .product-info-left, .item-left { overflow-wrap: anywhere; }
+    .actions-group { justify-content: flex-start; }
+    .item-left { min-width: 0; flex: 1; }
+    .item-left input[type=checkbox] { flex-shrink: 0; }
+    .item-left span { min-width: 0; overflow-wrap: anywhere; }
+    .input-group { flex-direction: column; }
+    .input-group > *, .coupon-input-group > input { min-width: 0; max-width: 100%; }
+    .nav-tabs { flex-wrap: wrap; }
+    .tabs { flex-wrap: wrap; max-width: 100%; }
+    .nav-tabs > * { min-width: 0; }
+    .stats-grid, .pricing-grid, .guides-grid { grid-template-columns: minmax(0, 1fr); }
+    .filter-container select { min-width: 0; max-width: 100%; }
+    .pricing-box { flex-wrap: wrap; }
+    .seo-link-item { min-width: 0; }
+    input, select, textarea { max-width: 100%; }
+    textarea { width: 100%; }
+    .form-grid > *, .row-group-2 > * { min-width: 0; }
+}

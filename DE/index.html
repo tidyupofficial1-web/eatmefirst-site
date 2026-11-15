@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haushalts-Vorratsverwaltung & MHD-Tracker | EatMeFirst</title>
+    <meta name="description" content="Organisieren Sie Ihre Einkäufe, überwachen Sie Haltbarkeitsdaten und vermeiden Sie Lebensmittelverschwendung mit Ihrer privaten und kostenlosen digitalen Speisekammer.">
+    <meta name="keywords" content="Vorratsverwaltung Haushalt, Mindesthaltbarkeitsdatum Tracker, Einkaufsliste, Barcode Scanner Einkaufen, Haushaltsinventar, Lebensmittelverschwendung vermeiden">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <meta property="og:title" content="Vorratsverwaltung & MHD-Tracker | EatMeFirst">
+    <meta property="og:description" content="Ein intelligenter und privater Assistent zur Verwaltung Ihrer Einkäufe und zur Beseitigung von Lebensmittelverschwendung.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="IMG/haushalt-speisekammer-organisation.png">
+
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --border-color: #30363d;
+            --light-bg: #21262d;
+            --success-color: #2ea44f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* GEMEINSAME KOPFLEISTE */
+        .language-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-badge {
+            width: 36px; height: 36px; background-color: #FFFFFF;
+            border-radius: 50%; padding: 2px; display: flex;
+            align-items: center; justify-content: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+        }
+
+        .logo-badge img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+        .brand-name { font-size: 16px; font-weight: 700; color: var(--text-color); }
+
+        .flags-container { display: flex; gap: 6px; align-items: center; }
+        .flag-link {
+            text-decoration: none; display: flex; align-items: center; gap: 4px;
+            font-size: 11px; font-weight: bold; color: var(--text-color);
+            padding: 4px 6px; border-radius: 4px; border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .flag-link:hover, .flag-link.active { border-color: var(--border-color); background: var(--light-bg); }
+        .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+        .main-container { max-width: 900px; margin: 75px auto 40px auto; padding: 0 16px; }
+        .hero-card {
+            background: var(--card-bg); border-radius: 16px;
+            border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            overflow: hidden; margin-bottom: 30px;
+        }
+        .hero-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+        .story-content { padding: 24px; }
+        .story-content h1 { font-size: 24px; color: var(--accent-color); margin-bottom: 15px; font-weight: 700; }
+        .story-content h2 { font-size: 18px; color: var(--accent-color); margin-top: 20px; margin-bottom: 10px; }
+        .story-text { font-size: 15.5px; color: var(--text-color); margin-bottom: 15px; line-height: 1.65; }
+
+        .greeting-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 15.5px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .user-name-inline {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: var(--accent-color);
+            font-size: 14.5px;
+            font-weight: bold;
+            outline: none;
+            width: 220px;
+            transition: border-color 0.2s;
+        }
+
+        .user-name-inline:focus {
+            border-color: var(--accent-color);
+        }
+
+        .hidden-story {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .hidden-story.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .leo-box {
+            background: var(--light-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 15px;
+        }
+
+        .consent-box {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 25px 20px; text-align: center;
+            margin-top: 25px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .btn-conditions {
+            background: none; border: none; color: var(--accent-color);
+            font-size: 14px; font-weight: 600; text-decoration: underline;
+            cursor: pointer; margin-bottom: 15px; display: inline-block;
+        }
+
+        .checkbox-label {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+            margin-bottom: 20px; color: var(--text-color);
+        }
+
+        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+
+        .btn-enter {
+            background-color: var(--accent-color); color: #0d1117; border: none;
+            padding: 14px 32px; font-size: 16px; font-weight: 700; border-radius: 8px;
+            cursor: pointer; transition: all 0.3s; opacity: 0.4; pointer-events: none;
+            text-decoration: none; display: inline-block; width: 100%; max-width: 320px;
+        }
+
+        .btn-enter.active { opacity: 1; pointer-events: auto; box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3); }
+        .btn-enter.active:hover { transform: translateY(-2px); background-color: #79c0ff; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8); display: none; justify-content: center;
+            align-items: center; z-index: 100; padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; max-width: 650px; width: 100%; max-height: 80vh;
+            overflow-y: auto; padding: 25px; position: relative;
+        }
+
+        .modal-content h2 { font-size: 20px; margin-bottom: 15px; color: var(--accent-color); }
+        .modal-body { font-size: 13.5px; color: var(--text-color); line-height: 1.6; margin-bottom: 20px; text-align: left; }
+        .modal-body h3 { font-size: 14px; margin-top: 16px; margin-bottom: 6px; color: var(--accent-color); }
+
+        .btn-close-modal {
+            background: var(--light-bg); color: var(--text-color); border: 1px solid var(--border-color);
+            padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right;
+        }
+
+        @media (max-width: 600px) {
+            .brand-name { display: none; }
+            .story-content { padding: 18px; }
+            .story-content h1 { font-size: 20px; }
+            .story-text { font-size: 14.5px; }
+            .language-bar { padding: 8px 12px; }
+            .user-name-inline { width: 100%; }
+        }
+    </style>
+<link rel="stylesheet" href="../css/collegamenti.css">
+</head>
+<body>
+
+    <!-- SKRIPT ZUR ERSTEN EINWILLIGUNGSKONTROLLE -->
+    <script>
+        if (localStorage.getItem('eatmefirst_consent_de') === 'accepted' || localStorage.getItem('eatmefirst_consent') === 'accepted') {
+            if (!localStorage.getItem('eatmefirst_consent_date')) {
+                if (!localStorage.getItem('eatmefirst_consent_date')) if (!localStorage.getItem('eatmefirst_consent_date')) localStorage.setItem('eatmefirst_consent_date', new Date().toISOString());
+            }
+            window.location.href = 'menu.html';
+        }
+    </script>
+
+    <!-- OBERE LEISTE MIT LOGO UND FLAGGEN -->
+    <div class="language-bar">
+        <div class="logo-container">
+            <div class="logo-badge"><img src="../IMG/logo_1024_white.png" alt="EatMeFirst Logo"></div>
+            <span class="brand-name">EatMeFirst</span>
+        </div>
+        <div class="flags-container">
+            <a href="../IT/index.html" class="flag-link"><img src="../IMG/bandiera_Italy.jpg" class="flag-img" alt="IT"> IT</a>
+            <a href="../EN/index.html" class="flag-link"><img src="../IMG/bandiera_England.jpg" class="flag-img" alt="EN"> EN</a>
+            <a href="index.html" class="flag-link active"><img src="../IMG/bandiera_Germany.jpg" class="flag-img" alt="DE"> DE</a>
+            <a href="../FR/index.html" class="flag-link"><img src="../IMG/bandiera_France.jpg" class="flag-img" alt="FR"> FR</a>
+            <a href="../ES/index.html" class="flag-link"><img src="../IMG/bandiera_Espana.jpg" class="flag-img" alt="ES"> ES</a>
+        </div>
+    </div>
+
+    <main class="main-container">
+        
+        <!-- CARD 1: MAX AND EVA -->
+        <article class="hero-card">
+            <img src="IMG/haushalt-speisekammer-organisation.png" alt="Eine Familie organisiert ihre Vorräte gegen Verschwendung" class="hero-img">
+            
+            <div class="story-content">
+                <h1>Willkommen bei EatMeFirst</h1>
+                
+                <div class="greeting-row">
+                    <span>„Hallo, wir sind Max und Eva. Und du?</span>
+                    <input type="text" id="userName" class="user-name-inline" placeholder="Dein Vorname (freiwillig)" oninput="gestisciInputUtente()">
+                </div>
+
+                <div id="storyContainer" class="hidden-story">
+                    <div class="story-text">
+                        <p id="introDynamic">„Wir kaufen ein wie du. Aber oft fanden wir vergessene, abgelaufene Produkte hinten im Schrank und mussten sie wegwerfen.</p>
+                        
+                        <p>Eines Tages erzählten wir einem befreundeten Entwickler davon. So entstand EatMeFirst, um die Einkäufe für zu Hause besser zu überblicken: Lebensmittel, Reinigungsmittel, Körperpflege und vieles mehr.</p>
+                        
+                        <p>Vertrau uns, <span id="displayNameMax">mein Freund</span>: Was du gleich ausprobierst, kann <strong>dir beim Organisieren deiner Einkäufe und Vorräte helfen</strong>.</p>
+                        
+                        <p>Eva sagt es einfach: „Unsere Einkäufe gehen uns etwas an!“ Dein Bestand bleibt im Browser des verwendeten Handys oder PCs. Du brauchst kein Konto. Auch dein freiwillig angegebener Vorname bleibt auf deinem Gerät.</p>
+                        <p><strong>Was wird über das Internet übertragen?</strong> Bei einer Barcode-Suche fragt die App öffentliche Kataloge, welches Produkt zu dieser Nummer gehört. Sie überträgt weder Bestand noch Mengen oder Einkaufs- und Verbrauchsverlauf. Produktfotos stammen ebenfalls aus externen Quellen.</p>
+                        <p><strong>Wie füge ich ein Produkt hinzu?</strong> Scanne den Code mit dem Handy, nutze einen Leser am PC oder gib die Angaben selbst ein. Kein Code? Kein Problem: Äpfel vom Markt, Käse von der Theke und Haushaltsprodukte sind willkommen! Prüfe vorgeschlagenen Namen, Foto, Kategorie und Packungsgröße vor dem Speichern. Weitere verfügbare Angaben findest du im Bestand.</p>
+                        <p>Eva ergänzt: „Und vergiss die halbe Salami nicht!“ Teilverbrauch speichert deine Schätzung des verbleibenden Inhalts. Bei Packungen kannst du einzelne Stücke verfolgen.</p>
+                        <p>Die Grundfunktionen der App sind und bleiben <strong>kostenlos</strong>. Aber ich habe genug geredet! Leo erklärt dir jetzt die Bedienung und die Kosten.“</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- CARD 2: LEO -->
+        <article class="hero-card hidden-story" id="secondCard">
+            <img src="IMG/app-lebensmittel-haltbarkeit-kontrolle.png" alt="Produkte scannen und ihre Daten verfolgen" class="hero-img">
+            
+            <div class="story-content">
+                <div class="story-text leo-box">
+                    <p><strong>Leo (der Entwickler):</strong></p>
+                    <p>„Hallo <span id="displayNameLeo">mein Freund</span>! Hier ist Leo. Wenn du einen Vorgang bestätigst, speichert die App ihn <strong>in diesem Browser, am Handy und am PC</strong>. Siehst du einen Speichern-Knopf, drücke ihn: Ausgefüllte Felder allein genügen nicht.</p>
+                    <p><strong>Warum dann exportieren?</strong> Lokales Speichern behält tägliche Änderungen auf diesem Gerät. Bestand exportieren erstellt eine getrennte Datei: Bewahre sie auf einem anderen Gerät, einem USB-Stick oder als selbst versendeten E-Mail-Anhang auf. EatMeFirst versendet die Datei nicht automatisch.</p>
+                    <p>Eine Sicherungskopie ist wie ein Ersatzschlüssel: hilfreich, wenn das Original verloren geht! Nach einem Defekt oder dem Löschen von Browserdaten importierst du die Datei und erhältst ihren gespeicherten Stand. Spätere Änderungen fehlen darin: Aktualisiere die Kopie nach wichtigen Änderungen.</p>
+                    <p>Handy und PC gleichen sich nicht automatisch ab. Übertrage vor einem Gerätewechsel die aktuelle Datei. Importieren ersetzt den gesamten Stand und führt keine getrennt geänderten Bestände zusammen. Hilfsfunktionen erklärt die Schritte.</p>
+                    <p>Änderungen am Vorrat werden automatisch und kostenlos auf Ihrem Gerät gespeichert. Auch der Export einer externen Kopie ist während dieser Startphase kostenlos, ohne Countdown. Künftig kann der Export ein optionaler kostenpflichtiger Dienst werden. Preis und Bedingungen werden vor einer Änderung mitgeteilt. Die Grundfunktionen und der Import vorhandener Kopien bleiben kostenlos.</p>
+
+                    <p>Änderungen am Vorrat werden automatisch und kostenlos auf Ihrem Gerät gespeichert. Auch der Export einer externen Kopie ist während dieser Startphase kostenlos, ohne Countdown. Künftig kann der Export ein optionaler kostenpflichtiger Dienst werden. Preis und Bedingungen werden vor einer Änderung mitgeteilt. Die Grundfunktionen und der Import vorhandener Kopien bleiben kostenlos.</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- CONSENT & ENTER BUTTON -->
+        <section class="consent-box hidden-story" id="consentSection">
+            <button type="button" class="btn-conditions" onclick="apriModal()">Nutzungsbedingungen und Hinweise lesen</button>
+            
+            <label class="checkbox-label">
+                <input type="checkbox" id="checkAccetto" onchange="gestisciSpunta()">
+                <span>Ich habe die Informationen gelesen und akzeptiere die Nutzungsbedingungen</span>
+            </label>
+
+            <a href="menu.html" id="btnEntra" class="btn-enter" onclick="confermaAccettazione(event)">Los geht’s!</a>
+        </section>
+
+    </main>
+
+    <!-- MODAL CONDITIONS -->
+    <div id="modalDisclaimer" class="modal-overlay">
+        <div class="modal-content">
+            <button type="button" class="btn-close-modal" onclick="chiudiModal()">Schließen</button>
+            <h2>Bedingungen, Nutzungsbedingungen und Haftungshinweise</h2>
+            <div class="modal-body">
+                <h3>1. Vollständiger Ausschluss der Gesundheits- und Lebensmittelhaftung</h3>
+                <p>EatMeFirst ist eine einfache Software zur organisatorischen Unterstützung und Bestandsführung im Haushalt. <strong>Der Nutzer erkennt ausdrücklich an und erklärt sich damit einverstanden, dass der Autor und die Ersteller der Anwendung von jeglicher zivil- und strafrechtlichen Haftung</strong> befreit sind, die sich aus dem Konsum von in der App erfassten Lebensmitteln ergibt. Die visuelle, olfaktorische und organoleptische Überprüfung des Zustands und der Frische der Lebensmittel liegt vor jedem Verzehr in der ausschließlichen und vollständigen Verantwortung des Nutzers.</p>
+                
+                <h3>2. Verbindliche und Empfohlene Fristen</h3>
+                <p>Die eingegebenen Daten unterteilen sich in verbindliche (für leicht verderbliche Frischeprodukte) und empfohlene (für haltbarere Produkte). Die Warnungen dienen lediglich als Erinnerung, und <strong>der Autor übernimmt keine Gewähr für die absolute Genauigkeit von Schätzungen oder externen Datenbanken</strong>. Jegliche Haftung für Eingabefehler oder nicht rechtzeitigen Verzehr wird abgelehnt.</p>
+
+                <h3>3. Lokale Speicherung, Datenschutz und Backup</h3>
+                <p>Die Daten verbleiben ausschließlich auf dem Gerät des Nutzers. <strong>Der Nutzer ist allein verantwortlich für die Durchführung regelmäßiger Backups</strong> (durch Speichern auf einem USB-Stick oder einer Sicherungsdatei). Der Autor hat keinen Zugriff auf die Daten und kann diese im Falle eines Geräteausfalls keinesfalls wiederherstellen.</p>
+                
+                <h3>4. Kostenlose Lizenz</h3>
+                <p>Die Anwendung wird kostenlos und ohne Tracking-Zwecke oder Datenverkauf an Drittunternehmen zur Verfügung gestellt.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timerIniziale10s = null;
+        let timerPausa5s = null;
+        let giaMostrato = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedName = localStorage.getItem('eatmefirst_username');
+            if (savedName) {
+                document.getElementById('userName').value = savedName;
+            }
+            
+            timerIniziale10s = setTimeout(() => {
+                mostraTestoEContenuti();
+            }, 10000);
+        });
+
+        function gestisciInputUtente() {
+            if (timerIniziale10s) {
+                clearTimeout(timerIniziale10s);
+                timerIniziale10s = null;
+            }
+
+            if (giaMostrato) {
+                aggiornaFraseText();
+                return;
+            }
+
+            if (timerPausa5s) {
+                clearTimeout(timerPausa5s);
+            }
+
+            timerPausa5s = setTimeout(() => {
+                mostraTestoEContenuti();
+            }, 5000);
+        }
+
+        function aggiornaFraseText() {
+            const nome = document.getElementById('userName').value.trim();
+            const elMax = document.getElementById('displayNameMax');
+            const elLeo = document.getElementById('displayNameLeo');
+
+            if (nome !== '') {
+                elMax.textContent = nome;
+                elLeo.textContent = nome;
+            } else {
+                elMax.textContent = 'Freund';
+                elLeo.textContent = 'Freund';
+            }
+        }
+
+        function mostraTestoEContenuti() {
+            if (timerIniziale10s) { clearTimeout(timerIniziale10s); timerIniziale10s = null; }
+            if (timerPausa5s) { clearTimeout(timerPausa5s); timerPausa5s = null; }
+
+            aggiornaFraseText();
+
+            if (!giaMostrato) {
+                document.getElementById('storyContainer').classList.add('visible');
+                document.getElementById('secondCard').classList.add('visible');
+                document.getElementById('consentSection').classList.add('visible');
+                giaMostrato = true;
+            }
+        }
+
+        function apriModal() { document.getElementById('modalDisclaimer').style.display = 'flex'; }
+        function chiudiModal() { document.getElementById('modalDisclaimer').style.display = 'none'; }
+        
+        function gestisciSpunta() {
+            const check = document.getElementById('checkAccetto');
+            const btn = document.getElementById('btnEntra');
+            if (check.checked) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        function confermaAccettazione(event) {
+            const check = document.getElementById('checkAccetto');
+            if (!check.checked) {
+                event.preventDefault();
+                return;
+            }
+            
+            localStorage.setItem('eatmefirst_consent_de', 'accepted');
+            localStorage.setItem('eatmefirst_consent', 'accepted');
+            if (!localStorage.getItem('eatmefirst_consent_date')) if (!localStorage.getItem('eatmefirst_consent_date')) localStorage.setItem('eatmefirst_consent_date', new Date().toISOString());
+            
+            const inputNome = document.getElementById('userName').value.trim();
+            if (inputNome !== '') {
+                localStorage.setItem('eatmefirst_username', inputNome);
+            } else {
+                localStorage.removeItem('eatmefirst_username');
+            }
+        }
+    </script>
+</body>
+</html>

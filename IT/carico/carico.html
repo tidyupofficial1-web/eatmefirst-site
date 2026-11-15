@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script src="../../js/accettazione-it.js" data-proteggi></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatMeFirst - Carico Prodotto in Dispensa e Gestione Inventario</title>
+    <meta name="description" content="Carica e organizza i prodotti nella tua dispensa locale in modo semplice, sicuro e intelligente con EatMeFirst.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Libreria per la scansione live del codice a barre -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --primary-color: #2ecc71;
+            --text-color: #e0e6ed;
+            --text-muted: #a0aec0;
+            --border-color: #2d3748;
+            --postit-bg: #fff59d;
+            --postit-text: #333333;
+            --info-bg: #1a2634;
+            --info-border: #3182ce;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* Carta Intestata Superiore Standard */
+        .top-navbar {
+            width: 100%;
+            max-width: 950px;
+            background-color: #101416;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .brand-logo img { height: 32px; width: auto; }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-flags {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 26px;
+            height: 17px;
+            cursor: pointer;
+            object-fit: cover;
+            border-radius: 3px;
+            transition: transform 0.2s, opacity 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.6;
+            display: inline-block;
+        }
+
+        .flag-icon:hover {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Finestra Overlay Scanner Live */
+        #scanner-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #scanner-container {
+            width: 100%;
+            max-width: 450px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-chiudi-scanner {
+            margin-top: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Presentazione di Max con Avatar SOPRA al testo */
+        .max-presentation-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            border-left: 4px solid var(--info-border);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .max-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            object-fit: cover;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .max-text-content h3 {
+            color: var(--primary-color);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .max-text-content p {
+            font-size: 0.93rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .max-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .btn-max-action {
+            background: #101416;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-max-action:hover {
+            border-color: var(--primary-color);
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .header-title {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Griglia principale */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .sidebar-scanner-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-scan-main {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: #12181b;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-scan-main:hover {
+            opacity: 0.9;
+        }
+
+        .product-image-box {
+            width: 100%;
+            height: 200px;
+            background: #101416;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .product-image-box img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .peso-badge {
+            font-size: 0.8rem;
+            background: #101416;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .row-group-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .label-with-postit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        label {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .postit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            background: rgba(255, 245, 157, 0.15);
+            border: 1px solid rgba(255, 245, 157, 0.4);
+            color: #fff59d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .postit-link:hover {
+            background: rgba(255, 245, 157, 0.3);
+            transform: scale(1.05);
+        }
+        .postit-icon {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+
+        input[type="text"], input[type="number"], input[type="date"], select, textarea {
+            width: 100%;
+            background: #101416;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #101416;
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            height: 42px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .scadenza-options-box {
+            background: #101416;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scadenza-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .scadenza-row select, .scadenza-row input {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+        }
+
+        .info-tech {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #101416;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+            line-height: 1.4;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: #12181b; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary { background-color: var(--border-color); color: var(--text-color); }
+        .btn-secondary:hover { background-color: #3e4c62; }
+
+        /* Responsive Mobile a piena larghezza */
+        @media (max-width: 768px) {
+            body { padding: 5px; }
+            .container { padding: 12px; border-radius: 8px; }
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .row-group-2 { grid-template-columns: 1fr; }
+            .product-image-box { height: 170px; }
+            .actions { justify-content: stretch; }
+            .actions .btn { flex: 1; justify-content: center; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+<!-- Finestra Overlay Scanner Live -->
+<div id="scanner-overlay">
+    <div id="scanner-container"></div>
+    <button type="button" class="btn-chiudi-scanner" onclick="chiudiScannerLive()">❌ Chiudi Scanner</button>
+</div>
+
+<!-- Carta Intestata Superiore -->
+<header class="top-navbar">
+    <a href="../menu.html" class="brand-logo">
+        <img src="../../IMG/logo_1024_white.png" alt="EatMeFirst Logo">
+        <span>EatMeFirst</span>
+    </a>
+    
+    <div class="navbar-right">
+        <div class="language-flags">
+            <a href="carico.html" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon" style="opacity: 1;"></a>
+            <a href="../../EN/load/load.html" title="English"><img src="../../IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
+            <a href="../../DE/lagerung/einlagerung.html" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
+            <a href="../../FR/chargement/chargement.html" title="Français"><img src="../../IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
+            <a href="../../ES/carga/carga-productos.html" title="Español"><img src="../../IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon"></a>
+        </div>
+        <a href="../menu.html" class="btn btn-secondary" style="padding: 6px 10px; font-size: 0.8rem;">🏠 Menu</a>
+    </div>
+</header>
+<div style="text-align:right;margin:8px 20px"><a href="../operazioni/index.html" style="color:#79c0ff">↩ Ultime 15 operazioni</a></div>
+
+<div class="container">
+
+    <!-- PRESENTAZIONE DI MAX (Avatar sopra e testo dettagliato) -->
+    <div id="maxPresentationBox" class="max-presentation-box" style="display: none;">
+        <img src="../../IMG/avatar_max.png" alt="Max Avatar" class="max-avatar">
+        <div class="max-text-content">
+            <h3 id="max-title">Ciao da Max! Benvenuto nel caricamento</h3>
+            <p id="max-text">Questa è la pagina dove si inseriscono i prodotti della tua spesa. Potrai inserire oltre agli alimenti anche altri articoli che girano in casa, come tovaglioli, detersivi, prodotti per l'igiene... Man mano che inserirai le destinazioni, le categorie o i fornitori, te li proporrò in modo che non dovrai scriverli di nuovo ogni volta: basterà un clic per fare la scelta. In ogni caso, per qualsiasi dubbio sui campi, usa i piccoli post-it gialli accanto alle etichette che ti daranno altre informazioni più specifiche.</p>
+            <div class="max-actions">
+                <button type="button" class="btn-max-action" onclick="chiudiMaxTemporaneo()">Chiudi</button>
+                <button type="button" class="btn-max-action" onclick="chiudiMaxDefinitivo()">Non mostrare più</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-title">
+        <h1>📦 Inserimento Prodotto in Dispensa</h1>
+    </div>
+
+    <section id="catalogo-ricordato" hidden style="margin:18px 0;padding:16px;border:1px solid #39434f;border-radius:10px">
+        <label for="scegli-catalogo">Prodotti ricordati dopo «Nuovo Inizio»</label>
+        <select id="scegli-catalogo" onchange="usaProdottoCatalogo(this.value)" style="width:100%;margin-top:8px"><option value="">Scegli un prodotto da ricaricare…</option></select>
+        <p>Quantità e scadenze vanno inserite per il nuovo acquisto. Nessun prodotto viene aggiunto finché non premi Salva.</p>
+    </section>
+    <div class="form-grid">
+        <div class="sidebar-scanner-box">
+            <button type="button" class="btn-scan-main" onclick="avviaScannerLive()">
+                📷 Scansiona Codice a Barre
+            </button>
+
+            <div id="box-foto-prodotto" class="product-image-box">
+                <img id="prodotto-foto" src="../../IMG/logo_1024_white.png" data-foto-prodotto="" alt="Logo EatMeFirst: foto prodotto non disponibile">
+                <div id="prodotto-peso-badge" class="peso-badge" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="form-fields">
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>Codice a Barre</label>
+                    <a href="guida-scansione-codice-barre.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Scansione
+                    </a>
+                </div>
+                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Scrivi o incolla il codice a barre" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">Cerca prodotto</button>
+                <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">Puoi anche lasciare il codice vuoto e compilare il prodotto a mano.</small>
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>Descrizione / Nome Prodotto</label>
+                    <a href="guida-nome-prodotto.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Nome
+                    </a>
+                </div>
+                <input type="text" id="prodotto-nome" placeholder="Nome del prodotto...">
+            </div>
+
+            <div class="row-group-2">
+                <div class="field-group">
+                    <div class="label-with-postit">
+                        <label>Categoria Prodotto</label>
+                        <a href="guida-categoria.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Categoria
+                        </a>
+                    </div>
+                    <input type="text" id="prodotto-categoria" list="categorie-carico" placeholder="Scegli o scrivi una categoria" oninput="EatCategorie.cambiaCategoria()">
+                    <label for="prodotto-sottocategoria" style="display:block;margin-top:10px">Sottocategoria (facoltativa)</label>
+                    <input type="text" id="prodotto-sottocategoria" list="sottocategorie-carico" placeholder="Scegli o scrivi una sottocategoria">
+                    <small>Scegli prima la categoria. Puoi scrivere nomi nuovi: verranno ricordati dopo il salvataggio.</small>
+                </div>
+                <div class="field-group">
+                    <div class="label-with-postit">
+                        <label>Ubicazione (Dove va)</label>
+                        <a href="guida-ubicazione.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Ubicazione
+                        </a>
+                    </div>
+                    <input type="text" id="prodotto-ubicazione" list="ubicazioni-carico" placeholder="Es. Frigo, Cantina, Ripostiglio...">
+                </div>
+            </div>
+
+            <div class="row-group-2">
+                <div class="field-group">
+                    <div class="row-group-2" style="gap: 8px;">
+                        <div>
+                            <div class="label-with-postit">
+                                <label>Confezioni acquistate</label>
+                                <a href="guida-quantita.html" class="postit-link" target="_blank">
+                                    <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida
+                                </a>
+                            </div>
+                            <input type="number" id="prodotto-quantita" value="1" min="1">
+                        </div>
+                        <div>
+                            <div class="label-with-postit">
+                                <label>Pezzi per confezione</label>
+                                <a href="guida-pezzi.html" class="postit-link" target="_blank">
+                                    <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida
+                                </a>
+                            </div>
+                            <input type="number" id="prodotto-pezzi" value="1" min="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <div class="label-with-postit">
+                        <label>Opzione Scorta</label>
+                        <a href="guida-tassativo.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Tassativo
+                        </a>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="prodotto-tassativo">
+                        <label for="prodotto-tassativo">🔒 Articolo Tassativo</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>Fornitore / Negozio d'Acquisto</label>
+                    <a href="guida-fornitore.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Fornitore
+                    </a>
+                </div>
+                <input type="text" id="prodotto-fornitore" placeholder="Es. Supermercato, Mercato rionale, Negozio...">
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>Gestione Scadenza</label>
+                    <a href="guida-scadenza.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Scadenza
+                    </a>
+                </div>
+                <div class="scadenza-options-box">
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-1" value="nessuna" checked onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-1">1) 🚫 Nessuna (carta, detersivi, ecc.)</label>
+                    </div>
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-2" value="giorni" onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-2">2) ⏱️ Giorni di validità:</label>
+                        <input type="number" id="valore-giorni" min="1" max="365" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">giorni</span>
+                    </div>
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-3" value="mesi" onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-3">3) 🗓️ Mesi di validità (pasta, scatole):</label>
+                        <input type="number" id="valore-mesi" min="1" max="60" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">mesi</span>
+                    </div>
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-4" value="esatta" onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-4">4) 📅 Data precisa (GG/MM/AAAA):</label>
+                        <input type="date" id="valore-data-esatta" style="width: 155px;" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div id="box-info-tecniche" class="info-tech" style="display:none;">
+                <strong>ℹ️ Info dal database online:</strong> <span id="testo-info-tecniche"></span>
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>Note / Appunti</label>
+                    <a href="guida-note.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Note
+                    </a>
+                </div>
+                <input type="text" id="prodotto-note" placeholder="Es. Già aperto, scorta alta, merce per pic-nic...">
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="../menu.html" class="btn btn-secondary">Annulla</a>
+        <button type="button" class="btn btn-primary" onclick="salvaProdotto()">➕ Aggiungi alla Dispensa</button>
+    </div>
+</div>
+
+<datalist id="ubicazioni-carico"></datalist>
+<datalist id="categorie-carico"></datalist>
+<datalist id="sottocategorie-carico"></datalist>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/scadenze-it.js"></script>
+<script src="../../js/ricerca-prodotti-it.js"></script>
+<script src="../../js/categorie-it.js"></script>
+<script src="../../js/ubicazioni-it.js"></script>
+<script>
+    function pezziDisponibili(p) {
+        if (Number.isSafeInteger(p.pezzi_rimanenti) && p.pezzi_rimanenti >= 0) return p.pezzi_rimanenti;
+        const q = Number(p.quantita), n = Number(p.pezzi_per_confezione || 1);
+        return (Number.isSafeInteger(q) && q > 0 ? q : 1) * (Number.isSafeInteger(n) && n > 0 ? n : 1);
+    }
+
+    let html5QrCodeScanner = null;
+    window.dettagliEstesiCorrenti = {};
+
+    function impostaFotoProdotto(sorgente = '') {
+        const img = document.getElementById('prodotto-foto');
+        const valida = typeof sorgente === 'string' && /^(https?:\/\/|data:image\/(?:png|jpeg|jpg|webp|gif);)/i.test(sorgente);
+        img.setAttribute('data-foto-prodotto', valida ? sorgente : '');
+        img.alt = valida ? 'Anteprima del prodotto' : 'Logo EatMeFirst: foto prodotto non disponibile';
+        // Il logo è solo una sostituzione visiva, non diventa la foto salvata del prodotto.
+        img.onerror = valida ? () => impostaFotoProdotto() : null;
+        img.src = valida ? sorgente : '../../IMG/logo_1024_white.png';
+    }
+
+    function completaFotoMancante(barcode, immagine, fonte) {
+        if (!barcode || typeof immagine !== 'string' || !/^https:\/\//i.test(immagine)) return false;
+        const aggiornamenti = {}, attesi = {};
+        for (const chiave of ['eat_dispensa_locale', 'eat_catalogo_prodotti_v1']) {
+            const righe = EatStorico.leggi(chiave);
+            attesi[chiave] = localStorage.getItem(chiave);
+            let modificata = false;
+            const nuove = righe.map(p => {
+                const fotoMancante = !p.immagine || /(?:^|\/)logo_1024_white\.png(?:[?#].*)?$/i.test(p.immagine);
+                if (p.barcode !== barcode || !fotoMancante) return p;
+                modificata = true;
+                const dettagli = {...(p.dettagli_tecnici || {})};
+                if (fonte && /^https:\/\/world\.open(?:food|petfood|beauty|products)facts\.org\/product\/\d+$/.test(fonte.url || '')) {
+                    dettagli.fonti = [...(Array.isArray(dettagli.fonti) ? dettagli.fonti : []), fonte]
+                        .filter((f, i, tutte) => tutte.findIndex(v => v.url === f.url) === i);
+                    dettagli.fonti_campi = {...(dettagli.fonti_campi || {}), immagine: fonte};
+                }
+                return {...p, immagine, dettagli_tecnici: dettagli};
+            });
+            if (modificata) aggiornamenti[chiave] = nuove;
+        }
+        if (!Object.keys(aggiornamenti).length) return false;
+        EatStorico.registra('Foto prodotto', 'Completata foto mancante del codice ' + barcode, aggiornamenti, attesi);
+        return true;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('eat_hide_max_carico') !== 'true') {
+            document.getElementById('maxPresentationBox').style.display = 'flex';
+        }
+        ripristinaUltimiValoriMemoria();
+        aggiornaCatalogoCarico();
+        EatCategorie.suggerisci();
+        if (EatUbicazioni.ricorda()) EatUbicazioni.suggerisci('ubicazioni-carico');
+    });
+
+    function chiudiMaxTemporaneo() {
+        document.getElementById('maxPresentationBox').style.display = 'none';
+    }
+
+    function chiudiMaxDefinitivo() {
+        document.getElementById('maxPresentationBox').style.display = 'none';
+        localStorage.setItem('eat_hide_max_carico', 'true');
+    }
+
+    function ripristinaUltimiValoriMemoria() {
+        const ultimaUbicazione = localStorage.getItem('eat_ultima_ubicazione');
+        const ultimaCategoria = localStorage.getItem('eat_ultima_categoria');
+        const ultimoFornitore = localStorage.getItem('eat_ultimo_fornitore');
+        
+        if (ultimaUbicazione && !document.getElementById('prodotto-ubicazione').value) {
+            document.getElementById('prodotto-ubicazione').value = ultimaUbicazione;
+        }
+        if (ultimaCategoria && !document.getElementById('prodotto-categoria').value) {
+            EatCategorie.imposta(ultimaCategoria, localStorage.getItem('eat_ultima_sottocategoria') || '');
+        }
+        if (ultimoFornitore && !document.getElementById('prodotto-fornitore').value) {
+            document.getElementById('prodotto-fornitore').value = ultimoFornitore;
+        }
+    }
+
+    /* --- GESTIONE SCANNER LIVE INTERNO --- */
+    function avviaScannerLive() {
+        const overlay = document.getElementById('scanner-overlay');
+        overlay.style.display = 'flex';
+
+        if (!html5QrCodeScanner) {
+            html5QrCodeScanner = new Html5Qrcode("scanner-container");
+        }
+
+        const config = { fps: 10, qrbox: { width: 280, height: 140 } };
+
+        html5QrCodeScanner.start(
+            { facingMode: "environment" }, 
+            config,
+            (decodedText, decodedResult) => {
+                annullaRicercaCodice();
+                document.getElementById('prodotto-barcode').value = decodedText;
+                cercaProdottoOnline(decodedText);
+                chiudiScannerLive();
+            },
+            (errorMessage) => {}
+        ).catch(err => {
+            alert("⚠️ Impossibile avviare la fotocamera. Verifica i permessi del browser.");
+            chiudiScannerLive();
+        });
+    }
+
+    function chiudiScannerLive() {
+        if (html5QrCodeScanner && html5QrCodeScanner.isScanning) {
+            html5QrCodeScanner.stop().then(() => {
+                document.getElementById('scanner-overlay').style.display = 'none';
+            }).catch(err => {
+                document.getElementById('scanner-overlay').style.display = 'none';
+            });
+        } else {
+            document.getElementById('scanner-overlay').style.display = 'none';
+        }
+    }
+
+    /* --- RICERCA RAPIDA ONLINE (Open Food Facts / Database Mirati) --- */
+    function cercaCodiceManuale() {
+        const campo = document.getElementById('prodotto-barcode');
+        const barcode = campo.value.replace(/\s+/g, '');
+        if (!/^\d{8,14}$/.test(barcode)) {
+            document.getElementById('esito-ricerca-codice').textContent = 'Inserisci un codice numerico da 8 a 14 cifre, mantenendo gli zeri iniziali.';
+            campo.focus();
+            return;
+        }
+        campo.value = barcode;
+        return cercaProdottoOnline(barcode);
+    }
+
+    let ricercaCodiceCorrente = 0;
+    let controllerRicercaCodice = null;
+    let metadatiRicercaCorrente = null;
+
+    function annullaRicercaCodice() {
+        ricercaCodiceCorrente++;
+        controllerRicercaCodice?.abort();
+        controllerRicercaCodice = null;
+        metadatiRicercaCorrente = null;
+        window.dettagliEstesiCorrenti = {};
+        impostaFotoProdotto();
+        document.getElementById('box-info-tecniche').style.display = 'none';
+        document.getElementById('prodotto-peso-badge').style.display = 'none';
+        document.getElementById('esito-ricerca-codice').textContent = 'Premi Cerca prodotto per verificare questo codice, oppure compila i dati a mano.';
+    }
+
+    async function cercaProdottoOnline(barcode) {
+        if (!/^\d{8,14}$/.test(barcode)) {
+            document.getElementById('esito-ricerca-codice').textContent = 'Codice non valido: scrivi da 8 a 14 cifre oppure compila il prodotto a mano.';
+            return;
+        }
+        controllerRicercaCodice?.abort();
+        controllerRicercaCodice = new AbortController();
+        const ricerca = ++ricercaCodiceCorrente;
+        const esito = document.getElementById('esito-ricerca-codice');
+        esito.textContent = 'Ricerca negli archivi di alimentari, animali, cosmetici e altri prodotti… Puoi continuare a compilare.';
+        let memoriaLocale;
+        try {
+            memoriaLocale = [...EatStorico.leggi('eat_catalogo_prodotti_v1'), ...EatStorico.leggi('eat_dispensa_locale')];
+            if (!Array.isArray(memoriaLocale)) throw Error('Dispensa non valida');
+        } catch (errore) {
+            esito.textContent = 'La dispensa locale non è leggibile. Non salvare altri prodotti prima di aver verificato i dati.';
+            return;
+        }
+        const locale = [...memoriaLocale].reverse().find(p => p.barcode === barcode);
+        const classificazione = EatCategorie.precedente(barcode);
+        EatCategorie.imposta(classificazione?.categoria || '', classificazione?.sottocategoria || '');
+        document.getElementById('prodotto-nome').value = locale?.nome || '';
+        impostaFotoProdotto();
+        document.getElementById('prodotto-peso-badge').style.display = 'none';
+        document.getElementById('box-info-tecniche').style.display = 'none';
+        impostaFotoProdotto(locale?.immagine);
+        if (locale?.ubicazione) document.getElementById('prodotto-ubicazione').value = locale.ubicazione;
+        if (locale?.fornitore) document.getElementById('prodotto-fornitore').value = locale.fornitore;
+        window.dettagliEstesiCorrenti = {...(locale?.dettagli_tecnici || {})};
+        metadatiRicercaCorrente = {barcode, stato: 'in_corso', nome_online: locale?.ricerca_prodotto?.nome_online || '', nome_personalizzato: locale?.ricerca_prodotto?.nome_personalizzato || false};
+        const campi = ['prodotto-nome', 'prodotto-categoria', 'prodotto-sottocategoria', 'prodotto-pezzi'];
+        const prima = Object.fromEntries(campi.map(id => [id, document.getElementById(id).value]));
+        const risultato = await EatRicercaProdotti.cerca(barcode, controllerRicercaCodice.signal);
+        if (ricerca !== ricercaCodiceCorrente || document.getElementById('prodotto-barcode').value !== barcode) return;
+        if (risultato.stato === 'annullata') return;
+        metadatiRicercaCorrente.stato = risultato.stato;
+        metadatiRicercaCorrente.controllato_il = new Date().toISOString();
+        if (risultato.stato === 'trovato') {
+            const scheda = risultato.scheda;
+            const campoNome = document.getElementById('prodotto-nome');
+            const nomeModificato = locale?.ricerca_prodotto?.nome_personalizzato;
+            // Un nome provvisorio può essere completato; un nome corretto dall'utente resta suo.
+            const provvisorio = !locale || (!locale.immagine && !locale.ricerca_prodotto) ||
+                (locale.ricerca_prodotto && !locale.ricerca_prodotto.nome_online && !nomeModificato);
+            if (scheda.nome && campoNome.value === prima['prodotto-nome'] && (provvisorio || !campoNome.value)) campoNome.value = scheda.nome;
+            if (scheda.immagine) impostaFotoProdotto(scheda.immagine);
+            const campoCategoria = document.getElementById('prodotto-categoria');
+            if (!prima['prodotto-categoria'] && !campoCategoria.value && !document.getElementById('prodotto-sottocategoria').value && scheda.categoria) {
+                EatCategorie.imposta(scheda.categoria, scheda.sottocategoria);
+            }
+            const campoPezzi = document.getElementById('prodotto-pezzi');
+            if (scheda.pezzi_per_confezione && prima['prodotto-pezzi'] === '1' && campoPezzi.value === '1') campoPezzi.value = String(scheda.pezzi_per_confezione);
+            const dettagli = {...window.dettagliEstesiCorrenti};
+            const fontiCampi = {...(dettagli.fonti_campi || {})};
+            Object.entries(scheda.dettagli).forEach(([key, value]) => {
+                if (key === 'fonti') return;
+                if (value !== '' && value !== null) {
+                    dettagli[key] = value;
+                    fontiCampi[key] = scheda.fonte;
+                }
+            });
+            dettagli.fonti_campi = fontiCampi;
+            dettagli.fonti = [...(dettagli.fonti || []), scheda.fonte].filter((fonte, i, tutte) => tutte.findIndex(f => f.url === fonte.url) === i);
+            window.dettagliEstesiCorrenti = dettagli;
+            metadatiRicercaCorrente.nome_online = scheda.nome;
+            metadatiRicercaCorrente.fonte = scheda.fonte;
+            metadatiRicercaCorrente.lingua_nome = scheda.lingua_nome;
+            if (scheda.quantita_confezione) {
+                document.getElementById('prodotto-peso-badge').textContent = scheda.quantita_confezione;
+                document.getElementById('prodotto-peso-badge').style.display = 'block';
+            }
+            document.getElementById('box-info-tecniche').style.display = 'block';
+            document.getElementById('testo-info-tecniche').textContent = 'Informazioni recuperate: saranno consultabili nei dettagli in Inventario.';
+            esito.textContent = 'Dati da ' + scheda.fonte.nome + '. Controlla nome, categoria e pezzi prima di salvare.';
+            try {
+                if (completaFotoMancante(barcode, scheda.immagine, scheda.fonte)) esito.textContent += ' Foto mancante aggiunta anche ai prodotti già salvati: quantità e altri dati invariati.';
+            } catch (errore) {
+                esito.textContent += ' Non è stato possibile completare la foto nei prodotti già salvati: ' + errore.message;
+            }
+            if (scheda.nome && scheda.lingua_nome !== 'it') esito.textContent += ' Il nome è quello originale dell’archivio: una versione italiana non è disponibile.';
+            if (scheda.nome && campoNome.value !== scheda.nome) esito.textContent += ' Nome presente nell’archivio: ' + scheda.nome + '. Il tuo nome è stato mantenuto; puoi cambiarlo se preferisci.';
+        } else if (risultato.stato === 'non_trovato') {
+            esito.textContent = 'Codice non trovato nei quattro archivi. Puoi salvare i dati compilati a mano: alla prossima scansione cercheremo di nuovo.';
+        } else if (risultato.stato === 'limite') {
+            esito.textContent = 'Consultazioni temporaneamente limitate. Riprova tra ' + risultato.attesa + ' secondi oppure compila a mano. Il codice non viene considerato sconosciuto.';
+        } else {
+            esito.textContent = 'Ricerca temporaneamente non disponibile o troppo lenta. Puoi usare i dati locali o compilare a mano: alla prossima scansione riproveremo.';
+        }
+    }
+
+    function aggiornaScadenzaUI() {
+        const tipo = document.querySelector('input[name="tipo-scadenza"]:checked').value;
+        document.getElementById('valore-giorni').disabled = (tipo !== 'giorni');
+        document.getElementById('valore-mesi').disabled = (tipo !== 'mesi');
+        document.getElementById('valore-data-esatta').disabled = (tipo !== 'esatta');
+    }
+
+    function resetForm() {
+        annullaRicercaCodice();
+        document.getElementById('esito-ricerca-codice').textContent = 'Puoi anche lasciare il codice vuoto e compilare il prodotto a mano.';
+        document.getElementById('prodotto-barcode').value = "";
+        document.getElementById('prodotto-nome').value = "";
+        impostaFotoProdotto();
+        document.getElementById('prodotto-note').value = "";
+        document.getElementById('prodotto-quantita').value = "1";
+        document.getElementById('prodotto-pezzi').value = "1";
+        document.getElementById('prodotto-tassativo').checked = false;
+        document.getElementById('box-info-tecniche').style.display = "none";
+        document.getElementById('prodotto-peso-badge').style.display = "none";
+        document.getElementById('valore-giorni').value = '';
+        document.getElementById('valore-mesi').value = '';
+        document.getElementById('valore-data-esatta').value = '';
+        document.getElementById('scad-opt-1').checked = true;
+        aggiornaScadenzaUI();
+        
+        ripristinaUltimiValoriMemoria();
+    }
+
+    function aggiornaCatalogoCarico() {
+        try {
+            const prodotti = EatStorico.leggi('eat_catalogo_prodotti_v1');
+            const select = document.getElementById('scegli-catalogo');
+            select.replaceChildren(new Option('Scegli un prodotto da ricaricare…',''));
+            prodotti.forEach((p,i)=>select.appendChild(new Option(`${p.nome}${p.ubicazione ? ' — '+p.ubicazione : ''}`,String(i))));
+            document.getElementById('catalogo-ricordato').hidden = !prodotti.length;
+        } catch (errore) { document.getElementById('esito-ricerca-codice').textContent='Catalogo non leggibile: '+errore.message; }
+    }
+    function usaProdottoCatalogo(indice) {
+        if (indice === '') return;
+        const p = EatStorico.leggi('eat_catalogo_prodotti_v1')[Number(indice)];
+        if (!p) return;
+        resetForm();
+        document.getElementById('prodotto-nome').value=p.nome || '';
+        document.getElementById('prodotto-barcode').value=p.barcode || '';
+        document.getElementById('prodotto-ubicazione').value=p.ubicazione || '';
+        document.getElementById('prodotto-fornitore').value=p.fornitore || '';
+        EatCategorie.imposta(p.categoria || '',p.sottocategoria || '');
+        document.getElementById('prodotto-pezzi').value=String(Math.max(1,Number(p.pezzi_per_confezione)||1));
+        document.getElementById('prodotto-quantita').value='';
+        impostaFotoProdotto(p.immagine);
+        window.dettagliEstesiCorrenti={...(p.dettagli_tecnici||{})};
+        metadatiRicercaCorrente=p.ricerca_prodotto?{...p.ricerca_prodotto}:null;
+        document.getElementById('esito-ricerca-codice').textContent='Dati ripresi dal catalogo. Inserisci le confezioni acquistate e scegli la nuova scadenza prima di salvare.';
+    }
+
+    /* --- SALVATAGGIO IN LOCALSTORAGE CON DATI ESSENZIALI E DETTAGLI DIFFERITI --- */
+    function salvaProdotto() {
+        const barcode = document.getElementById('prodotto-barcode').value;
+        const nome = document.getElementById('prodotto-nome').value;
+        const {categoria, sottocategoria} = EatCategorie.scelta(document.getElementById('prodotto-categoria').value, document.getElementById('prodotto-sottocategoria').value);
+        if (sottocategoria && !categoria) { alert('Scegli una categoria prima della sottocategoria.'); return; }
+        const quantita = document.getElementById('prodotto-quantita').value;
+        const pezzi = document.getElementById('prodotto-pezzi').value;
+        const totalePezzi = Number(quantita) * Number(pezzi);
+        if (![Number(quantita), Number(pezzi), totalePezzi].every(n => Number.isSafeInteger(n) && n > 0)) {
+            alert('Inserisci numeri interi maggiori di zero per confezioni e pezzi per confezione.');
+            return;
+        }
+        const ubicazione = EatUbicazioni.canonica(document.getElementById('prodotto-ubicazione').value);
+        const fornitore = document.getElementById('prodotto-fornitore').value;
+        const tassativo = document.getElementById('prodotto-tassativo').checked;
+        const note = document.getElementById('prodotto-note').value;
+        const foto = document.getElementById('prodotto-foto').getAttribute('data-foto-prodotto') || '';
+
+        if (fornitore) localStorage.setItem('eat_ultimo_fornitore', fornitore);
+
+        const tipoScadenza = document.querySelector('input[name="tipo-scadenza"]:checked').value;
+        let scadenzaValore = "";
+        let scadenzaRiepilogo = "Nessuna";
+        
+        if (tipoScadenza === 'giorni') {
+            scadenzaValore = document.getElementById('valore-giorni').value;
+            scadenzaRiepilogo = `Tra ${scadenzaValore} giorni`;
+        } else if (tipoScadenza === 'mesi') {
+            scadenzaValore = document.getElementById('valore-mesi').value;
+            scadenzaRiepilogo = `Tra ${scadenzaValore} mesi`;
+        } else if (tipoScadenza === 'esatta') {
+            scadenzaValore = document.getElementById('valore-data-esatta').value;
+            scadenzaRiepilogo = scadenzaValore || "Non specificata";
+        }
+
+        const istanteCarico = new Date();
+        const scadenzaCalcolata = EatScadenze.calcola(tipoScadenza, scadenzaValore, EatScadenze.oggi(istanteCarico));
+        if (!scadenzaCalcolata.valida) { alert(scadenzaCalcolata.messaggio); return; }
+        if (tassativo && !scadenzaCalcolata.data) { alert('Per un articolo tassativo indica una scadenza.'); return; }
+        scadenzaRiepilogo = scadenzaCalcolata.data ? EatScadenze.formato(scadenzaCalcolata.data) + (tassativo ? ' — tassativa' : ' — indicativa') : 'Nessuna scadenza indicata';
+
+        const conferma = confirm(`Riepilogo inserimento:\n\n• Prodotto: ${nome || 'Senza nome'}\n• Categoria: ${categoria}${sottocategoria ? " → " + sottocategoria : ""}\n• Ubicazione: ${ubicazione || 'Non specificata'}\n• Quantità: ${quantita} conf. (${pezzi} pz/conf), totale ${totalePezzi} pezzi\n• Scadenza: ${scadenzaRiepilogo}\n\nConfermi il salvataggio in dispensa?`);
+
+        if (!conferma) return;
+        if (!EatUbicazioni.ricorda([ubicazione])) return;
+
+        // Impedisce a una risposta tardiva di cambiare la scheda dopo la conferma.
+        controllerRicercaCodice?.abort();
+        ricercaCodiceCorrente++;
+        const ricercaSalvata = metadatiRicercaCorrente?.barcode === barcode ? {...metadatiRicercaCorrente} : {barcode, stato: 'manuale', nome_online: ''};
+        if (ricercaSalvata.stato === 'in_corso') ricercaSalvata.stato = 'da_completare';
+        ricercaSalvata.nome_personalizzato = ricercaSalvata.nome_online ? nome !== ricercaSalvata.nome_online : false;
+        const prodottoData = {
+            barcode: barcode,
+            nome: nome || 'Prodotto senza nome',
+            categoria: categoria,
+            sottocategoria: sottocategoria,
+            ubicazione: ubicazione,
+            fornitore: fornitore,
+            quantita: parseInt(quantita),
+            pezzi_per_confezione: Number(pezzi),
+            pezzi_rimanenti: totalePezzi,
+            tassativo: tassativo,
+            tipo_scadenza: tipoScadenza,
+            valore_scadenza: scadenzaValore,
+            data_scadenza: scadenzaCalcolata.data,
+            data_scadenza_iniziale: scadenzaCalcolata.data,
+            note: note,
+            immagine: foto,
+            dettagli_tecnici: window.dettagliEstesiCorrenti || {},
+            ricerca_prodotto: ricercaSalvata,
+            data_carico: istanteCarico.toISOString()
+        };
+
+        let dispensa = EatStorico.leggi('eat_dispensa_locale');
+        const dispensaAttesa = localStorage.getItem('eat_dispensa_locale');
+        dispensa.push(prodottoData);
+        try {
+            EatStorico.registra('Carico', `${prodottoData.nome}: ${totalePezzi} pezzi (${quantita} confezioni da ${pezzi}) in ${ubicazione || 'ubicazione non indicata'}`, {eat_dispensa_locale: dispensa}, {eat_dispensa_locale: dispensaAttesa});
+        } catch (errore) {
+            alert('Prodotto non salvato. ' + errore.message);
+            return;
+        }
+        try {
+            EatCategorie.ricorda(prodottoData);
+            localStorage.setItem('eat_ultima_categoria', categoria);
+            localStorage.setItem('eat_ultima_sottocategoria', sottocategoria);
+        } catch (errore) {
+            alert('Il prodotto è salvato, ma non è stato possibile aggiornare la memoria delle categorie.');
+        }
+        EatCategorie.imposta(categoria, sottocategoria);
+        if (ubicazione) localStorage.setItem('eat_ultima_ubicazione', ubicazione);
+        EatUbicazioni.suggerisci('ubicazioni-carico');
+
+        const altroProdotto = confirm("✅ Prodotto salvato in dispensa!\n\nVuoi inserire un altro prodotto?");
+
+        resetForm();
+        window.dettagliEstesiCorrenti = {};
+
+        if (altroProdotto) {
+            avviaScannerLive();
+        } else {
+            window.location.href = "../menu.html";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<!-- Versione interfaccia: ubicazioni verticali compatte v2, 10 novembre 2026. -->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salidas y consumo | EatMeFirst</title>
+    <meta name="description" content="Gestisci lo scarico e il consumo parziale degli alimenti in dispensa con il regolatore visivo di EatMeFirst.">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --success-color: #238636;
+            --danger-color: #da3633;
+            --warning-color: #d29922;
+            --border-color: #30363d;
+            --light-bg: #21262d;
+            --input-bg: #0d1117;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- BARRA NAVIGAZIONE --- */
+        .app-bar {
+            background: rgba(22, 27, 34, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 40;
+        }
+
+        .app-brand { display: flex; align-items: center; gap: 12px; }
+        .btn-back {
+            background: var(--light-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); padding: 6px 14px;
+            border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+        }
+        .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+        .app-nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .language-flags {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            background: var(--light-bg);
+            padding: 4px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .flag-link {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+        .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+        .container { max-width: 900px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
+
+        /* --- BOX MESSAGGIO DI EVA (DISMISSIBILE) --- */
+        .eva-welcome-box {
+            background: #16222f;
+            border: 1px solid #3182ce;
+            border-left: 5px solid #3182ce;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .eva-avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .eva-welcome-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-color);
+            padding-right: 25px;
+        }
+
+        .eva-welcome-content strong { color: var(--accent-color); }
+
+        .eva-welcome-content a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+
+        .eva-welcome-content a:hover { color: #79c0ff; }
+
+        .btn-close-eva {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            border-radius: 4px;
+        }
+
+        .btn-close-eva:hover { color: var(--text-color); background: rgba(255, 255, 255, 0.1); }
+
+        /* CARD FILTRI & RICERCA */
+        .card-box {
+            background: var(--card-bg); border-radius: 16px;
+            border: 1px solid var(--border-color); padding: 24px;
+            margin-bottom: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .card-title { font-size: 19px; color: var(--accent-color); font-weight: 700; }
+
+        .filtri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .search-input, .filter-select {
+            width: 100%; padding: 11px 14px; background: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--text-color); font-size: 14px; outline: none;
+        }
+
+        /* LISTA PRODOTTI */
+        .product-list { display: flex; flex-direction: column; gap: 10px; }
+        .product-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 16px; background: var(--light-bg);
+            border: 1px solid var(--border-color); border-radius: 10px;
+            gap: 15px;
+        }
+
+        .product-info-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .product-thumb {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #0d1117;
+        }
+
+        .actions-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+        
+        .btn-esaurito {
+            background-color: var(--danger-color); color: #fff;
+            border: none; padding: 6px 10px; border-radius: 6px;
+            font-weight: bold; cursor: pointer; font-size: 13px;
+        }
+        .btn-esaurito:hover { opacity: 0.9; }
+
+        .btn-parziale {
+            background-color: var(--warning-color); color: #0d1117;
+            border: none; padding: 6px 10px; border-radius: 6px;
+            font-weight: bold; cursor: pointer; font-size: 13px;
+        }
+        .btn-parziale:hover { opacity: 0.9; }
+
+        .btn-modifica {
+            background-color: var(--accent-color); color: #0d1117;
+            border: none; padding: 6px 10px; border-radius: 6px;
+            font-weight: bold; cursor: pointer; font-size: 13px;
+        }
+        .btn-modifica:hover { opacity: 0.9; }
+
+        /* --- MODALI --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85); display: flex; justify-content: center;
+            align-items: center; z-index: 100; padding: 20px; overflow-y: auto;
+        }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; max-width: 520px; width: 100%; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: auto;
+        }
+        #modalRiepilogoScarico { z-index: 200; }
+        .riepilogo-scarico {
+            max-width: 740px;
+            height: min(86vh, 760px);
+            height: min(86dvh, 760px);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .riepilogo-scarico h3 { flex-shrink: 0; color: var(--accent-color); margin: 0; }
+        .riepilogo-scarico-corpo { min-height: 0; flex: 1; overflow-y: auto; padding: 4px; }
+        .riepilogo-scarico-richiamo { padding: 12px; border: 2px solid var(--warning-color); border-radius: 8px; margin-bottom: 16px; }
+        #riepilogoScaricoTesto { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+        .riepilogo-scarico .modal-buttons { flex-shrink: 0; margin-top: 0; }
+
+        .interactive-shape-wrapper {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            user-select: none;
+        }
+
+        .shape-canvas { cursor: pointer; transition: transform 0.1s ease; }
+        .slider-level-control { width: 80%; margin-top: 12px; accent-color: var(--success-color); cursor: pointer; }
+
+        .status-badge-container {
+            display: flex; justify-content: space-around; width: 100%;
+            margin-top: 10px; font-size: 13px; font-weight: 600;
+        }
+        .badge-ver { color: #2ecc71; }
+        .badge-ros { color: #e74c3c; }
+
+        .location-change-box {
+            background: #0d1117; border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 14px; margin-bottom: 15px;
+        }
+        .location-change-box label { font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 600; }
+
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
+        .btn-secondary {
+            background: var(--light-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;
+        }
+        .btn-confirm {
+            background-color: var(--success-color); color: #fff;
+            border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer;
+        }
+        .btn-confirm:hover { background-color: #2ea043; }
+
+        /* --- FOOTER CON LINK GUIDE PERMANENTI --- */
+        .app-footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 16px 20px;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover { color: var(--accent-color); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            #modalSpostaPezzi { padding: 6px; }
+            #modalSpostaPezzi .modal-content { max-width: none; width: 100%; padding: 12px; }
+            #modalSpostaPezzi .search-input { padding: 9px 10px; margin-bottom: 8px; }
+            .filtri-grid { grid-template-columns: 1fr; }
+            .language-flags { display: flex; gap: 4px; padding: 2px 6px; }
+            .flag-img { width: 18px; height: 12px; }
+            .eva-welcome-box { flex-direction: column; align-items: center; text-align: center; }
+            .eva-welcome-content { padding-right: 0; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+    <!-- BARRA NAVIGAZIONE SUPERIORE CON LOGO E BANDIERE -->
+    <header class="app-bar">
+        <div class="app-brand">
+            <a href="../menu.html" class="btn-back">← Menú</a>
+            <div class="mini-logo" style="display: inline-flex; align-items: center;">
+                <img src="../../IMG/logo_1024_white.png" alt="Logo EatMeFirst" style="height: 36px; width: auto; filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.8));">
+            </div>
+            <span class="brand-title">Salidas y consumo</span>
+        </div>
+
+        <div class="app-nav-right">
+            <nav class="language-flags">
+                <a href="../../IT/scarico/index.html" class="flag-link" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" class="flag-img" alt="IT"></a>
+                <a href="../../EN/unload/index.html" class="flag-link" title="English"><img src="../../IMG/bandiera_England.jpg" class="flag-img" alt="EN"></a>
+                <a href="../../DE/entnahme/index.html" class="flag-link" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" class="flag-img" alt="DE"></a>
+                <a href="../../FR/dechargement/index.html" class="flag-link" title="Français"><img src="../../IMG/bandiera_France.jpg" class="flag-img" alt="FR"></a>
+                <a href="index.html" class="flag-link active" title="Español"><img src="../../IMG/bandiera_Espana.jpg" class="flag-img" alt="ES"></a>
+            </nav>
+        </div>
+    </header>
+<div style="text-align:right;margin:8px 20px"><a href="../operaciones/index.html" style="color:#79c0ff">↩ Últimas 15 operaciones</a></div>
+
+    <main class="container">
+        
+        <!-- MESSAGGIO D'IMPATTO INIZIALE DI EVA (DISMISSIBILE) -->
+        <div id="evaWelcomeBox" class="eva-welcome-box">
+            <img src="../../IMG/avatar_eva.png" alt="Eva Avatar" class="eva-avatar-large">
+            <div class="eva-welcome-content">
+                <p style="margin-bottom:14px"><strong>¡Primero cocina, luego cuenta!</strong> ¿Manos mojadas o llenas de harina? ¡Deja el móvil! Apunta lo que usas: dos pastillas de caldo, medio litro de leche, 250 gramos de pasta… ¡Hasta Max se olvida de cosas si confía solo en la memoria! Actualiza la despensa en un momento tranquilo con Retirar unidades o Consumo parcial, indicando lo que queda. Hasta entonces, las cantidades y sugerencias de compra pueden estar desactualizadas.</p>
+                ¡Al final me salí con la mía! Max quería simplificarlo todo y Leo protestaba por el tiempo, pero insistí en explicar bien dos cosas. ¡Alguien tiene que organizar esta casa!<br><br>
+                ¿Has abierto algo y consumido solo una parte? Abre la <a href="guia-consumo-parcial.html" target="_blank">Guía de consumo parcial</a> y señala lo que queda en la botella o el envase. Si lo cambias de sitio, la <a href="guia-cambio-ubicacion.html" target="_blank">Guía de cambio de ubicación</a> te ayuda a encontrarlo. ¡Basta de charla, vamos a organizarnos!
+            </div>
+            <button type="button" class="btn-close-eva" onclick="chiudiWelcomeEva()" title="Chiudi messaggio">✕</button>
+        </div>
+
+        <div class="card-box">
+            <div class="card-title-row">
+                <div class="card-title">🔍 Buscar producto para consumir o retirar</div>
+                <a href="../operaciones/index.html" class="btn-secondary" style="text-decoration:none">↩ Últimas 15 operaciones</a>
+            </div>
+
+            <div class="filtri-grid">
+                <input type="text" id="filtroNome" class="search-input" placeholder="Buscar por nombre…" oninput="filtraDispensa()">
+                <select id="filtroUbicazione" class="filter-select" onchange="filtraDispensa()">
+                    <option value="">Todas las ubicaciones</option>
+                </select>
+                <select id="filtroCategoria" class="filter-select" onchange="document.getElementById('filtroSottocategoria').value=''; EatCategorie.filtri(dispensaGlobale); filtraDispensa()">
+                    <option value="">Todas las categorías</option>
+                </select>
+                <select id="filtroSottocategoria" class="filter-select" disabled onchange="filtraDispensa()"><option value="">Todas las subcategorías</option></select>
+            </div>
+
+            <div id="listaRisultati" class="product-list"></div>
+        </div>
+    </main>
+
+    <!-- Numero dei pezzi da scaricare: volutamente senza valore iniziale -->
+    <div id="modalScaricoPezzi" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3 style="color:var(--accent-color)">Retirar unidades</h3>
+            <p id="infoScaricoPezzi" style="color:var(--text-muted)"></p>
+            <label for="quantitaPezziScarico">¿Cuántas unidades quieres retirar?</label>
+            <input type="number" id="quantitaPezziScarico" class="search-input" min="1" placeholder="Introduce la cantidad" autocomplete="off">
+            <div class="modal-buttons">
+                <button type="button" class="btn-secondary" onclick="chiudiScaricoPezzi()">Cancelar</button>
+                <button type="button" class="btn-confirm" onclick="confermaNumeroPezziScarico()">Continuar al resumen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Riepilogo interno all'app: dimensioni controllabili e comandi sempre visibili. -->
+    <div id="modalRiepilogoScarico" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="titoloRiepilogoScarico" onkeydown="tastieraRiepilogoScarico(event)">
+        <div class="modal-content riepilogo-scarico">
+            <h3 id="titoloRiepilogoScarico">Resumen de salida</h3>
+            <div class="riepilogo-scarico-corpo">
+                <div id="riepilogoScaricoRichiamo" class="riepilogo-scarico-richiamo" hidden></div>
+                <div id="riepilogoScaricoTesto"></div>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" id="riepilogoScaricoAnnulla" class="btn-secondary" onclick="concludiRiepilogoScarico(false)">Cancelar</button>
+                <button type="button" id="riepilogoScaricoConferma" class="btn-confirm" onclick="concludiRiepilogoScarico(true)">Confirmar y guardar salida</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE SCARICO PARZIALE (SENZA POST-IT) -->
+    <div id="modalScaricoVisual" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3 id="modalNomeProdotto" style="color: var(--accent-color); font-size: 18px; text-align: center; margin-bottom: 4px;">Nombre del producto</h3>
+            <p id="modalUbicazioneAttuale" style="text-align: center; color: var(--text-muted); font-size: 12px; margin-bottom: 16px;">Ubicación actual: -</p>
+
+            <div class="interactive-shape-wrapper">
+                <div id="sceltaPezzoConsumo parcial" style="display:none; margin-bottom:12px; text-align:left;">
+                    <label for="numeroPezzoConsumo parcial">Unidad que se va a abrir (solo una):</label>
+                    <select id="numeroPezzoConsumo parcial" class="filter-select"><option value="1">1 unidad</option></select>
+                    <small style="color:var(--text-muted)">El control afecta a una unidad, no al envase completo.</small>
+                </div>
+                <div id="shapeContainer"></div>
+                <input type="range" id="levelSlider" class="slider-level-control" min="0" max="100" value="100" oninput="aggiornaLivelloVisivo(this.value)">
+
+                <div class="status-badge-container">
+                    <span class="badge-ver">🟢 Contenido restante: <strong id="lblRimanente">100%</strong></span>
+                    <span class="badge-ros">🔴 Consumido: <strong id="lblConsumato">0%</strong></span>
+                </div>
+            </div>
+
+            <div class="location-change-box">
+                <label for="nuovaUbicazioneSelect">📍 ¿Dónde guardar la unidad abierta?</label>
+                <select id="nuovaUbicazioneSelect" class="filter-select" style="margin-bottom: 8px;" onchange="verificaNuovaUbicazione(this.value)">
+                </select>
+                <input type="text" id="inputNuovaUbicazioneCustom" class="search-input" placeholder="O escribe una ubicación nueva…" style="display:none;">
+            </div>
+
+            <div class="modal-buttons">
+                <button type="button" class="btn-secondary" onclick="chiudiModalScarico()">Cancelar</button>
+                <button type="button" class="btn-confirm" onclick="confermaScaricoEffettivo()">Confirmar y guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spostamento di pezzi interi senza considerarli consumati -->
+    <div id="modalSpostaPezzi" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3 id="titoloSpostaPezzi" style="color:var(--accent-color)">Mover unidades</h3>
+            <p id="riepilogoSpostaPezzi" style="color:var(--text-muted)"></p>
+            <label for="numeroPezziDaSpostare">¿Cuántas unidades quieres mover?</label>
+            <input type="number" id="numeroPezziDaSpostare" class="search-input" min="1" value="1">
+            <label for="destinazioneSpostaPezzi" style="display:block;margin-top:12px">Nueva ubicación (ej. frigorífico)</label>
+            <div id="scelteDestinazioneSposta" role="group" aria-label="Ubicaciones disponibles" style="display:flex;flex-direction:column;gap:3px;max-height:min(34dvh,260px);overflow-y:auto;margin:6px 0"></div>
+            <input type="text" id="destinazioneSpostaPezzi" class="search-input" placeholder="Elige arriba o escribe una ubicación nueva" aria-label="Destino del traslado">
+            <div class="modal-buttons">
+                <button type="button" class="btn-secondary" onclick="chiudiModalSpostaPezzi()">Cancelar</button>
+                <button type="button" class="btn-confirm" onclick="confermaSpostaPezzi()">Confirmar traslado</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTE E PROMEMORIA: NON MODIFICA LE QUANTITÀ -->
+    <div id="modalModificaScheda" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="max-height:85vh;overflow-y:auto">
+            <h3 style="color:var(--accent-color);margin-bottom:12px">📌 Notas y recordatorios</h3>
+            <p id="modNomeProdotto" style="margin-bottom:14px;font-weight:bold"></p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+                <div>
+                    <label for="modEditNote">Notas</label>
+                    <textarea id="modEditNote" class="search-input" rows="3" placeholder="Por ejemplo: guardar para mamá"></textarea>
+                </div>
+                <div>
+                    <label for="modDestinazione">Reservado para / Evento (opcional)</label>
+                    <input type="text" id="modDestinazione" class="search-input" placeholder="Por ejemplo: fiesta de verano">
+                </div>
+                <div>
+                    <label for="modDataEvento">Fecha del evento (opcional)</label>
+                    <input type="date" id="modDataEvento" class="search-input" oninput="aggiornaConflittoEvento()">
+                </div>
+                <div>
+                    <label for="modAnticipoEvento">Avisar estos días antes</label>
+                    <input type="number" id="modAnticipoEvento" class="search-input" min="0" max="365" step="1" placeholder="0 = el día del evento">
+                    <small>Para una reserva sencilla puedes dejar vacíos la fecha y los días de aviso.</small>
+                </div>
+                <div id="modAvvisoEvento" hidden style="padding:12px;border:2px solid #f1c40f;border-radius:8px">
+                    <p id="modTestoAvvisoEvento" role="status"></p>
+                    <label id="modConfermaEventoLabel" style="display:block;margin-top:10px">
+                        <input type="checkbox" id="modConfermaEvento">
+                        He leído el aviso y quiero reservar el producto para este evento de todos modos.
+                    </label>
+                </div>
+                <small>La fecha del evento no cambia la del producto. Los recordatorios aparecen con la app abierta.</small>
+            </div>
+            <div class="modal-buttons" style="margin-top:20px">
+                <button type="button" class="btn-secondary" onclick="chiudiModalModifica()">Cancelar</button>
+                <button type="button" class="btn-confirm" onclick="salvaModificaScheda()">💾 Guardar notas y recordatorios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER PERMANENTE CON LINK GUIDE -->
+    <footer class="app-footer">
+        <div class="footer-links">
+            <a href="guia-consumo-parcial.html" target="_blank" class="footer-link">📌 Guía de consumo parcial</a>
+            <a href="guia-cambio-ubicacion.html" target="_blank" class="footer-link">📍 Guía de cambio de ubicación</a>
+        </div>
+    </footer>
+
+    <datalist id="ubicazioni-scarico"></datalist>
+    <script src="../../js/errori-es.js"></script>
+<script src="../../js/storico-it.js"></script>
+    <script src="../../js/scadenze-es.js"></script>
+    <script src="../../js/promemoria-es.js"></script>
+    <script src="../../js/ubicazioni-es.js"></script>
+    <script src="../../js/categorie-es.js"></script>
+    <script>
+        let dispensaGlobale = [];
+        let prodottoSelezionato = null;
+        let percentualeAttuale = 100;
+        let indiceModificaAttuale = null;
+        let indiceSpostamento = null;
+        let indiceScaricoPezzi = null;
+        let operazioneInCorso = null;
+
+        function memorizzaPrimaDiScaricare(azione, tipo = 'Scarico') {
+            try {
+                if (!EatStorico.coerente('eat_dispensa_locale', dispensaGlobale)) throw Error('La dispensa è cambiata. Ricarica la pagina prima di continuare.');
+                for (const key of ['eat_spesa_locale', 'eat_lista_spesa_v1']) EatStorico.leggi(key);
+                operazioneInCorso = {
+                    tipo, descrizione: azione, aggiornamenti: {}, riferimenti: [],
+                    attesi: Object.fromEntries(['eat_dispensa_locale', 'eat_lista_spesa_v1', 'eat_spesa_locale'].map(k => [k, localStorage.getItem(k)]))
+                };
+                return true;
+            } catch (errore) {
+                alert(EatErroriES(errore.message));
+                return false;
+            }
+        }
+
+        function pezziDisponibili(p) {
+            const espliciti = Number(p.pezzi_rimanenti);
+            if (Number.isSafeInteger(espliciti) && espliciti >= 0) return espliciti;
+            const conf = Number(p.quantita) || 1;
+            const pezzi = Number(p.pezzi_per_confezione) || 1;
+            return Math.max(0, Math.round(conf * pezzi));
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Controllo se il messaggio di Eva è stato chiuso in precedenza
+            if (localStorage.getItem('eat_eva_welcome_closed') === 'true') {
+                const box = document.getElementById('evaWelcomeBox');
+                if (box) box.style.display = 'none';
+            }
+
+            await caricaDispensaCombinata();
+        });
+
+        function aggiornaScaricoSeLibero() {
+            const aperta = ['modalScaricoPezzi', 'modalScaricoVisual', 'modalModificaScheda', 'modalSpostaPezzi', 'modalRiepilogoScarico'].some(id => document.getElementById(id).style.display === 'flex');
+            if (!aperta) caricaDispensaCombinata();
+        }
+        window.addEventListener('pageshow', aggiornaScaricoSeLibero);
+        window.addEventListener('focus', aggiornaScaricoSeLibero);
+        window.addEventListener('storage', evento => { if (evento.key === 'eat_dispensa_locale' || evento.key === null) setTimeout(aggiornaScaricoSeLibero, 100); });
+
+        function chiudiWelcomeEva() {
+            const box = document.getElementById('evaWelcomeBox');
+            if (box) box.style.display = 'none';
+            localStorage.setItem('eat_eva_welcome_closed', 'true');
+        }
+
+        /* Unica dispensa locale, condivisa con Carico e con lo storico. */
+        async function caricaDispensaCombinata() {
+            try {
+                dispensaGlobale = EatStorico.leggi('eat_dispensa_locale');
+                if (EatUbicazioni.ricorda([], dispensaGlobale)) EatUbicazioni.suggerisci('ubicazioni-scarico', dispensaGlobale);
+                popolaFiltri();
+                filtraDispensa();
+            } catch (errore) { alert('No se pudo leer la despensa. ' + EatErroriES(errore.message)); }
+        }
+
+        function salvaDispensaAggiornata() {
+            try {
+                if (!operazioneInCorso) throw Error('Operazione non preparata: ricarica la pagina.');
+                const op = operazioneInCorso;
+                const risultati = EatStorico.registra(op.tipo, op.descrizione,
+                    {...op.aggiornamenti, eat_dispensa_locale: dispensaGlobale}, op.attesi, op.riferimenti);
+                dispensaGlobale = risultati.eat_dispensa_locale;
+                operazioneInCorso = null;
+                return true;
+            } catch (errore) {
+                operazioneInCorso = null;
+                alert('Operación no guardada. ' + EatErroriES(errore.message));
+                caricaDispensaCombinata();
+                return false;
+            }
+        }
+
+        function popolaFiltri() {
+            const ubSelect = document.getElementById('filtroUbicazione');
+            
+            const ubs = [...new Set(dispensaGlobale.map(p => p.ubicazione).filter(Boolean))];
+
+
+            ubSelect.replaceChildren(new Option('Todas las ubicaciones', ''));
+            ubs.forEach(u => ubSelect.appendChild(new Option(u, u)));
+
+            EatCategorie.filtri(dispensaGlobale, true);
+        }
+
+        function filtraDispensa() {
+            const query = document.getElementById('filtroNome').value.toLowerCase();
+            const ub = document.getElementById('filtroUbicazione').value;
+            const cat = document.getElementById('filtroCategoria').value;
+
+            const container = document.getElementById('listaRisultati');
+            const filtrati = dispensaGlobale.filter(p => 
+                (p.nome || "").toLowerCase().includes(query) &&
+                (ub === "" || p.ubicazione === ub) &&
+                (cat === "" || p.categoria === cat) &&
+                (!document.getElementById('filtroSottocategoria').value || p.sottocategoria === document.getElementById('filtroSottocategoria').value)
+            );
+
+            if (filtrati.length === 0) {
+                container.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--text-muted); font-style: italic;">No se han encontrado productos en la despensa.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtrati.map((p) => {
+                const index = dispensaGlobale.indexOf(p);
+                const fotoProdotto = EatCategorie.foto(p.immagine || p.foto);
+                const n = pezziDisponibili(p);
+                const dettaglioPezzi = ` | 📦 ${n} ${n === 1 ? 'unidad disponible' : 'unidades disponibles'}`;
+                
+                return `
+                <div class="product-item">
+                    <div class="product-info-left">
+                        <img src="${fotoProdotto}" alt="Vista previa" class="product-thumb">
+                        <div>
+                            <strong>${EatCategorie.escape(p.nome || 'Producto sin nombre')}</strong><br>
+                            <small>${EatCategorie.escape(p.categoria)}${p.sottocategoria ? ' → ' + EatCategorie.escape(p.sottocategoria) : ''}</small><br>
+                            <small style="color: var(--text-muted)">📍 ${p.ubicazione ? EatCategorie.escape(p.ubicazione) : '<span style="color:#e74c3c;">No indicada</span>'}${dettaglioPezzi} | ⏳ Contenido restante: ${p.percentuale ?? 100}%</small>
+                            ${EatPromemoria.html(p)}
+                        </div>
+                    </div>
+                    <div class="actions-group">
+                        <button class="btn-modifica" onclick="apriModalModifica(${index})">📌 Notas y recordatorios</button>
+                        ${n > 1 ? `<button class="btn-modifica" onclick="apriModalSpostaPezzi(${index})">📦 Mover unidades</button>` : ''}
+                        <button class="btn-parziale" onclick="apriModalVisual(${index})">Consumo parcial</button>
+                        <button class="btn-esaurito" onclick="segnaEsauritoDiretto(${index})">Retirar unidades</button>
+                    </div>
+                </div>
+            `;}).join('');
+        }
+
+        function apriModalModifica(index) {
+            const p = dispensaGlobale[index];
+            if (!p) return;
+            indiceModificaAttuale = index;
+            document.getElementById('modNomeProdotto').textContent = p.nome || 'Producto sin nombre';
+            document.getElementById('modEditNote').value = p.note || '';
+            document.getElementById('modDestinazione').value = p.promemoria?.destinazione || '';
+            document.getElementById('modDataEvento').value = p.promemoria?.data_evento || '';
+            document.getElementById('modAnticipoEvento').value = p.promemoria?.anticipo_giorni ?? '';
+            aggiornaConflittoEvento();
+            const conflitto = EatPromemoria.conflitto(p, document.getElementById('modDataEvento').value);
+            document.getElementById('modConfermaEvento').checked = p.promemoria?.conferma_oltre_scadenza === true &&
+                p.promemoria?.scadenza_confermata === conflitto.scadenza &&
+                p.promemoria?.evento_confermato === document.getElementById('modDataEvento').value;
+            document.getElementById('modalModificaScheda').style.display = 'flex';
+        }
+
+        function aggiornaConflittoEvento() {
+            const p = dispensaGlobale[indiceModificaAttuale];
+            if (!p) return;
+            const confronto = EatPromemoria.conflitto(p, document.getElementById('modDataEvento').value);
+            document.getElementById('modAvvisoEvento').hidden = !confronto.testo;
+            document.getElementById('modTestoAvvisoEvento').textContent = confronto.testo;
+            document.getElementById('modConfermaEventoLabel').style.display = confronto.oltre ? 'block' : 'none';
+            document.getElementById('modConfermaEvento').checked = false;
+        }
+
+        function chiudiModalModifica() {
+            document.getElementById('modalModificaScheda').style.display = 'none';
+            indiceModificaAttuale = null;
+        }
+
+        function salvaModificaScheda() {
+            const p = dispensaGlobale[indiceModificaAttuale];
+            if (!p || indiceModificaAttuale === null) return;
+            const risultato = EatPromemoria.valida(document.getElementById('modDestinazione').value,
+                document.getElementById('modDataEvento').value, document.getElementById('modAnticipoEvento').value);
+            if (risultato.errore) { alert(risultato.errore); return; }
+            const memo = risultato.promemoria;
+            const confronto = EatPromemoria.conflitto(p, memo?.data_evento);
+            if (confronto.oltre && !document.getElementById('modConfermaEvento').checked) {
+                alert('Lee el aviso de fecha y marca la casilla si quieres reservar el producto de todos modos.');
+                return;
+            }
+            if (memo) {
+                memo.conferma_oltre_scadenza = confronto.oltre && document.getElementById('modConfermaEvento').checked;
+                memo.scadenza_confermata = confronto.oltre ? confronto.scadenza : null;
+                memo.evento_confermato = confronto.oltre ? memo.data_evento : null;
+            }
+            const aggiornata = [...dispensaGlobale];
+            aggiornata[indiceModificaAttuale] = {...p, note: document.getElementById('modEditNote').value.trim(), promemoria: memo};
+            try {
+                if (!EatStorico.coerente('eat_dispensa_locale', dispensaGlobale)) throw Error('La dispensa è cambiata: ricarica la pagina.');
+                const attesa = localStorage.getItem('eat_dispensa_locale');
+                const risultatoStorico = EatStorico.registra('Note e promemoria', `Notas y recordatorios de ${p.nome}`, {eat_dispensa_locale: aggiornata}, {eat_dispensa_locale: attesa});
+                aggiornata.splice(0, aggiornata.length, ...risultatoStorico.eat_dispensa_locale);
+            } catch (errore) {
+                alert('Notas y recordatorios no guardados. ' + EatErroriES(errore.message));
+                return;
+            }
+            dispensaGlobale = aggiornata;
+            chiudiModalModifica();
+            filtraDispensa();
+        }
+
+        function segnaEsauritoDiretto(index) {
+            const prod = dispensaGlobale[index];
+            if (!prod) return;
+            indiceScaricoPezzi = index;
+            document.getElementById('infoScaricoPezzi').textContent = `${prod.nome || 'Producto'} — ${prod.ubicazione || 'Ubicación no indicada'} — ${pezziDisponibili(prod)} unidades disponibles`;
+            const campo = document.getElementById('quantitaPezziScarico');
+            campo.value = '';
+            campo.max = String(pezziDisponibili(prod));
+            document.getElementById('modalScaricoPezzi').style.display = 'flex';
+            campo.focus();
+        }
+
+        function chiudiScaricoPezzi() {
+            document.getElementById('modalScaricoPezzi').style.display = 'none';
+            indiceScaricoPezzi = null;
+        }
+
+        let risolviRiepilogoScarico = null;
+        let focusPrimaRiepilogoScarico = null;
+
+        function chiediConfermaScarico(testo, prodotto) {
+            if (risolviRiepilogoScarico) return Promise.resolve(false);
+            const richiamo = document.getElementById('riepilogoScaricoRichiamo');
+            richiamo.innerHTML = EatPromemoria.html(prodotto);
+            richiamo.hidden = !richiamo.innerHTML;
+            document.getElementById('riepilogoScaricoTesto').textContent = testo;
+            focusPrimaRiepilogoScarico = document.activeElement;
+            document.getElementById('modalRiepilogoScarico').style.display = 'flex';
+            return new Promise(resolve => {
+                risolviRiepilogoScarico = resolve;
+                document.getElementById('riepilogoScaricoAnnulla').focus();
+            });
+        }
+
+        function concludiRiepilogoScarico(conferma) {
+            if (!risolviRiepilogoScarico) return;
+            const risolvi = risolviRiepilogoScarico;
+            risolviRiepilogoScarico = null;
+            document.getElementById('modalRiepilogoScarico').style.display = 'none';
+            focusPrimaRiepilogoScarico?.focus();
+            risolvi(conferma === true);
+        }
+
+        function tastieraRiepilogoScarico(evento) {
+            if (evento.key === 'Escape') {
+                evento.preventDefault();
+                concludiRiepilogoScarico(false);
+            } else if (evento.key === 'Tab') {
+                const annulla = document.getElementById('riepilogoScaricoAnnulla');
+                const conferma = document.getElementById('riepilogoScaricoConferma');
+                if (evento.shiftKey && document.activeElement === annulla) { evento.preventDefault(); conferma.focus(); }
+                else if (!evento.shiftKey && document.activeElement === conferma) { evento.preventDefault(); annulla.focus(); }
+            }
+        }
+
+        async function confermaNumeroPezziScarico() {
+            const p = dispensaGlobale[indiceScaricoPezzi];
+            if (!p) return;
+            const disponibili = pezziDisponibili(p);
+            const campo = document.getElementById('quantitaPezziScarico');
+            if (campo.value.trim() === '') { alert('Introduce la cantidad antes de continuar.'); return; }
+            const quanti = Number(campo.value);
+            if (!Number.isSafeInteger(quanti) || quanti < 1 || quanti > disponibili) {
+                alert(`Introduce un entero de 1 a ${disponibili}.`); return;
+            }
+            const rimanenti = disponibili - quanti;
+            const riordina = rimanenti === 0 && !p.origine_confezione;
+            const riordino = riordina ? `SÍ: un envase de ${Number(p.pezzi_per_confezione) || 1} unidades.` : 'NO';
+            const riepilogo = `RESUMEN DE SALIDA\n\nProducto: ${p.nome}\nUbicación: ${p.ubicazione || 'No indicada'}\nDisponibles: ${disponibili} unidades\nPara retirar: ${quanti} unidades\nContenido restante: ${rimanenti} unidades\nAñadir a la lista de la compra: ${riordino}\n\n¿Confirmar y guardar?`;
+            const indice = indiceScaricoPezzi;
+            const statoProdotto = JSON.stringify(p);
+            const statoSalvato = localStorage.getItem('eat_dispensa_locale');
+            if (!await chiediConfermaScarico(riepilogo, p)) return;
+            if (indiceScaricoPezzi !== indice || dispensaGlobale[indice] !== p || JSON.stringify(p) !== statoProdotto || localStorage.getItem('eat_dispensa_locale') !== statoSalvato) {
+                alert('La despensa ha cambiado durante el resumen. Revisa los datos antes de retirar.');
+                chiudiScaricoPezzi();
+                await caricaDispensaCombinata();
+                return;
+            }
+            if (!memorizzaPrimaDiScaricare(`Retirar ${quanti} unidades de ${p.nome}`)) return;
+            if (rimanenti === 0) {
+                if (riordina) spostaInListaSpesa(p);
+                dispensaGlobale.splice(indiceScaricoPezzi, 1);
+            } else {
+                p.pezzi_rimanenti = rimanenti;
+                p.quantita = Math.ceil(rimanenti / Math.max(1, Number(p.pezzi_per_confezione) || 1));
+            }
+            if (!salvaDispensaAggiornata()) return;
+            chiudiScaricoPezzi();
+            popolaFiltri();
+            filtraDispensa();
+        }
+
+        function apriModalSpostaPezzi(index) {
+            const p = dispensaGlobale[index];
+            if (!p || pezziDisponibili(p) < 2) return;
+            indiceSpostamento = index;
+            document.getElementById('titoloSpostaPezzi').textContent = p.nome || 'Producto';
+            document.getElementById('riepilogoSpostaPezzi').textContent = `${pezziDisponibili(p)} unidades disponibles in ${p.ubicazione || 'Ubicación no indicada'}`;
+            const input = document.getElementById('numeroPezziDaSpostare');
+            input.max = String(pezziDisponibili(p));
+            input.value = '1';
+            document.getElementById('destinazioneSpostaPezzi').value = '';
+            EatUbicazioni.suggerisci('ubicazioni-scarico', dispensaGlobale);
+            const scelte = document.getElementById('scelteDestinazioneSposta');
+            scelte.replaceChildren();
+            EatUbicazioni.elenco(dispensaGlobale).filter(nome => nome.trim().toLocaleLowerCase('es') !== String(p.ubicazione || '').trim().toLocaleLowerCase('es')).forEach(nome => {
+                const scelta = document.createElement('button');
+                scelta.type = 'button';
+                scelta.textContent = nome;
+                scelta.setAttribute('aria-pressed', 'false');
+                scelta.style.cssText = 'flex:none;width:100%;min-height:36px;padding:5px 10px;font-size:15px;line-height:1.3;text-align:left;white-space:normal;overflow-wrap:anywhere;background:#21262d;color:#f0f6fc;border:1px solid #586475;border-radius:6px;cursor:pointer';
+                scelta.onclick = () => {
+                    document.getElementById('destinazioneSpostaPezzi').value = nome;
+                    evidenziaDestinazioneSposta(nome);
+                };
+                scelte.appendChild(scelta);
+            });
+            document.getElementById('destinazioneSpostaPezzi').oninput = event => evidenziaDestinazioneSposta(event.target.value);
+            document.getElementById('modalSpostaPezzi').style.display = 'flex';
+        }
+
+        function evidenziaDestinazioneSposta(nome) {
+            for (const scelta of document.getElementById('scelteDestinazioneSposta').children) {
+                const selezionata = scelta.textContent === nome;
+                scelta.setAttribute('aria-pressed', String(selezionata));
+                scelta.style.background = selezionata ? '#1f5285' : '#21262d';
+                scelta.style.borderColor = selezionata ? '#79c0ff' : '#586475';
+            }
+        }
+
+        function chiudiModalSpostaPezzi() {
+            document.getElementById('modalSpostaPezzi').style.display = 'none';
+            indiceSpostamento = null;
+        }
+
+        function confermaSpostaPezzi() {
+            const p = dispensaGlobale[indiceSpostamento];
+            if (!p) return;
+            const disponibili = pezziDisponibili(p);
+            const numero = Number(document.getElementById('numeroPezziDaSpostare').value);
+            const destinazione = EatUbicazioni.canonica(document.getElementById('destinazioneSpostaPezzi').value, dispensaGlobale);
+            if (!Number.isSafeInteger(numero) || numero < 1 || numero > disponibili) {
+                alert(`Introduce un entero de 1 a ${disponibili}.`); return;
+            }
+            if (!destinazione || destinazione.toLowerCase() === String(p.ubicazione || '').toLowerCase()) {
+                alert('Introduce una ubicación distinta de la actual.'); return;
+            }
+            if (!confirm(`¿Mover ${numero} unidades de "${p.nome}" de ${p.ubicazione} a ${destinazione}?`)) return;
+            if (!memorizzaPrimaDiScaricare(`Mover ${numero} unidades de ${p.nome}: ${p.ubicazione} → ${destinazione}`, 'Spostamento')) return;
+            if (!EatUbicazioni.ricorda([destinazione], dispensaGlobale)) return;
+            const origine = p.ubicazione;
+            const rimanenti = disponibili - numero;
+            const copia = { ...p, _emf_id: EatStorico.nuovoId(), ubicazione: destinazione, quantita: numero, pezzi_per_confezione: 1, pezzi_rimanenti: numero, data_spostamento: new Date().toISOString(), origine_confezione: p.origine_confezione || origine };
+            // Una confezione parzialmente svuotata conserva il formato originale.
+            if (rimanenti === 0) {
+                dispensaGlobale.splice(indiceSpostamento, 1);
+                // Lista della spesa: si riordina quando termina la scorta nella posizione d'origine.
+                if (!p.origine_confezione) spostaInListaSpesa(p);
+            } else {
+                p.pezzi_rimanenti = rimanenti;
+                p.quantita = Math.ceil(rimanenti / Math.max(1, Number(p.pezzi_per_confezione) || 1));
+            }
+            dispensaGlobale.push(copia);
+            if (!salvaDispensaAggiornata()) return;
+            chiudiModalSpostaPezzi();
+            popolaFiltri();
+            filtraDispensa();
+        }
+
+        function spostaInListaSpesa(prod) {
+            if (!operazioneInCorso) throw Error('Operazione non preparata.');
+            const formato = Number(prod.pezzi_per_confezione) || 1;
+            const voceAcquisto = formato > 1 ? `${prod.nome} — Envase de ${formato} unidades` : prod.nome;
+            const spesa = EatStorico.leggi('eat_spesa_locale');
+            const lista = EatStorico.leggi('eat_lista_spesa_v1');
+            for (const [chiave, righe] of [['eat_spesa_locale', spesa], ['eat_lista_spesa_v1', lista]]) {
+                const prodottoChiave = EatStorico.chiaveProdotto(prod);
+                const esistente = righe.find(s => s.prodotto_chiave === prodottoChiave || s.nome === voceAcquisto);
+                if (esistente) {
+                    operazioneInCorso.riferimenti.push({chiave, id: esistente._emf_id});
+                    if (chiave === 'eat_lista_spesa_v1') Object.assign(esistente, {nome: voceAcquisto, tipo: 'esaurito', checked: false, prodotto_chiave: prodottoChiave});
+                    else esistente.stato = 'esaurito';
+                }
+                else if (chiave === 'eat_spesa_locale') righe.push({nome: voceAcquisto, categoria: prod.categoria || 'General', quantita: 1, stato: 'esaurito'});
+                else righe.push({id: Date.now() + Math.floor(Math.random() * 100000), nome: voceAcquisto, tipo: 'esaurito', checked: false, prodotto_chiave: prodottoChiave});
+                operazioneInCorso.aggiornamenti[chiave] = righe;
+            }
+        }
+
+        function apriModalVisual(index) {
+            prodottoSelezionato = dispensaGlobale[index];
+            if (!prodottoSelezionato) return;
+
+            prodottoSelezionato.indiceGlobale = index;
+            percentualeAttuale = prodottoSelezionato.percentuale || 100;
+
+            // Su prodotti multipli il consumo parziale riguarda un pezzo solo.
+            const scelta = document.getElementById('sceltaPezzoConsumo parcial');
+            scelta.style.display = pezziDisponibili(prodottoSelezionato) > 1 ? 'block' : 'none';
+
+            document.getElementById('modalNomeProdotto').innerText = prodottoSelezionato.nome || 'Producto sin nombre';
+            document.getElementById('modalUbicazioneAttuale').innerText = `Ubicación actual: ${prodottoSelezionato.ubicazione || 'No indicada'}`;
+            document.getElementById('levelSlider').value = percentualeAttuale;
+
+            popolaUbicazioniModal(prodottoSelezionato.ubicazione);
+            disegnaFormaSVG(prodottoSelezionato.forma || 'cilindro_verticale', percentualeAttuale);
+            aggiornaEtichette(percentualeAttuale);
+
+            document.getElementById('modalScaricoVisual').style.display = 'flex';
+        }
+
+        function popolaUbicazioniModal(ubicazioneCorrente) {
+            const select = document.getElementById('nuovaUbicazioneSelect');
+            const inputCustom = document.getElementById('inputNuovaUbicazioneCustom');
+            inputCustom.style.display = 'none';
+            inputCustom.value = '';
+
+            EatUbicazioni.popolaSelect(select, ubicazioneCorrente, 'Guardar en: ', dispensaGlobale);
+        }
+
+        function verificaNuovaUbicazione(valore) {
+            const inputCustom = document.getElementById('inputNuovaUbicazioneCustom');
+            if (valore === 'ALTRO') {
+                inputCustom.style.display = 'block';
+                inputCustom.focus();
+            } else {
+                inputCustom.style.display = 'none';
+                inputCustom.value = '';
+            }
+        }
+
+        function disegnaFormaSVG(forma, percentuale) {
+            const container = document.getElementById('shapeContainer');
+            const hVerde = (percentuale / 100) * 140; 
+            const hRosso = 140 - hVerde;
+
+            if (forma === 'cilindro_verticale' || forma === 'parallelepipedo' || !forma) {
+                container.innerHTML = `
+                    <svg width="100" height="160" viewBox="0 0 100 160" class="shape-canvas" onclick="gestisciClickAltezza(event)">
+                        <rect x="15" y="10" width="70" height="140" rx="8" fill="#e74c3c" />
+                        <rect x="15" y="${10 + hRosso}" width="70" height="${hVerde}" rx="0" fill="#2ecc71" />
+                        <rect x="15" y="10" width="70" height="140" rx="8" fill="none" stroke="#ffffff" stroke-width="3" />
+                    </svg>
+                `;
+            } else if (forma === 'cilindro_orizzontale') {
+                const wVerde = (percentuale / 100) * 160;
+                container.innerHTML = `
+                    <svg width="180" height="90" viewBox="0 0 180 90" class="shape-canvas" onclick="gestisciClickLarghezza(event)">
+                        <rect x="10" y="20" width="160" height="50" rx="25" fill="#e74c3c" />
+                        <rect x="10" y="20" width="${wVerde}" height="50" rx="0" fill="#2ecc71" />
+                        <rect x="10" y="20" width="160" height="50" rx="25" fill="none" stroke="#ffffff" stroke-width="3" />
+                    </svg>
+                `;
+            } else if (forma === 'forma_circolare') {
+                const angolo = (percentuale / 100) * 360;
+                const rad = (angolo - 90) * (Math.PI / 180);
+                const x = 70 + 60 * Math.cos(rad);
+                const y = 70 + 60 * Math.sin(rad);
+                const largeArc = angolo > 180 ? 1 : 0;
+
+                container.innerHTML = `
+                    <svg width="140" height="140" viewBox="0 0 140 140" class="shape-canvas">
+                        <circle cx="70" cy="70" r="60" fill="#e74c3c" stroke="#ffffff" stroke-width="3" />
+                        ${percentuale > 0 ? `
+                        <path d="M 70 70 L 70 10 A 60 60 0 ${largeArc} 1 ${x} ${y} Z" fill="#2ecc71" />
+                        ` : ''}
+                    </svg>
+                `;
+            }
+        }
+
+        function gestisciClickAltezza(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickY = e.clientY - rect.top;
+            let p = Math.round(100 - ((clickY / rect.height) * 100));
+            p = Math.max(0, Math.min(100, p));
+            document.getElementById('levelSlider').value = p;
+            aggiornaLivelloVisivo(p);
+        }
+
+        function gestisciClickLarghezza(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            let p = Math.round((clickX / rect.width) * 100);
+            p = Math.max(0, Math.min(100, p));
+            document.getElementById('levelSlider').value = p;
+            aggiornaLivelloVisivo(p);
+        }
+
+        function aggiornaLivelloVisivo(valore) {
+            percentualeAttuale = parseInt(valore);
+            disegnaFormaSVG(prodottoSelezionato.forma || 'cilindro_verticale', percentualeAttuale);
+            aggiornaEtichette(percentualeAttuale);
+        }
+
+        function aggiornaEtichette(p) {
+            document.getElementById('lblRimanente').innerText = p + '%';
+            document.getElementById('lblConsumato').innerText = (100 - p) + '%';
+        }
+
+        function chiudiModalScarico() {
+            document.getElementById('modalScaricoVisual').style.display = 'none';
+        }
+
+        async function confermaScaricoEffettivo() {
+            const idx = prodottoSelezionato.indiceGlobale;
+            if (idx !== undefined && dispensaGlobale[idx]) {
+                const selectVal = document.getElementById('nuovaUbicazioneSelect').value;
+                let nuovaUbicazione = dispensaGlobale[idx].ubicazione;
+                
+                if (selectVal === 'ALTRO') {
+                    const customVal = document.getElementById('inputNuovaUbicazioneCustom').value.trim();
+                    if (customVal !== "") {
+                        nuovaUbicazione = customVal;
+                    }
+                } else if (selectVal !== "") {
+                    nuovaUbicazione = selectVal;
+                }
+
+                const msg = percentualeAttuale <= 0 
+                    ? (pezziDisponibili(dispensaGlobale[idx]) > 1 ? `¿Consumir UNA unidad entera de "${dispensaGlobale[idx].nome}"?` : `El producto "${dispensaGlobale[idx].nome}" ha llegado al 0 % y se considera agotado. ¿Confirmar y añadir a la lista de la compra?`)
+                    : `¿Actualizar "${dispensaGlobale[idx].nome}" al ${percentualeAttuale} % restante en "${nuovaUbicazione}"?`;
+
+                const statoProdotto = JSON.stringify(dispensaGlobale[idx]);
+                const statoSalvato = localStorage.getItem('eat_dispensa_locale');
+                if (!await chiediConfermaScarico(msg, dispensaGlobale[idx])) return;
+                if (JSON.stringify(dispensaGlobale[idx]) !== statoProdotto || localStorage.getItem('eat_dispensa_locale') !== statoSalvato) {
+                    alert('La despensa ha cambiado durante el resumen. Revisa los datos antes de retirar.');
+                    chiudiModalScarico();
+                    await caricaDispensaCombinata();
+                    return;
+                }
+                if (!memorizzaPrimaDiScaricare(`Consumo de ${dispensaGlobale[idx].nome}: del ${dispensaGlobale[idx].percentuale ?? 100} % al ${percentualeAttuale} %`, 'Consumo parziale')) return;
+
+                nuovaUbicazione = EatUbicazioni.canonica(nuovaUbicazione, dispensaGlobale);
+                if (!EatUbicazioni.ricorda([nuovaUbicazione], dispensaGlobale)) return;
+                const pezzi = pezziDisponibili(dispensaGlobale[idx]);
+                if (pezzi > 1 && percentualeAttuale < 100 && percentualeAttuale > 0) {
+                    const singolo = { ...dispensaGlobale[idx], _emf_id: EatStorico.nuovoId(), quantita: 1, pezzi_per_confezione: 1, pezzi_rimanenti: 1, percentuale: percentualeAttuale, ubicazione: nuovaUbicazione, origine_confezione: dispensaGlobale[idx].origine_confezione || dispensaGlobale[idx].ubicazione };
+                    dispensaGlobale[idx].pezzi_rimanenti = pezzi - 1;
+                    dispensaGlobale[idx].quantita = Math.ceil((pezzi - 1) / Math.max(1, Number(dispensaGlobale[idx].pezzi_per_confezione) || 1));
+                    dispensaGlobale.push(singolo);
+                } else if (pezzi > 1 && percentualeAttuale === 0) {
+                    dispensaGlobale[idx].pezzi_rimanenti = pezzi - 1;
+                    dispensaGlobale[idx].quantita = Math.ceil((pezzi - 1) / Math.max(1, Number(dispensaGlobale[idx].pezzi_per_confezione) || 1));
+                } else {
+                    dispensaGlobale[idx].percentuale = percentualeAttuale;
+                    dispensaGlobale[idx].ubicazione = nuovaUbicazione;
+                }
+
+                if (percentualeAttuale <= 0 && pezzi === 1) {
+                    if (!dispensaGlobale[idx].origine_confezione) spostaInListaSpesa(dispensaGlobale[idx]);
+                    dispensaGlobale.splice(idx, 1);
+                }
+
+                if (!salvaDispensaAggiornata()) return;
+                chiudiModalScarico();
+                popolaFiltri();
+                filtraDispensa();
+            }
+        }
+    </script>
+</body>
+</html>

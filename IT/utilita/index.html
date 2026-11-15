@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<script src="../../js/accettazione-it.js" data-proteggi></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utilità & Sicurezza Chiavetta | EatMeFirst</title>
+  <meta name="description" content="Esporta e importa la dispensa, conserva una copia dei tuoi dati e scopri come ricevere le novità di EatMeFirst dal sito.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --text-color: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent-color: #58a6ff;
+      --primary: #3182ce;
+      --primary-hover: #2b6cb0;
+      --success-color: #238636;
+      --success-hover: #2ea043;
+      --danger-color: #f85149;
+      --warning-color: #d29922;
+      --border-color: #30363d;
+      --light-bg: #21262d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .container { max-width: 850px; margin: 0 auto; width: 100%; }
+
+    /* CARTA INTESTATA SUPERIORE */
+    .app-bar {
+      background: rgba(22, 27, 34, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 40;
+      border-radius: 12px; margin-bottom: 20px;
+    }
+
+    .app-brand { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      background: var(--light-bg); color: var(--text-color);
+      border: 1px solid var(--border-color); padding: 6px 14px;
+      border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+    }
+    .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+    .language-flags {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--light-bg); padding: 4px 8px;
+      border-radius: 20px; border: 1px solid var(--border-color);
+    }
+    .flag-link { text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+    .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+    /* BANNER INTRODUTTIVO LEO */
+    .leo-welcome-banner {
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      border: 1px solid var(--primary); border-radius: 16px;
+      overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+    .leo-banner-img {
+      width: 100%; max-height: 320px; object-fit: contain;
+      background-color: #0d1117; border-bottom: 2px solid var(--primary);
+    }
+    .leo-banner-content { padding: 22px; }
+    .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
+    .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
+    .leo-banner-actions { display: flex; justify-content: flex-end; }
+    
+    .btn-dismiss {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
+      color: var(--text-color); padding: 8px 16px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-dismiss:hover { background: rgba(239, 68, 68, 0.25); border-color: #f87171; color: #fca5a5; }
+
+    /* CARD SEZIONI */
+    .section-card {
+      background: var(--card-bg); border-radius: 16px;
+      border: 1px solid var(--border-color); padding: 25px;
+      margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 1.25rem; font-weight: 700; color: var(--text-color);
+      margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+    }
+
+    /* POST-IT GUIDA ICON */
+    .postit-link { display: inline-block; line-height: 0; position: relative; z-index: 10; }
+    .postit-icon {
+      width: 28px; height: 28px; object-fit: contain; border-radius: 4px; cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4); transition: transform 0.2s;
+    }
+    .postit-icon:hover { transform: scale(1.2) rotate(-3deg); }
+
+    /* BIBLIOTECA COMPLETA GRID */
+    .guides-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px; margin-top: 15px;
+    }
+    .guide-card-link {
+      background: #0d1117; border: 1px solid var(--border-color);
+      padding: 14px 16px; border-radius: 10px; text-decoration: none; color: var(--text-color);
+      display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+    }
+    .guide-card-link:hover { border-color: var(--accent-color); background: var(--light-bg); }
+
+    /* PRICING GRID */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px; margin-top: 15px;
+    }
+    .pricing-card {
+      background: #0d1117; border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .pricing-card.featured { border-color: #68d391; background: rgba(56, 161, 105, 0.1); }
+    .pricing-title { font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 6px; }
+    .pricing-price { font-size: 1.5rem; font-weight: 800; color: #38a169; margin-bottom: 8px; }
+    .pricing-sub { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ZONA PERICOLO */
+    .danger-zone { border-color: #7f1d1d; background: rgba(127, 29, 29, 0.12); }
+    .danger-title { color: #fca5a5; }
+
+    .btn-danger-action {
+      width: 100%; background: var(--danger-color); color: #fff; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-danger-action:hover { opacity: 0.9; }
+
+    .btn-warning-action {
+      width: 100%; background: var(--warning-color); color: #0d1117; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-warning-action:hover { opacity: 0.9; }
+
+    /* MODALE */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; max-width: 450px; width: 100%; padding: 25px; text-align: center;
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+    .modal-text { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; text-align: left; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 12px; }
+    .btn-modal-cancel { flex: 1; background: var(--light-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .btn-modal-confirm { flex: 1; background: var(--danger-color); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .backup-comandi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .backup-comandi > * { min-width: 0; width: 100%; text-align: center; }
+    .backup-comandi .backup-esporta { background: #238636; border: 2px solid #3fb950; color: #fff; font-size: 16px; font-weight: 700; }
+    .backup-comandi .backup-esporta:hover { background: #196c2e; }
+    .backup-comandi .backup-importa { background: #142c43; border: 2px solid #58a6ff; }
+    .backup-importa-titolo { color: #9dceff; font-size: 16px; font-weight: 700; }
+    .backup-comandi > :focus-visible, .backup-comandi input:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .backup-comandi input[type="file"] { display: block; width: 100%; min-width: 0; max-width: 100%; margin-top: 8px; font-size: 13px; }
+    @media (max-width: 768px) {
+      .backup-comandi { grid-template-columns: minmax(0, 1fr); }
+      .backup-comandi > * { padding: 16px 12px; }
+    }
+
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px; }
+
+    @media (max-width: 600px) {
+      .language-flags { display: flex; gap: 4px; padding: 2px 6px; }
+      .flag-img { width: 18px; height: 12px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- CARTA INTESTATA SUPERIORE -->
+    <header class="app-bar">
+      <div class="app-brand">
+        <a href="../menu.html" class="btn-back">← Menu</a>
+        <div class="mini-logo" style="display: inline-flex; align-items: center;">
+          <img src="../../IMG/logo_1024_white.png" alt="Logo EatMeFirst" style="height: 32px; width: auto;">
+        </div>
+        <span class="brand-title">Utilità & Sicurezza</span>
+      </div>
+      <div class="app-nav-right">
+        <nav class="language-flags">
+            <a href="index.html" class="flag-link active" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" class="flag-img" alt="IT"></a>
+            <a href="../../EN/utilities/index.html" class="flag-link" title="English"><img src="../../IMG/bandiera_England.jpg" class="flag-img" alt="EN"></a>
+            <a href="../../DE/hilfsmittel/index.html" class="flag-link" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" class="flag-img" alt="DE"></a>
+            <a href="../../FR/utilitaires/index.html" class="flag-link" title="Français"><img src="../../IMG/bandiera_France.jpg" class="flag-img" alt="FR"></a>
+            <a href="../../ES/utilidades/index.html" class="flag-link" title="Español"><img src="../../IMG/bandiera_Espana.jpg" class="flag-img" alt="Español"></a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="section-card" id="esportazione-prezzi"><h2 class="section-title">La copia esterna della dispensa</h2><div class="launch-export-notice"><p>Abbiamo pensato che potrebbe esserti utile trasferire la tua dispensa dal cellulare a un altro dispositivo. Con <strong>Esporta dispensa</strong> crei un file da aprire sull’altro dispositivo con <strong>Importa dispensa</strong>. Il trasferimento è manuale: i dispositivi non si aggiornano automaticamente fra loro.</p><p><strong>Questo servizio è attualmente gratuito.</strong></p><p><strong><u>Il salvataggio automatico e immediato delle modifiche sul cellulare resterà sempre gratuito.</u></strong></p></div></section>
+
+    <!-- BANNER INTRODUTTIVO LEO -->
+    <div id="leo-banner" class="leo-welcome-banner">
+      <img src="../IMG/utilita-famiglia-backup-dispensa.png" alt="Utilità e Backup EatMeFirst" class="leo-banner-img">
+      <div class="leo-banner-content">
+        <div class="leo-banner-title">La sicurezza della tua dispensa, protetta su dispositivo, chiavetta USB o via e-mail! 🛡️💾</div>
+        <div class="leo-banner-text">
+          <p style="margin-bottom: 10px;">
+            Ciao, sono Max! Per caricare la spesa, il cellulare è un bel compagno di squadra: <strong>inquadra il codice a barre</strong> e l’app cerca il prodotto negli archivi online. Quando li trova, propone nome, immagine e altri dati disponibili. Dai sempre un’occhiata prima di salvare: anche il nostro scanner ogni tanto ha bisogno di una mano! Mia moglie Eva dice che dovrei controllare con la stessa attenzione anche quello che metto nel carrello…
+          </p>
+          <p style="margin-bottom: 10px;">
+            Preferisci lo schermo grande del PC? Puoi scrivere il codice a barre oppure usare un lettore. E se il prodotto non ha un codice o non viene trovato, lo inserisci a mano: qui c’è posto anche per il salame del banco!
+          </p>
+          <p>
+            La dispensa viene conservata <strong>nel browser del dispositivo che stai usando</strong>. Per averne una copia sul PC, sul telefono o su una chiavetta, usa Esporta dispensa e trasferisci il file. <strong>Quando cerchi un prodotto online, l’app chiede all’archivio: «A quale prodotto corrisponde questo codice a barre?»</strong> Non manda la tua dispensa, le quantità che hai in casa o la cronologia dei tuoi acquisti e consumi. Anche le immagini dei prodotti vengono caricate dagli archivi esterni. 
+          </p>
+        </div>
+        <div class="leo-banner-actions">
+          <button class="btn-dismiss" onclick="dismissLeoBanner()">Chiudi / Non mostrare più</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="section-card" id="trasferimento-dispensa">
+      <p>💬 <a href="../../sito-bozza/IT/domande.html#contatti" target="_blank" rel="noopener noreferrer">Consigli e assistenza sul sito</a></p>
+      <h2 class="section-title">💾 Esporta e importa la dispensa</h2>
+      <p><strong>Max, ma devo salvare ogni volta?</strong> Quando confermi un carico, uno scarico o un’altra operazione, EatMeFirst conserva la modifica nel browser che stai usando. <strong>Vale sia sul PC sia sul cellulare.</strong> Dove trovi un pulsante Salva o Conferma, devi premerlo per completare l’operazione: aver scritto nei campi non basta. Non devi poi premere anche Esporta dispensa per mantenere quella modifica sullo stesso dispositivo.</p>
+      <p><strong>E allora a cosa serve la chiavetta?</strong> «Alla copia di scorta, Max!», direbbe Eva. Se il telefono o il PC si rompe, viene perso oppure cancelli i dati del browser, il salvataggio rimasto lì può andare perso. Con <strong>Esporta dispensa</strong> prepari un file da conservare altrove: per esempio su una chiavetta o su un altro dispositivo.</p>
+      <p><strong>Posso mandarmelo via email?</strong> Sì: prima esporti il file, poi apri la tua posta, lo alleghi e lo spedisci tu. EatMeFirst non spedisce automaticamente la dispensa. Per recuperarla, scarichi l’allegato e scegli <strong>Importa dispensa</strong>. Recupererai la situazione del momento in cui hai esportato il file: per includere le modifiche successive serve una nuova esportazione.</p>
+      <p style="line-height:1.6">Usa il cellulare per il carico e trasferisci il file al PC, oppure carica dal PC con un lettore e porta una copia sul cellulare per la spesa. Il trasferimento sostituisce la situazione completa: non unisce due dispense.</p>
+      <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
+      <p style="margin:12px 0;line-height:1.6"><strong>La copia è come una chiave di scorta:</strong> se la lasci nella borsa insieme alle chiavi principali e perdi la borsa, non ti aiuta! Conserva il file anche fuori dal dispositivo e aggiornalo dopo le modifiche importanti. Serve sia per recuperare la dispensa in caso di guasto o perdita dei dati, sia per trasferirla tra PC e cellulare.</p>
+      <p style="margin:12px 0;line-height:1.6"><strong>Quando passi dal PC al cellulare, o viceversa, porta prima la copia aggiornata.</strong> Due dispense modificate separatamente non si uniscono: la data più recente da sola non basta. In questa fase di lancio l’esportazione è gratuita e non richiede codici.</p>
+      <p style="font-size:14px"><button type="button" class="btn-modal-cancel" onclick="apriImpostazioniEsportazione()">Nome del dispositivo e aiuto per le copie</button></p>
+      <dialog oncancel="annullaRichiestaEsportazione()" onclose="annullaRichiestaEsportazione()" id="dialogoEsportazione" aria-labelledby="titoloDialogoEsportazione" style="box-sizing:border-box;width:min(560px,94vw);max-height:88vh;overflow:auto;background:#161b22;color:#fff;border:2px solid #58a6ff;border-radius:14px;padding:24px">
+        <form onsubmit="confermaEsportazioneDispensa(event)">
+          <h2 id="titoloDialogoEsportazione">Un consiglio per non confondere le copie</h2>
+          <p>Se usi la dispensa su più dispositivi, da solo o in famiglia, è facile ritrovarsi con file diversi e ripartire da una copia vecchia, senza gli ultimi acquisti o consumi.</p>
+          <p><strong>Per tenere ordine, scegliete un posto dove conservare la copia aggiornata.</strong> Prima di iniziare, prendete il file da lì e controllate l’anteprima di <strong>Importa dispensa</strong>. Quando finite, premete <strong>Esporta dispensa</strong>, verificate il download e mettete la nuova copia nello stesso posto, pronta per la prossima volta.</p>
+          <p>Per riconoscere meglio i passaggi, scegli un nome come <strong>Maria — portatile</strong>: insieme alla data ti aiuterà a capire chi ha esportato quella copia. Il browser lo ricorderà per i prossimi salvataggi.</p>
+          <label for="backupFirma"><strong>Nome per questo dispositivo (facoltativo)</strong></label>
+          <input type="text" id="backupFirma" maxlength="60" placeholder="Es. Maria — portatile" autocomplete="off" aria-describedby="backupFirmaAiuto" style="display:block;box-sizing:border-box;width:100%;padding:12px;margin:10px 0;background:#0d1117;color:#fff;border:1px solid #58a6ff;border-radius:6px;font:inherit">
+          <p id="backupFirmaAiuto" style="font-size:14px">Va bene anche un soprannome. Chi riceve il file potrà leggerlo. Il nome è scelto da te, non rilevato automaticamente.</p>
+          <p><strong>Lavorate uno alla volta.</strong> Se qui ci sono modifiche non ancora esportate, non sostituitele con una copia vecchia: leggete gli avvisi prima di importare. Il posto lo scegliete voi; l’app non vi trasferisce il file automaticamente.</p>
+          <p><a href="../../sito-bozza/IT/dispensa-in-famiglia.html" target="_blank" rel="noopener noreferrer" style="color:#8cc8ff">Leggi la guida: una dispensa per tutta la famiglia ↗</a></p>
+          <label style="display:block;margin:16px 0"><input type="checkbox" id="backupNonMostrare" checked> Ricorda il nome e non mostrare più questa spiegazione</label>
+          <p style="font-size:14px">La prossima volta Esporta dispensa avvierà direttamente il download con il nome ricordato. Puoi cambiare nome o riaprire l’aiuto dal pulsante in Utilità. La destinazione del file dipende dal browser.</p>
+          <p id="esitoDialogoEsportazione" role="status" aria-live="polite"></p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
+            <button type="button" class="btn-modal-cancel" onclick="annullaRichiestaEsportazione(); document.getElementById('dialogoEsportazione').close()">Annulla</button>
+            <button id="confermaEsportaDispensa" type="submit" class="btn-modal-confirm">Esporta dispensa</button>
+          </div>
+        </form>
+      </dialog>
+      <div class="backup-comandi">
+        <button id="esportaDispensaBtn" type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">Esporta dispensa</button>
+        <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">Importa dispensa</span>
+          <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
+        </label>
+      </div>
+      <p style="font-size:14px;line-height:1.6">Esporta un file sul dispositivo; poi copialo sulla chiavetta o allegalo manualmente a un’email. Sul dispositivo di destinazione scegli Importa dispensa e seleziona quel file. Nessun invio automatico e nessun database su server.</p>
+      <p style="font-size:14px;line-height:1.6;margin-top:10px">Sono compresi prodotti, catalogo ricordato, liste, note e promemoria, preferenze e ultime 15 operazioni. Le foto dei post-it sono incluse; le immagini recuperate dagli archivi restano collegamenti alle loro fonti.</p>
+      <p id="backupEsito" role="status" aria-live="polite" style="margin:14px 0"></p>
+      
+      <div id="anteprimaImportazione" hidden style="border:2px solid #58a6ff;border-radius:12px;padding:18px;margin-top:18px">
+        <h3 id="titoloImportazione">Controlla il file prima di sostituire i dati</h3>
+        <p id="nomeImportazione" style="margin:12px 0;overflow-wrap:anywhere"></p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:12px 0">
+          <div><strong>Situazione presente</strong><p id="riepilogoLocale"></p></div>
+          <div><strong>Situazione da importare</strong><p id="riepilogoFile"></p></div>
+        </div>
+        <p id="confrontoImportazione" style="font-weight:bold;line-height:1.6"></p>
+        <label id="consensoImportazioneLabel" hidden style="margin-top:14px">
+          <input type="checkbox" id="consensoImportazione" onchange="aggiornaPulsanteImportazione()">
+          Ho letto l’avviso e scelgo di conservare la dispensa del file, sostituendo quella presente qui.
+        </label>
+        <p style="font-size:14px;margin-top:14px">Prima della sostituzione viene conservata una copia locale della situazione presente. La data di scadenza dei prodotti non viene modificata.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <button type="button" class="btn-modal-cancel" onclick="annullaImportazione()">Mantieni situazione presente</button>
+          <button type="button" class="btn-modal-confirm" id="confermaImportazione" disabled onclick="confermaImportazione()">Conferma sostituzione</button>
+        </div>
+      </div>
+      <button type="button" class="btn-modal-cancel" id="recuperaDispensa" disabled style="margin-top:18px" onclick="preparaRecupero()">Recupera situazione precedente al trasferimento o azzeramento</button>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px">La copia di recupero è una sola e resta nello stesso browser. Per conservarla anche fuori dal dispositivo usa Esporta dispensa.</p>
+    </section>
+
+    <!-- SEZIONE: COME FUNZIONANO I SALVATAGGI & LA CHIAVETTA USB -->
+    <section class="section-card" style="border-color: #3182ce; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
+      <h2 class="section-title">
+        <span>💾 Salvataggi, Chiavetta USB & Studio di Leo</span>
+        <a href="guida-backup.html" class="postit-link">
+          <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Backup">
+        </a>
+      </h2>
+      
+      <!-- PUNTO 1: PC vs CELLULARE -->
+      <div style="background: #0d1117; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; margin-bottom: 15px;">
+        <div style="font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 8px;">1. 🖥️ PC/Laptop a casa, 📱 Smartphone in mobilità</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+          Il cellulare è comodo per leggere i codici, il PC per guardare tutto su uno schermo grande: scegli tu! Se passi da uno all’altro, esporta la dispensa dal dispositivo aggiornato e importa quel file sull’altro. Prima di uscire, controlla che sul telefono ci sia la lista giusta: Eva non accetta scuse davanti allo scaffale!
+        </p>
+      </div>
+
+      <!-- PUNTO 2: SALVATAGGIO IN CONTEMPORANEA E TRASFERIMENTO -->
+      <div style="background: #0d1117; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; margin-bottom: 15px;">
+        <div style="font-size: 1.05rem; font-weight: 700; color: #68d391; margin-bottom: 8px;">2. 💾 Salvataggio su Chiavetta (da PC) o Trasferimento via E-mail</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+          I dati vengono salvati costantemente all'interno del browser che stai utilizzando. Quando lavori da computer fisso o portatile, puoi usare <strong>Esporta dispensa</strong> e salvare o copiare il file su una chiavetta USB. Il semplice collegamento della chiavetta non avvia copie automatiche. Se invece stai utilizzando lo smartphone, il metodo più semplice e immediato per spostare o inviare il database aggiornato è esportare il file e allegarlo manualmente a un messaggio di <strong>posta elettronica (e-mail)</strong>.
+        </p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+          Una copia esterna ti dà una mano in tre modi:
+        </p>
+        <ul style="margin-left: 20px; font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-top: 6px;">
+          <li><strong>Trasporto dati:</strong> sposti facilmente la tua dispensa tra PC e cellulare.</li>
+          <li><strong>Copia di sicurezza:</strong> se perdi i dati sul dispositivo, puoi recuperare quelli contenuti nel file conservato altrove.</li>
+          <li><strong>Spesa sul telefono:</strong> trasferisci una copia aggiornata prima di uscire. Le modifiche successive sull’altro dispositivo non arrivano da sole.</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:18px;line-height:1.6">In questa fase di lancio puoi esportare e importare la dispensa senza acquistare un piano. Conserva una copia aggiornata fuori dal dispositivo.</p>
+    </section>
+
+    <!-- SEZIONE: AGGIORNAMENTI & TRASPARENZA SERVER -->
+    <section class="section-card" style="border-color: #38a169; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
+      <h2 class="section-title">
+        <span>🔄 Aggiornare EatMeFirst</span>
+        <a href="guida-aggiornamenti.html" class="postit-link">
+          <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Aggiornamenti">
+        </a>
+      </h2>
+      
+      <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
+        Le nuove funzioni e le correzioni arrivano dal sito: collegati a Internet e riapri l’app. Se non vedi subito le novità, prova a ricaricare la pagina. Non devi scaricare un pacchetto del programma.
+      </p>
+      <p style="font-size:0.92rem;line-height:1.6;margin-top:12px"><strong>La dispensa resta sul tuo dispositivo.</strong> Esporta dispensa serve a farne una copia di sicurezza o a portarla su un altro dispositivo. Il foglietto info spiega la differenza.</p>
+    </section>
+
+    <!-- SEZIONE: ZONA RESET AVANZATI -->
+    <section class="section-card danger-zone">
+      <h2 class="section-title danger-title">
+        <span>⚠️ Zone di Reset Avanzato</span>
+        <a href="guida-reset-avanzati.html" class="postit-link">
+          <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Reset">
+        </a>
+      </h2>
+      
+      <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.05rem; color: #fbd38d;">1. Nuovo Inizio (Azzera Quantità)</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+          Svuota le giacenze e le scadenze, conservando codici, nomi, categorie, foto, formato delle confezioni e negozi in un <strong>catalogo selezionabile nel Carico</strong>. Le vecchie note e i promemoria dei prodotti non vengono riproposti. Le liste, i post-it e le preferenze restano; lo storico e le stime dei consumi ripartono da zero.
+        </p>
+        <button class="btn-warning-action" onclick="openResetModal('nuovo_inizio')">Azzera Quantità e Riparti</button>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+      <div>
+        <h3 style="font-size: 1.05rem; color: #fca5a5;">2. Riparti da zero</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+          Svuota dispensa, catalogo, liste, note, preferenze. Conserva l’accettazione delle condizioni e non richiede di ripetere la presentazione iniziale.
+        </p>
+        <button class="btn-danger-action" onclick="openResetModal('reset_totale')">Riparti da zero</button>
+      </div>
+    </section>
+
+    <section class="section-card" aria-labelledby="invito-leo" style="margin:24px 0;padding:20px;border:1px solid #39434f;border-radius:12px;background:#161b22;line-height:1.6">
+        <h2 id="invito-leo" style="font-size:1.15rem;color:#79c0ff">💬 Un invito a collaborare con Leo</h2>
+        <p>Come ti trovi con EatMeFirst? Raccontaci cosa funziona, cosa è complicato e quali nuove funzioni vorresti. Anche le critiche ci aiutano a migliorare.</p>
+        <p>Questo invito è già contenuto nell’app: non è un’email né un messaggio inviato da una persona.</p>
+        <a href="../../sito-bozza/IT/domande.html#contatti" style="color:#79c0ff">Consigli e assistenza sul sito</a>
+        <p style="font-size:.9rem">Ciao, sono Leo! Hai un consiglio, una domanda o qualcosa che non funziona? Passa dal sito di EatMeFirst: lì trovi le indicazioni per scriverci via email, se vuoi. Dall’app non parte nessun messaggio e la tua dispensa non viene allegata.</p>
+    </section>
+
+    <!-- SEZIONE: BIBLIOTECA DELLE GUIDE (ESATTAMENTE 4 GUIDE) -->
+    <section class="section-card">
+      <h2 class="section-title">
+        <span>📚 Biblioteca delle Guide Ufficiali</span>
+      </h2>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+        Accedi direttamente alla documentazione di supporto disponibile:
+      </p>
+      <div class="guides-grid">
+        <a href="guida-aggiornamenti.html" class="guide-card-link">📌 Guida Aggiornamenti Software</a>
+        <a href="guida-backup.html" class="guide-card-link">📌 Guida Backup e Sicurezza</a>
+        <a href="guida-esportazione.html" class="guide-card-link">📌 Guida Lista Spesa & Rientro</a>
+        <a href="guida-reset-avanzati.html" class="guide-card-link">📌 Guida Reset Avanzati & Nuovo Inizio</a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>&copy; EatMeFirst &bull; Dispensa conservata sul dispositivo</span>
+  </footer>
+
+  <!-- MODALE CONFERMA RESET -->
+  <div id="confirmation-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div id="modal-title" class="modal-title">Conferma Operazione</div>
+      <div id="modal-text" class="modal-text">Sei sicuro di voler procedere?</div>
+      <label style="display:block;margin:14px 0"><input type="checkbox" id="confermaResetLetto"> Ho letto quali dati verranno svuotati e quali conservati.</label>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="closeResetModal()">Annulla</button>
+        <button id="btn-modal-confirm-exec" class="btn-modal-confirm" onclick="executeReset()">Conferma e Procedi</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/storico-it.js"></script>
+  <script src="../../js/backup-it.js"></script>
+  <script src="../../js/lancio-gratuito-it.js"></script>
+  <script src="../../js/statistiche-config.js"></script>
+  <script src="../../js/statistiche-utilita-it.js"></script>
+  <script src="../../js/backup-interfaccia-it.js"></script>
+  <script src="../../js/reset-it.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (localStorage.getItem("hide_leo_banner_utilita_it") === "true") {
+        const banner = document.getElementById("leo-banner");
+        if (banner) banner.style.display = "none";
+      }
+    });
+
+    function dismissLeoBanner() {
+      const banner = document.getElementById("leo-banner");
+      if (banner) banner.style.display = "none";
+      localStorage.setItem("hide_leo_banner_utilita_it", "true");
+    }
+
+    let activeResetType = null;
+    let preparazioneReset = null;
+
+    function openResetModal(type) {
+      try { preparazioneReset = EatReset.prepara(type); }
+      catch (errore) { alert('Azzeramento non preparato. ' + errore.message); return; }
+      activeResetType = type;
+      document.getElementById('confermaResetLetto').checked = false;
+      const modal = document.getElementById('confirmation-modal');
+      const title = document.getElementById('modal-title');
+      const text = document.getElementById('modal-text');
+      const confirmBtn = document.getElementById('btn-modal-confirm-exec');
+
+      if (type === 'nuovo_inizio') {
+        title.innerText = "⚠️ Confermi il 'Nuovo Inizio'?";
+        title.style.color = "#ed8936";
+        text.innerHTML = "La dispensa attiva sarà vuota: quantità, scadenze e vecchi promemoria non saranno riproposti. Codici, nomi, foto, categorie, formato e negozi resteranno nel catalogo del Carico. Liste e post-it restano; storico e calcolo dei consumi ripartono da zero.<br><br>Prima viene conservata una copia recuperabile, che sostituisce l'eventuale copia di recupero precedente. Ti consigliamo anche di esportare un file: la copia locale non protegge da un guasto.<br><br>L’accettazione resta valida.";
+        confirmBtn.style.background = "#ed8936";
+      } else if (type === 'reset_totale') {
+        title.innerText = "🚨 Confermi di ripartire da zero?";
+        title.style.color = "#e53e3e";
+        text.innerHTML = "Dispensa, catalogo, liste, post-it, storico e preferenze saranno svuotati. L’accettazione delle condizioni resta conservata.<br><br>Prima viene conservata una copia recuperabile, che sostituisce l'eventuale copia di recupero precedente. Ti consigliamo anche un'esportazione esterna: la copia locale non protegge da un guasto.<br><br>Le condizioni restano accettate, senza ripetere la presentazione iniziale.";
+        confirmBtn.style.background = "#e53e3e";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    let closeResetModal = function() {
+      document.getElementById('confirmation-modal').style.display = 'none';
+      activeResetType = null;
+      preparazioneReset = null;
+    }
+
+    function executeReset() {
+      if (!activeResetType || !preparazioneReset) return;
+      if (!document.getElementById('confermaResetLetto').checked) { alert('Leggi il riepilogo e spunta la conferma prima di procedere.'); return; }
+      try {
+        const tipo = activeResetType;
+        const risultato = EatReset.esegui(preparazioneReset);
+        closeResetModal();
+        importazioneInAttesa = null;
+        document.getElementById('anteprimaImportazione').hidden = true;
+        aggiornaSituazioneBackup();
+        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Nuovo Inizio completato: dispensa vuota, ${risultato.catalogo} prodotti nel catalogo del Carico. Copia precedente disponibile nel pulsante di recupero.` : 'Ripartenza completata. Accettazione e diritto al servizio conservati. Copia precedente disponibile nel pulsante di recupero.';
+        window.scrollTo({top:document.getElementById('trasferimento-dispensa').offsetTop,behavior:'smooth'});
+      } catch (errore) { alert('Azzeramento non eseguito. ' + errore.message); }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Últimas 15 operaciones | EatMeFirst</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #0d1117; color: #f0f6fc; font: 16px/1.5 system-ui, sans-serif; }
+        main { max-width: 1100px; margin: auto; padding: 24px 16px; }
+        nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+        a { color: #79c0ff; }
+        h1 { font-size: 1.65rem; }
+        .intro { color: #b1bac4; }
+        .tabella { overflow-x: auto; border: 1px solid #30363d; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; background: #161b22; }
+        th, td { padding: 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #30363d; overflow-wrap: anywhere; }
+        th { color: #79c0ff; background: #21262d; }
+        td:first-child { min-width: 130px; }
+        .motivo { display: block; margin-top: 6px; max-width: 310px; font-size: 13px; color: #b1bac4; }
+        button { padding: 10px 14px; border: 1px solid #58a6ff; border-radius: 8px; background: #1f6feb; color: white; font: inherit; cursor: pointer; }
+        button:disabled { cursor: default; background: #30363d; border-color: #484f58; color: #b1bac4; }
+        .annullata { color: #b1bac4; }
+        #stato { padding: 12px 0; }
+        .overlay { position: fixed; inset: 0; padding: 18px; background: #000b; display: flex; justify-content: center; align-items: center; }
+        .overlay[hidden] { display: none; }
+        .dialogo { width: 100%; max-width: 680px; max-height: 85vh; overflow-y: auto; padding: 24px; border: 1px solid #58a6ff; border-radius: 14px; background: #161b22; }
+        .comandi { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+        #descrizioneConferma { white-space: pre-wrap; overflow-wrap: anywhere; }
+        @media (max-width: 768px) {
+            .tabella { overflow: visible; border: 0; }
+            .tabella table { display: block; min-width: 0; width: 100%; background: transparent; }
+            .tabella thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+            .tabella tbody { display: block; width: 100%; }
+            .tabella tbody tr { display: block; padding: 14px; margin-bottom: 14px; border: 1px solid #30363d; border-radius: 12px; background: #161b22; }
+            .tabella td, .tabella td:first-child { display: block; width: 100%; min-width: 0; padding: 8px 0; border: 0; }
+            .tabella td::before { display: block; margin-bottom: 4px; color: #79c0ff; font-weight: 600; }
+            .tabella td:nth-child(1)::before { content: 'Fecha y hora'; }
+            .tabella td:nth-child(2)::before { content: 'Operación'; }
+            .tabella td:nth-child(3)::before { content: 'Detalles'; }
+            .tabella td:nth-child(4)::before { content: 'Acción'; }
+            .tabella td button { width: 100%; white-space: normal; }
+            .tabella .motivo { max-width: none; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+<main>
+    <nav aria-label="Navigazione">
+        <a href="../menu.html">← Menú</a><a href="../carga/carga.html">Entrada de productos</a>
+        <a href="../descarga/index.html">Salidas y consumo</a><a href="../inventario/index.html">Inventario</a><a href="../compra/index.html">Lista de la compra</a>
+    </nav>
+    <h1>↩ Últimas 15 operaciones</h1>
+    <p class="intro">Aquí aparecen las operaciones más recientes de este navegador desde que se activó el historial. Las operaciones deshechas siguen visibles con su estado.</p>
+    <p class="intro">Puedes deshacer una operación conservando cambios independientes. Si hay operaciones posteriores del mismo producto o entrada de la compra, se indica cuál deshacer primero.</p>
+    <p id="stato" role="status" aria-live="polite"></p>
+    <div class="tabella"><table>
+        <thead><tr><th scope="col">Fecha y hora</th><th scope="col">Operación</th><th scope="col">Detalles</th><th scope="col">Acción</th></tr></thead>
+        <tbody id="operazioni"></tbody>
+    </table></div>
+    <p class="intro">El historial no sustituye una copia de seguridad. Las operaciones anteriores a las últimas 15 ya no se pueden deshacer desde aquí.</p>
+</main>
+<div id="confermaOperazione" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="titoloConferma" onkeydown="tastieraConferma(event)">
+    <div class="dialogo">
+        <h2 id="titoloConferma">¿Confirmas deshacer esta operación?</h2>
+        <p id="descrizioneConferma"></p>
+        <p>Solo se deshará la operación seleccionada. Los cambios independientes se conservan.</p>
+        <div class="comandi">
+            <button type="button" id="nonAnnullare" onclick="chiudiConferma()">Mantener operación</button>
+            <button type="button" id="annullaOperazione" onclick="eseguiAnnullamento()">Confirmar deshacer</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/errori-es.js"></script>
+<script>
+    let selezionata = null;
+    let focusPrecedente = null;
+    function aggiorna() {
+        const corpo = document.getElementById('operazioni');
+        corpo.replaceChildren();
+        try {
+            const voci = EatStorico.elenco();
+            const letture = {};
+            document.getElementById('stato').textContent = voci.length ? `${voci.length} operaciones recientes, primero la más nueva.` : 'No hay operaciones registradas. No se reconstruyen los movimientos anteriores.';
+            voci.forEach(voce => {
+                const riga = document.createElement('tr');
+                if (voce.annullata) riga.className = 'annullata';
+                for (const testo of [new Date(voce.data).toLocaleString('es-ES'), ({Carico:'Entrada de productos',Scarico:'Salida','Foto prodotto':'Foto del producto','Note e promemoria':'Notas y recordatorios','Spostamento':'Mover','Consumo parziale':'Consumo parcial','Lista della spesa':'Lista de la compra'})[voce.tipo] || voce.tipo, voce.descrizione]) {
+                    const cella = document.createElement('td');
+                    cella.textContent = testo;
+                    riga.appendChild(cella);
+                }
+                const scelta = document.createElement('td');
+                const motivo = EatStorico.motivo(voce.id, voci, letture);
+                const pulsante = document.createElement('button');
+                pulsante.type = 'button';
+                pulsante.textContent = voce.annullata ? 'Ya deshecha' : 'Deshacer operación';
+                pulsante.disabled = !!motivo;
+                pulsante.addEventListener('click', () => apriConferma(voce.id));
+                scelta.appendChild(pulsante);
+                if (motivo) {
+                    const spiegazione = document.createElement('span');
+                    spiegazione.className = 'motivo';
+                    spiegazione.textContent = EatErroriES(motivo);
+                    scelta.appendChild(spiegazione);
+                }
+                riga.appendChild(scelta);
+                corpo.appendChild(riga);
+            });
+        } catch (errore) { document.getElementById('stato').textContent = EatErroriES(errore.message); }
+    }
+    function apriConferma(id) {
+        try {
+            const motivo = EatStorico.motivo(id);
+            if (motivo) { document.getElementById('stato').textContent = EatErroriES(motivo); aggiorna(); return; }
+            const voce = EatStorico.elenco().find(v => v.id === id);
+            selezionata = id;
+            focusPrecedente = document.activeElement;
+            document.getElementById('descrizioneConferma').textContent = `${voce.tipo} — ${voce.descrizione}`;
+            document.getElementById('confermaOperazione').hidden = false;
+            document.getElementById('nonAnnullare').focus();
+        } catch (errore) { document.getElementById('stato').textContent = EatErroriES(errore.message); }
+    }
+    function chiudiConferma() {
+        selezionata = null;
+        document.getElementById('confermaOperazione').hidden = true;
+        focusPrecedente?.focus();
+    }
+    function eseguiAnnullamento() {
+        if (!selezionata) return;
+        try {
+            EatStorico.annulla(selezionata);
+            chiudiConferma();
+            aggiorna();
+            document.getElementById('stato').textContent = 'Operación deshecha. Los cambios independientes se han conservado.';
+        } catch (errore) { chiudiConferma(); aggiorna(); document.getElementById('stato').textContent = EatErroriES(errore.message); }
+    }
+    function tastieraConferma(evento) {
+        if (evento.key === 'Escape') { evento.preventDefault(); chiudiConferma(); }
+        if (evento.key === 'Tab') {
+            const primo = document.getElementById('nonAnnullare'), ultimo = document.getElementById('annullaOperazione');
+            if (evento.shiftKey && document.activeElement === primo) { evento.preventDefault(); ultimo.focus(); }
+            else if (!evento.shiftKey && document.activeElement === ultimo) { evento.preventDefault(); primo.focus(); }
+        }
+    }
+    let attesaAggiornamento = null;
+    window.addEventListener('storage', () => {
+        clearTimeout(attesaAggiornamento);
+        attesaAggiornamento = setTimeout(aggiorna, 100);
+    });
+    window.addEventListener('focus', aggiorna);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) aggiorna(); });
+    aggiorna();
+</script>
+</body>
+</html>

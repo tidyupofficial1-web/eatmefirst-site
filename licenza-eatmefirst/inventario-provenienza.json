@@ -1,0 +1,2578 @@
+{
+  "archivio": "eatmefirst-app-08f4d996295c09484fb50e5d04b56a223ae8477c.zip",
+  "commit": "08f4d996295c09484fb50e5d04b56a223ae8477c",
+  "sha256_archivio": "f8c39cb63346aa62c7e739b82648a4adfdc2fcf3f2dd2d91b491d8e6301453be",
+  "limiti": "Classificazione tecnica, non accertamento della titolarita. Include corrispondenze con prove-mobile e altri percorsi. Un percorso assente non dimostra codice nuovo. Non copre tutta la cronologia GitHub, archivi esterni o precedente repository del sito.",
+  "file": [
+    {
+      "file": "IT/abbonamento/collabora-bug-gratis.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/abbonamento/collabora-bug-gratis.html",
+        "prove-mobile/prova-it/IT/abbonamento/collabora-bug-gratis.html"
+      ],
+      "sha256_attuale": "3ac9b48452ca695f6f48e709f07612ca9b8004e39b6fd7c265c28437816df9d2"
+    },
+    {
+      "file": "IT/abbonamento/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/abbonamento/index.html",
+        "prove-mobile/prova-it/IT/abbonamento/index.html"
+      ],
+      "sha256_attuale": "c7a51a85f465a0d5b16816d0c6c40b9faa762ff0f3fc754d9a0806524887d3ab"
+    },
+    {
+      "file": "IT/abbonamento/sicurezza-dati-chiavetta.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/abbonamento/sicurezza-dati-chiavetta.html",
+        "prove-mobile/prova-it/IT/abbonamento/sicurezza-dati-chiavetta.html"
+      ],
+      "sha256_attuale": "6902183c343593f37430aef41854546eaac9c2b8abb5a6e48ee2344b7764b825"
+    },
+    {
+      "file": "IT/carico/carico vecchio.html",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/carico.html"
+      ],
+      "sha256_attuale": "5496a3d4aa058668783efeb9d4899fe3b441f964f1a1caa4d99c81ca0c74e4f6"
+    },
+    {
+      "file": "IT/carico/carico.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/carico.html",
+        "prove-mobile/prova-it/IT/carico/carico.html"
+      ],
+      "sha256_attuale": "3442444051a63968ca0d5e468370c8059d17ea02a0fb8a5798b20763ec89bcbb"
+    },
+    {
+      "file": "IT/carico/collegamento.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/collegamento.html",
+        "prove-mobile/prova-it/IT/carico/collegamento.html"
+      ],
+      "sha256_attuale": "438a36c337ec62c75e4f6cf11ea6a641387724718b6c9853cc64184305e710f7"
+    },
+    {
+      "file": "IT/carico/guida-categoria.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-categoria.html",
+        "prove-mobile/prova-it/IT/carico/guida-categoria.html"
+      ],
+      "sha256_attuale": "a8797d1421cfd55389718e814ea015b3fb332bdfe695cd0a214f37728e7cb3a9"
+    },
+    {
+      "file": "IT/carico/guida-fornitore.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-fornitore.html",
+        "prove-mobile/prova-it/IT/carico/guida-fornitore.html"
+      ],
+      "sha256_attuale": "1416f07ea44c607f6084d025ed960c210d52aa01ed13f120a88844770f957e61"
+    },
+    {
+      "file": "IT/carico/guida-nome-prodotto.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-nome-prodotto.html",
+        "prove-mobile/prova-it/IT/carico/guida-nome-prodotto.html"
+      ],
+      "sha256_attuale": "09ef4707ba58b011c759e04638e338d0c3b6fcb39ee76bd8a6eedd024ffb3eb9"
+    },
+    {
+      "file": "IT/carico/guida-note.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-note.html",
+        "prove-mobile/prova-it/IT/carico/guida-note.html"
+      ],
+      "sha256_attuale": "5b3041e6b832e5ea90bd9d1aabe32fbb2dd6e8ad5e8641093a83cf7b498d1c36"
+    },
+    {
+      "file": "IT/carico/guida-pezzi.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-pezzi.html",
+        "prove-mobile/prova-it/IT/carico/guida-pezzi.html"
+      ],
+      "sha256_attuale": "9ab3170b3d292aeaf696821091b822b991386bf45adede9173ad7da82d16aead"
+    },
+    {
+      "file": "IT/carico/guida-quantita.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-quantita.html",
+        "prove-mobile/prova-it/IT/carico/guida-quantita.html"
+      ],
+      "sha256_attuale": "fafe57317eba9a1bfb6cb28f7ea40cc61cd8ebb6b919345cf43a0e9204f05ce5"
+    },
+    {
+      "file": "IT/carico/guida-scadenza.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-scadenza.html",
+        "prove-mobile/prova-it/IT/carico/guida-scadenza.html"
+      ],
+      "sha256_attuale": "9c5070d7284fcf3fa80ac012d48f1fe97a4d5a7478d7cd0d45256b37a817df70"
+    },
+    {
+      "file": "IT/carico/guida-scansione-codice-barre.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-scansione-codice-barre.html",
+        "prove-mobile/prova-it/IT/carico/guida-scansione-codice-barre.html"
+      ],
+      "sha256_attuale": "abff95880c3d1a793f2370462818b55d2d8688d9a98ee4141d88606fc9dcc90a"
+    },
+    {
+      "file": "IT/carico/guida-tassativo.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-tassativo.html",
+        "prove-mobile/prova-it/IT/carico/guida-tassativo.html"
+      ],
+      "sha256_attuale": "5ca6ea6c0d9652c55c96a3068a8fc32bab0d6bca225272bcad3de62bb78d3204"
+    },
+    {
+      "file": "IT/carico/guida-ubicazione.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/carico/guida-ubicazione.html",
+        "prove-mobile/prova-it/IT/carico/guida-ubicazione.html"
+      ],
+      "sha256_attuale": "bca8bc4e4c8fe5f7fde7f0212e2e1ded2055db71dd162df4004b6f05ae5f1bac"
+    },
+    {
+      "file": "IT/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/index.html",
+        "prove-mobile/prova-it/IT/index.html"
+      ],
+      "sha256_attuale": "823c736e524c4692bc155b9646945beeacb951a0c4aaaa6cdef8a577be4ffb6e"
+    },
+    {
+      "file": "IT/inventario/guida-inventario.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/inventario/guida-inventario.html",
+        "prove-mobile/prova-it/IT/inventario/guida-inventario.html"
+      ],
+      "sha256_attuale": "54170b4fdf44a40810777f8ecbcc50fb45642f427837becdb23eec1918a4e671"
+    },
+    {
+      "file": "IT/inventario/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/inventario/index.html",
+        "prove-mobile/prova-it/IT/inventario/index.html"
+      ],
+      "sha256_attuale": "80e7e9c9e45fcb6f3759e73a737ee03f5cc59512e8ca567a208f365aa479a473"
+    },
+    {
+      "file": "IT/menu.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/menu.html",
+        "prove-mobile/prova-it/IT/menu.html"
+      ],
+      "sha256_attuale": "24758f460324d0d4d9d03761314d093b0b81c554fb3aaedcd3d030bec2c995c9"
+    },
+    {
+      "file": "IT/operazioni/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/IT/operazioni/index.html"
+      ],
+      "sha256_attuale": "d31353371c7c3eddce089e5d97a17c9e9dab8a520f6548e1fbcb1299cd7821e3"
+    },
+    {
+      "file": "IT/questionario/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/IT/questionario/index.html"
+      ],
+      "sha256_attuale": "3ac9b48452ca695f6f48e709f07612ca9b8004e39b6fd7c265c28437816df9d2"
+    },
+    {
+      "file": "IT/scarico/guida-cambio-ubicazione.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/scarico/guida-cambio-ubicazione.html",
+        "prove-mobile/prova-it/IT/scarico/guida-cambio-ubicazione.html"
+      ],
+      "sha256_attuale": "b5b55320e3f63bc7c4bb79e7b63a899678373217da67e0e3af9dd51fc5da3ed9"
+    },
+    {
+      "file": "IT/scarico/guida-consumo-parziale.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/scarico/guida-consumo-parziale.html",
+        "prove-mobile/prova-it/IT/scarico/guida-consumo-parziale.html"
+      ],
+      "sha256_attuale": "e80ac153b4d2775138a501ab28131c5b5edae890020ac2a2724a9e74fd7bcf25"
+    },
+    {
+      "file": "IT/scarico/index vecchio 1.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "377a2768671b41ffb4a9371aae97e1674e484edda859f3ba82e2826493c9724f"
+    },
+    {
+      "file": "IT/scarico/index vecchio 2.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "d9a2f3051214feda342165d7d3a3a62ca9a2042282b89bf759868545c1c6d7d7"
+    },
+    {
+      "file": "IT/scarico/index vecchio.html",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/scarico/index.html"
+      ],
+      "sha256_attuale": "7cbb85b54d3f44bc5e12ef92c0b8e6ee31c39628c604f8f856ebbe5e9cb2ddc9"
+    },
+    {
+      "file": "IT/scarico/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/scarico/index.html",
+        "prove-mobile/prova-it/IT/scarico/index.html"
+      ],
+      "sha256_attuale": "dc2100dac87aec48a11e0681f991b3c350b291914e1913f745dcf1d961ce27a5"
+    },
+    {
+      "file": "IT/spesa/guida-block-notes.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/spesa/guida-block-notes.html",
+        "prove-mobile/prova-it/IT/spesa/guida-block-notes.html"
+      ],
+      "sha256_attuale": "201e1a131f42f976929ea525c439f22fee81233192537f55684a52981a9a1984"
+    },
+    {
+      "file": "IT/spesa/guida-cose-da-fare.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/spesa/guida-cose-da-fare.html",
+        "prove-mobile/prova-it/IT/spesa/guida-cose-da-fare.html"
+      ],
+      "sha256_attuale": "cf1056cca101f5da6878a358cb9cbaee15f4ec084685370d074f2ca5b3ed3d71"
+    },
+    {
+      "file": "IT/spesa/guida-lista-spesa.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/spesa/guida-lista-spesa.html",
+        "prove-mobile/prova-it/IT/spesa/guida-lista-spesa.html"
+      ],
+      "sha256_attuale": "fcddd8d15482f0cf8e531fe7bb9aaf7ad24b173fcd6a6437711162294852b05b"
+    },
+    {
+      "file": "IT/spesa/index vecchio.html",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/spesa/index.html"
+      ],
+      "sha256_attuale": "a2d137b48d1a8bc4c394a321d0cda46e5f0c0f28e1db4436fccbcc4d216a24b9"
+    },
+    {
+      "file": "IT/spesa/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/spesa/index.html",
+        "prove-mobile/prova-it/IT/spesa/index.html"
+      ],
+      "sha256_attuale": "4c1809e96db3b63faa2d1036c66deb3c222f7c3402070fb7388f86fc2d224e7a"
+    },
+    {
+      "file": "IT/statistiche/guida-consumi-top-prodotti.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/statistiche/guida-consumi-top-prodotti.html",
+        "prove-mobile/prova-it/IT/statistiche/guida-consumi-top-prodotti.html"
+      ],
+      "sha256_attuale": "a412997592646c36bd6d3ea88c0d911425bb6377b0bf94c68f3a27d381c569c8"
+    },
+    {
+      "file": "IT/statistiche/guida-fornitori-negozi.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/statistiche/guida-fornitori-negozi.html",
+        "prove-mobile/prova-it/IT/statistiche/guida-fornitori-negozi.html"
+      ],
+      "sha256_attuale": "4491b391b906d6ca3a55a556648e4a43e992d65337f09cd8bb65651773658de3"
+    },
+    {
+      "file": "IT/statistiche/guida-indice-antispreco.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/statistiche/guida-indice-antispreco.html",
+        "prove-mobile/prova-it/IT/statistiche/guida-indice-antispreco.html"
+      ],
+      "sha256_attuale": "c3ac9abddcb7a33ad8f755a40236eb3867cd0d8e8a4702f6693d6fa0842d2f4c"
+    },
+    {
+      "file": "IT/statistiche/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/statistiche/index.html",
+        "prove-mobile/prova-it/IT/statistiche/index.html"
+      ],
+      "sha256_attuale": "29ee7b0b78a9e1112709227a20f7710c458d58ef1e693e563c2bd0b6051cfae4"
+    },
+    {
+      "file": "IT/termini-IT-2026-11-11-1.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "9ed059c0c2a1b5cadb65054f6039610601d62f37b4bc81e3dd043b06dce0f97a"
+    },
+    {
+      "file": "IT/termini-IT-2026-11-11-2.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "3dde6575a72e0ade662ae39cfd212a04cbca9613633d217a46052a3b7a9ab285"
+    },
+    {
+      "file": "IT/termini.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/termini.html",
+        "prove-mobile/prova-it/IT/termini.html"
+      ],
+      "sha256_attuale": "3dde6575a72e0ade662ae39cfd212a04cbca9613633d217a46052a3b7a9ab285"
+    },
+    {
+      "file": "IT/utilita/guida-aggiornamenti.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/utilita/guida-aggiornamenti.html",
+        "prove-mobile/prova-it/IT/utilita/guida-aggiornamenti.html"
+      ],
+      "sha256_attuale": "bcde4706153d67b08da4220506d5c8b71a3344c54d362f3bbb7e21973c10b696"
+    },
+    {
+      "file": "IT/utilita/guida-backup.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/utilita/guida-backup.html",
+        "prove-mobile/prova-it/IT/utilita/guida-backup.html"
+      ],
+      "sha256_attuale": "47a0881945c171fc22cb49827b645b4fd6d041c39d6eada3012270f99db29319"
+    },
+    {
+      "file": "IT/utilita/guida-esportazione.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/utilita/guida-esportazione.html",
+        "prove-mobile/prova-it/IT/utilita/guida-esportazione.html"
+      ],
+      "sha256_attuale": "d34cb86103bc3b1452da44fb9e9a060165663c423e335f483ed434578ceafc72"
+    },
+    {
+      "file": "IT/utilita/guida-reset-avanzati.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/utilita/guida-reset-avanzati.html",
+        "prove-mobile/prova-it/IT/utilita/guida-reset-avanzati.html"
+      ],
+      "sha256_attuale": "87726aeec3bc7b3467ff1da0a938c537fb81894975179a89338ba5c50e524a91"
+    },
+    {
+      "file": "IT/utilita/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "IT/utilita/index.html",
+        "prove-mobile/prova-it/IT/utilita/index.html"
+      ],
+      "sha256_attuale": "4c3ecad0812bd296f884ea159eb51f86cb9173ee288082e9c5fc4b688c06f719"
+    },
+    {
+      "file": "EN/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/index.html"
+      ],
+      "sha256_attuale": "d7494230ddf8ba1ca101a7caa91f04fc35fac0be618403ddcc3da30a15d7ddb7"
+    },
+    {
+      "file": "EN/inventory/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/inventory/index.html"
+      ],
+      "sha256_attuale": "603e23bc95fd6ca87943c7927f79faa168cfcab8f8286917adf1c5544a765be8"
+    },
+    {
+      "file": "EN/inventory/inventory-help-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/inventory/inventory-help-guide.html"
+      ],
+      "sha256_attuale": "178172e22e8ecba9a26c2afe549b95457464e63002773d06ffd4b93fe24fe1d3"
+    },
+    {
+      "file": "EN/load/connection.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/connection.html"
+      ],
+      "sha256_attuale": "82fec55e0ed62124a7e951d13d9cfa7f8985f6dd28bf3ab6101ec5deb399759f"
+    },
+    {
+      "file": "EN/load/guide-barcode-scanning.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-barcode-scanning.html"
+      ],
+      "sha256_attuale": "cd52b7d8fec0ee610d6eac19fbb209ce79817d3f46a502c9cf1979f1d9defc62"
+    },
+    {
+      "file": "EN/load/guide-category.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-category.html"
+      ],
+      "sha256_attuale": "a4b079c42eaaf32389bd1f5512e8a7a46582ace7b26ded708902ef2b7cb87d10"
+    },
+    {
+      "file": "EN/load/guide-expiration.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-expiration.html"
+      ],
+      "sha256_attuale": "d11f37ac28e499cb71a9c3beab5ccb05ff031269d9706a953f8c902872be3e9c"
+    },
+    {
+      "file": "EN/load/guide-location.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-location.html"
+      ],
+      "sha256_attuale": "5458e31abbd13421f432af26c8cf43ab7d9bc68c2cb75a6a95ff2936ed88e6f7"
+    },
+    {
+      "file": "EN/load/guide-mandatory.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-mandatory.html"
+      ],
+      "sha256_attuale": "06592a9aeb231533d86cb4cb51729473edb04cb50cd181005c9802faa5dfba4b"
+    },
+    {
+      "file": "EN/load/guide-notes.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-notes.html"
+      ],
+      "sha256_attuale": "d9149bb26dcab974ad341e04cfa8499473ad39d8d4e33d3e8f306f07ad1f6d30"
+    },
+    {
+      "file": "EN/load/guide-pieces.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-pieces.html"
+      ],
+      "sha256_attuale": "be72b3c82dcebe777d41c84e342878028d5e06c42fde0eb66b46a07732ea0075"
+    },
+    {
+      "file": "EN/load/guide-product-name.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-product-name.html"
+      ],
+      "sha256_attuale": "bb3825c3bc70827b5d038fdb9d3b5c0b8b6e15e165072de77fa62f0c8a51d1f7"
+    },
+    {
+      "file": "EN/load/guide-quantity.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-quantity.html"
+      ],
+      "sha256_attuale": "e8ef2c72045417cee078e788951c50ee974d4adc7f369620f414394a64d80225"
+    },
+    {
+      "file": "EN/load/guide-supplier.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/guide-supplier.html"
+      ],
+      "sha256_attuale": "22ab53055bd2778e1673d5bbe705f6a7e76b277a9bb5cd8c166be5984a0a6635"
+    },
+    {
+      "file": "EN/load/load.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/load/load.html"
+      ],
+      "sha256_attuale": "50fe064ebe3d6b3ee79464247fdaff1111b5950aac6d7a3ccde80d905d712e30"
+    },
+    {
+      "file": "EN/menu.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/menu.html"
+      ],
+      "sha256_attuale": "02c31d79d10bd746f7907880f7241354043b4dfb3bdb1bd9e8e0d84a6f1a9ad7"
+    },
+    {
+      "file": "EN/operations/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a5dcd202b18688d9623aeea28875b3482144e145afc87d107f6a5acad2b89440"
+    },
+    {
+      "file": "EN/questionnaire/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1dc01ba9729285926c4b7f62b510455a08a80f691075087593709a6e8816aa53"
+    },
+    {
+      "file": "EN/shopping/grocery-shopping-list-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/shopping/grocery-shopping-list-guide.html"
+      ],
+      "sha256_attuale": "bb74f5ece5ca82e0430bf8e77ac86c0081620a93fe351d79f2a82d74771a3a75"
+    },
+    {
+      "file": "EN/shopping/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/shopping/index.html"
+      ],
+      "sha256_attuale": "619de607f50f19f34eedf5fff6956b50f8374978bd5e3c7eaa4eb2f7c8040862"
+    },
+    {
+      "file": "EN/shopping/notepad-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/shopping/notepad-guide.html"
+      ],
+      "sha256_attuale": "11d98435c05428e3b1e54503a1081819f2e550e2b6030adc49a64dfa9465a0a9"
+    },
+    {
+      "file": "EN/shopping/to-do-list-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/shopping/to-do-list-guide.html"
+      ],
+      "sha256_attuale": "bd2a6bf2645bb8fc03a53e6f3ceb9aea860646d6b4609e4a2c4c8145de65ad88"
+    },
+    {
+      "file": "EN/statistics/anti-waste-index-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/statistics/anti-waste-index-guide.html"
+      ],
+      "sha256_attuale": "872bf6832b82462303b8d2a3db846cbef4e68cec5eadd4e799cb5b1427ebd4f8"
+    },
+    {
+      "file": "EN/statistics/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/statistics/index.html"
+      ],
+      "sha256_attuale": "ff4acf76257bc63ab5fc22c510202d9768397e1e5a6ef4c4d416aaac686b5013"
+    },
+    {
+      "file": "EN/statistics/store-suppliers-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/statistics/store-suppliers-guide.html"
+      ],
+      "sha256_attuale": "6d02caf3fddeb4e11bcd291412afa9ce683bc0ff3fa2bf1d18217427bda557be"
+    },
+    {
+      "file": "EN/statistics/top-products-consumption-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/statistics/top-products-consumption-guide.html"
+      ],
+      "sha256_attuale": "5b6d261b5bcf59b8ea61fc2b64f24c6dc020ab264fd2fb33388b0de3fc75b345"
+    },
+    {
+      "file": "EN/subscription/collaborate-free.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/subscription/collaborate-free.html"
+      ],
+      "sha256_attuale": "1dc01ba9729285926c4b7f62b510455a08a80f691075087593709a6e8816aa53"
+    },
+    {
+      "file": "EN/subscription/data-security-usb.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/subscription/data-security-usb.html"
+      ],
+      "sha256_attuale": "2517fdff509838578eb3f863f4540b9994795c471ab443345c29832c4d30f667"
+    },
+    {
+      "file": "EN/subscription/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/subscription/index.html"
+      ],
+      "sha256_attuale": "c7dde095bde73be7595b234b63467b0668d532cbecc964adbb41fe6b7453c4f8"
+    },
+    {
+      "file": "EN/termini.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/termini.html"
+      ],
+      "sha256_attuale": "093941437e4f2b60e9b97663e67b40de12501de9bba9f19e431e6f8e51a4a420"
+    },
+    {
+      "file": "EN/unload/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/unload/index.html"
+      ],
+      "sha256_attuale": "d454040e34aee84159f2a52c49e2a7c44f38a58e16f7ab928353cd0b41eeb43a"
+    },
+    {
+      "file": "EN/unload/location-change-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/unload/location-change-guide.html"
+      ],
+      "sha256_attuale": "95cb56a240ea8253a4185bf860f54abf1b223ccb1710b121925127d4b6426685"
+    },
+    {
+      "file": "EN/unload/partial-consumption-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/unload/partial-consumption-guide.html"
+      ],
+      "sha256_attuale": "d0bc1b59db546003e7f5c9e0c5af67b229dd15689490d81403e1a8e2b92040d5"
+    },
+    {
+      "file": "EN/utilities/advanced-reset-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/utilities/advanced-reset-guide.html"
+      ],
+      "sha256_attuale": "40665095fc903c8fac54b0b2da85ec61bfa47b509f4e79269eebebc98449e13b"
+    },
+    {
+      "file": "EN/utilities/export-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/utilities/export-guide.html"
+      ],
+      "sha256_attuale": "f80bd4bdfd548a9558ff3e93b7232804e211291206dcd51b79af13121ead819c"
+    },
+    {
+      "file": "EN/utilities/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/utilities/index.html"
+      ],
+      "sha256_attuale": "d5fedb84df1c0c2cf1cabfc22d28ed9184443818072f360e4829c2e5e58fab8d"
+    },
+    {
+      "file": "EN/utilities/leo-updates-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/utilities/leo-updates-guide.html"
+      ],
+      "sha256_attuale": "17882f8aa385d2613cc3c2f5a46d03b3224244b03d97a803c787d8e146f2cfdb"
+    },
+    {
+      "file": "EN/utilities/usb-save-guide.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "EN/utilities/usb-save-guide.html"
+      ],
+      "sha256_attuale": "0b34484998dedaecd56fedb63e4432693ecb4d744bcf95866a292b1b76b0a0cb"
+    },
+    {
+      "file": "FR/abonnement/collaborer-gratuit.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/abonnement/collaborer-gratuit.html"
+      ],
+      "sha256_attuale": "6a54448ebb177ad3dfe16152755aa650cea47c61ca11fb437225bd54f57d6bb5"
+    },
+    {
+      "file": "FR/abonnement/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/abonnement/index.html"
+      ],
+      "sha256_attuale": "9a575c6e56d13f97e433af6c3757b3322759702fd25687c56abf4ccdb1a3ce69"
+    },
+    {
+      "file": "FR/abonnement/securite-donnees-usb.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/abonnement/securite-donnees-usb.html"
+      ],
+      "sha256_attuale": "7523f39bce28b9f538051cb5d4fc102276b8db3be94c81b96f56d86979920297"
+    },
+    {
+      "file": "FR/chargement/chargement.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/chargement.html"
+      ],
+      "sha256_attuale": "836e8b202d5e405a3ca7f14c1400520d9d868c7cb77e996dd9d06fbbd0008ef4"
+    },
+    {
+      "file": "FR/chargement/connexion.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/connexion.html"
+      ],
+      "sha256_attuale": "e323171174e643bf24127d043062da6db3403b2fab31ac1c5592eaff9864f6cd"
+    },
+    {
+      "file": "FR/chargement/guide-categorie.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-categorie.html"
+      ],
+      "sha256_attuale": "458eae040403e8fb0dc3b23e18ae92be201cde3564fff44e00e8d8621fdafd4b"
+    },
+    {
+      "file": "FR/chargement/guide-emplacement.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-emplacement.html"
+      ],
+      "sha256_attuale": "59240edc500b6ec4b717ed3a145c6e758453a34df3485f302072547cbec48057"
+    },
+    {
+      "file": "FR/chargement/guide-fournisseur.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-fournisseur.html"
+      ],
+      "sha256_attuale": "0a780efd647ab52c1b36584aa19b1a6d701a8b69cbe1f17431df8fd9cb3dd039"
+    },
+    {
+      "file": "FR/chargement/guide-imperatif.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "bac88d68fea0bcf9b7d4e3ff123b3f070395e0bb39c42c752c06490fd8d2d1b2"
+    },
+    {
+      "file": "FR/chargement/guide-nom-produit.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-nom-produit.html"
+      ],
+      "sha256_attuale": "9c7739362d1f848ea4a82d422c13c3422f40a35a1f684df2929f6eab7363646a"
+    },
+    {
+      "file": "FR/chargement/guide-notes.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-notes.html"
+      ],
+      "sha256_attuale": "8bdabbe061c448398959600c655616eb1f852b4de396ec8389189d354487ccdf"
+    },
+    {
+      "file": "FR/chargement/guide-peremption.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-peremption.html"
+      ],
+      "sha256_attuale": "3a246b1851b104d4f95bc8e2dcb1fba1f29386d5b014f0e13acfeb753d3956f2"
+    },
+    {
+      "file": "FR/chargement/guide-pieces.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-pieces.html"
+      ],
+      "sha256_attuale": "f69316a801117f1d5bc15177a26063b9f3e83d0e90d5b9a1c2501bb64c14af43"
+    },
+    {
+      "file": "FR/chargement/guide-quantite.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-quantite.html"
+      ],
+      "sha256_attuale": "e3d39a094aa4ef8903dbdd3d0a703ba321a76e1bb44225482fc98de4d87b7408"
+    },
+    {
+      "file": "FR/chargement/guide-scanner-code-barres.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/chargement/guide-scanner-code-barres.html"
+      ],
+      "sha256_attuale": "a87300a89a3bac001326723ed0360ba379bcfb8fa637f365389efb10b8963288"
+    },
+    {
+      "file": "FR/conditions.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/conditions.html"
+      ],
+      "sha256_attuale": "78fe21a297f4039ac0b76f3ab355b89ac745a8761cdeb474eec243e0ea3b98c6"
+    },
+    {
+      "file": "FR/courses/guide-bloc-notes.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/courses/guide-bloc-notes.html"
+      ],
+      "sha256_attuale": "f4251ed2946b0e021dd6de195b91627c999cd28d10c723136f5e7bc02678793f"
+    },
+    {
+      "file": "FR/courses/guide-choses-a-faire.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/courses/guide-choses-a-faire.html"
+      ],
+      "sha256_attuale": "769581026f125c2fb8ea94b83d0a0c5ada4a24c9b8b733ad716e994ce364f7a9"
+    },
+    {
+      "file": "FR/courses/guide-liste-courses.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/courses/guide-liste-courses.html"
+      ],
+      "sha256_attuale": "aaf4578a4c8f6614e038a8c8d2107133d85c28e4ec8c203595d1f554b2de2a8b"
+    },
+    {
+      "file": "FR/courses/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/courses/index.html"
+      ],
+      "sha256_attuale": "d86f3f1efa7e8a00af09fce6c631d66533683c064f5afb1b37262369659cfddd"
+    },
+    {
+      "file": "FR/dechargement/guide-changement-emplacement.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/dechargement/guide-changement-emplacement.html"
+      ],
+      "sha256_attuale": "76bfdd76c35c7a12a210877f7058740405c89c8e289304c14683994a156a42ba"
+    },
+    {
+      "file": "FR/dechargement/guide-consommation-partielle.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/dechargement/guide-consommation-partielle.html"
+      ],
+      "sha256_attuale": "f0e0b72517035ac4ab97922293597aa078318e6d2c7e8350c89aeed3a12d6e5f"
+    },
+    {
+      "file": "FR/dechargement/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/dechargement/index.html"
+      ],
+      "sha256_attuale": "a6c34fbbb272fd4900dc42755e1754d4ebfe41c536dfeb98b41588d9742e6cf8"
+    },
+    {
+      "file": "FR/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/index.html"
+      ],
+      "sha256_attuale": "b3cb3b5824dbd593aa498d9d1aadd9bc2cb81f6c2f71eee0bc540fbfe08fc1bb"
+    },
+    {
+      "file": "FR/inventaire/guide-inventaire.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/inventaire/guide-inventaire.html"
+      ],
+      "sha256_attuale": "728318dcf2864454ff08822682ad66ff59b88a3426b48ea6d369e17c9b38888f"
+    },
+    {
+      "file": "FR/inventaire/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/inventaire/index.html"
+      ],
+      "sha256_attuale": "d81c23c1ca3df9d0ae24ca7d36d9ecc5b0843f63da3e29fc386ab2490417d7ad"
+    },
+    {
+      "file": "FR/menu.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/menu.html"
+      ],
+      "sha256_attuale": "5e7704431d699fff763b7536eb7f61b3c9d8d7a2a84f9ac6f73a012dfa00ec25"
+    },
+    {
+      "file": "FR/operations/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c049c12657d1ef52bf4ed21915bfc916a8be00a09f836def7a2ce9e0147d842d"
+    },
+    {
+      "file": "FR/questionnaire/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6a54448ebb177ad3dfe16152755aa650cea47c61ca11fb437225bd54f57d6bb5"
+    },
+    {
+      "file": "FR/statistiques/guide-consommation-top-produits.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/statistiques/guide-consommation-top-produits.html"
+      ],
+      "sha256_attuale": "4b298f97ea17fea6cb813b049de6a787fb9fd7effc842589dca04b3f566ad544"
+    },
+    {
+      "file": "FR/statistiques/guide-fournisseurs-magasins.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/statistiques/guide-fournisseurs-magasins.html"
+      ],
+      "sha256_attuale": "12393c4b7a4560eb70218781ed415c285862f425935f5c7d300357900e20a4b8"
+    },
+    {
+      "file": "FR/statistiques/guide-indice-anti-gaspillage.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/statistiques/guide-indice-anti-gaspillage.html"
+      ],
+      "sha256_attuale": "931862f6d6763d93d6473070f9b2010d7813bf32a02e13c36e59326d0567ecb1"
+    },
+    {
+      "file": "FR/statistiques/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/statistiques/index.html"
+      ],
+      "sha256_attuale": "31f1cbaef01ba98ff592dde32110b03a60062dfa08d44c1ab395b85164c25b73"
+    },
+    {
+      "file": "FR/utilitaires/guide-exportation-donnees.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/utilitaires/guide-exportation-donnees.html"
+      ],
+      "sha256_attuale": "5f8ad5136e0672368752ac49974e75c3a8e7d5300fca8b3f1009afabccbe67e0"
+    },
+    {
+      "file": "FR/utilitaires/guide-mises-a-jour-leo.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/utilitaires/guide-mises-a-jour-leo.html"
+      ],
+      "sha256_attuale": "d4f209795e1fc7881f617ea10c6b5822b78cf2b4d06b747c06f13bd5995f85d9"
+    },
+    {
+      "file": "FR/utilitaires/guide-reinitialisation-avancee.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/utilitaires/guide-reinitialisation-avancee.html"
+      ],
+      "sha256_attuale": "1eb03ff76ddcc1e63d99ec5543a32f7c35cf0c779d4a97b23de164a31024651a"
+    },
+    {
+      "file": "FR/utilitaires/guide-sauvegarde-backup.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/utilitaires/guide-sauvegarde-backup.html"
+      ],
+      "sha256_attuale": "fcb4d2171184046a8ef44f912e0ad726c3c6834ebc2aa68fd66157fc5eb5a8f0"
+    },
+    {
+      "file": "FR/utilitaires/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "FR/utilitaires/index.html"
+      ],
+      "sha256_attuale": "61df4e7709bd833421e1d6982ab20be4801ca50fea954892162cee7eda155d37"
+    },
+    {
+      "file": "DE/abonnement/datensicherheit-usb.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/abonnement/datensicherheit-usb.html"
+      ],
+      "sha256_attuale": "84745af594e17ab504ee6efdb2c2e7e7550ee98d09491ebc76ff29a2428ad00a"
+    },
+    {
+      "file": "DE/abonnement/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/abonnement/index.html"
+      ],
+      "sha256_attuale": "f6dbf77eb0c3e968752f03ffc79ed01f4eaa61e87c17b4ec744a6b62f3179f3f"
+    },
+    {
+      "file": "DE/abonnement/mitarbeiten-gratis.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/abonnement/mitarbeiten-gratis.html"
+      ],
+      "sha256_attuale": "881ad13999e12f2af5f173921d219e1051d5d2d1a5b2764339ff9fb8b69ef0af"
+    },
+    {
+      "file": "DE/einkaufsliste/aufgaben-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/einkaufsliste/aufgaben-anleitung.html"
+      ],
+      "sha256_attuale": "cdcc7611c5680d3847bef63bc7eceb7145f70ee6517ded1501ff821cc4e1904f"
+    },
+    {
+      "file": "DE/einkaufsliste/einkaufsliste-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/einkaufsliste/einkaufsliste-anleitung.html"
+      ],
+      "sha256_attuale": "240b6486202c9e141b3ba7049d564486e6992f9e521533bc66e06f4c1a23140a"
+    },
+    {
+      "file": "DE/einkaufsliste/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/einkaufsliste/index.html"
+      ],
+      "sha256_attuale": "65d1eb7d88f68d790b98bfb3897cc16ccab62c0c4e07cd25e7a68e7f9d163673"
+    },
+    {
+      "file": "DE/einkaufsliste/notizblock-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/einkaufsliste/notizblock-anleitung.html"
+      ],
+      "sha256_attuale": "4d1ac3d39e9a2bdf1227d0a90c2cb1a40bad2ad324a0291ab9b41947b926423d"
+    },
+    {
+      "file": "DE/entnahme/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/entnahme/index.html"
+      ],
+      "sha256_attuale": "fd8fd7c6d6c12438c8c98c1c117115011b62b13690e85887de57ee81aaf1422a"
+    },
+    {
+      "file": "DE/entnahme/lagerort-wechsel-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/entnahme/lagerort-wechsel-anleitung.html"
+      ],
+      "sha256_attuale": "11ecf29709238e135f4db44852cbfe6a8d6173ed7c6cd4a7de95089dfabae858"
+    },
+    {
+      "file": "DE/entnahme/teilverbrauch-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/entnahme/teilverbrauch-anleitung.html"
+      ],
+      "sha256_attuale": "e8aabf4888303607fa08db7fd2a4ed1ce58208d46fd2526c3c7acd18d123d5d9"
+    },
+    {
+      "file": "DE/fragebogen/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "881ad13999e12f2af5f173921d219e1051d5d2d1a5b2764339ff9fb8b69ef0af"
+    },
+    {
+      "file": "DE/hilfsmittel/aktualisierung-anleitung.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "12f16004a31ab9379778ca770c326e3d3169635ab215570d3951fa465827f4fc"
+    },
+    {
+      "file": "DE/hilfsmittel/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/hilfsmittel/index.html"
+      ],
+      "sha256_attuale": "666f15a99c204e61d9377fdd03dcb945ce10209306093bb30d61617fc11da7a9"
+    },
+    {
+      "file": "DE/hilfsmittel/sicherung-anleitung.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "cbcb19e2f00628ff7dc9c1210a3476df45483bbe8eff329ef6b589331a8baa38"
+    },
+    {
+      "file": "DE/hilfsmittel/uebertragung-anleitung.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "2ce48bb7c672ca1f0499f054a682576cae5fc436d39341ba7aeb8cff29dbc006"
+    },
+    {
+      "file": "DE/hilfsmittel/zuruecksetzen-anleitung.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "60bb8108634385f47f1931fea266bbf5c176ff9eda04bf3087e1c16399758908"
+    },
+    {
+      "file": "DE/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/index.html"
+      ],
+      "sha256_attuale": "7ec0b70d27deb33c845769663b443512e06169c6186988d3d9ee2b7e7803d389"
+    },
+    {
+      "file": "DE/inventar/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/inventar/index.html"
+      ],
+      "sha256_attuale": "e9506d05d852806d337b009c87564c31e750ae44a8f678143a201bec642a248b"
+    },
+    {
+      "file": "DE/inventar/inventar-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/inventar/inventar-anleitung.html"
+      ],
+      "sha256_attuale": "7849cac5fbd74ae54010cb0da940e1737550959cc9e9dad2a2873345f3a2a84c"
+    },
+    {
+      "file": "DE/lagerung/barcode-scan-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/barcode-scan-anleitung.html"
+      ],
+      "sha256_attuale": "5012cc47fb64c676901f1bb04efa3f16f06552301826e73ab8b7734767c3ce5d"
+    },
+    {
+      "file": "DE/lagerung/einlagerung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/einlagerung.html"
+      ],
+      "sha256_attuale": "e98b82c3aa74cbb09d7760cd4235cab2314c839806768ab399f3b5db20b18ce8"
+    },
+    {
+      "file": "DE/lagerung/haltbarkeit-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/haltbarkeit-anleitung.html"
+      ],
+      "sha256_attuale": "acbdfb4afbc4928e5647b8e73b7acf96c4de4efa35c989071ce938f197a001cd"
+    },
+    {
+      "file": "DE/lagerung/kategorie-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/kategorie-anleitung.html"
+      ],
+      "sha256_attuale": "3bcefbfa19b31b08507de5a0d47b69676ab898e2396871b2a5dbf60e793cd35a"
+    },
+    {
+      "file": "DE/lagerung/lagerort-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/lagerort-anleitung.html"
+      ],
+      "sha256_attuale": "3998d56b1899dee0b36a73f4d57bca5ad41e422b42935800a56678cc8fb87fff"
+    },
+    {
+      "file": "DE/lagerung/lieferant-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/lieferant-anleitung.html"
+      ],
+      "sha256_attuale": "c8a6532f1876a2a2197dd5ce8a5a52d9e0f30fe309131bf0a3218b9ea6195c0e"
+    },
+    {
+      "file": "DE/lagerung/mengen-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/mengen-anleitung.html"
+      ],
+      "sha256_attuale": "1d68e31891041ff7d1a7931a8503eb3b6068566a33f6d6b848c96e6f92a8a28c"
+    },
+    {
+      "file": "DE/lagerung/notizen-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/notizen-anleitung.html"
+      ],
+      "sha256_attuale": "538cb1f9be6c5bf773048e4070bae5c081398a1f86db37929d00a86cc5eda4d0"
+    },
+    {
+      "file": "DE/lagerung/pflichtartikel-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/pflichtartikel-anleitung.html"
+      ],
+      "sha256_attuale": "d91a4a8f055dc083c946680588aa981f025305244a0c6a4bca5af1e850df60b0"
+    },
+    {
+      "file": "DE/lagerung/produktname-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/produktname-anleitung.html"
+      ],
+      "sha256_attuale": "f1b3990284927af29c6d087394b9b02f17049e47734767f82cc8fb82cb6da6d7"
+    },
+    {
+      "file": "DE/lagerung/stueck-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/stueck-anleitung.html"
+      ],
+      "sha256_attuale": "7aadbcf3685b75d6e8948b765ecbcdbbb654f682db982aa6cc891e51f45a8205"
+    },
+    {
+      "file": "DE/lagerung/verknuepfung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/lagerung/verknuepfung.html"
+      ],
+      "sha256_attuale": "c53c80898a0837de805fc3d6aea652681120b54e7d4f14c942dc380a90cf3eca"
+    },
+    {
+      "file": "DE/menu.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/menu.html"
+      ],
+      "sha256_attuale": "cfdc10685411e8778de92973b7f6abcad5c16a2493c2a39440699482a0661879"
+    },
+    {
+      "file": "DE/nutzungsbedingungen.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/nutzungsbedingungen.html"
+      ],
+      "sha256_attuale": "3a9d7082983ebd0ee823b37487dd00b1026d380b72539128d2df28e399efd7fa"
+    },
+    {
+      "file": "DE/statistiken/anti-verschwendung-anleitung.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "2c1186c024bbe351758b9817e3fe587155ed2479886de3db0c799f97d6805c8a"
+    },
+    {
+      "file": "DE/statistiken/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/statistiken/index.html"
+      ],
+      "sha256_attuale": "a76215b8bf090b9fb87364e945561ef70f33efee596925538c34328b43fd62b9"
+    },
+    {
+      "file": "DE/statistiken/lieferanten-geschaefte-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/statistiken/lieferanten-geschaefte-anleitung.html"
+      ],
+      "sha256_attuale": "16ca20eb85c55ebe79c4c1d8787b79ba60c10bbb6e3ac020991c20234655d64a"
+    },
+    {
+      "file": "DE/statistiken/verbrauch-top-produkte-anleitung.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "DE/statistiken/verbrauch-top-produkte-anleitung.html"
+      ],
+      "sha256_attuale": "74a24ab89ea31efba9c1230e66bc60f982346b5f040630d1a66562b9042586d4"
+    },
+    {
+      "file": "DE/vorgaenge/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "e9843d570489850b6f387840b307e03aba04c5d9b4a222ab3212ecf85e727b3b"
+    },
+    {
+      "file": "ES/carga/carga-productos.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/carga-productos.html"
+      ],
+      "sha256_attuale": "94efdf6888dd12f3419abf48bfa839e12b6a4421f92bc5534ea61b67cfeaa94a"
+    },
+    {
+      "file": "ES/carga/carga.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "3f6eeba31d1073eb5698c7faf5eda06b9181a34b8a4c31f753b718596729085f"
+    },
+    {
+      "file": "ES/carga/conexion-escaner.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/conexion-escaner.html"
+      ],
+      "sha256_attuale": "e0e2d6aa48c067b1bab8ff6b4b6c9255af59674892199015e2b929fff7dddaf7"
+    },
+    {
+      "file": "ES/carga/guia-caducidad-estricta.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-caducidad-estricta.html"
+      ],
+      "sha256_attuale": "32873875e74f99c333133984201880a65122d46ec399d7a978d5356c2ea780ca"
+    },
+    {
+      "file": "ES/carga/guia-cantidad-unidades.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-cantidad-unidades.html"
+      ],
+      "sha256_attuale": "510431ed991caf0ecd145f2ae700b8afe634f1183657f6c862e94efcaf42225a"
+    },
+    {
+      "file": "ES/carga/guia-cantidad.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ab25958bf59ecc9e3e4d9a59425d1ac974084a54d10e97246b02050e646e0e0b"
+    },
+    {
+      "file": "ES/carga/guia-categoria.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "eec81026160b8613aeca0fd0689b72c221955a1784eb50c0fc1305120b239c56"
+    },
+    {
+      "file": "ES/carga/guia-categorias-alimentos.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-categorias-alimentos.html"
+      ],
+      "sha256_attuale": "a2cad2aa10c051d6cb7cff4b26bbbd1336a9cc416050ea15da1567490c25d8b5"
+    },
+    {
+      "file": "ES/carga/guia-escanear-codigo-barras.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-escanear-codigo-barras.html"
+      ],
+      "sha256_attuale": "8527685d9770e1f5a786735ed0bc9ef18943d3b086d89507f1b0a90c66b29886"
+    },
+    {
+      "file": "ES/carga/guia-escaner.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "39df4fd06e1ac30e93a3d191c5e049b8c239fac0cef1a7bc828d6165fd051bfe"
+    },
+    {
+      "file": "ES/carga/guia-fecha-caducidad.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-fecha-caducidad.html"
+      ],
+      "sha256_attuale": "3158ff747d1a6e672c55b2f5a8b9a85e817ee235a4e6538fc92d591c4d158404"
+    },
+    {
+      "file": "ES/carga/guia-fecha-estricta.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "804f319dee4555896b9cde5a52a70590f3bde130f2166e2bca7fd228816f952e"
+    },
+    {
+      "file": "ES/carga/guia-fecha.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "43f5be7d9357f7b8e848d05a88922ec8a8e331d423dfbc4d37e21032d78de599"
+    },
+    {
+      "file": "ES/carga/guia-nombre-producto.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-nombre-producto.html"
+      ],
+      "sha256_attuale": "c755e22a1802edff9f02192126ddc4322b15818d7577f7e3ff631cd1e15112ff"
+    },
+    {
+      "file": "ES/carga/guia-nombre.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "9e01ac5405cc0a497a40ec37748ce7576881dc806f6fd861aba37bdbe970121b"
+    },
+    {
+      "file": "ES/carga/guia-notas-inventario.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-notas-inventario.html"
+      ],
+      "sha256_attuale": "cd658898bc61a0a65e32feae98abf38dd4ca6c43d25b70a7d1455575695e71a9"
+    },
+    {
+      "file": "ES/carga/guia-notas.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c2d6651409f85d3946e47efff483f475910d3939b4f5ea0b0de30aa575b83f6d"
+    },
+    {
+      "file": "ES/carga/guia-proveedor.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "0dd058257b665934d6a9c261a73e159911f7ec491b0bde7001f98e8a346e9886"
+    },
+    {
+      "file": "ES/carga/guia-proveedores.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-proveedores.html"
+      ],
+      "sha256_attuale": "e492d28a90f7142f5ca1e0086a7f2799eaa19ca2f2ee59356220740e8bf6f693"
+    },
+    {
+      "file": "ES/carga/guia-ubicacion-despensa.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/carga/guia-ubicacion-despensa.html"
+      ],
+      "sha256_attuale": "656f5f8361621e262a260443e897c93024c1d181125b3299ea48fa1512285ee6"
+    },
+    {
+      "file": "ES/carga/guia-ubicacion.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "9d877cb29d7b3538329b6da4a1e8e3f7333794a95078de70cd8316c530b9f9f4"
+    },
+    {
+      "file": "ES/carga/guia-unidades.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "f770dc8ee5882453cfd120d13cf977e83f67dc846ca0bff465c80ac4a7ceab7d"
+    },
+    {
+      "file": "ES/compra/guia-bloc-notas.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/compra/guia-bloc-notas.html"
+      ],
+      "sha256_attuale": "76fa45d37779a220e0e98bcb8fab248bcc1fb4f0b38858d89c506e6a862d9ba4"
+    },
+    {
+      "file": "ES/compra/guia-lista-compra.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "80a11cfe61471df015932165265f8c1985476e1718ec0f71f7f21402c1a1bac1"
+    },
+    {
+      "file": "ES/compra/guia-recados.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1f5c8c141e6c82171ebd55529d63b1b34299219197c9b340eaa955cf10f40652"
+    },
+    {
+      "file": "ES/compra/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/compra/index.html"
+      ],
+      "sha256_attuale": "808d74cea2f84b05d1dfb4504e31eed875291a2422ffd2609ecde7ac8c2fe2b2"
+    },
+    {
+      "file": "ES/cuestionario/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "19020706a332cf84eb3b2c9a0e34e84a5e17263d016783d97b2910c2b31b400d"
+    },
+    {
+      "file": "ES/descarga/guia-cambio-ubicacion.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/descarga/guia-cambio-ubicacion.html"
+      ],
+      "sha256_attuale": "d147b3d49401f813411d9116d1a9e52318dea912141fcdbe75cc10a7a3e38352"
+    },
+    {
+      "file": "ES/descarga/guia-consumo-parcial.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "0e236bebea9661a1e452c1af7fbb9912abb1e90b9c449906cda4781d4f62a950"
+    },
+    {
+      "file": "ES/descarga/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/descarga/index.html"
+      ],
+      "sha256_attuale": "2347bc8d2faea85f6991a9f4b4914371198e5b26565256a6ad93d75ffb1806e3"
+    },
+    {
+      "file": "ES/estadisticas/guia-consumo-productos-mas-usados.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/estadisticas/guia-consumo-productos-mas-usados.html"
+      ],
+      "sha256_attuale": "142614b0bd5ed7a9c54fe8b88c2b73081eb710868ecbe98d8815b4e07d2dd7d7"
+    },
+    {
+      "file": "ES/estadisticas/guia-indice-desperdicio-cero.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/estadisticas/guia-indice-desperdicio-cero.html"
+      ],
+      "sha256_attuale": "17d9683a31f21f1537c9ffc19c8dcb502b50d166608d776adbf5f8257a704d7a"
+    },
+    {
+      "file": "ES/estadisticas/guia-tiendas-proveedores.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/estadisticas/guia-tiendas-proveedores.html"
+      ],
+      "sha256_attuale": "6b87d424b32f2b251f3c09d2facd9745682ce9b1ca30363cf10ae27a7003fd9e"
+    },
+    {
+      "file": "ES/estadisticas/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/estadisticas/index.html"
+      ],
+      "sha256_attuale": "1a5fafa2acff7a530dd1101ba969aaf314b7cd72ab89e057860bf16ffab47e6d"
+    },
+    {
+      "file": "ES/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/index.html"
+      ],
+      "sha256_attuale": "fe227a0e8e98a6455293a3838846fe17b73f88efe67ccfa6465c71bf621ea79a"
+    },
+    {
+      "file": "ES/inventario/guia-inventario.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "4c65da0dd20d8c40cd32c8e57fc083478fd3c03f566c140661ff143264d2c7b9"
+    },
+    {
+      "file": "ES/inventario/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/inventario/index.html"
+      ],
+      "sha256_attuale": "a8fb7f425bc65681796e633e0f4b7b38b6468594bd340a0f89ec1449479b97e7"
+    },
+    {
+      "file": "ES/menu.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/menu.html"
+      ],
+      "sha256_attuale": "9b1560e9c175e07fcdd607662ff59cf55b378e958e1a0d4411b72fd2c523aea7"
+    },
+    {
+      "file": "ES/operaciones/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "8e01094caecc3de2def9b5c9724a833d5c7b24eba0c4fa2aee9c9802f9ac4029"
+    },
+    {
+      "file": "ES/suscripcion/colaborar-gratis.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/suscripcion/colaborar-gratis.html"
+      ],
+      "sha256_attuale": "19020706a332cf84eb3b2c9a0e34e84a5e17263d016783d97b2910c2b31b400d"
+    },
+    {
+      "file": "ES/suscripcion/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/suscripcion/index.html"
+      ],
+      "sha256_attuale": "7fc0fd907d0e6dd4a18c47bc869b064b1ce42facf29f8853046af20b5546babd"
+    },
+    {
+      "file": "ES/suscripcion/seguridad-datos-usb.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/suscripcion/seguridad-datos-usb.html"
+      ],
+      "sha256_attuale": "9709eb33913e0ef0d24ed9b801d4efb68cb475125b87967aa8c51ffc70bcf9d1"
+    },
+    {
+      "file": "ES/termini.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/termini.html"
+      ],
+      "sha256_attuale": "74e305197016b56d87bb685aaa09535738ae6839f6039f4f55d9d8070feec8d7"
+    },
+    {
+      "file": "ES/utilidades/guia-actualizaciones-leo.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/utilidades/guia-actualizaciones-leo.html"
+      ],
+      "sha256_attuale": "501f86159997cbad8fa236a63b3cefa3fa73b415572df2e9b90572f81c7f53dc"
+    },
+    {
+      "file": "ES/utilidades/guia-exportacion-datos.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/utilidades/guia-exportacion-datos.html"
+      ],
+      "sha256_attuale": "306a17a70aba031d6e32d138c99c482ef19064a3c99356e540cb635cfe7ac548"
+    },
+    {
+      "file": "ES/utilidades/guia-guardar-memoria-usb.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/utilidades/guia-guardar-memoria-usb.html"
+      ],
+      "sha256_attuale": "3c99c4f884ef321f5a7d221af0c7f4730f676c187fc4456026dc19ca972728c1"
+    },
+    {
+      "file": "ES/utilidades/guia-restauracion-avanzada.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/utilidades/guia-restauracion-avanzada.html"
+      ],
+      "sha256_attuale": "e1e24d50e7246c53819ca5ae69f3afc5512dfa59e15d8d61b76449a1aaa7a0e6"
+    },
+    {
+      "file": "ES/utilidades/index.html",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "ES/utilidades/index.html"
+      ],
+      "sha256_attuale": "73ea5f2fddc6c2f0524a9d1f722b37eb18d93b482ac11737c837cea5f62ae074"
+    },
+    {
+      "file": "js/accettazione-it.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "afc0486694761c984186bc3180ba0aab3ffe11952a6b47d7af98b0dda7de9d52"
+    },
+    {
+      "file": "js/backup-interfaccia-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "2fcdea0709ff479b721c49cf2512fb3eae10613ce6363af08b2d7b9fae7f25f0"
+    },
+    {
+      "file": "js/backup-interfaccia-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6dadf0c4ba54b64afdc373a0d756877de7838200501a43b4ed54386fa318f176"
+    },
+    {
+      "file": "js/backup-interfaccia-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6ad932df641e8788017fe12815c32868d0579e3809a6f5047fbb1674e3713ebb"
+    },
+    {
+      "file": "js/backup-interfaccia-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b1d49e099c74801f81c6262d3de8a0c8a21ed50a2c87910ff4e907c503738152"
+    },
+    {
+      "file": "js/backup-interfaccia-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/backup-interfaccia-it.js"
+      ],
+      "sha256_attuale": "f2e9207c7658e801b3fd5108985e1d49da543f2b8904a9db10548b56df73c831"
+    },
+    {
+      "file": "js/backup-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/backup-it.js"
+      ],
+      "sha256_attuale": "edb132b0e8aaa2aaed80adf0aca22438b1e100ea1848ed646098ed45c817dd64"
+    },
+    {
+      "file": "js/categorie-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "cbb66abb219cf4677eb1e59b90aacbec6053148fe2219f97ddb9002d7b56e6e6"
+    },
+    {
+      "file": "js/categorie-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "477195abf97581089ff453278435055d4a209535f702f0e4866c8eb128b0c82b"
+    },
+    {
+      "file": "js/categorie-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "809626bc9c64cda0620cbf904291a14c472893bfb12e7d1bc3cd1568e974a6e0"
+    },
+    {
+      "file": "js/categorie-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "56e2e1cc590c0550b7e749e318b41248d57b18b5fd85e9f204db35aa36cd4e94"
+    },
+    {
+      "file": "js/categorie-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/categorie-it.js"
+      ],
+      "sha256_attuale": "2765021f86c961d1dd6904a2fdcd15281982e5c15a4aef89a9dc4c10e12a3067"
+    },
+    {
+      "file": "js/errori-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "e6c7a925993aef759a0bbc9b89ad6f6c09a50592442c0b242e106d41baac9269"
+    },
+    {
+      "file": "js/errori-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "e56ee03862ada5b00c05503d56855f74634c98d0d3c00993d0909a311a2d71af"
+    },
+    {
+      "file": "js/errori-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "12aa4fb2aad1eb0af9ab576489c6141c4ba30673f13d0fc2a9ff1a78b475286b"
+    },
+    {
+      "file": "js/errori-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "893208d44003bbef6444839587a1506734b83ebabfe7d7bee1ed993c393160c4"
+    },
+    {
+      "file": "js/icona-it.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "06c97c3122ecd92384fe3f2facfee93f239712ba69b03c7e2890e8da8f7eb130"
+    },
+    {
+      "file": "js/messaggi-programmati-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "15276552e79909e984b38fd34820a3a8a6a33f3e694f8d31d9828b51140077f6"
+    },
+    {
+      "file": "js/messaggi-programmati-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1d78d0a3c6f5b436af4148a525bc46c1c83830596ab5c8db0490a292c7ef16bb"
+    },
+    {
+      "file": "js/messaggi-programmati-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "f3fa196b35d70f76bc6528403d95d993c42ab1f4f68f3fea19ea94eb17a8278f"
+    },
+    {
+      "file": "js/messaggi-programmati-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6e22b5edfe1f0c101c23f6c5cc3296900a4a4295c79d6c1d12653bdfe241618f"
+    },
+    {
+      "file": "js/messaggi-programmati-it.js",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/messaggi-programmati-it.js"
+      ],
+      "sha256_attuale": "618c9ca1d683122f791b5cc02a81f3deb66818698e4d87aec599ac5733762f02"
+    },
+    {
+      "file": "js/messaggi-testi-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "41d549467211b60ec3c19b56312e8a0b44a4c2ff5cce0d52139c7392e1bf9b56"
+    },
+    {
+      "file": "js/messaggi-testi-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c3c98198bd7c3f6dadde5125470f9ce186e14f04a8975f8b59b8eae859e9d213"
+    },
+    {
+      "file": "js/messaggi-testi-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "625e00c0909aa30ba9c1d333c3d0c04e16fb9d3a99b04c63524c81566199cabf"
+    },
+    {
+      "file": "js/messaggi-testi-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "83c7651f3f6f09aa7aaa989354841f7b3b5a2d96d23cae76e63b456de4e76ff8"
+    },
+    {
+      "file": "js/messaggi-testi-it.js",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/messaggi-testi-it.js"
+      ],
+      "sha256_attuale": "dbc35d0b71ef975ded329800e94e160fafa4d7f5fd2a40f16ada0742ae8f8cb4"
+    },
+    {
+      "file": "js/premi-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/premi-it.js"
+      ],
+      "sha256_attuale": "a72f859c9dbd87d6873580913a4d2d4562b3db21373b009e5feb56fda779550b"
+    },
+    {
+      "file": "js/previsioni-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "d5332c42dcb30197484268d7a56f6a2119203b7fa5532098d593224d9a43350d"
+    },
+    {
+      "file": "js/previsioni-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "e7c006de9f5af13e646c8b19e4019e5abbd732ff6339d1811a8a8afcdb553216"
+    },
+    {
+      "file": "js/previsioni-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "9efef59adee3b45b7fba6ee2b95638733b4376ee2661351d8cc1f73f690e8ee5"
+    },
+    {
+      "file": "js/previsioni-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "07775009bc0602f1e370f8ecb0696b0e8741ce77f780decea5ca7b642883b6ed"
+    },
+    {
+      "file": "js/previsioni-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/previsioni-it.js"
+      ],
+      "sha256_attuale": "5de366e2a1ab26bfe8800d6443804ced63b93a0929c69c0afb1f9cba01fcad1d"
+    },
+    {
+      "file": "js/promemoria-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "98de9af69bfb77cb9d0c3ebf7e04ad89be919d8054ec32563ab5af175e3bcd79"
+    },
+    {
+      "file": "js/promemoria-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c62de9b43ef8105c230c38d85319769730a81a0a6771efcbdb6897c6c5df2469"
+    },
+    {
+      "file": "js/promemoria-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "996ee22f33a6709933a1d161eb4a748e007ffbd7530f43f5d1ee6078ca597b3e"
+    },
+    {
+      "file": "js/promemoria-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6bf069c43ee40c020b3108d2ec392c881a378ffe151c18304bd18d39d968e511"
+    },
+    {
+      "file": "js/promemoria-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/promemoria-it.js"
+      ],
+      "sha256_attuale": "fd34e3d9237b819999be86b7ca12ca55a756041ab2131fc80b8cc6cd4bfcd3f5"
+    },
+    {
+      "file": "js/questionario-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ed2d76c393d0859e6de1795c90038e5872908b13db3af9cccec1a3c04469eb5b"
+    },
+    {
+      "file": "js/questionario-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1b7e17e211b8f4e1180bc406c69922a068a672729b2d7bd82b981f4a62ae26c6"
+    },
+    {
+      "file": "js/questionario-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b69618361a8cfae717efb9a7f792c4c1957ef27a7d63a9528b2db7c5f299a368"
+    },
+    {
+      "file": "js/questionario-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "60d75eee77c67e9945e7458ae74f4544257dd074bca6ea3b74f66996d01eb1ac"
+    },
+    {
+      "file": "js/questionario-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/questionario-it.js"
+      ],
+      "sha256_attuale": "36f608dd2a4095a96cda0d0dc9e9e4e5caebac95e1fc969fb800179cbe8f1561"
+    },
+    {
+      "file": "js/reset-it.js",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/reset-it.js"
+      ],
+      "sha256_attuale": "2aeb114e18a8ba42b7e2b14db297c5ac910a196f92f469a4aed569861748374c"
+    },
+    {
+      "file": "js/ricerca-prodotti-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "5652a4ba5d7cbb21036de0789e15c51e54ae1eb8e5a51b6ca63c4d835eeedb13"
+    },
+    {
+      "file": "js/ricerca-prodotti-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ca2886b90d38ceb8ad4ed1fb217bb78b93e2625217743dda4173a29d30793c5c"
+    },
+    {
+      "file": "js/ricerca-prodotti-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "8c86520a56d3be55bbb5649fb577686bdd0113c1cf6525b6acdeaa5b8d7744fd"
+    },
+    {
+      "file": "js/ricerca-prodotti-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "fd82299cebca13ed9771653814a5ef3a0ae14f509170f649819356b4b651632f"
+    },
+    {
+      "file": "js/ricerca-prodotti-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/ricerca-prodotti-it.js"
+      ],
+      "sha256_attuale": "803fde786520836b954efebc08c4fa407bc6a2461c0ea987f25709b618312996"
+    },
+    {
+      "file": "js/scadenze-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b32c3a76dbf380bb45950b7a952a60b37cb206ff5f722b3821c9d4c1d738fbcc"
+    },
+    {
+      "file": "js/scadenze-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a3b82b9546cf3853f05d08213018eeb3b7917621237e072ea1ea641eadfdfc67"
+    },
+    {
+      "file": "js/scadenze-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a6483716d870a07aa70684f9cc54b5300c56cfb07b97fece4a7a4e101fd9b7a2"
+    },
+    {
+      "file": "js/scadenze-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "f55150a8ff2a70725319f683a74fc3a707b15f4008039d17895134d2ae80f83f"
+    },
+    {
+      "file": "js/scadenze-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/scadenze-it.js"
+      ],
+      "sha256_attuale": "8efdc9001f9762e4d4abfe3c6493c84aae867a7691d885c95be03762c98155ad"
+    },
+    {
+      "file": "js/statistiche-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/statistiche-it.js"
+      ],
+      "sha256_attuale": "045aa0c42ae7087629b6f757d4853972b76b7cc221ad337a0fcb3931cd44fa93"
+    },
+    {
+      "file": "js/statistiche-traduzioni.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/statistiche-traduzioni.js"
+      ],
+      "sha256_attuale": "faee29ff7959ecc289a58fb22589c37a0a06af5b3e51b4ba21e88d83f27eacb1"
+    },
+    {
+      "file": "js/storico-it.js",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/storico-it.js"
+      ],
+      "sha256_attuale": "415c45a2dc8a37d7fcbe65ebe5ea6703fe6626da753ea2134e34ec8108f9d50c"
+    },
+    {
+      "file": "js/ubicazioni-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "bb0833eebee8f88d24167a63dc27027f26545c43595b3a161b2dd6bb49e7256f"
+    },
+    {
+      "file": "js/ubicazioni-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "5aa61da5a242a29ed587cab2afbe8831d8b165040a3a87aee84b8ccdccc9ecaa"
+    },
+    {
+      "file": "js/ubicazioni-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "00acbeb8ca29dc54fb1a9edc215da3b3a8d7ef47f3000ea83175e9e3b85603bb"
+    },
+    {
+      "file": "js/ubicazioni-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "acddca8803cf2a3b10c43e5592ee9b535ae8d86c43e722d747b877de6b652686"
+    },
+    {
+      "file": "js/ubicazioni-it.js",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/js/ubicazioni-it.js"
+      ],
+      "sha256_attuale": "73b002579157cc3acee40bba50f0769ade04ed8a963b9eab7d61d3d5d9c8c6c1"
+    },
+    {
+      "file": "css/collegamenti.css",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "7985993cfdb55b870c29ab92d02892dcdd1197bb33d46686c44366f544c4a6ae"
+    },
+    {
+      "file": "css/messaggi-programmati-it.css",
+      "classificazione": "modificato rispetto a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/css/messaggi-programmati-it.css"
+      ],
+      "sha256_attuale": "a10c6d66a5cf0f8111bc7533bf23fb97ad4bf1babc7a6ad817e9ba58e0d7ca79"
+    },
+    {
+      "file": "css/responsive-it.css",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/css/responsive-it.css"
+      ],
+      "sha256_attuale": "11ef1c478b5284ab24ace8b9e5e775b13f27320473e66cd2346bfc0ab407646d"
+    },
+    {
+      "file": "css/scadenze-it.css",
+      "classificazione": "identico a file archivio MIT",
+      "riferimenti_MIT": [
+        "prove-mobile/prova-it/css/scadenze-it.css"
+      ],
+      "sha256_attuale": "fc8f6bbb570f871c2070a4d7270faa2c2dc5836bc2771b6e16d46cf367e188e5"
+    },
+    {
+      "file": "sito-bozza/assets/gioco.css",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a1b7cfbb7c7a7f229536aa678a428291a5a4f1181e05ff3e8c6ac4887a0a158a"
+    },
+    {
+      "file": "sito-bozza/assets/gioco.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "486bc3cc28de999f813b755f475577f5a57ea53f07efbf4579754a88d3a76f41"
+    },
+    {
+      "file": "sito-bozza/assets/practice-de.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b6138f9fc94b8fad37bd49fe437d8d006f0dd5af7aff19b7394c2fb8cb424304"
+    },
+    {
+      "file": "sito-bozza/assets/practice-en.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "3cda08ea11068a450e99cd8ae694ce5febed6c1c8c9aee35fca307abf126967b"
+    },
+    {
+      "file": "sito-bozza/assets/practice-es.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "897c17b66083d239c4db6974a40d90cdeb735931398255beb4eae52f2eaa5b91"
+    },
+    {
+      "file": "sito-bozza/assets/practice-fr.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "66709e152fb2f3d89abe665b2e4337b3c19df3684ecea13978fd7be6e65d2aba"
+    },
+    {
+      "file": "sito-bozza/assets/practice.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "013df8e8bf008f1513282c5e78746be6db38f3cc3c115d9fb17f8ffe2b25860b"
+    },
+    {
+      "file": "sito-bozza/assets/site-menu.js",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ee1fbd8676e7ffe28a5209970e0181905afbe840143c572d996432e120223e75"
+    },
+    {
+      "file": "sito-bozza/assets/site.css",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b7d307cd52bdfc133e85343ee43c1e35c3cd5f3f4d00f7be8b3b2663dc7978a1"
+    },
+    {
+      "file": "sito-bozza/DE/come-funziona.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "78aa73caf61e6e4dbc2cb87b6241c953841da85a4abca4ce00c21ed1a1699d1b"
+    },
+    {
+      "file": "sito-bozza/DE/consigli/evitare-acquisti-doppi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "5bde885349ab1af790e5a0ab41de9e4b7b2ae156cb7b128069847f9c13c5c36c"
+    },
+    {
+      "file": "sito-bozza/DE/consigli/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c1db316eeda096a95bac9c9755062601900ffcdc98ac3965200db07e88f35f46"
+    },
+    {
+      "file": "sito-bozza/DE/consigli/note-ingredienti-preparazioni.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "207aa5e2f3bc10e0c7ee4592198e995ebe1a2639e62fcd0c6f0d6027ae49aa29"
+    },
+    {
+      "file": "sito-bozza/DE/consigli/organizzare-congelatore.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "af2300445b5756cd9a4753563f37ef34c72955de364bf8df2323f92b75f45f7e"
+    },
+    {
+      "file": "sito-bozza/DE/consigli/telefono-guasto-recuperare-dispensa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ee045cc32224ed4e17acf9fd7e2b35d418f7bea624b7c6928fa1aa2ad53213ad"
+    },
+    {
+      "file": "sito-bozza/DE/consumi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "4e9ebc57f1a0e4eb40c32e8ee0371272813f033500b705dc06439ad7c1d80d12"
+    },
+    {
+      "file": "sito-bozza/DE/domande.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "cf7fd19215e11212120de5375ab0c419d59ae91d196dc4caae2e65105585dacf"
+    },
+    {
+      "file": "sito-bozza/DE/gioco.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "58eb28bd044af59b0687a189a813f10e35a00c67fea37e91fbce74f7e1ae721b"
+    },
+    {
+      "file": "sito-bozza/DE/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "5d67b99df6c8adf4f004f0bd9a5bc8a0af45c57eacf6dab70877e2712b0deb23"
+    },
+    {
+      "file": "sito-bozza/DE/inventario.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "87da9fdb448d9620f6781efc8bb31e8b3f7f7c665441e28ff4625e02fdb7cf76"
+    },
+    {
+      "file": "sito-bozza/DE/lista-spesa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "9d55eca7707df923624432eaadb8adca395a62433452952a44e194e2486eb307"
+    },
+    {
+      "file": "sito-bozza/DE/menu.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "948d75147a2a328cf0070b72743e06f7a8b8fc39a1a4fe4aa34814461d0e677b"
+    },
+    {
+      "file": "sito-bozza/DE/statistiche.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "978b717a413b49eb002ec50113b2c5d5f8247f8a0ff816d4de48c214442fe11d"
+    },
+    {
+      "file": "sito-bozza/DE/utilita.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "df68b9c0c308c82e6300f70d3106b39c6d7521e725e6829127b6094e1a2f3ab2"
+    },
+    {
+      "file": "sito-bozza/EN/come-funziona.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "fa1990d1e1a2f5c45838920d7e0ec779c4a1a4410fa49e5d29f15f1b93d331b2"
+    },
+    {
+      "file": "sito-bozza/EN/consigli/evitare-acquisti-doppi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "3f048c39445c5645c9a7d1a04b27533895e064be7c7269f37c33327d2449e54e"
+    },
+    {
+      "file": "sito-bozza/EN/consigli/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "8fa3c95dbdb7957d2d17c977b834c7d84dcb220783208e6273c1281c5b36f78f"
+    },
+    {
+      "file": "sito-bozza/EN/consigli/note-ingredienti-preparazioni.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "25424051b5a581621267d9a6caf52c7e746f47284221f9bf0c7cd6a1d44e4de9"
+    },
+    {
+      "file": "sito-bozza/EN/consigli/organizzare-congelatore.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "415fe5e3925ce1352c58b246d0ebc106ecb630c1bc8969bf4f3b8d1c87eb852c"
+    },
+    {
+      "file": "sito-bozza/EN/consigli/telefono-guasto-recuperare-dispensa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ec8245cc6b310ca528ff99e61b4cfccf2b448cb3525c7ec2f4df7c1c8c345a33"
+    },
+    {
+      "file": "sito-bozza/EN/consumi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "578cf35da5fe47fbde70789e3a8e7b8fea5b57fba58916cdffd18c0f070d2045"
+    },
+    {
+      "file": "sito-bozza/EN/domande.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "954451f26028b76b8fa31f78376e6c9f3c7209f3d9f95ca8e6eee73e7f967202"
+    },
+    {
+      "file": "sito-bozza/EN/gioco.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "fd7074cee6be479dd20fe8b6ae17836879e370da7d7484595dd7e68b621cb514"
+    },
+    {
+      "file": "sito-bozza/EN/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a41564fb8c1a0bc889a1856d932d28a357efa4611850584e9bfc0bbe4df72b53"
+    },
+    {
+      "file": "sito-bozza/EN/inventario.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "12e4a91826e911f0523e7eb5cfc78cb1f2d4188a7be24ede20d65125cc677015"
+    },
+    {
+      "file": "sito-bozza/EN/lista-spesa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "2f2b2fb324b19544a06279e15379f2406931a641ab600484f8ba1dc2a9290488"
+    },
+    {
+      "file": "sito-bozza/EN/menu.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "cf7c20ac865bd699e9b6efc8c3616447368b365e172e1270ed056bf19ce5c884"
+    },
+    {
+      "file": "sito-bozza/EN/statistiche.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b18088c6151ec7577d1a2e7be74c3b90c07098931a262d2767da719e0f4d5665"
+    },
+    {
+      "file": "sito-bozza/EN/utilita.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "63977a0d4cb059d872c5bec8ec19b3a0cc0a2b1c133f23ec65ebfa450b590635"
+    },
+    {
+      "file": "sito-bozza/ES/come-funziona.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c2916fbf851d88a5804fe7be9e42ca8b5901232af1ec6abba24a008608e96d61"
+    },
+    {
+      "file": "sito-bozza/ES/consigli/evitare-acquisti-doppi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "81523ff58811484843537d9f7c806350644be9ac4935772184f8a16ff58b24c1"
+    },
+    {
+      "file": "sito-bozza/ES/consigli/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "7e0c810a040f40dbbf273dd8eb0ddaf395137cf547af8663dc886a3f5446a9d5"
+    },
+    {
+      "file": "sito-bozza/ES/consigli/note-ingredienti-preparazioni.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "0d89c7c76a46f04f35a14acfb8267ed3405fb42fe5a06ed0a29245a2be48309c"
+    },
+    {
+      "file": "sito-bozza/ES/consigli/organizzare-congelatore.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "22ef6d021a8b3238588f0301b8d1fdcb4062a010acd67430c35b129bcda33498"
+    },
+    {
+      "file": "sito-bozza/ES/consigli/telefono-guasto-recuperare-dispensa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "167cd452cd030e5dd8505482bc5154e423b5a54feef63f328a19840395543a23"
+    },
+    {
+      "file": "sito-bozza/ES/consumi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "4f08381e8281b508b48030bc60a5e84571d6e9c2bc8d6e5bb13d4e53d937c713"
+    },
+    {
+      "file": "sito-bozza/ES/domande.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "771328b89376aa5432a3eeb18e394ee735d43ca455463a5257403c23d384ac10"
+    },
+    {
+      "file": "sito-bozza/ES/gioco.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "e43d7d969a8e1d51a3a63ec3d408af793ddc26acb26db8a70dd96f6d7d358427"
+    },
+    {
+      "file": "sito-bozza/ES/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1b4ef0749fdb81b4ffda9118ce3fc9354b641709499e5c386889ba7c2e0515a9"
+    },
+    {
+      "file": "sito-bozza/ES/inventario.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "2471814bef38a17f093a7d849d4bc7b5d27ee4f917022cd73226ec669ec92f03"
+    },
+    {
+      "file": "sito-bozza/ES/lista-spesa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6e25908b783748a9ad6afbc685b02872c27fa9d68425404c65958c60621e82d4"
+    },
+    {
+      "file": "sito-bozza/ES/menu.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "93aae2d3e4fd90afd5998ba0f183db5e6ef6c8862b0909724ced0eb231285f15"
+    },
+    {
+      "file": "sito-bozza/ES/statistiche.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "c870f871ad46042f61f45af3896bfb4ae41774c38d38bcc3b2705cc06508e122"
+    },
+    {
+      "file": "sito-bozza/ES/utilita.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ed88403a50892bf69aba283535a2796879f782e0ef1359954f7a7fcd66cd1ba8"
+    },
+    {
+      "file": "sito-bozza/FR/come-funziona.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "39d188761375d1f5eabccf32f5311e43ccb3ca62089100753d64935f4ec2e3c8"
+    },
+    {
+      "file": "sito-bozza/FR/consigli/evitare-acquisti-doppi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "052a18275d3184b0e9b78d838a85f7ee096f19a8a6f9840d28f30765f5f504b0"
+    },
+    {
+      "file": "sito-bozza/FR/consigli/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ceace13f7288e834caa4326f6e63589daec98d80c0556a002288be73afa77ac8"
+    },
+    {
+      "file": "sito-bozza/FR/consigli/note-ingredienti-preparazioni.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "bfe197a4bdf1b1dc9f330e65ae7672c0aaed32b38bd0032ef59c0d566e15506b"
+    },
+    {
+      "file": "sito-bozza/FR/consigli/organizzare-congelatore.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "bc5922fb52618685d7b11d4cb15056fe5d8ea4ff38320ac207111a1eb049f2be"
+    },
+    {
+      "file": "sito-bozza/FR/consigli/telefono-guasto-recuperare-dispensa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a2d60cf5d7ab2260cb650595ca0210ea61bfc985b2eed880fdd62f1d5032ff35"
+    },
+    {
+      "file": "sito-bozza/FR/consumi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1c8dae2baf9f982f6a6a2ba17f1659d328999dcf9ce325b54babbd771a5baffb"
+    },
+    {
+      "file": "sito-bozza/FR/domande.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "5fcef473ea04f9e76e1598abeeedbf2633969ca1e99f5fe93b6fca1315f4b942"
+    },
+    {
+      "file": "sito-bozza/FR/gioco.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "1337b6d08044b628f2133be4b2b13b721a332fc8a45a30d503c32d00ee0bf4e1"
+    },
+    {
+      "file": "sito-bozza/FR/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "334f9673b9e5700d38e2bc2f3ae69874b22bc816009eb63ede2fa278a0a3eda7"
+    },
+    {
+      "file": "sito-bozza/FR/inventario.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "2e4b97d3bfc7ae24279a1ad5526f2f01ff3b0665113b31e59349c12d5662710b"
+    },
+    {
+      "file": "sito-bozza/FR/lista-spesa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "b32bf2be1c3e6d02a4f02c0c1f71dfe2ffd9630b5529524f7533d090180fe0d0"
+    },
+    {
+      "file": "sito-bozza/FR/menu.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "ccb3b1e1b2d1cd348a4d11e13a73a5570f59cd9b0a1f697ba57952486370d1e5"
+    },
+    {
+      "file": "sito-bozza/FR/statistiche.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "44be6d484aefea4d56fedff5fd44b12ede6be684c89a495f6e11b7dfd1ee1984"
+    },
+    {
+      "file": "sito-bozza/FR/utilita.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "33725e9daa521bda8162464687f7f4555fc682a1a88ab9614ce73a9a204f512d"
+    },
+    {
+      "file": "sito-bozza/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "6e9307a9f03d8ebeb1afeb9b8e0fa79ae0a23c1a0ed30b7d3e7ba00a84c0ecf7"
+    },
+    {
+      "file": "sito-bozza/IT/come-funziona.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "15828506258958576849fb7202a854884677e1639e880ada8ca6b5bd1f419ab8"
+    },
+    {
+      "file": "sito-bozza/IT/consigli/evitare-acquisti-doppi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "06d6a82874c2a8ea7b3be606639cbc6ede7f7b5f5d4dac15a55611f64bafbe20"
+    },
+    {
+      "file": "sito-bozza/IT/consigli/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "bef52b2957b5bee95dae5ecee288583e40761fb7ff49d1f44ee7a7375be7bb17"
+    },
+    {
+      "file": "sito-bozza/IT/consigli/note-ingredienti-preparazioni.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "4316c31ff11c7788121514ab84275386067253751e71fcaa50bf83087fb3db3a"
+    },
+    {
+      "file": "sito-bozza/IT/consigli/organizzare-congelatore.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "e3b57d90bcd9f8842a56885a8a54be657467b915582461332c3d3fe317bc02fa"
+    },
+    {
+      "file": "sito-bozza/IT/consigli/telefono-guasto-recuperare-dispensa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "9a3f9fbe4ebc2f7ae903772cdae344f377044ed9ee0a9fa16290f22b793f767f"
+    },
+    {
+      "file": "sito-bozza/IT/consumi.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "d84c69b1bd9b663e0ddeda555153ad1c22702e02b2ee868d9ebe5116675865d8"
+    },
+    {
+      "file": "sito-bozza/IT/domande.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "f903ff4339a58f885a132f1a631c6b0e0f31785a7a3fbd2d9f549e7dbfb70076"
+    },
+    {
+      "file": "sito-bozza/IT/gioco.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "a0425248331753b90cdef04aefb42f2243c15c473215a227b66cf9693aa44b49"
+    },
+    {
+      "file": "sito-bozza/IT/index.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "beab1839ebb8f338874e9a1e84198de7a0970bd213910ca45133f0817292da7c"
+    },
+    {
+      "file": "sito-bozza/IT/inventario.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "41d7b7734fd351b56005e955ae0e9ba2a39bdc88ce386adddbe6a5d0b63cd88c"
+    },
+    {
+      "file": "sito-bozza/IT/lista-spesa.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "243be08495821d8f00806c957d91c22c433debdb22f41df6afd7da5b2d7d66d4"
+    },
+    {
+      "file": "sito-bozza/IT/menu.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "34186cf5db4d8050dc7c060e12185ea3ea95fe93988fcc2ac050ab4142ce4557"
+    },
+    {
+      "file": "sito-bozza/IT/statistiche.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "399bd7eb03b3085dd670be3fde108e952e448194dc70bbb128eefe3f268c13d6"
+    },
+    {
+      "file": "sito-bozza/IT/utilita.html",
+      "classificazione": "percorso assente; originalita e derivazione da verificare",
+      "riferimenti_MIT": [],
+      "sha256_attuale": "df6e0bd44c8fdf6c7ee9ec6947151674600fbf9fad996a6e8580c9b08ed40747"
+    }
+  ]
+}

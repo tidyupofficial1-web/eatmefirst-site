@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Categoria Prodotto | EatMeFirst</title>
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --text-color: #e0e6ed;
+            --postit-bg: #fff59d;
+            --postit-text: #333333;
+            --border-color: #2d3748;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .postit-card {
+            background-color: var(--postit-bg);
+            color: var(--postit-text);
+            padding: 25px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        h1 { font-size: 1.3rem; margin-bottom: 16px; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
+        
+        .discorso-guida {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        .discorso-guida p {
+            margin-bottom: 12px;
+        }
+
+        .discorso-guida ul {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .discorso-guida li {
+            margin-bottom: 5px;
+        }
+
+        .categoria-box {
+            background: rgba(46, 125, 50, 0.15);
+            border-left: 4px solid #2e7d32;
+            padding: 12px 14px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .chiusura-box {
+            margin-top: 15px;
+            padding: 12px 14px;
+            background: rgba(35, 134, 54, 0.15);
+            border-left: 4px solid #238636;
+            border-radius: 4px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .btn-close {
+            display: inline-block;
+            margin-top: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-close:hover { background: #000; }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+    <main class="container">
+        <article class="postit-card">
+            <h1>🏷️ Categoria Prodotto: Organizza con un Clic</h1>
+            
+            <div class="discorso-guida">
+                <p>A cosa serve dividere la dispensa in categorie? Non a fare i pignoli, ma a trovare subito quello che ti serve quando consulti l'inventario o fai un controllo rapido delle scorte!</p>
+
+                <p><strong>Come funziona la Categoria in pratica?</strong></p>
+
+                <p><strong>1. Scegli il gruppo:</strong> nel campo Categoria trovi Alimentari, Bevande, Pulizia della casa, Cura della persona, Animali, Giardinaggio e Materiali per la casa. Puoi anche scrivere una categoria nuova.</p>
+                <p><strong>2. Scegli il dettaglio:</strong> la Sottocategoria propone soltanto le voci del gruppo scelto. Per esempio Animali → Alimentazione oppure Giardinaggio → Terriccio. Puoi scrivere una nuova sottocategoria oppure lasciare il campo vuoto.</p>
+                <div class="categoria-box">Le nuove voci vengono ricordate dopo la conferma del prodotto e restano disponibili anche quando il prodotto finisce. Per lo stesso codice a barre viene riproposta l'ultima classificazione salvata. Puoi sempre correggerla prima del salvataggio.</div>
+                <p>I prodotti già presenti conservano la loro categoria. Non vengono riclassificati automaticamente. La categoria indica che cosa è il prodotto; l'ubicazione indica dove lo conservi.</p>
+
+                <div class="chiusura-box">
+                    🟢 <strong>Continuo Ciclo di Carico:</strong> Dopo aver inserito la categoria e completato i campi del prodotto, clicca su <strong>"➕ Aggiungi alla Dispensa"</strong>. Il sistema ti chiederà subito se desideri inserire un altro prodotto o tornare al menu principale!
+                </div>
+            </div>
+
+            <a href="carico.html" class="btn-close" onclick="if (window.opener) { window.close(); return false; }">✕ Chiudi Guida</a>
+        </article>
+    </main>
+
+</body>
+</html>

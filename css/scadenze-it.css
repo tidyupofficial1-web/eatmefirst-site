@@ -1,0 +1,47 @@
+/* Date superate: il tipo resta giallo/rosso, il richiamo non fa sparire il testo. */
+.scadenza-superata, .scadenza-oggi {
+    --scadenza-bordo: #f1c40f;
+    outline: 4px solid var(--scadenza-bordo);
+    outline-offset: 2px;
+    animation: richiamo-data-superata 3s ease-in-out infinite;
+}
+.scadenza-superata-tassativa, .scadenza-oggi-tassativa { --scadenza-bordo: #ff7b72; }
+.scadenza-badge-superata, .scadenza-badge-oggi {
+    display: inline-block;
+    padding: 4px 8px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background: #101416;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+.scadenza-badge-oggi {
+    outline: 2px solid var(--scadenza-bordo, #f1c40f);
+    animation: richiamo-scade-oggi 2s ease-in-out infinite;
+}
+@keyframes richiamo-scade-oggi {
+    0%, 100% { background-color: #101416; box-shadow: 0 0 0 0 transparent; }
+    50% { background-color: #465565; box-shadow: 0 0 10px 3px var(--scadenza-bordo, #f1c40f); }
+}
+.scadenza-icona-superata {
+    display: inline-block;
+    margin-right: 5px;
+    color: var(--scadenza-bordo, #f1c40f);
+    font-size: 21px;
+    line-height: 1;
+    vertical-align: middle;
+    animation: richiamo-triangolo-superata 2s ease-in-out infinite;
+}
+@keyframes richiamo-data-superata {
+    0%, 100% { box-shadow: 0 0 0 0 transparent; }
+    50% { box-shadow: 0 0 16px 5px var(--scadenza-bordo); }
+}
+@keyframes richiamo-triangolo-superata {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(1.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .scadenza-superata, .scadenza-oggi, .scadenza-badge-oggi, .scadenza-icona-superata { animation: none; }
+}

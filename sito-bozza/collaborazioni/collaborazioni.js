@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const t=document.getElementById(b.dataset.copy);try{await navigator.clipboard.writeText(t.value);b.textContent='Testo copiato';}catch(e){t.focus();t.select();b.textContent='Testo selezionato: premi Ctrl+C';}}));

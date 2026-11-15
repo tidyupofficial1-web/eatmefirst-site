@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Data di Scadenza | EatMeFirst</title>
+    <meta name="description" content="Scopri come gestire al meglio la data di scadenza, i giorni, i mesi o l'inserimento preciso per i prodotti nella tua dispensa con EatMeFirst.">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --text-color: #e0e6ed;
+            --postit-bg: #fff59d;
+            --postit-text: #333333;
+            --border-color: #2d3748;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .postit-card {
+            background-color: var(--postit-bg);
+            color: var(--postit-text);
+            padding: 25px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        h1 { font-size: 1.3rem; margin-bottom: 16px; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
+        
+        .discorso-guida {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        .discorso-guida p {
+            margin-bottom: 12px;
+        }
+
+        .discorso-guida ul {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .discorso-guida li {
+            margin-bottom: 6px;
+        }
+
+        .scadenza-box {
+            background: rgba(255, 152, 0, 0.15);
+            border-left: 4px solid #ff9800;
+            padding: 12px 14px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .max-idea-box {
+            background: rgba(33, 150, 243, 0.15);
+            border-left: 4px solid #2196f3;
+            padding: 12px 14px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .btn-close {
+            display: inline-block;
+            margin-top: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-close:hover { background: #000; }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+</head>
+<body>
+
+    <main class="container">
+        <article class="postit-card">
+            <h1>📅 Gestione Scadenza: Nessuna, Giorni, Mesi o Data Precisa</h1>
+            
+            <div class="discorso-guida">
+                <p>Scegli come indicare la scadenza del prodotto. I campi iniziano vuoti: decidi tu il valore, controllando la confezione quando disponibile.</p>
+                <ul>
+                    <li><strong>Nessuna:</strong> non viene calcolata una data e il prodotto non genera avvisi di scadenza.</li>
+                    <li><strong>Giorni di validità:</strong> inserisci un numero intero da 1 a 365. La data è calcolata a partire dal giorno del carico.</li>
+                    <li><strong>Mesi di validità:</strong> inserisci un numero intero da 1 a 60. Se il giorno non esiste nel mese di arrivo, viene usato l’ultimo giorno di quel mese.</li>
+                    <li><strong>Data precisa:</strong> scegli la data dal calendario.</li>
+                </ul>
+                <div class="scadenza-box">
+                    <strong>Tipo di data e colori:</strong> senza la spunta Articolo tassativo la data è indicativa; con la spunta è tassativa. Il modo di inserimento (giorni, mesi o data precisa) non determina il tipo.
+                </div>
+                <p>Gli avvisi iniziano 10 giorni prima: <strong>giallo per le date indicative</strong> e <strong>rosso per le tassative</strong>. Prima di questa soglia la visualizzazione è normale. Dopo la data il colore resta quello del tipo, con la scritta “Data superata da … giorni”. Una stima non è una durata garantita di conservazione.</p>
+                <p>L’Inventario mette prima le date superate, poi quelle più vicine, infine i prodotti senza data. A parità di data vengono prima i tassativi. Il Menu apre un elenco delle scadenze da controllare.</p>
+                <p>Il conteggio si aggiorna all’apertura e al ritorno alla pagina; se resta aperta, viene aggiornato anche al cambio del giorno. A programma chiuso non vengono inviate notifiche.</p>
+                <p>La scadenza non cancella prodotti e non li inserisce automaticamente nella lista della spesa. I dati restano locali. Una data già posticipata, quando registrata con la sua data iniziale, è segnalata con ↻; il programma non sposta mai le date da solo.</p>
+            </div>
+
+            <a href="carico.html" class="btn-close" onclick="if (window.opener) { window.close(); return false; }">✕ Chiudi Guida</a>
+        </article>
+    </main>
+
+</body>
+</html>
