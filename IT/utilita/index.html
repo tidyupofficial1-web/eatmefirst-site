@@ -85,7 +85,7 @@
     .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
     .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
     .leo-banner-actions { display: flex; justify-content: flex-end; }
-    
+
     .btn-dismiss {
       background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
       color: var(--text-color); padding: 8px 16px; border-radius: 8px;
@@ -213,42 +213,13 @@
       </div>
     </header>
 
-    <section class="section-card" id="esportazione-prezzi"><h2 class="section-title">La copia esterna della dispensa</h2><div class="launch-export-notice"><p>Abbiamo pensato che potrebbe esserti utile trasferire la tua dispensa dal cellulare a un altro dispositivo. Con <strong>Esporta dispensa</strong> crei un file da aprire sull’altro dispositivo con <strong>Importa dispensa</strong>. Il trasferimento è manuale: i dispositivi non si aggiornano automaticamente fra loro.</p><p><strong>Questo servizio è attualmente gratuito.</strong></p><p><strong><u>Il salvataggio automatico e immediato delle modifiche sul cellulare resterà sempre gratuito.</u></strong></p></div></section>
-
-    <!-- BANNER INTRODUTTIVO LEO -->
-    <div id="leo-banner" class="leo-welcome-banner">
-      <img src="../IMG/utilita-famiglia-backup-dispensa.png" alt="Utilità e Backup EatMeFirst" class="leo-banner-img">
-      <div class="leo-banner-content">
-        <div class="leo-banner-title">La sicurezza della tua dispensa, protetta su dispositivo, chiavetta USB o via e-mail! 🛡️💾</div>
-        <div class="leo-banner-text">
-          <p style="margin-bottom: 10px;">
-            Ciao, sono Max! Per caricare la spesa, il cellulare è un bel compagno di squadra: <strong>inquadra il codice a barre</strong> e l’app cerca il prodotto negli archivi online. Quando li trova, propone nome, immagine e altri dati disponibili. Dai sempre un’occhiata prima di salvare: anche il nostro scanner ogni tanto ha bisogno di una mano! Mia moglie Eva dice che dovrei controllare con la stessa attenzione anche quello che metto nel carrello…
-          </p>
-          <p style="margin-bottom: 10px;">
-            Preferisci lo schermo grande del PC? Puoi scrivere il codice a barre oppure usare un lettore. E se il prodotto non ha un codice o non viene trovato, lo inserisci a mano: qui c’è posto anche per il salame del banco!
-          </p>
-          <p>
-            La dispensa viene conservata <strong>nel browser del dispositivo che stai usando</strong>. Per averne una copia sul PC, sul telefono o su una chiavetta, usa Esporta dispensa e trasferisci il file. <strong>Quando cerchi un prodotto online, l’app chiede all’archivio: «A quale prodotto corrisponde questo codice a barre?»</strong> Non manda la tua dispensa, le quantità che hai in casa o la cronologia dei tuoi acquisti e consumi. Anche le immagini dei prodotti vengono caricate dagli archivi esterni. 
-          </p>
-        </div>
-        <div class="leo-banner-actions">
-          <button class="btn-dismiss" onclick="dismissLeoBanner()">Chiudi / Non mostrare più</button>
-        </div>
-      </div>
-    </div>
-
     <section class="section-card" id="trasferimento-dispensa">
       <p>💬 <a href="../../sito-bozza/IT/domande.html#contatti" target="_blank" rel="noopener noreferrer">Consigli e assistenza sul sito</a></p>
       <h2 class="section-title">💾 Esporta e importa la dispensa</h2>
-      <p><strong>Max, ma devo salvare ogni volta?</strong> Quando confermi un carico, uno scarico o un’altra operazione, EatMeFirst conserva la modifica nel browser che stai usando. <strong>Vale sia sul PC sia sul cellulare.</strong> Dove trovi un pulsante Salva o Conferma, devi premerlo per completare l’operazione: aver scritto nei campi non basta. Non devi poi premere anche Esporta dispensa per mantenere quella modifica sullo stesso dispositivo.</p>
-      <p><strong>E allora a cosa serve la chiavetta?</strong> «Alla copia di scorta, Max!», direbbe Eva. Se il telefono o il PC si rompe, viene perso oppure cancelli i dati del browser, il salvataggio rimasto lì può andare perso. Con <strong>Esporta dispensa</strong> prepari un file da conservare altrove: per esempio su una chiavetta o su un altro dispositivo.</p>
-      <p><strong>Posso mandarmelo via email?</strong> Sì: prima esporti il file, poi apri la tua posta, lo alleghi e lo spedisci tu. EatMeFirst non spedisce automaticamente la dispensa. Per recuperarla, scarichi l’allegato e scegli <strong>Importa dispensa</strong>. Recupererai la situazione del momento in cui hai esportato il file: per includere le modifiche successive serve una nuova esportazione.</p>
-      <p style="line-height:1.6">Usa il cellulare per il carico e trasferisci il file al PC, oppure carica dal PC con un lettore e porta una copia sul cellulare per la spesa. Il trasferimento sostituisce la situazione completa: non unisce due dispense.</p>
-      <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
-      <p style="margin:12px 0;line-height:1.6"><strong>La copia è come una chiave di scorta:</strong> se la lasci nella borsa insieme alle chiavi principali e perdi la borsa, non ti aiuta! Conserva il file anche fuori dal dispositivo e aggiornalo dopo le modifiche importanti. Serve sia per recuperare la dispensa in caso di guasto o perdita dei dati, sia per trasferirla tra PC e cellulare.</p>
-      <p style="margin:12px 0;line-height:1.6"><strong>Quando passi dal PC al cellulare, o viceversa, porta prima la copia aggiornata.</strong> Due dispense modificate separatamente non si uniscono: la data più recente da sola non basta. In questa fase di lancio l’esportazione è gratuita e non richiede codici.</p>
-      <p style="font-size:14px"><button type="button" class="btn-modal-cancel" onclick="apriImpostazioniEsportazione()">Nome del dispositivo e aiuto per le copie</button></p>
-      <dialog oncancel="annullaRichiestaEsportazione()" onclose="annullaRichiestaEsportazione()" id="dialogoEsportazione" aria-labelledby="titoloDialogoEsportazione" style="box-sizing:border-box;width:min(560px,94vw);max-height:88vh;overflow:auto;background:#161b22;color:#fff;border:2px solid #58a6ff;border-radius:14px;padding:24px">
+<p><strong>Le modifiche confermate si salvano automaticamente sul dispositivo, sempre gratuitamente.</strong></p><p>Con Esporta dispensa crei un file da usare su un altro dispositivo con Importa dispensa. Questo servizio è attualmente gratuito.</p><p>Il trasferimento è manuale: i dispositivi non si aggiornano automaticamente tra loro.</p>
+<p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
+<p style="font-size:14px"><button type="button" class="btn-modal-cancel" onclick="apriImpostazioniEsportazione()">Nome del dispositivo e aiuto per le copie</button></p>
+<dialog oncancel="annullaRichiestaEsportazione()" onclose="annullaRichiestaEsportazione()" id="dialogoEsportazione" aria-labelledby="titoloDialogoEsportazione" style="box-sizing:border-box;width:min(560px,94vw);max-height:88vh;overflow:auto;background:#161b22;color:#fff;border:2px solid #58a6ff;border-radius:14px;padding:24px">
         <form onsubmit="confermaEsportazioneDispensa(event)">
           <h2 id="titoloDialogoEsportazione">Un consiglio per non confondere le copie</h2>
           <p>Se usi la dispensa su più dispositivi, da solo o in famiglia, è facile ritrovarsi con file diversi e ripartire da una copia vecchia, senza gli ultimi acquisti o consumi.</p>
@@ -274,10 +245,10 @@
           <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
         </label>
       </div>
-      <p style="font-size:14px;line-height:1.6">Esporta un file sul dispositivo; poi copialo sulla chiavetta o allegalo manualmente a un’email. Sul dispositivo di destinazione scegli Importa dispensa e seleziona quel file. Nessun invio automatico e nessun database su server.</p>
-      <p style="font-size:14px;line-height:1.6;margin-top:10px">Sono compresi prodotti, catalogo ricordato, liste, note e promemoria, preferenze e ultime 15 operazioni. Le foto dei post-it sono incluse; le immagini recuperate dagli archivi restano collegamenti alle loro fonti.</p>
+
+
       <p id="backupEsito" role="status" aria-live="polite" style="margin:14px 0"></p>
-      
+
       <div id="anteprimaImportazione" hidden style="border:2px solid #58a6ff;border-radius:12px;padding:18px;margin-top:18px">
         <h3 id="titoloImportazione">Controlla il file prima di sostituire i dati</h3>
         <p id="nomeImportazione" style="margin:12px 0;overflow-wrap:anywhere"></p>
@@ -300,15 +271,23 @@
       <p style="font-size:13px;color:var(--text-muted);margin-top:8px">La copia di recupero è una sola e resta nello stesso browser. Per conservarla anche fuori dal dispositivo usa Esporta dispensa.</p>
     </section>
 
-    <!-- SEZIONE: COME FUNZIONANO I SALVATAGGI & LA CHIAVETTA USB -->
-    <section class="section-card" style="border-color: #3182ce; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
+<details class="section-card"><summary style="cursor:pointer;font-weight:bold">Guida al trasferimento e alle copie</summary><div style="margin-top:18px">
+      <p><strong>Max, ma devo salvare ogni volta?</strong> Quando confermi un carico, uno scarico o un’altra operazione, EatMeFirst conserva la modifica nel browser che stai usando. <strong>Vale sia sul PC sia sul cellulare.</strong> Dove trovi un pulsante Salva o Conferma, devi premerlo per completare l’operazione: aver scritto nei campi non basta. Non devi poi premere anche Esporta dispensa per mantenere quella modifica sullo stesso dispositivo.</p>
+      <p><strong>E allora a cosa serve la chiavetta?</strong> «Alla copia di scorta, Max!», direbbe Eva. Se il telefono o il PC si rompe, viene perso oppure cancelli i dati del browser, il salvataggio rimasto lì può andare perso. Con <strong>Esporta dispensa</strong> prepari un file da conservare altrove: per esempio su una chiavetta o su un altro dispositivo.</p>
+      <p><strong>Posso mandarmelo via email?</strong> Sì: prima esporti il file, poi apri la tua posta, lo alleghi e lo spedisci tu. EatMeFirst non spedisce automaticamente la dispensa. Per recuperarla, scarichi l’allegato e scegli <strong>Importa dispensa</strong>. Recupererai la situazione del momento in cui hai esportato il file: per includere le modifiche successive serve una nuova esportazione.</p>
+      <p style="line-height:1.6">Usa il cellulare per il carico e trasferisci il file al PC, oppure carica dal PC con un lettore e porta una copia sul cellulare per la spesa. Il trasferimento sostituisce la situazione completa: non unisce due dispense.</p>
+
+      <p style="margin:12px 0;line-height:1.6"><strong>La copia è come una chiave di scorta:</strong> se la lasci nella borsa insieme alle chiavi principali e perdi la borsa, non ti aiuta! Conserva il file anche fuori dal dispositivo e aggiornalo dopo le modifiche importanti. Serve sia per recuperare la dispensa in caso di guasto o perdita dei dati, sia per trasferirla tra PC e cellulare.</p>
+      <p style="margin:12px 0;line-height:1.6"><strong>Quando passi dal PC al cellulare, o viceversa, porta prima la copia aggiornata.</strong> Due dispense modificate separatamente non si uniscono: la data più recente da sola non basta. In questa fase di lancio l’esportazione è gratuita e non richiede codici.</p>
+
+      <p style="font-size:14px;line-height:1.6">Esporta un file sul dispositivo; poi copialo sulla chiavetta o allegalo manualmente a un’email. Sul dispositivo di destinazione scegli Importa dispensa e seleziona quel file. Nessun invio automatico e nessun database su server.</p><p style="font-size:14px;line-height:1.6;margin-top:10px">Sono compresi prodotti, catalogo ricordato, liste, note e promemoria, preferenze e ultime 15 operazioni. Le foto dei post-it sono incluse; le immagini recuperate dagli archivi restano collegamenti alle loro fonti.</p>
       <h2 class="section-title">
         <span>💾 Salvataggi, Chiavetta USB & Studio di Leo</span>
         <a href="guida-backup.html" class="postit-link">
           <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Backup">
         </a>
       </h2>
-      
+
       <!-- PUNTO 1: PC vs CELLULARE -->
       <div style="background: #0d1117; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; margin-bottom: 15px;">
         <div style="font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 8px;">1. 🖥️ PC/Laptop a casa, 📱 Smartphone in mobilità</div>
@@ -334,7 +313,7 @@
       </div>
 
       <p style="margin-top:18px;line-height:1.6">In questa fase di lancio puoi esportare e importare la dispensa senza acquistare un piano. Conserva una copia aggiornata fuori dal dispositivo.</p>
-    </section>
+    </div></details>
 
     <!-- SEZIONE: AGGIORNAMENTI & TRASPARENZA SERVER -->
     <section class="section-card" style="border-color: #38a169; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
@@ -344,7 +323,7 @@
           <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Aggiornamenti">
         </a>
       </h2>
-      
+
       <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
         Le nuove funzioni e le correzioni arrivano dal sito: collegati a Internet e riapri l’app. Se non vedi subito le novità, prova a ricaricare la pagina. Non devi scaricare un pacchetto del programma.
       </p>
@@ -359,7 +338,7 @@
           <img src="../../IMG/biglietto_info.jpg" alt="Info Post-it" class="postit-icon" title="Guida Reset">
         </a>
       </h2>
-      
+
       <div style="margin-bottom: 20px;">
         <h3 style="font-size: 1.05rem; color: #fbd38d;">1. Nuovo Inizio (Azzera Quantità)</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
@@ -494,3 +473,4 @@
   </script>
 </body>
 </html>
+

@@ -84,7 +84,7 @@
     .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
     .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
     .leo-banner-actions { display: flex; justify-content: flex-end; }
-    
+
     .btn-dismiss {
       background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
       color: var(--text-color); padding: 8px 16px; border-radius: 8px;
@@ -212,46 +212,20 @@
       </div>
     </header>
 
-    <!-- BANNER INTRODUTTIVO LEO -->
-    <div id="leo-banner" class="leo-welcome-banner">
-      <img src="../../IT/IMG/utilita-famiglia-backup-dispensa.png" alt="Utilitaires et sauvegarde EatMeFirst" class="leo-banner-img">
-      <div class="leo-banner-content">
-        <div class="leo-banner-title">Garde une copie sur un autre appareil, une clé USB ou dans tes e-mails ! 🛡️💾</div>
-        <div class="leo-banner-text">
-          <p style="margin-bottom: 10px;">
-            Salut, c’est Max ! Ton téléphone est un bon compagnon de courses : <strong>pointe-le vers le code-barres</strong> et l’application cherche le produit dans les catalogues en ligne. Si les informations sont disponibles, elle propose un nom, une photo et d’autres détails. Vérifie-les avant d’enregistrer : même notre scanner a parfois besoin d’un coup de main ! Eva me dit de vérifier mon chariot avec autant de soin…
-          </p>
-          <p style="margin-bottom: 10px;">
-            Tu préfères le grand écran du PC ? Saisis le code ou utilise un lecteur de codes-barres. Pas de code ou aucun résultat ? Ajoute le produit à la main : le fromage à la coupe a aussi sa place !
-          </p>
-          <p>
-            Ton inventaire est conservé <strong>dans le navigateur de l’appareil que tu utilises</strong>. Pour garder une copie sur le PC, le téléphone ou une clé USB, utilise Exporter les réserves et transfère le fichier. <strong>La recherche en ligne demande au catalogue : « À quel produit correspond ce code-barres ? »</strong> Elle n’envoie ni ton inventaire, ni tes quantités, ni ton historique d’achats et de consommations. Les photos des produits sont aussi chargées depuis les catalogues externes. 
-          </p>
-        </div>
-        <div class="leo-banner-actions">
-          <button class="btn-dismiss" onclick="dismissLeoBanner()">Fermer / Ne plus afficher</button>
-        </div>
-      </div>
-    </div>
-
-    <section class="section-card" id="trasferimento-dispensa">
+        <section class="section-card" id="trasferimento-dispensa">
       <p>💬 <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" target="_blank" rel="noopener noreferrer">Conseils et aide sur le site</a></p>
       <h2 class="section-title">💾 Exporter et importer les réserves</h2>
-      <p><strong>Max, faut-il enregistrer à chaque fois ?</strong> Quand tu confirmes une entrée, une sortie ou une autre opération, EatMeFirst conserve la modification dans le navigateur utilisé. <strong>Cela vaut sur PC comme sur téléphone.</strong> Quand un bouton Enregistrer ou Confirmer apparaît, appuie dessus pour terminer : remplir les champs ne suffit pas. Tu n’as ensuite pas besoin d’exporter pour garder cette modification sur le même appareil.</p>
-      <p><strong>Alors, à quoi sert la clé USB ?</strong> « À garder une copie de secours, Max ! » dirait Eva. Si le téléphone ou le PC tombe en panne, est perdu ou si tu effaces les données du navigateur, les données qu’il contient peuvent être perdues. Avec <strong>Exporter les réserves</strong> tu prépares un fichier à conserver ailleurs, sur une clé USB ou un autre appareil par exemple.</p>
-      <p><strong>Puis-je me l’envoyer par e-mail ?</strong> Oui : exporte le fichier, ouvre ta messagerie, joins-le et envoie-le toi-même. EatMeFirst n’envoie pas automatiquement ton inventaire par e-mail. Pour le récupérer, télécharge la pièce jointe puis choisis <strong>Importer les réserves</strong>. Tu retrouves la situation au moment de l’exportation. Pour inclure les changements suivants, exporte une nouvelle copie.</p>
-      <p style="line-height:1.6">Utilise le téléphone pour les entrées puis transfère le fichier au PC, ou utilise un lecteur sur PC et emporte une copie sur téléphone pour les courses. Le transfert remplace toute la situation : il ne fusionne pas deux inventaires.</p>
-      <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
-      <p style="margin:12px 0;line-height:1.6"><strong>Une sauvegarde, c’est comme un double des clés :</strong> si tu le laisses dans le même sac que les clés principales et que tu perds le sac, il ne t’aidera pas ! Garde le fichier hors de l’appareil et actualise-le après les changements importants. Il sert à récupérer les données après une panne ou une perte, mais aussi à passer du PC au téléphone.</p>
-      <div class="launch-export-notice"><p>Nous avons pensé qu’il pourrait être utile de retrouver tes réserves sur un autre appareil. Exporter les réserves crée un fichier avec les produits, quantités, dates, notes et listes. Avec Importer les réserves, tu peux l’ouvrir sur l’appareil de ton choix.</p><p>Ce service est actuellement gratuit.</p><p><strong><u>L’enregistrement automatique et immédiat sur le téléphone restera toujours gratuit.</u></strong></p></div>
-      <div class="backup-comandi">
+<p><strong>Les modifications confirmées sont enregistrées automatiquement sur votre appareil, toujours gratuitement.</strong></p><p>Exporter les réserves crée un fichier à ouvrir sur un autre appareil avec Importer les réserves. Ce service est actuellement gratuit.</p><p>Le transfert est manuel : les appareils ne se synchronisent pas automatiquement.</p>
+<p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
+
+<div class="backup-comandi">
         <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">Exporter les réserves</button>
         <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">Importer les réserves</span>
           <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
         </label>
       </div>
-      <p style="font-size:14px;line-height:1.6">Exporte un fichier sur ton appareil, puis copie-le sur une clé USB ou joins-le toi-même à un e-mail. Sur l’appareil de destination, choisis Importer les réserves et sélectionne ce fichier. Aucun envoi automatique ni base d’inventaire sur un serveur.</p>
-      <p style="font-size:14px;line-height:1.6;margin-top:10px">Sont inclus : produits, catalogue mémorisé, listes, notes et rappels, préférences et 15 dernières opérations. Les photos des notes sont incluses ; les images des catalogues restent des liens vers leurs sources.</p>
+
+
       <p id="backupEsito" role="status" aria-live="polite" style="margin:14px 0"></p>
       <div id="anteprimaImportazione" hidden style="border:2px solid #58a6ff;border-radius:12px;padding:18px;margin-top:18px">
         <h3 id="titoloImportazione">Vérifie le fichier avant de remplacer les données</h3>
@@ -275,15 +249,22 @@
       <p style="font-size:13px;color:var(--text-muted);margin-top:8px">Une seule copie de récupération est conservée dans ce navigateur. Exporte aussi un fichier pour garder une copie hors de l’appareil.</p>
     </section>
 
-    <!-- SEZIONE: COME FUNZIONANO I SALVATAGGI & LA CHIAVETTA USB -->
-    <section class="section-card" style="border-color: #3182ce; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
+<details class="section-card"><summary style="cursor:pointer;font-weight:bold">Guide du transfert et des copies</summary><div style="margin-top:18px">
+      <p><strong>Max, faut-il enregistrer à chaque fois ?</strong> Quand tu confirmes une entrée, une sortie ou une autre opération, EatMeFirst conserve la modification dans le navigateur utilisé. <strong>Cela vaut sur PC comme sur téléphone.</strong> Quand un bouton Enregistrer ou Confirmer apparaît, appuie dessus pour terminer : remplir les champs ne suffit pas. Tu n’as ensuite pas besoin d’exporter pour garder cette modification sur le même appareil.</p>
+      <p><strong>Alors, à quoi sert la clé USB ?</strong> « À garder une copie de secours, Max ! » dirait Eva. Si le téléphone ou le PC tombe en panne, est perdu ou si tu effaces les données du navigateur, les données qu’il contient peuvent être perdues. Avec <strong>Exporter les réserves</strong> tu prépares un fichier à conserver ailleurs, sur une clé USB ou un autre appareil par exemple.</p>
+      <p><strong>Puis-je me l’envoyer par e-mail ?</strong> Oui : exporte le fichier, ouvre ta messagerie, joins-le et envoie-le toi-même. EatMeFirst n’envoie pas automatiquement ton inventaire par e-mail. Pour le récupérer, télécharge la pièce jointe puis choisis <strong>Importer les réserves</strong>. Tu retrouves la situation au moment de l’exportation. Pour inclure les changements suivants, exporte une nouvelle copie.</p>
+      <p style="line-height:1.6">Utilise le téléphone pour les entrées puis transfère le fichier au PC, ou utilise un lecteur sur PC et emporte une copie sur téléphone pour les courses. Le transfert remplace toute la situation : il ne fusionne pas deux inventaires.</p>
+
+      <p style="margin:12px 0;line-height:1.6"><strong>Une sauvegarde, c’est comme un double des clés :</strong> si tu le laisses dans le même sac que les clés principales et que tu perds le sac, il ne t’aidera pas ! Garde le fichier hors de l’appareil et actualise-le après les changements importants. Il sert à récupérer les données après une panne ou une perte, mais aussi à passer du PC au téléphone.</p>
+      <div class="launch-export-notice"><p>Nous avons pensé qu’il pourrait être utile de retrouver tes réserves sur un autre appareil. Exporter les réserves crée un fichier avec les produits, quantités, dates, notes et listes. Avec Importer les réserves, tu peux l’ouvrir sur l’appareil de ton choix.</p><p>Ce service est actuellement gratuit.</p><p><strong><u>L’enregistrement automatique et immédiat sur le téléphone restera toujours gratuit.</u></strong></p></div>
+      <p style="font-size:14px;line-height:1.6">Exporte un fichier sur ton appareil, puis copie-le sur une clé USB ou joins-le toi-même à un e-mail. Sur l’appareil de destination, choisis Importer les réserves et sélectionne ce fichier. Aucun envoi automatique ni base d’inventaire sur un serveur.</p><p style="font-size:14px;line-height:1.6;margin-top:10px">Sont inclus : produits, catalogue mémorisé, listes, notes et rappels, préférences et 15 dernières opérations. Les photos des notes sont incluses ; les images des catalogues restent des liens vers leurs sources.</p>
       <h2 class="section-title">
         <span>💾 Sauvegardes, clé USB et atelier de Leo</span>
         <a href="guide-sauvegarde-backup.html" class="postit-link">
           <img src="../../IMG/biglietto_info.jpg" alt="Note d’aide" class="postit-icon" title="Guide de sauvegarde">
         </a>
       </h2>
-      
+
       <!-- PUNTO 1: PC vs CELLULARE -->
       <div style="background: #0d1117; border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; margin-bottom: 15px;">
         <div style="font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 8px;">1. 🖥️ PC à la maison, 📱 téléphone en déplacement</div>
@@ -308,8 +289,8 @@
         </ul>
       </div>
 
-      
-    </section>
+
+    </div></details>
 
     <!-- SEZIONE: AGGIORNAMENTI & TRASPARENZA SERVER -->
     <section class="section-card" style="border-color: #38a169; background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);">
@@ -319,7 +300,7 @@
           <img src="../../IMG/biglietto_info.jpg" alt="Note d’aide" class="postit-icon" title="Guide des mises à jour">
         </a>
       </h2>
-      
+
       <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6;">
         Les nouvelles fonctions et corrections viennent du site : connecte-toi à Internet et rouvre l’application. Si tu ne vois pas les changements, recharge la page. Tu n’as pas de programme à télécharger.
       </p>
@@ -334,7 +315,7 @@
           <img src="../../IMG/biglietto_info.jpg" alt="Note d’aide" class="postit-icon" title="Guide des réinitialisations">
         </a>
       </h2>
-      
+
       <div style="margin-bottom: 20px;">
         <h3 style="font-size: 1.05rem; color: #fbd38d;">1. Nouveau départ (Vider les quantités)</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
@@ -459,3 +440,4 @@
   </script>
 </body>
 </html>
+
