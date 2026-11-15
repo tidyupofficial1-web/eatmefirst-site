@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EatMeFirst - Carga de Producto en Despensa y Gestión de Inventario</title>
-    <meta name="description" content="Carga y organiza los productos en tu despensa local de forma sencilla, segura e inteligente con EatMeFirst.">
+    <title>EatMeFirst - Añadir productos a la despensa</title>
+    <meta name="description" content="Registra alimentos y productos del hogar en tu despensa local: códigos, categorías y fechas.">
     <meta name="robots" content="noindex, nofollow">
+
+    <!-- Libreria per la scansione live del codice a barre -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <style>
         :root {
@@ -31,23 +34,23 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
-        /* Cabecera Superior Estándar */
+        /* Carta Intestata Superiore Standard */
         .top-navbar {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             background-color: #101416;
-            padding: 12px 24px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-radius: 8px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
         .brand-logo {
@@ -56,27 +59,27 @@
             gap: 10px;
             text-decoration: none;
             color: #ffffff;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
         }
 
-        .brand-logo img { height: 36px; width: auto; }
+        .brand-logo img { height: 32px; width: auto; }
 
         .navbar-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .language-flags {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
 
         .flag-icon {
-            width: 28px;
-            height: 18px;
+            width: 26px;
+            height: 17px;
             cursor: pointer;
             object-fit: cover;
             border-radius: 3px;
@@ -92,26 +95,61 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             background-color: var(--card-bg);
-            border-radius: 14px;
-            padding: 30px;
+            border-radius: 12px;
+            padding: 18px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             border: 1px solid var(--border-color);
         }
 
-        /* Presentación de Max */
+        /* Finestra Overlay Scanner Live */
+        #scanner-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #scanner-container {
+            width: 100%;
+            max-width: 450px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-chiudi-scanner {
+            margin-top: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Presentazione di Max con Avatar SOPRA al testo */
         .max-presentation-box {
             background-color: var(--info-bg);
             border: 1px solid var(--info-border);
             border-left: 4px solid var(--info-border);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 18px;
+            margin-bottom: 20px;
             display: flex;
-            align-items: flex-start;
-            gap: 18px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             position: relative;
         }
 
@@ -121,33 +159,37 @@
             border-radius: 50%;
             border: 2px solid var(--primary-color);
             object-fit: cover;
-            flex-shrink: 0;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .max-text-content h3 {
             color: var(--primary-color);
             font-size: 1.15rem;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .max-text-content p {
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 0.93rem;
+            line-height: 1.6;
             color: var(--text-color);
             margin-bottom: 15px;
+            text-align: left;
         }
 
         .max-actions {
             display: flex;
             gap: 10px;
+            justify-content: center;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .btn-max-action {
             background: #101416;
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 6px;
             font-size: 0.85rem;
             cursor: pointer;
@@ -161,27 +203,55 @@
 
         .header-title {
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
             margin-bottom: 20px;
         }
 
         h1 {
             color: var(--primary-color);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
+        /* Griglia principale */
         .form-grid {
             display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 25px;
+            grid-template-columns: 260px 1fr;
+            gap: 20px;
             align-items: start;
         }
 
+        .sidebar-scanner-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-scan-main {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: #12181b;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-scan-main:hover {
+            opacity: 0.9;
+        }
+
         .product-image-box {
-            width: 200px;
+            width: 100%;
             height: 200px;
             background: #101416;
             border: 2px dashed var(--border-color);
@@ -192,11 +262,12 @@
             overflow: hidden;
             flex-direction: column;
             gap: 8px;
+            position: relative;
         }
 
         .product-image-box img {
             width: 100%;
-            height: 140px;
+            height: 150px;
             object-fit: contain;
         }
 
@@ -218,7 +289,7 @@
         .row-group-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .field-group {
@@ -309,7 +380,8 @@
         .scadenza-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .scadenza-row select, .scadenza-row input {
@@ -318,10 +390,10 @@
         }
 
         .info-tech {
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             background: #101416;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 6px;
             border-left: 3px solid var(--primary-color);
             line-height: 1.4;
@@ -330,12 +402,13 @@
         .actions {
             margin-top: 25px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: flex-end;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
@@ -351,7 +424,19 @@
         .btn-primary:hover { opacity: 0.9; }
         .btn-secondary { background-color: var(--border-color); color: var(--text-color); }
         .btn-secondary:hover { background-color: #3e4c62; }
+
+        /* Responsive Mobile a piena larghezza */
+        @media (max-width: 768px) {
+            body { padding: 5px; }
+            .container { padding: 12px; border-radius: 8px; }
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .row-group-2 { grid-template-columns: 1fr; }
+            .product-image-box { height: 170px; }
+            .actions { justify-content: stretch; }
+            .actions .btn { flex: 1; justify-content: center; }
+        }
     </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
 <link rel="stylesheet" href="../../css/collegamenti.css">
 <style id="max-full-width-mobile">
 .max-presentation-box { width:100%; max-width:950px; box-sizing:border-box; }
@@ -364,7 +449,13 @@
 </style></head>
 <body>
 
-<!-- Cabecera Superior con Logotipo y Banderas -->
+<!-- Finestra Overlay Scanner Live -->
+<div id="scanner-overlay">
+    <div id="scanner-container"></div>
+    <button type="button" class="btn-chiudi-scanner" onclick="chiudiScannerLive()">❌ Cerrar escáner</button>
+</div>
+
+<!-- Carta Intestata Superiore -->
 <header class="top-navbar">
     <a href="../menu.html" class="brand-logo">
         <img src="../../IMG/logo_1024_white.png" alt="EatMeFirst Logo">
@@ -373,81 +464,97 @@
     
     <div class="navbar-right">
         <div class="language-flags">
-    <a href="../../IT/carico/carico.html" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon"></a>
-    <a href="../../EN/load/load.html" title="English"><img src="../../IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
-    <a href="../../DE/lagerung/einlagerung.html" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
-    <a href="../../FR/chargement/chargement.html" title="Français"><img src="../../IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
-    <a href="carga-productos.html" title="Español"><img src="../../IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon" style="opacity: 1;"></a>
-</div>
-        <a href="../menu.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;">🏠 Menú Principal</a>
-        <a href="conexion-escaner.html" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;">🔄 Reconectar Escáner</a>
+            <a href="../../IT/carico/carico.html" title="Italiano"><img src="../../IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon"></a>
+            <a href="../../EN/load/load.html" title="English"><img src="../../IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
+            <a href="../../DE/lagerung/einlagerung.html" title="Deutsch"><img src="../../IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
+            <a href="../../FR/chargement/chargement.html" title="Français"><img src="../../IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
+            <a href="../../ES/carga/carga-productos.html" title="Español"><img src="../../IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon" style="opacity: 1;"></a>
+        </div>
+        <a href="../menu.html" class="btn btn-secondary" style="padding: 6px 10px; font-size: 0.8rem;">🏠 Menú</a>
     </div>
 </header>
+<div style="text-align:right;margin:8px 20px"><a href="../operaciones/index.html" style="color:#79c0ff">↩ Últimas 15 operaciones</a></div>
 
 <div class="container">
 
-    <!-- PRESENTACIÓN DE MAX -->
+    <!-- PRESENTAZIONE DI MAX (Avatar sopra e testo dettagliato) -->
     <div id="maxPresentationBox" class="max-presentation-box" style="display: none;">
-        <img src="../../IMG/avatar_max.png" alt="Avatar de Max" class="max-avatar">
+        <img src="../../IMG/avatar_max.png" alt="Max Avatar" class="max-avatar">
         <div class="max-text-content">
-            <h3 id="max-title">¡Hola de parte de Max! Bienvenido a la carga</h3>
-            <p id="max-text">Esta es la página donde se introducen los productos, tanto los que tienen código de barras como los comprados en el mercado sin código. Además, también podrás introducir productos caseros como tartas, salsas, semielaborados, etc. Puedes añadir los productos a tu despensa local eligiendo tú mismo el nombre del lugar donde los vas a conservar. Estas son solo algunas de las funciones: si tienes cualquier duda sobre los campos a rellenar, busca los pequeños post-it informativos amarillos al lado de las etiquetas; te explicarán de forma sencilla cómo completarlos.</p>
+            <h3 id="max-title">¡Hola, soy Max! Vamos a registrar tus compras</h3>
+            <p id="max-text">Aquí registras tus compras. Alimentos, servilletas, limpieza, higiene… ¡hay sitio para toda la casa! Recordaré tus ubicaciones y categorías y propondré la última tienda utilizada. ¡Eva dice que sin lista me olvidaría hasta de la cabeza! Si tienes dudas, abre la ayuda amarilla junto al campo.</p>
             <div class="max-actions">
                 <button type="button" class="btn-max-action" onclick="chiudiMaxTemporaneo()">Cerrar</button>
-                <button type="button" class="btn-max-action" onclick="chiudiMaxDefinitivo()">No mostrar más</button>
+                <button type="button" class="btn-max-action" onclick="chiudiMaxDefinitivo()">No volver a mostrar</button>
             </div>
         </div>
     </div>
 
     <div class="header-title">
-        <h1>📦 Introducción de Producto en Despensa</h1>
+        <h1>📦 Añadir producto a la despensa</h1>
     </div>
 
+    <section id="catalogo-ricordato" hidden style="margin:18px 0;padding:16px;border:1px solid #39434f;border-radius:10px">
+        <label for="scegli-catalogo">Productos recordados después de «Nuevo comienzo»</label>
+        <select id="scegli-catalogo" onchange="usaProdottoCatalogo(this.value)" style="width:100%;margin-top:8px"><option value="">Elige un producto para volver a registrarlo…</option></select>
+        <p>Introduce cantidad y fecha para la nueva compra. No se añade nada hasta confirmar el guardado.</p>
+    </section>
     <div class="form-grid">
-        <div class="product-image-box">
-            <img id="prodotto-foto" src="" alt="Vista previa del producto">
-            <div id="prodotto-peso-badge" class="peso-badge" style="display:none;"></div>
+        <div class="sidebar-scanner-box">
+            <button type="button" class="btn-scan-main" onclick="avviaScannerLive()">
+                📷 Escanear código de barras
+            </button>
+
+            <div id="box-foto-prodotto" class="product-image-box">
+                <img id="prodotto-foto" src="../../IMG/logo_1024_white.png" data-foto-prodotto="" alt="Logotipo EatMeFirst: foto del producto no disponible">
+                <div id="prodotto-peso-badge" class="peso-badge" style="display:none;"></div>
+            </div>
         </div>
 
         <div class="form-fields">
             <div class="field-group">
                 <div class="label-with-postit">
-                    <label>Código de Barras</label>
-                    <a href="guia-escanear-codigo-barras.html" class="postit-link" target="_blank">
-                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Escaneo
+                    <label>Código de barras</label>
+                    <a href="guia-escaner.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda del escáner
                     </a>
                 </div>
-                <input type="text" id="prodotto-barcode" readonly style="color: var(--text-muted);" placeholder="Sin código (Producto de mercado / Sin EAN)">
+                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Escribe o pega el código de barras" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">Buscar producto</button>
+                <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">También puedes dejar el código vacío e introducir el producto a mano.</small>
             </div>
 
             <div class="field-group">
                 <div class="label-with-postit">
-                    <label>Descripción / Nombre del Producto</label>
-                    <a href="guia-nombre-producto.html" class="postit-link" target="_blank">
-                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Nombre
+                    <label>Descripción / Nombre del producto</label>
+                    <a href="guia-nombre.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda del nombre
                     </a>
                 </div>
-                <input type="text" id="prodotto-nome" placeholder="Nombre del producto...">
+                <input type="text" id="prodotto-nome" placeholder="Nombre del producto…">
             </div>
 
             <div class="row-group-2">
                 <div class="field-group">
                     <div class="label-with-postit">
-                        <label>Categoría del Producto</label>
-                        <a href="guia-categorias-alimentos.html" class="postit-link" target="_blank">
-                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Categoría
+                        <label>Categoría del producto</label>
+                        <a href="guia-categoria.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda de categorías
                         </a>
                     </div>
-                    <input type="text" id="prodotto-categoria" placeholder="Ej. Lácteos, Pasta, Detergentes...">
+                    <input type="text" id="prodotto-categoria" list="categorie-carico" placeholder="Elige o escribe una categoría" oninput="EatCategorie.cambiaCategoria()">
+                    <label for="prodotto-sottocategoria" style="display:block;margin-top:10px">Subcategoría (opcional)</label>
+                    <input type="text" id="prodotto-sottocategoria" list="sottocategorie-carico" placeholder="Elige o escribe una subcategoría">
+                    <small>Elige primero la categoría. Puedes escribir nombres nuevos: se recordarán al guardar.</small>
                 </div>
                 <div class="field-group">
                     <div class="label-with-postit">
-                        <label>Ubicación (Dónde se guarda)</label>
-                        <a href="guia-ubicacion-despensa.html" class="postit-link" target="_blank">
-                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Ubicación
+                        <label>Ubicación (dónde va)</label>
+                        <a href="guia-ubicacion.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda de ubicaciones
                         </a>
                     </div>
-                    <input type="text" id="prodotto-ubicazione" placeholder="Ej. Nevera, Despensa, Trastero...">
+                    <input type="text" id="prodotto-ubicazione" list="ubicazioni-carico" placeholder="Ej. Frigorífico, sótano, armario…">
                 </div>
             </div>
 
@@ -456,18 +563,18 @@
                     <div class="row-group-2" style="gap: 8px;">
                         <div>
                             <div class="label-with-postit">
-                                <label>Cantidad</label>
-                                <a href="guia-cantidad-unidades.html" class="postit-link" target="_blank">
-                                    <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía
+                                <label>Envases comprados</label>
+                                <a href="guia-cantidad.html" class="postit-link" target="_blank">
+                                    <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda
                                 </a>
                             </div>
                             <input type="number" id="prodotto-quantita" value="1" min="1">
                         </div>
                         <div>
                             <div class="label-with-postit">
-                                <label>Unidades x Envase</label>
-                                <a href="guia-cantidad-unidades.html" class="postit-link" target="_blank">
-                                    <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía
+                                <label>Unidades por envase</label>
+                                <a href="guia-unidades.html" class="postit-link" target="_blank">
+                                    <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda
                                 </a>
                             </div>
                             <input type="number" id="prodotto-pezzi" value="1" min="1">
@@ -476,49 +583,49 @@
                 </div>
                 <div class="field-group">
                     <div class="label-with-postit">
-                        <label>Opción de Stock</label>
-                        <a href="guia-caducidad-estricta.html" class="postit-link" target="_blank">
-                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía Obligatorio
+                        <label>Tipo de fecha</label>
+                        <a href="guia-fecha-estricta.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda de fecha estricta
                         </a>
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="prodotto-tassativo">
-                        <label for="prodotto-tassativo">🔒 Artículo Obligatorio</label>
+                        <label for="prodotto-tassativo">🔒 Fecha estricta</label>
                     </div>
                 </div>
             </div>
 
             <div class="field-group">
                 <div class="label-with-postit">
-                    <label>Proveedor / Tienda de Compra</label>
-                    <a href="guia-proveedores.html" class="postit-link" target="_blank">
-                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Proveedor
+                    <label>Proveedor / Tienda</label>
+                    <a href="guia-proveedor.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda de tiendas
                     </a>
                 </div>
-                <input type="text" id="prodotto-fornitore" placeholder="Ej. Supermercado, Mercado local, Tienda...">
+                <input type="text" id="prodotto-fornitore" placeholder="Ej. Supermercado, mercado, tienda…">
             </div>
 
             <div class="field-group">
                 <div class="label-with-postit">
-                    <label>Gestión de Caducidad</label>
-                    <a href="guia-fecha-caducidad.html" class="postit-link" target="_blank">
-                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Caducidad
+                    <label>Fecha del producto</label>
+                    <a href="guia-fecha.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda de fechas
                     </a>
                 </div>
                 <div class="scadenza-options-box">
                     <div class="scadenza-row">
                         <input type="radio" name="tipo-scadenza" id="scad-opt-1" value="nessuna" checked onclick="aggiornaScadenzaUI()">
-                        <label for="scad-opt-1">1) 🚫 Ninguna (papel, detergentes, etc.)</label>
+                        <label for="scad-opt-1">1) 🚫 Sin fecha (papel, limpieza…)</label>
                     </div>
                     <div class="scadenza-row">
                         <input type="radio" name="tipo-scadenza" id="scad-opt-2" value="giorni" onclick="aggiornaScadenzaUI()">
-                        <label for="scad-opt-2">2) ⏱️ Días de validez:</label>
-                        <input type="number" id="valore-giorni" min="1" max="365" value="7" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">días</span>
+                        <label for="scad-opt-2">2) ⏱️ Número de días:</label>
+                        <input type="number" id="valore-giorni" min="1" max="365" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">días</span>
                     </div>
                     <div class="scadenza-row">
                         <input type="radio" name="tipo-scadenza" id="scad-opt-3" value="mesi" onclick="aggiornaScadenzaUI()">
-                        <label for="scad-opt-3">3) 🗓️ Meses de validez (pasta, latas):</label>
-                        <input type="number" id="valore-mesi" min="1" max="60" value="12" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">meses</span>
+                        <label for="scad-opt-3">3) 🗓️ Número de meses (pasta, conservas):</label>
+                        <input type="number" id="valore-mesi" min="1" max="60" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">meses</span>
                     </div>
                     <div class="scadenza-row">
                         <input type="radio" name="tipo-scadenza" id="scad-opt-4" value="esatta" onclick="aggiornaScadenzaUI()">
@@ -529,39 +636,84 @@
             </div>
 
             <div id="box-info-tecniche" class="info-tech" style="display:none;">
-                <strong>ℹ️ Info de base de datos online:</strong> <span id="testo-info-tecniche"></span>
+                <strong>ℹ️ Información del catálogo en línea:</strong> <span id="testo-info-tecniche"></span>
             </div>
 
             <div class="field-group">
                 <div class="label-with-postit">
-                    <label>Notas / Apuntes</label>
-                    <a href="guia-notas-inventario.html" class="postit-link" target="_blank">
-                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guía de Notas
+                    <label>Notas</label>
+                    <a href="guia-notas.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda de notas
                     </a>
                 </div>
-                <input type="text" id="prodotto-note" placeholder="Ej. Ya abierto, stock alto, comida para pícnic...">
+                <input type="text" id="prodotto-note" placeholder="Ej. Ya abierto, reservado para el picnic…">
             </div>
         </div>
     </div>
 
     <div class="actions">
         <a href="../menu.html" class="btn btn-secondary">Cancelar</a>
-        <button type="button" class="btn btn-primary" onclick="salvaProdotto()">➕ Añadir a la Despensa</button>
+        <button type="button" class="btn btn-primary" onclick="salvaProdotto()">➕ Añadir a la despensa</button>
     </div>
 </div>
 
+<datalist id="ubicazioni-carico"></datalist>
+<datalist id="categorie-carico"></datalist>
+<datalist id="sottocategorie-carico"></datalist>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/scadenze-it.js"></script>
+<script src="../../js/ricerca-prodotti-es.js"></script>
+<script src="../../js/categorie-es.js"></script>
+<script src="../../js/ubicazioni-es.js"></script>
+<script src="../../js/errori-es.js"></script>
 <script>
-    let ultimoBarcodeElaborato = "";
-    let cellCollegatoInPrecedenza = false;
+    function pezziDisponibili(p) {
+        if (Number.isSafeInteger(p.pezzi_rimanenti) && p.pezzi_rimanenti >= 0) return p.pezzi_rimanenti;
+        const q = Number(p.quantita), n = Number(p.pezzi_per_confezione || 1);
+        return (Number.isSafeInteger(q) && q > 0 ? q : 1) * (Number.isSafeInteger(n) && n > 0 ? n : 1);
+    }
+
+    let html5QrCodeScanner = null;
     window.dettagliEstesiCorrenti = {};
 
-    window.addEventListener('DOMContentLoaded', async () => {
+    function impostaFotoProdotto(sorgente = '') {
+        const img = document.getElementById('prodotto-foto');
+        const valida = typeof sorgente === 'string' && /^(https?:\/\/|data:image\/(?:png|jpeg|jpg|webp|gif);)/i.test(sorgente);
+        img.setAttribute('data-foto-prodotto', valida ? sorgente : '');
+        img.alt = valida ? 'Vista previa del producto' : 'Logotipo EatMeFirst: foto del producto no disponible';
+        // Il logo è solo una sostituzione visiva, non diventa la foto salvata del prodotto.
+        img.onerror = valida ? () => impostaFotoProdotto() : null;
+        img.src = valida ? sorgente : '../../IMG/logo_1024_white.png';
+    }
+
+    function completaFotoMancante(barcode, immagine) {
+        if (!barcode || typeof immagine !== 'string' || !/^https:\/\//i.test(immagine)) return false;
+        const aggiornamenti = {}, attesi = {};
+        for (const chiave of ['eat_dispensa_locale', 'eat_catalogo_prodotti_v1']) {
+            const righe = EatStorico.leggi(chiave);
+            attesi[chiave] = localStorage.getItem(chiave);
+            let modificata = false;
+            const nuove = righe.map(p => {
+                const fotoMancante = !p.immagine || /(?:^|\/)logo_1024_white\.png(?:[?#].*)?$/i.test(p.immagine);
+                if (p.barcode !== barcode || !fotoMancante) return p;
+                modificata = true;
+                return {...p, immagine};
+            });
+            if (modificata) aggiornamenti[chiave] = nuove;
+        }
+        if (!Object.keys(aggiornamenti).length) return false;
+        EatStorico.registra('Foto prodotto', 'Foto que faltaba añadida para el código ' + barcode, aggiornamenti, attesi);
+        return true;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
         if (localStorage.getItem('eat_hide_max_carico') !== 'true') {
             document.getElementById('maxPresentationBox').style.display = 'flex';
         }
-
-        await controllaEIncollaDati();
-        setInterval(controllaEIncollaDati, 1000);
+        ripristinaUltimiValoriMemoria();
+        aggiornaCatalogoCarico();
+        EatCategorie.suggerisci();
+        if (EatUbicazioni.ricorda()) EatUbicazioni.suggerisci('ubicazioni-carico');
     });
 
     function chiudiMaxTemporaneo() {
@@ -573,77 +725,178 @@
         localStorage.setItem('eat_hide_max_carico', 'true');
     }
 
-    async function controllaEIncollaDati() {
+    function ripristinaUltimiValoriMemoria() {
+        const ultimaUbicazione = localStorage.getItem('eat_ultima_ubicazione');
+        const ultimaCategoria = localStorage.getItem('eat_ultima_categoria');
+        const ultimoFornitore = localStorage.getItem('eat_ultimo_fornitore');
+        
+        if (ultimaUbicazione && !document.getElementById('prodotto-ubicazione').value) {
+            document.getElementById('prodotto-ubicazione').value = ultimaUbicazione;
+        }
+        if (ultimaCategoria && !document.getElementById('prodotto-categoria').value) {
+            EatCategorie.imposta(ultimaCategoria, localStorage.getItem('eat_ultima_sottocategoria') || '');
+        }
+        if (ultimoFornitore && !document.getElementById('prodotto-fornitore').value) {
+            document.getElementById('prodotto-fornitore').value = ultimoFornitore;
+        }
+    }
+
+    /* --- GESTIONE SCANNER LIVE INTERNO --- */
+    function avviaScannerLive() {
+        const overlay = document.getElementById('scanner-overlay');
+        overlay.style.display = 'flex';
+
+        if (!html5QrCodeScanner) {
+            html5QrCodeScanner = new Html5Qrcode("scanner-container");
+        }
+
+        const config = { fps: 10, qrbox: { width: 280, height: 140 } };
+
+        html5QrCodeScanner.start(
+            { facingMode: "environment" }, 
+            config,
+            (decodedText, decodedResult) => {
+                annullaRicercaCodice();
+                document.getElementById('prodotto-barcode').value = decodedText;
+                cercaProdottoOnline(decodedText);
+                chiudiScannerLive();
+            },
+            (errorMessage) => {}
+        ).catch(err => {
+            alert("⚠️ No se pudo iniciar la cámara. Revisa los permisos del navegador.");
+            chiudiScannerLive();
+        });
+    }
+
+    function chiudiScannerLive() {
+        if (html5QrCodeScanner && html5QrCodeScanner.isScanning) {
+            html5QrCodeScanner.stop().then(() => {
+                document.getElementById('scanner-overlay').style.display = 'none';
+            }).catch(err => {
+                document.getElementById('scanner-overlay').style.display = 'none';
+            });
+        } else {
+            document.getElementById('scanner-overlay').style.display = 'none';
+        }
+    }
+
+    /* --- RICERCA RAPIDA ONLINE (Open Food Facts / Database Mirati) --- */
+    function cercaCodiceManuale() {
+        const campo = document.getElementById('prodotto-barcode');
+        const barcode = campo.value.replace(/\s+/g, '');
+        if (!/^\d{8,14}$/.test(barcode)) {
+            document.getElementById('esito-ricerca-codice').textContent = 'Introduce un código de barras de 8 a 14 cifras. Conserva los ceros iniciales.';
+            campo.focus();
+            return;
+        }
+        campo.value = barcode;
+        return cercaProdottoOnline(barcode);
+    }
+
+    let ricercaCodiceCorrente = 0;
+    let controllerRicercaCodice = null;
+    let metadatiRicercaCorrente = null;
+
+    function annullaRicercaCodice() {
+        ricercaCodiceCorrente++;
+        controllerRicercaCodice?.abort();
+        controllerRicercaCodice = null;
+        metadatiRicercaCorrente = null;
+        window.dettagliEstesiCorrenti = {};
+        impostaFotoProdotto();
+        document.getElementById('box-info-tecniche').style.display = 'none';
+        document.getElementById('prodotto-peso-badge').style.display = 'none';
+        document.getElementById('esito-ricerca-codice').textContent = 'Pulsa Buscar producto para comprobar el código o introduce el producto a mano.';
+    }
+
+    async function cercaProdottoOnline(barcode) {
+        if (!/^\d{8,14}$/.test(barcode)) {
+            document.getElementById('esito-ricerca-codice').textContent = 'Código no válido: introduce de 8 a 14 cifras o rellena el formulario a mano.';
+            return;
+        }
+        controllerRicercaCodice?.abort();
+        controllerRicercaCodice = new AbortController();
+        const ricerca = ++ricercaCodiceCorrente;
+        const esito = document.getElementById('esito-ricerca-codice');
+        esito.textContent = 'Buscando en catálogos de alimentos, mascotas, cosmética y otros productos… Puedes seguir rellenando el formulario.';
+        let memoriaLocale;
         try {
-            let response = await fetch('/last_scan', { cache: 'no-store' });
-            let data = await response.json();
-
-            if (data && (data.connected === true || (data.barcode && data.barcode.trim() !== ""))) {
-                if (!cellCollegatoInPrecedenza) {
-                    cellCollegatoInPrecedenza = true;
-                    document.getElementById('max-title').innerText = "¡Por fin está conectado tu móvil!";
-                    document.getElementById('max-text').innerHTML = "Como habías previsto, habrás notado el texto en rojo, pero no te preocupes: sigues estando en tu disco duro, ¡lo puedes ver por el código IP! Pero pasemos a la explicación de la página de carga.<br><br>" +
-                        "Esta es la página donde se introducen los productos, tanto los que tienen código de barras como los comprados en el mercado sin código. Además, también podrás introducir productos caseros como tartas, salsas, semielaborados, etc. Puedes añadir los productos a tu despensa local eligiendo tú mismo el nombre del lugar donde los vas a conservar. Estas son solo algunas de las funciones: si tienes cualquier duda sobre los campos a rellenar, busca los pequeños post-it informativos amarillos al lado de las etiquetas; te explicarán de forma sencilla cómo completarlos.";
-                }
+            memoriaLocale = [...EatStorico.leggi('eat_catalogo_prodotti_v1'), ...EatStorico.leggi('eat_dispensa_locale')];
+            if (!Array.isArray(memoriaLocale)) throw Error('Dispensa non valida');
+        } catch (errore) {
+            esito.textContent = 'No se puede leer la despensa local. Comprueba los datos antes de guardar más productos.';
+            return;
+        }
+        const locale = [...memoriaLocale].reverse().find(p => p.barcode === barcode);
+        const classificazione = EatCategorie.precedente(barcode);
+        EatCategorie.imposta(classificazione?.categoria || '', classificazione?.sottocategoria || '');
+        document.getElementById('prodotto-nome').value = locale?.nome || '';
+        impostaFotoProdotto();
+        document.getElementById('prodotto-peso-badge').style.display = 'none';
+        document.getElementById('box-info-tecniche').style.display = 'none';
+        impostaFotoProdotto(locale?.immagine);
+        if (locale?.ubicazione) document.getElementById('prodotto-ubicazione').value = locale.ubicazione;
+        if (locale?.fornitore) document.getElementById('prodotto-fornitore').value = locale.fornitore;
+        window.dettagliEstesiCorrenti = {...(locale?.dettagli_tecnici || {})};
+        metadatiRicercaCorrente = {barcode, stato: 'in_corso', nome_online: locale?.ricerca_prodotto?.nome_online || '', nome_personalizzato: locale?.ricerca_prodotto?.nome_personalizzato || false};
+        const campi = ['prodotto-nome', 'prodotto-categoria', 'prodotto-sottocategoria', 'prodotto-pezzi'];
+        const prima = Object.fromEntries(campi.map(id => [id, document.getElementById(id).value]));
+        const risultato = await EatRicercaProdotti.cerca(barcode, controllerRicercaCodice.signal);
+        if (ricerca !== ricercaCodiceCorrente || document.getElementById('prodotto-barcode').value !== barcode) return;
+        if (risultato.stato === 'annullata') return;
+        metadatiRicercaCorrente.stato = risultato.stato;
+        metadatiRicercaCorrente.controllato_il = new Date().toISOString();
+        if (risultato.stato === 'trovato') {
+            const scheda = risultato.scheda;
+            const campoNome = document.getElementById('prodotto-nome');
+            const nomeModificato = locale?.ricerca_prodotto?.nome_personalizzato;
+            // Un nome provvisorio può essere completato; un nome corretto dall'utente resta suo.
+            const provvisorio = !locale || (!locale.immagine && !locale.ricerca_prodotto) ||
+                (locale.ricerca_prodotto && !locale.ricerca_prodotto.nome_online && !nomeModificato);
+            if (scheda.nome && campoNome.value === prima['prodotto-nome'] && (provvisorio || !campoNome.value)) campoNome.value = scheda.nome;
+            if (scheda.immagine) impostaFotoProdotto(scheda.immagine);
+            const campoCategoria = document.getElementById('prodotto-categoria');
+            if (!prima['prodotto-categoria'] && !campoCategoria.value && !document.getElementById('prodotto-sottocategoria').value && scheda.categoria) {
+                EatCategorie.imposta(scheda.categoria, scheda.sottocategoria);
             }
-
-            if (data && data.barcode && data.barcode !== ultimoBarcodeElaborato) {
-                let scanValue = data.barcode.trim();
-                if (scanValue.includes("conexion-escaner.html") || scanValue.includes("192.168.") || scanValue.startsWith("http")) {
-                    return;
+            const campoPezzi = document.getElementById('prodotto-pezzi');
+            if (scheda.pezzi_per_confezione && prima['prodotto-pezzi'] === '1' && campoPezzi.value === '1') campoPezzi.value = String(scheda.pezzi_per_confezione);
+            const dettagli = {...window.dettagliEstesiCorrenti};
+            const fontiCampi = {...(dettagli.fonti_campi || {})};
+            Object.entries(scheda.dettagli).forEach(([key, value]) => {
+                if (key === 'fonti') return;
+                if (value !== '' && value !== null) {
+                    dettagli[key] = value;
+                    fontiCampi[key] = scheda.fonte;
                 }
-
-                ultimoBarcodeElaborato = data.barcode;
-                document.getElementById('prodotto-barcode').value = data.barcode;
-                
-                // Captura de detalles técnicos estesi en segundo plano
-                window.dettagliEstesiCorrenti = {
-                    calorie: data.calorie ? `${data.calorie} kcal/100g` : '',
-                    allergeni: data.allergeni || '',
-                    ingredienti: data.ingredienti || ''
-                };
-
-                if (data.found && data.nome) {
-                    document.getElementById('prodotto-nome').value = data.nome;
-                } else {
-                    document.getElementById('prodotto-nome').value = '';
-                    document.getElementById('prodotto-nome').placeholder = 'Código no encontrado: introduce la descripción...';
-                }
-
-                document.getElementById('prodotto-categoria').value = data.categoria || '';
-                
-                if (data.foto) {
-                    document.getElementById('prodotto-foto').src = data.foto;
-                } else {
-                    document.getElementById('prodotto-foto').src = "";
-                }
-
-                if (data.pezzi) {
-                    document.getElementById('prodotto-pezzi').value = data.pezzi;
-                }
-
-                const badgePeso = document.getElementById('prodotto-peso-badge');
-                if (data.quantita_netta) {
-                    badgePeso.innerText = "⚖️ " + data.quantita_netta;
-                    badgePeso.style.display = "block";
-                } else {
-                    badgePeso.style.display = "none";
-                }
-
-                const boxTech = document.getElementById('box-info-tecniche');
-                if (window.dettagliEstesiCorrenti.calorie || window.dettagliEstesiCorrenti.allergeni) {
-                    document.getElementById('testo-info-tecniche').innerText = "Información nutricional y detalles técnicos recuperados (disponibles en los detalles del inventario).";
-                    boxTech.style.display = "block";
-                } else {
-                    boxTech.style.display = "none";
-                }
-
-                document.getElementById('prodotto-quantita').value = "1";
-                document.getElementById('prodotto-note').value = "";
-                document.getElementById('scad-opt-1').checked = true;
-                aggiornaScadenzaUI();
+            });
+            dettagli.fonti_campi = fontiCampi;
+            dettagli.fonti = [...(dettagli.fonti || []), scheda.fonte].filter((fonte, i, tutte) => tutte.findIndex(f => f.url === fonte.url) === i);
+            window.dettagliEstesiCorrenti = dettagli;
+            metadatiRicercaCorrente.nome_online = scheda.nome;
+            metadatiRicercaCorrente.fonte = scheda.fonte;
+            metadatiRicercaCorrente.lingua_nome = scheda.lingua_nome;
+            if (scheda.quantita_confezione) {
+                document.getElementById('prodotto-peso-badge').textContent = scheda.quantita_confezione;
+                document.getElementById('prodotto-peso-badge').style.display = 'block';
             }
-        } catch (e) {}
+            document.getElementById('box-info-tecniche').style.display = 'block';
+            document.getElementById('testo-info-tecniche').textContent = 'Información encontrada: puedes leerla en los detalles del producto en Inventario.';
+            esito.textContent = 'Datos de ' + scheda.fonte.nome + '. Comprueba nombre, categoría y unidades por envase antes de guardar.';
+            try {
+                if (completaFotoMancante(barcode, scheda.immagine)) esito.textContent += ' La foto que faltaba también se ha añadido a productos guardados: cantidades y otros datos se mantienen.';
+            } catch (errore) {
+                esito.textContent += ' No se pudo añadir la foto a los productos guardados: ' + EatErroriES(errore.message);
+            }
+            if (scheda.nome && scheda.lingua_nome !== 'es') esito.textContent += ' El nombre procede del catálogo original: no hay una versión en español.';
+            if (scheda.nome && campoNome.value !== scheda.nome) esito.textContent += ' Nombre del catálogo: ' + scheda.nome + '. Se ha conservado tu nombre; puedes cambiarlo si quieres.';
+        } else if (risultato.stato === 'non_trovato') {
+            esito.textContent = 'Código no encontrado en los cuatro catálogos. Puedes guardar tus datos: volveremos a intentarlo en el próximo escaneo.';
+        } else if (risultato.stato === 'limite') {
+            esito.textContent = 'Consultas limitadas temporalmente. Inténtalo dentro de ' + risultato.attesa + ' segundos o rellena el formulario a mano. Esto no significa que el código sea desconocido.';
+        } else {
+            esito.textContent = 'Búsqueda temporalmente no disponible o demasiado lenta. Usa los datos locales o rellena a mano: volveremos a intentarlo en el próximo escaneo.';
+        }
     }
 
     function aggiornaScadenzaUI() {
@@ -653,84 +906,164 @@
         document.getElementById('valore-data-esatta').disabled = (tipo !== 'esatta');
     }
 
-    async function salvaProdotto() {
+    function resetForm() {
+        annullaRicercaCodice();
+        document.getElementById('esito-ricerca-codice').textContent = 'También puedes dejar el código vacío e introducir el producto a mano.';
+        document.getElementById('prodotto-barcode').value = "";
+        document.getElementById('prodotto-nome').value = "";
+        impostaFotoProdotto();
+        document.getElementById('prodotto-note').value = "";
+        document.getElementById('prodotto-quantita').value = "1";
+        document.getElementById('prodotto-pezzi').value = "1";
+        document.getElementById('prodotto-tassativo').checked = false;
+        document.getElementById('box-info-tecniche').style.display = "none";
+        document.getElementById('prodotto-peso-badge').style.display = "none";
+        document.getElementById('valore-giorni').value = '';
+        document.getElementById('valore-mesi').value = '';
+        document.getElementById('valore-data-esatta').value = '';
+        document.getElementById('scad-opt-1').checked = true;
+        aggiornaScadenzaUI();
+        
+        ripristinaUltimiValoriMemoria();
+    }
+
+    function aggiornaCatalogoCarico() {
+        try {
+            const prodotti = EatStorico.leggi('eat_catalogo_prodotti_v1');
+            const select = document.getElementById('scegli-catalogo');
+            select.replaceChildren(new Option('Elige un producto para volver a registrarlo…',''));
+            prodotti.forEach((p,i)=>select.appendChild(new Option(`${p.nome}${p.ubicazione ? ' — '+p.ubicazione : ''}`,String(i))));
+            document.getElementById('catalogo-ricordato').hidden = !prodotti.length;
+        } catch (errore) { document.getElementById('esito-ricerca-codice').textContent='No se puede leer el catálogo: '+EatErroriES(errore.message); }
+    }
+    function usaProdottoCatalogo(indice) {
+        if (indice === '') return;
+        const p = EatStorico.leggi('eat_catalogo_prodotti_v1')[Number(indice)];
+        if (!p) return;
+        resetForm();
+        document.getElementById('prodotto-nome').value=p.nome || '';
+        document.getElementById('prodotto-barcode').value=p.barcode || '';
+        document.getElementById('prodotto-ubicazione').value=p.ubicazione || '';
+        document.getElementById('prodotto-fornitore').value=p.fornitore || '';
+        EatCategorie.imposta(p.categoria || '',p.sottocategoria || '');
+        document.getElementById('prodotto-pezzi').value=String(Math.max(1,Number(p.pezzi_per_confezione)||1));
+        document.getElementById('prodotto-quantita').value='';
+        impostaFotoProdotto(p.immagine);
+        window.dettagliEstesiCorrenti={...(p.dettagli_tecnici||{})};
+        metadatiRicercaCorrente=p.ricerca_prodotto?{...p.ricerca_prodotto}:null;
+        document.getElementById('esito-ricerca-codice').textContent='Datos recuperados del catálogo. Introduce los envases comprados y la nueva fecha antes de guardar.';
+    }
+
+    /* --- SALVATAGGIO IN LOCALSTORAGE CON DATI ESSENZIALI E DETTAGLI DIFFERITI --- */
+    function salvaProdotto() {
         const barcode = document.getElementById('prodotto-barcode').value;
         const nome = document.getElementById('prodotto-nome').value;
-        const categoria = document.getElementById('prodotto-categoria').value;
+        const {categoria, sottocategoria} = EatCategorie.scelta(document.getElementById('prodotto-categoria').value, document.getElementById('prodotto-sottocategoria').value);
+        if (sottocategoria && !categoria) { alert('Elige primero una categoría antes de la subcategoría.'); return; }
         const quantita = document.getElementById('prodotto-quantita').value;
         const pezzi = document.getElementById('prodotto-pezzi').value;
-        const ubicazione = document.getElementById('prodotto-ubicazione').value;
+        const totalePezzi = Number(quantita) * Number(pezzi);
+        if (![Number(quantita), Number(pezzi), totalePezzi].every(n => Number.isSafeInteger(n) && n > 0)) {
+            alert('Introduce números enteros mayores que cero para envases y unidades por envase.');
+            return;
+        }
+        const ubicazione = EatUbicazioni.canonica(document.getElementById('prodotto-ubicazione').value);
         const fornitore = document.getElementById('prodotto-fornitore').value;
         const tassativo = document.getElementById('prodotto-tassativo').checked;
         const note = document.getElementById('prodotto-note').value;
-        const foto = document.getElementById('prodotto-foto').src;
+        const foto = document.getElementById('prodotto-foto').getAttribute('data-foto-prodotto') || '';
+
+        if (fornitore) localStorage.setItem('eat_ultimo_fornitore', fornitore);
 
         const tipoScadenza = document.querySelector('input[name="tipo-scadenza"]:checked').value;
         let scadenzaValore = "";
-        let scadenzaRiepilogo = "Ninguna";
+        let scadenzaRiepilogo = "Nessuna";
+        
         if (tipoScadenza === 'giorni') {
             scadenzaValore = document.getElementById('valore-giorni').value;
-            scadenzaRiepilogo = `En ${scadenzaValore} días`;
+            scadenzaRiepilogo = `Tra ${scadenzaValore} giorni`;
         } else if (tipoScadenza === 'mesi') {
             scadenzaValore = document.getElementById('valore-mesi').value;
-            scadenzaRiepilogo = `En ${scadenzaValore} meses`;
+            scadenzaRiepilogo = `Tra ${scadenzaValore} mesi`;
         } else if (tipoScadenza === 'esatta') {
             scadenzaValore = document.getElementById('valore-data-esatta').value;
-            scadenzaRiepilogo = scadenzaValore || "No especificada";
+            scadenzaRiepilogo = scadenzaValore || "No indicado";
         }
 
-        const conferma = confirm(`Resumen de introducción:\n\n• Producto: ${nome || 'Sin nombre'}\n• Categoría: ${categoria}\n• Ubicación: ${ubicazione || 'No especificada'}\n• Cantidad: ${quantita} env. (${pezzi} un./env)\n• Caducidad: ${scadenzaRiepilogo}\n\n¿Confirmas el guardado en la despensa?`);
+        const istanteCarico = new Date();
+        const scadenzaCalcolata = EatScadenze.calcola(tipoScadenza, scadenzaValore, EatScadenze.oggi(istanteCarico));
+        if (!scadenzaCalcolata.valida) { alert(EatErroriES(scadenzaCalcolata.messaggio)); return; }
+        if (tassativo && !scadenzaCalcolata.data) { alert('Introduce una fecha si has marcado Fecha estricta.'); return; }
+        scadenzaRiepilogo = scadenzaCalcolata.data ? EatScadenze.formato(scadenzaCalcolata.data) + (tassativo ? ' — fecha estricta' : ' — fecha orientativa') : 'Sin fecha indicada';
+
+        const conferma = confirm(`Resumen de entrada:\n\n• Producto: ${nome || 'Sin nombre'}\n• Categoría: ${categoria}${sottocategoria ? " → " + sottocategoria : ""}\n• Ubicación: ${ubicazione || 'No indicado'}\n• Cantidad: ${quantita} envases (${pezzi} unidades/envase), total ${totalePezzi} unidades\n• Fecha: ${scadenzaRiepilogo}\n\n¿Añadir este producto a la despensa?`);
 
         if (!conferma) return;
+        if (!EatUbicazioni.ricorda([ubicazione])) return;
 
+        // Impedisce a una risposta tardiva di cambiare la scheda dopo la conferma.
+        controllerRicercaCodice?.abort();
+        ricercaCodiceCorrente++;
+        const ricercaSalvata = metadatiRicercaCorrente?.barcode === barcode ? {...metadatiRicercaCorrente} : {barcode, stato: 'manuale', nome_online: ''};
+        if (ricercaSalvata.stato === 'in_corso') ricercaSalvata.stato = 'da_completare';
+        ricercaSalvata.nome_personalizzato = ricercaSalvata.nome_online ? nome !== ricercaSalvata.nome_online : false;
         const prodottoData = {
             barcode: barcode,
             nome: nome || 'Producto sin nombre',
             categoria: categoria,
+            sottocategoria: sottocategoria,
             ubicazione: ubicazione,
             fornitore: fornitore,
             quantita: parseInt(quantita),
-            pezzi_per_confezione: parseInt(pezzi),
+            pezzi_per_confezione: Number(pezzi),
+            pezzi_rimanenti: totalePezzi,
             tassativo: tassativo,
             tipo_scadenza: tipoScadenza,
             valore_scadenza: scadenzaValore,
+            data_scadenza: scadenzaCalcolata.data,
+            data_scadenza_iniziale: scadenzaCalcolata.data,
             note: note,
             immagine: foto,
             dettagli_tecnici: window.dettagliEstesiCorrenti || {},
-            data_carico: new Date().toISOString()
+            ricerca_prodotto: ricercaSalvata,
+            data_carico: istanteCarico.toISOString()
         };
 
+        let dispensa = EatStorico.leggi('eat_dispensa_locale');
+        const dispensaAttesa = localStorage.getItem('eat_dispensa_locale');
+        dispensa.push(prodottoData);
         try {
-            let res = await fetch('/save_pantry', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(prodottoData)
-            });
+            EatStorico.registra('Carico', `${prodottoData.nome}: ${totalePezzi} unidades (${quantita} envases de ${pezzi}) en ${ubicazione || 'Ubicación no indicada'}`, {eat_dispensa_locale: dispensa}, {eat_dispensa_locale: dispensaAttesa});
+        } catch (errore) {
+            alert('Producto no guardado. ' + EatErroriES(errore.message));
+            return;
+        }
+        try {
+            EatCategorie.ricorda(prodottoData);
+            localStorage.setItem('eat_ultima_categoria', categoria);
+            localStorage.setItem('eat_ultima_sottocategoria', sottocategoria);
+        } catch (errore) {
+            alert('Producto guardado, pero no se pudieron actualizar las categorías.');
+        }
+        EatCategorie.imposta(categoria, sottocategoria);
+        if (ubicazione) localStorage.setItem('eat_ultima_ubicazione', ubicazione);
+        EatUbicazioni.suggerisci('ubicazioni-carico');
 
-            if (res.ok) {
-                alert("✅ ¡Producto guardado con éxito en la despensa! Página lista para el siguiente escaneo.");
+        const altroProdotto = confirm("✅ ¡Producto guardado en la despensa!\n\n¿Quieres añadir otro producto?");
 
-                await fetch('/save_scan?barcode=', { cache: 'no-store' });
+        resetForm();
+        window.dettagliEstesiCorrenti = {};
 
-                document.getElementById('prodotto-barcode').value = "";
-                document.getElementById('prodotto-nome').value = "";
-                document.getElementById('prodotto-categoria').value = "";
-                document.getElementById('prodotto-ubicazione').value = "";
-                document.getElementById('prodotto-fornitore').value = "";
-                document.getElementById('prodotto-foto').src = "";
-                document.getElementById('box-info-tecniche').style.display = "none";
-                document.getElementById('prodotto-peso-badge').style.display = "none";
-                window.dettagliEstesiCorrenti = {};
-            } else {
-                alert("⚠️ Error al guardar en el servidor.");
-            }
-        } catch (e) {
-            alert("⚠️ Error de conexión con el servidor durante el guardado.");
+        if (altroProdotto) {
+            avviaScannerLive();
+        } else {
+            window.location.href = "../menu.html";
         }
     }
 </script>
 
 <script src="../../js/guide-carico.js"></script></body>
 </html>
+
 
 
