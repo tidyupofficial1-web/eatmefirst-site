@@ -1,15 +1,7 @@
 /* Categorie italiane: nessuna riclassificazione dei prodotti esistenti. */
 (function () {
     const KEY = 'eat_categorie_personalizzate_v1';
-    const iniziali = [
-        ['Alimentos', ['Pasta y arroz', 'Conservas', 'Lácteos', 'Carne y pescado', 'Frutas y verduras', 'Desayuno y dulces']],
-        ['Bebidas', ['Agua', 'Zumos', 'Vino y cerveza']],
-        ['Limpieza del hogar', ['Ropa', 'Vajilla', 'Productos de limpieza']],
-        ['Higiene personal', ['Higiene dental', 'Cabello', 'Cuerpo']],
-        ['Mascotas', ['Alimentación', 'Higiene y arena', 'Accesorios']],
-        ['Jardín', ['Semillas', 'Abonos', 'Tierra']],
-        ['Artículos del hogar', ['Pilas', 'Bombillas', 'Bolsas']]
-    ];
+    const iniziali = []; // Le categorie vengono ricordate solo dopo l’inserimento dell’utente.
     const pulisci = v => typeof v === 'string' ? v.trim().replace(/\s+/g, ' ') : '';
     const id = v => pulisci(v).toLocaleLowerCase('es');
     const uguali = (a, b) => id(a) === id(b);

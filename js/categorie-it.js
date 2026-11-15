@@ -1,15 +1,7 @@
 /* Categorie italiane: nessuna riclassificazione dei prodotti esistenti. */
 (function () {
     const KEY = 'eat_categorie_personalizzate_v1';
-    const iniziali = [
-        ['Alimentari', ['Pasta e riso', 'Conserve', 'Latticini', 'Carne e pesce', 'Frutta e verdura', 'Dolci e colazione']],
-        ['Bevande', ['Acqua', 'Succhi', 'Vino e birra']],
-        ['Pulizia della casa', ['Bucato', 'Stoviglie', 'Detergenti']],
-        ['Cura della persona', ['Igiene orale', 'Capelli', 'Corpo']],
-        ['Animali', ['Alimentazione', 'Igiene e lettiere', 'Accessori']],
-        ['Giardinaggio', ['Semi', 'Concimi', 'Terriccio']],
-        ['Materiali per la casa', ['Pile', 'Lampadine', 'Sacchetti']]
-    ];
+    const iniziali = []; // Le categorie vengono ricordate solo dopo l’inserimento dell’utente.
     const pulisci = v => typeof v === 'string' ? v.trim().replace(/\s+/g, ' ') : '';
     const id = v => pulisci(v).toLocaleLowerCase('it');
     const uguali = (a, b) => id(a) === id(b);

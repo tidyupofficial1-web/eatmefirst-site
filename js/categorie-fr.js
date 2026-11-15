@@ -1,15 +1,7 @@
 /* Categorie italiane: nessuna riclassificazione dei prodotti esistenti. */
 (function () {
     const KEY = 'eat_categorie_personalizzate_v1';
-    const iniziali = [
-        ['Alimentation', ['Pâtes et riz', 'Conserves', 'Produits laitiers', 'Viande et poisson', 'Fruits et légumes', 'Desserts et petit-déjeuner']],
-        ['Boissons', ['Eau', 'Jus', 'Vin et bière']],
-        ['Entretien de la maison', ['Lessive', 'Vaisselle', 'Nettoyants']],
-        ['Soins personnels', ['Hygiène bucco-dentaire', 'Cheveux', 'Corps']],
-        ['Animaux', ['Nourriture', 'Hygiène et litières', 'Accessoires']],
-        ['Jardinage', ['Graines', 'Engrais', 'Terreau']],
-        ['Fournitures pour la maison', ['Piles', 'Ampoules', 'Sacs']]
-    ];
+    const iniziali = []; // Le categorie vengono ricordate solo dopo l’inserimento dell’utente.
     const pulisci = v => typeof v === 'string' ? v.trim().replace(/\s+/g, ' ') : '';
     const id = v => pulisci(v).toLocaleLowerCase('fr');
     const uguali = (a, b) => id(a) === id(b);

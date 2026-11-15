@@ -1,15 +1,7 @@
 /* Categorie italiane: nessuna riclassificazione dei prodotti esistenti. */
 (function () {
     const KEY = 'eat_categorie_personalizzate_v1';
-    const iniziali = [
-        ['Food', ['Pasta and rice', 'Tinned food', 'Dairy', 'Meat and fish', 'Fruit and vegetables', 'Breakfast and sweets']],
-        ['Drinks', ['Water', 'Juices', 'Wine and beer']],
-        ['Household cleaning', ['Laundry', 'Dishes', 'Cleaning products']],
-        ['Personal care', ['Oral care', 'Hair', 'Body']],
-        ['Pets', ['Food', 'Hygiene and litter', 'Accessories']],
-        ['Gardening', ['Seeds', 'Fertiliser', 'Potting soil']],
-        ['Household supplies', ['Batteries', 'Light bulbs', 'Bags']]
-    ];
+    const iniziali = []; // Le categorie vengono ricordate solo dopo l’inserimento dell’utente.
     const pulisci = v => typeof v === 'string' ? v.trim().replace(/\s+/g, ' ') : '';
     const id = v => pulisci(v).toLocaleLowerCase('en');
     const uguali = (a, b) => id(a) === id(b);
