@@ -353,7 +353,14 @@
         .btn-secondary:hover { background-color: #3e4c62; }
     </style>
 <link rel="stylesheet" href="../../css/collegamenti.css">
-</head>
+<style id="max-full-width-mobile">
+.max-text-content { min-width:0; width:100%; box-sizing:border-box; }
+@media (max-width:768px) {
+  .max-presentation-box { flex-direction:column; align-items:center; padding:16px; gap:12px; }
+  .max-text-content { flex:none; max-width:none; padding:0; text-align:left; }
+  .max-avatar { flex:none; }
+}
+</style></head>
 <body>
 
 <!-- Cabecera Superior con Logotipo y Banderas -->
@@ -724,3 +731,4 @@
 
 <script src="../../js/guide-carico.js"></script></body>
 </html>
+
