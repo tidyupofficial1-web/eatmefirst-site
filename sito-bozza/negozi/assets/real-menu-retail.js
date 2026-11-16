@@ -8,5 +8,5 @@ video.addEventListener('ended',proceed);video.addEventListener('error',()=>{docu
 document.querySelector('#retailFallback').onclick=proceed;ad.addEventListener('cancel',()=>video.pause());ad.addEventListener('close',()=>video.pause());
 const hide=document.querySelector('#chkHideMenuGuide');if(hide){hide.removeAttribute('onchange');hide.onchange=()=>{document.querySelector('#menuGuideBox').hidden=hide.checked;document.querySelector('#menuGuideBox').style.display=hide.checked?'none':''}}
 function showIntroduction(){video.pause();if(ad.open)ad.close();destination=null;if(!intro.open)intro.showModal();}
-window.addEventListener('pageshow',showIntroduction);
+window.addEventListener('pageshow',event=>{if(event.persisted)showIntroduction();});
 showIntroduction();
