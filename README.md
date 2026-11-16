@@ -9,6 +9,6 @@ Inventory changes are stored locally in the browser on the device being used.
 Export and import transfer a file manually; devices do not synchronise automatically.
 The educational game uses example products.
 
-Contact: eatmefirst.contatti@outlook.com
+Contact: eatmefirst.contatti@gmail.com
 
 See LICENSE and licenza-eatmefirst for copyright and applicable licence notices.
