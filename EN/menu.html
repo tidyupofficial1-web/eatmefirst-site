@@ -375,7 +375,8 @@
 <link rel="stylesheet" href="../css/messaggi-programmati-it.css">
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
-</head>
+<style>/* EMF MENU BANNER */
+.emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../css/spazi-menu.css"></head>
 <body>
 
 <!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
@@ -442,10 +443,7 @@
                 <p>Max here, with Leo, who developed the app! Here you can open all the main functions. Eva says a tidy pantry starts with knowing what we already have — and she is usually right!</p>
                 <p>Keep track of stock and dates to help avoid waste at home.</p>
                 
-                <div class="usb-tip-box">
-                    💡 <strong>Keep a spare copy of your data:</strong><br>
-                    Confirmed changes are saved in this browser on both phone and PC. Export inventory in Utilities to keep a separate copy, then copy the file to another device or a USB drive, or attach it to an email yourself. If the device breaks or its browser data is cleared, you can recover the situation in that file. Later changes need a new export. Your phone and PC do not synchronise automatically.
-                </div>
+                <div class="usb-tip-box">💡 <strong>Your inventory, on another device too</strong><br>The app saves changes automatically on this device. In Utilities you can export your inventory to a file and save it separately, then transfer and import it on another device. Transfer is manual: devices do not synchronise automatically. Export is currently free.</div>
             </div>
 
             <div class="guide-footer">
@@ -458,7 +456,8 @@
     </div>
 
     <!-- Griglia dei 6 Moduli Operativi della Dispensa -->
-    <main class="menu-grid">
+<!-- EMF BANNER START --><a class="eat-menu-sponsor" data-menu-sponsor hidden></a><!-- EMF BANNER END -->
+<main class="menu-grid">
         <a href="load/load.html" class="menu-card">
             <div class="card-icon">📦</div>
             <div class="card-title">Product Entry</div>
@@ -501,6 +500,9 @@
             <div class="card-desc">Export, import or recover your inventory and manage a fresh start.</div>
         </a>
     </main>
+
+
+<aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6"><p>📣 Latest news!</p><h2 id="scuola-eatmefirst">🎓 Our EatMeFirst driving school is here!</h2><p>Learn to use the app by playing with Max, Eva and Leo, one step at a time.</p><p>The products are fictional: none of your inventory data is read or changed.</p><a href="../sito-bozza/EN/gioco.html">🎮 Learn by playing</a></aside>
     <aside aria-labelledby="invito-leo" style="margin:24px 0;padding:20px;border:1px solid #39434f;border-radius:12px;background:#161b22;line-height:1.6">
         <h2 id="invito-leo" style="font-size:1.15rem;color:#79c0ff">💬 An invitation to help Leo</h2>
         <p>How are you getting on with EatMeFirst? Tell us what works, what is awkward and which new features you would like. Criticism helps us improve too!</p>
@@ -691,6 +693,6 @@
 
 <script src="../js/messaggi-testi-en.js"></script>
 <script src="../js/messaggi-programmati-en.js"></script>
-</body>
+<script src="../js/spazi-menu-config.js"></script><script src="../js/spazi-menu.js"></script></body>
 </html>
 

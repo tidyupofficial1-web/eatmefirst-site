@@ -376,7 +376,8 @@
 <link rel="stylesheet" href="../css/messaggi-programmati-it.css">
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
-</head>
+<style>/* EMF MENU BANNER */
+.emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../css/spazi-menu.css"></head>
 <body>
 
 <!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
@@ -443,10 +444,7 @@
                 <p>Sono qui con Leo, che ha sviluppato l'applicazione. In questa pagina trovi l'accesso rapido a tutte le funzioni principali della tua dispensa.</p>
                 <p>Ognuna di queste funzioni mette al centro la gestione intelligente delle scadenze e delle scorte per aiutarti ad azzerare gli sprechi domestici.</p>
                 
-                <div class="usb-tip-box">
-                    💡 <strong>Un consiglio prezioso per la sicurezza dei tuoi dati:</strong><br>
-                    Il programma salva tutto in automatico e in tempo reale nella memoria del tuo cellulare. Ti consigliamo di fare periodicamente un backup esterno su chiavetta USB o tramite email (dopo aver inserito un po' di prodotti): in questo modo, se ti si esaurisce la batteria del telefono, si verifica un guasto o devi cambiare dispositivo, non perderai le tue operazioni.
-                </div>
+                <div class="usb-tip-box">💡 <strong>La tua dispensa, anche su un altro dispositivo</strong><br>Il programma salva automaticamente le modifiche su questo dispositivo. Da Utilità puoi esportare un file della dispensa e salvarlo esternamente, per trasportarlo e importarlo su un altro dispositivo. Il trasferimento è manuale: i dispositivi non si sincronizzano automaticamente. Il servizio di esportazione è attualmente gratuito.</div>
             </div>
 
             <div class="guide-footer">
@@ -458,16 +456,9 @@
         </div>
     </div>
 
-    <aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6">
-        <p style="display:inline-block;margin:0 0 12px;padding:5px 12px;border-radius:6px;background:var(--primary-color);color:#101820;font-weight:bold">📣 Ultima notizia!</p>
-        <h2 id="scuola-eatmefirst" style="margin-top:0;color:var(--primary-color);font-size:1.4rem">🎓 È nata la nostra scuola guida di EatMeFirst!</h2>
-        <p><strong>Mettiti alla guida della tua dispensa, insieme a Max, Eva e Leo!</strong> Abbiamo preparato un percorso per imparare a usare l’app giocando, un passo alla volta. Niente lezioni complicate: prova il Carico, lo Scarico, le note e le copie di sicurezza con noi al tuo fianco.</p>
-        <p><strong>Puoi esercitarti senza paura di sbagliare:</strong> i prodotti sono inventati e nessun dato della tua dispensa viene letto o modificato. La prova è facoltativa e puoi ricominciarla quando vuoi.</p>
-        <a href="../sito-bozza/IT/gioco.html" style="display:inline-block;padding:12px 18px;border-radius:8px;background:var(--primary-color);color:#101820;font-weight:bold;text-decoration:none">🎮 Entra e impara giocando</a>
-    </aside>
-
     <!-- Funzioni e prova guidata della Dispensa -->
-    <main class="menu-grid">
+<!-- EMF BANNER START --><a class="eat-menu-sponsor" data-menu-sponsor hidden></a><!-- EMF BANNER END -->
+<main class="menu-grid">
         <a href="carico/carico.html" class="menu-card">
             <div class="card-icon">📦</div>
             <div class="card-title">Carico Prodotti</div>
@@ -515,6 +506,17 @@
             <div class="card-desc">Prova con dati di esempio, senza toccare la tua dispensa. Max, Eva e Leo ti accompagnano passo dopo passo.</div>
         </a>
     </main>
+
+
+
+
+    <aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6">
+        <p style="display:inline-block;margin:0 0 12px;padding:5px 12px;border-radius:6px;background:var(--primary-color);color:#101820;font-weight:bold">📣 Ultima notizia!</p>
+        <h2 id="scuola-eatmefirst" style="margin-top:0;color:var(--primary-color);font-size:1.4rem">🎓 È nata la nostra scuola guida di EatMeFirst!</h2>
+        <p><strong>Mettiti alla guida della tua dispensa, insieme a Max, Eva e Leo!</strong> Abbiamo preparato un percorso per imparare a usare l’app giocando, un passo alla volta. Niente lezioni complicate: prova il Carico, lo Scarico, le note e le copie di sicurezza con noi al tuo fianco.</p>
+        <p><strong>Puoi esercitarti senza paura di sbagliare:</strong> i prodotti sono inventati e nessun dato della tua dispensa viene letto o modificato. La prova è facoltativa e puoi ricominciarla quando vuoi.</p>
+        <a href="../sito-bozza/IT/gioco.html" style="display:inline-block;padding:12px 18px;border-radius:8px;background:var(--primary-color);color:#101820;font-weight:bold;text-decoration:none">🎮 Entra e impara giocando</a>
+    </aside>
 
 
 </div>
@@ -699,5 +701,5 @@
 
 <script src="../js/messaggi-testi-it.js"></script>
 <script src="../js/messaggi-programmati-it.js"></script>
-<script src="../js/icona-it.js"></script></body>
+<script src="../js/icona-it.js"></script><script src="../js/spazi-menu-config.js"></script><script src="../js/spazi-menu.js"></script></body>
 </html>

@@ -1,0 +1,7 @@
+/* Colore predefinito leggibile sui fondi scuri.
+   Il livello CSS lascia prevalere i colori specifici di pulsanti e guide. */
+@layer collegamenti {
+    a:any-link { color: #79c0ff; }
+    a:any-link:hover { color: #b6e3ff; }
+    a:any-link:focus-visible { outline: 2px solid #79c0ff; outline-offset: 3px; }
+}

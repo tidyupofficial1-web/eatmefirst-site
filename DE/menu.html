@@ -375,7 +375,8 @@
 <link rel="stylesheet" href="../css/messaggi-programmati-it.css">
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
-</head>
+<style>/* EMF MENU BANNER */
+.emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../css/spazi-menu.css"></head>
 <body>
 
 <!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
@@ -442,10 +443,7 @@
                 <p>Hier ist Max, zusammen mit Leo, der die App entwickelt hat! Von hier erreichst du die wichtigsten Funktionen. Eva sagt, gute Ordnung beginnt damit, zu wissen, was schon da ist. Und da hat sie oft recht!</p>
                 <p>Behalte Vorräte und ihre Daten im Blick, um Verschwendung zu Hause zu vermeiden.</p>
                 
-                <div class="usb-tip-box">
-                    💡 <strong>Bewahre eine Sicherungskopie deiner Daten auf:</strong><br>
-                    Bestätigte Änderungen werden in diesem Browser gespeichert, am Handy und am PC. Exportiere unter Hilfsfunktionen deinen Bestand und bewahre die Datei auf einem anderen Gerät, einem USB-Stick oder als selbst versendeten E-Mail-Anhang auf. Nach einem Defekt oder dem Löschen von Browserdaten kannst du den Stand aus der Datei wiederherstellen. Spätere Änderungen benötigen einen neuen Export. Handy und PC gleichen sich nicht automatisch ab.
-                </div>
+                <div class="usb-tip-box">💡 <strong>Ihr Vorrat, auch auf einem anderen Gerät</strong><br>Die App speichert Änderungen automatisch auf diesem Gerät. Unter Hilfsfunktionen können Sie Ihren Vorrat als Datei exportieren, separat speichern und auf ein anderes Gerät übertragen und dort importieren. Die Übertragung erfolgt manuell: Geräte werden nicht automatisch synchronisiert. Der Export ist derzeit kostenlos.</div>
             </div>
 
             <div class="guide-footer">
@@ -458,7 +456,8 @@
     </div>
 
     <!-- Griglia dei 6 Moduli Operativi della Dispensa -->
-    <main class="menu-grid">
+<!-- EMF BANNER START --><a class="eat-menu-sponsor" data-menu-sponsor hidden></a><!-- EMF BANNER END -->
+<main class="menu-grid">
         <a href="lagerung/einlagerung.html" class="menu-card">
             <div class="card-icon">📦</div>
             <div class="card-title">Einlagerung</div>
@@ -501,6 +500,9 @@
             <div class="card-desc">Exportiere, importiere oder stelle deinen Bestand wieder her und bereite einen Neustart vor.</div>
         </a>
     </main>
+
+
+<aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6"><p>📣 Neuigkeiten!</p><h2 id="scuola-eatmefirst">🎓 Unsere EatMeFirst-Fahrschule ist da!</h2><p>Lernen Sie die App spielerisch mit Max, Eva und Leo kennen, Schritt für Schritt.</p><p>Die Produkte sind erfunden: Ihre Vorratsdaten werden weder gelesen noch verändert.</p><a href="../sito-bozza/DE/gioco.html">🎮 Spielend lernen</a></aside>
     <aside aria-labelledby="invito-leo" style="margin:24px 0;padding:20px;border:1px solid #39434f;border-radius:12px;background:#161b22;line-height:1.6">
         <h2 id="invito-leo" style="font-size:1.15rem;color:#79c0ff">💬 Eine Einladung, Leo zu helfen</h2>
         <p>Wie kommst du mit EatMeFirst zurecht? Sag uns, was klappt, was umständlich ist und welche Funktion du dir wünschst. Kritik hilft uns auch!</p>
@@ -691,6 +693,6 @@
 
 <script src="../js/messaggi-testi-de.js"></script>
 <script src="../js/messaggi-programmati-de.js"></script>
-</body>
+<script src="../js/spazi-menu-config.js"></script><script src="../js/spazi-menu.js"></script></body>
 </html>
 

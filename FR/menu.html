@@ -375,7 +375,8 @@
 <link rel="stylesheet" href="../css/messaggi-programmati-it.css">
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
-</head>
+<style>/* EMF MENU BANNER */
+.emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../css/spazi-menu.css"></head>
 <body>
 
 <!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
@@ -442,10 +443,7 @@
                 <p>Ici Max, avec Leo qui a développé l’application ! Tu peux accéder ici aux principales fonctions. Eva dit qu’un rangement réussi commence par savoir ce qu’on a déjà — et elle a souvent raison !</p>
                 <p>Suis tes stocks et leurs dates pour éviter le gaspillage à la maison.</p>
                 
-                <div class="usb-tip-box">
-                    💡 <strong>Garde une copie de secours de tes données :</strong><br>
-                    Les modifications confirmées sont enregistrées dans ce navigateur, sur téléphone comme sur PC. Dans Utilitaires, exporte les réserves pour créer une copie séparée, puis garde le fichier sur un autre appareil, une clé USB ou joins-le toi-même à un e-mail. En cas de panne ou de suppression des données du navigateur, tu peux récupérer la situation du fichier. Les changements suivants nécessitent un nouvel export. Téléphone et PC ne se synchronisent pas automatiquement.
-                </div>
+                <div class="usb-tip-box">💡 <strong>Vos réserves, aussi sur un autre appareil</strong><br>L’application enregistre automatiquement les modifications sur cet appareil. Dans Utilitaires, vous pouvez exporter vos réserves dans un fichier et le conserver séparément, puis le transférer et l’importer sur un autre appareil. Le transfert est manuel : les appareils ne se synchronisent pas automatiquement. L’exportation est actuellement gratuite.</div>
             </div>
 
             <div class="guide-footer">
@@ -458,7 +456,8 @@
     </div>
 
     <!-- Griglia dei 6 Moduli Operativi della Dispensa -->
-    <main class="menu-grid">
+<!-- EMF BANNER START --><a class="eat-menu-sponsor" data-menu-sponsor hidden></a><!-- EMF BANNER END -->
+<main class="menu-grid">
         <a href="chargement/chargement.html" class="menu-card">
             <div class="card-icon">📦</div>
             <div class="card-title">Entrée des produits</div>
@@ -501,6 +500,9 @@
             <div class="card-desc">Exporte, importe ou récupère tes réserves et prépare un nouveau départ.</div>
         </a>
     </main>
+
+
+<aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6"><p>📣 Dernière nouvelle !</p><h2 id="scuola-eatmefirst">🎓 Notre école de conduite EatMeFirst est arrivée !</h2><p>Apprenez à utiliser l’application en jouant avec Max, Eva et Leo, un pas après l’autre.</p><p>Les produits sont fictifs : aucune donnée de vos réserves n’est lue ni modifiée.</p><a href="../sito-bozza/FR/gioco.html">🎮 Apprendre en jouant</a></aside>
     <aside aria-labelledby="invito-leo" style="margin:24px 0;padding:20px;border:1px solid #39434f;border-radius:12px;background:#161b22;line-height:1.6">
         <h2 id="invito-leo" style="font-size:1.15rem;color:#79c0ff">💬 Une invitation à aider Leo</h2>
         <p>Comment te débrouilles-tu avec EatMeFirst ? Dis-nous ce qui marche, ce qui est compliqué et les fonctions que tu aimerais. Les critiques nous aident aussi !</p>
@@ -691,6 +693,6 @@
 
 <script src="../js/messaggi-testi-fr.js"></script>
 <script src="../js/messaggi-programmati-fr.js"></script>
-</body>
+<script src="../js/spazi-menu-config.js"></script><script src="../js/spazi-menu.js"></script></body>
 </html>
 

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatMeFirst - Menu Principale e Gestione Dispensa</title>
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --primary-color: #2ecc71;
+            --text-color: #e0e6ed;
+            --text-muted: #a0aec0;
+            --border-color: #2d3748;
+            --info-bg: #1a2634;
+            --info-border: #3182ce;
+            --hover-card: #253238;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Navbar Superiore con Carta Intestata e Pulsante Abbonamento */
+        .top-navbar {
+            width: 100%;
+            background-color: #101416;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .brand-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        /* Pulsante Verde Chiaro / Scritta Nera per Abbonamento */
+        .btn-abbonamento-nav {
+            background-color: #2ecc71;
+            color: #000000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+
+        .btn-abbonamento-nav:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .language-flags {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            object-fit: cover;
+            border-radius: 3px;
+            transition: transform 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-block;
+        }
+
+        .flag-icon:hover {
+            transform: scale(1.15);
+        }
+
+        /* Layout Principale */
+        .main-wrapper {
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        /* Stile Alert Lampeggiante Scadenze */
+        @keyframes blink-animation {
+            0%, 100% { box-shadow: 0 0 0 0 transparent; }
+            50% { box-shadow: 0 0 12px 2px var(--alert-color); }
+        }
+
+        .alert-banner {
+            --alert-color: #f1c40f;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 2px solid var(--alert-color);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            animation: blink-animation 3s ease-in-out infinite;
+            transition: background-color 0.2s;
+        }
+
+        .alert-banner:hover {
+            background-color: var(--light-bg);
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-icon {
+            font-size: 2rem;
+        }
+
+        .alert-text strong {
+            display: block;
+            margin: 0 0 4px 0;
+            color: var(--alert-color);
+            font-size: 1.15rem;
+        }
+
+        .alert-text .alert-description {
+            display: block;
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        @media (prefers-reduced-motion: reduce) { .alert-banner { animation: none; } }
+
+        /* Modale / Box Elenco in Sola Consultazione */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            background: #101416;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .btn-close-modal:hover { color: #fff; }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scadenza-item-card {
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .badge-tassativo {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        .badge-consigliata {
+            background-color: #f1c40f;
+            color: #000000;
+        }
+
+        /* Box Guida del Menu (Scomparabile) */
+        .welcome-guide-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .guide-banner-container {
+            width: 100%;
+            background-color: #0f1417;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .guide-banner-img {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .guide-content-area {
+            padding: 25px;
+        }
+
+        .guide-header-title {
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .guide-body p {
+            margin: 0 0 12px 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .usb-tip-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 18px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .guide-footer {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .hide-guide-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hide-guide-label input {
+            accent-color: var(--primary-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Griglia Funzioni Principali (6 moduli) */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .menu-card:hover {
+            background-color: var(--hover-card);
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+    </style>
+    <link rel="stylesheet" href="../app-assets/css/scadenze-it.css">
+<link rel="stylesheet" href="../app-assets/css/messaggi-programmati-it.css">
+<link rel="stylesheet" href="../app-assets/css/responsive-it.css">
+<link rel="stylesheet" href="../app-assets/css/collegamenti.css">
+<style>/* EMF MENU BANNER */
+.emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../app-assets/css/spazi-menu.css"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="../assets/real-menu-retail.css"></head>
+<body>
+
+<!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
+<header class="top-navbar">
+    <div class="brand-logo-group">
+        <a href="../IT/demo.html" class="brand-logo">
+            <img src="../app-assets/IMG/logo_1024_white.png" alt="EatMeFirst Logo">
+            <span>EatMeFirst</span>
+        </a>
+
+        <!-- Pulsante verde chiaro per l'Abbonamento & Backup -->
+    </div>
+
+    <div class="language-flags">
+        <a href="../IT/demo.html" title="Italiano"><img src="../app-assets/IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon"></a>
+        <a href="../EN/demo.html" title="English"><img src="../app-assets/IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
+        <a href="../DE/demo.html" title="Deutsch"><img src="../app-assets/IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
+        <a href="../FR/demo.html" title="Français"><img src="../app-assets/IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
+        <a href="../ES/demo.html" title="Español"><img src="../app-assets/IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon"></a>
+    </div>
+</header>
+
+<div class="main-wrapper">
+
+    <!-- ALERT LAMPEGGIANTE DINAMICO PER LE SCADENZE -->
+    <button type="button" id="alertScadenzeBanner" class="alert-banner" aria-haspopup="dialog" style="display: none;">
+        <span class="alert-content">
+            <span class="alert-icon" aria-hidden="true">⚠️</span>
+            <span class="alert-text">
+                <strong id="alertTitoloTesto">Prodotti con scadenza da controllare</strong>
+                <span class="alert-description">Apri l’elenco ordinato per urgenza. Giallo: data indicativa · Rosso: data tassativa.</span>
+            </span>
+        </span>
+        <span style="font-size:1.2rem;color:var(--alert-color);font-weight:bold" aria-hidden="true">➔</span>
+    </button>
+
+    <button type="button" id="promemoriaBanner" class="alert-banner" aria-haspopup="dialog" style="display:none;--alert-color:#79c0ff;animation:none">
+        <span class="alert-content">
+            <span class="alert-icon" aria-hidden="true">📌</span>
+            <span class="alert-text">
+                <strong id="promemoriaTitolo">Promemoria per prodotti riservati</strong>
+                <span class="alert-description">Apri gli eventi da ricordare. Le scadenze dei prodotti restano separate.</span>
+            </span>
+        </span>
+    </button>
+
+    <!-- Box Guida di Benvenuto con Banner Grande -->
+    <div class="welcome-guide-box" id="menuGuideBox">
+        <div class="guide-banner-container">
+            <img src="../app-assets/IT/IMG/organizzazione-dispensa-software.png" alt="Organizzazione Dispensa Software" class="guide-banner-img">
+        </div>
+
+        <div class="guide-content-area">
+            <div class="guide-header-title">
+                <h2 style="margin: 0; color: var(--primary-color); font-size: 1.4rem;">
+                    Ciao <span id="displayUserName">amico</span>!
+                </h2>
+                <p style="margin: 3px 0 0 0; color: var(--text-muted); font-size: 0.95rem;">
+                    Benvenuto nel pannello principale della tua dispensa
+                </p>
+            </div>
+
+            <div class="guide-body">
+                <p>Sono qui con Leo, che ha sviluppato l'applicazione. In questa pagina trovi l'accesso rapido a tutte le funzioni principali della tua dispensa.</p>
+                <p>Ognuna di queste funzioni mette al centro la gestione intelligente delle scadenze e delle scorte per aiutarti ad azzerare gli sprechi domestici.</p>
+
+                <div class="usb-tip-box">💡 <strong>La tua dispensa, anche su un altro dispositivo</strong><br>Il programma salva automaticamente le modifiche su questo dispositivo. Da Utilità puoi esportare un file della dispensa e salvarlo esternamente, per trasportarlo e importarlo su un altro dispositivo. Il trasferimento è manuale: i dispositivi non si sincronizzano automaticamente. Il servizio di esportazione è attualmente gratuito.</div>
+            </div>
+
+            <div class="guide-footer">
+                <label class="hide-guide-label">
+                    <input type="checkbox" id="chkHideMenuGuide">
+                    <span>Ho capito, non mostrare più questo messaggio nel menu</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Funzioni e prova guidata della Dispensa -->
+<div class="emf-menu-banner"><div class="emf-mark" aria-hidden="true">CL</div><div><strong>CasaLieve Market</strong><p>La freschezza, vicino a casa.</p><small>www.casalieve.example</small></div></div>
+<main class="menu-grid">
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/carico/carico.html" class="menu-card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">Carico Prodotti</div>
+            <div class="card-desc">Inserisci i nuovi acquisti con lo scanner dello smartphone, la pistola USB o manualmente.</div>
+        </a>
+
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/scarico/index.html" class="menu-card">
+            <div class="card-icon">🍳</div>
+            <div class="card-title">Scarico & Consumi</div>
+            <div class="card-desc">Registra i prodotti consumati o aperti per mantenere l'inventario sempre aggiornato.</div>
+        </a>
+
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/inventario/index.html" class="menu-card">
+            <div class="card-icon">🔍</div>
+            <div class="card-title">Controllo Giacenze</div>
+            <div class="card-desc">Verifica la disponibilità dei prodotti e tieni d'occhio le scadenze imminenti.</div>
+        </a>
+
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/spesa/index.html" class="menu-card">
+            <div class="card-icon">🛒</div>
+            <div class="card-title">Lista della Spesa</div>
+            <div class="card-desc">Consulta i prodotti esauriti, in esaurimento o suggeriti dall'app con i codici colore intelligenti.</div>
+        </a>
+
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/operazioni/index.html" class="menu-card">
+            <div class="card-icon">↩</div>
+            <div class="card-title">Ultime 15 operazioni</div>
+            <div class="card-desc">Consulta i movimenti recenti e annulla un’operazione senza cancellare quelle indipendenti.</div>
+        </a>
+
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/statistiche/index.html" class="menu-card">
+            <div class="card-icon">📊</div>
+            <div class="card-title">Statistiche & Risparmio</div>
+            <div class="card-desc">Consulta le scorte attuali, i consumi registrati e i negozi indicati sui prodotti.</div>
+        </a>
+
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/IT/utilita/index.html" class="menu-card">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Utilità & Sicurezza</div>
+            <div class="card-desc">Gestisci le copie della dispensa, le impostazioni e gli strumenti di sicurezza.</div>
+        </a>
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/sito-bozza/IT/gioco.html" class="menu-card">
+            <div class="card-icon" aria-hidden="true">🎮</div>
+            <div class="card-title">Impara giocando</div>
+            <div class="card-desc">Prova con dati di esempio, senza toccare la tua dispensa. Max, Eva e Leo ti accompagnano passo dopo passo.</div>
+        </a>
+    </main>
+
+
+
+
+    <aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6">
+        <p style="display:inline-block;margin:0 0 12px;padding:5px 12px;border-radius:6px;background:var(--primary-color);color:#101820;font-weight:bold">📣 Ultima notizia!</p>
+        <h2 id="scuola-eatmefirst" style="margin-top:0;color:var(--primary-color);font-size:1.4rem">🎓 È nata la nostra scuola guida di EatMeFirst!</h2>
+        <p><strong>Mettiti alla guida della tua dispensa, insieme a Max, Eva e Leo!</strong> Abbiamo preparato un percorso per imparare a usare l’app giocando, un passo alla volta. Niente lezioni complicate: prova il Carico, lo Scarico, le note e le copie di sicurezza con noi al tuo fianco.</p>
+        <p><strong>Puoi esercitarti senza paura di sbagliare:</strong> i prodotti sono inventati e nessun dato della tua dispensa viene letto o modificato. La prova è facoltativa e puoi ricominciarla quando vuoi.</p>
+        <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/sito-bozza/IT/gioco.html" style="display:inline-block;padding:12px 18px;border-radius:8px;background:var(--primary-color);color:#101820;font-weight:bold;text-decoration:none">🎮 Entra e impara giocando</a>
+    </aside>
+
+
+</div>
+
+<!-- MODALE IN SOLA CONSULTAZIONE PER GLI ALERT SCADENZE -->
+<div id="modalScadenze" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>⚠️ Date superate e scadenze entro 10 giorni</h2>
+            <button class="btn-close-modal">✕</button>
+        </div>
+        <div class="modal-body" id="modalScadenzeLista">
+            <!-- I prodotti vengono iniettati qui dinamicamente -->
+        </div>
+    </div>
+</div>
+
+<div id="modalPromemoria" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2>📌 Eventi e prodotti riservati</h2>
+            <button type="button" class="btn-close-modal" aria-label="Chiudi promemoria">✕</button>
+        </div>
+        <div class="modal-body" id="modalPromemoriaLista"></div>
+    </div>
+</div>
+
+
+
+
+
+
+<dialog class="retail-dialog" id="retailIntro" aria-label="EatMeFirst"><p tabindex="-1" autofocus>Il Menu è il punto di accesso alle funzioni dell’app. Qui mostriamo lo spazio per il vostro logo, un motto o un messaggio breve e il sito web, su uno sfondo distinto. CasaLieve Market è un marchio inventato per questa anteprima.</p><p>Per vedere l’animazione clicca su una funzione e aggiorna la pagina Menu per rivederla.</p><button id="retailClose">Chiudi popup</button></dialog><dialog class="retail-dialog" id="retailAd" aria-label="Esempio di spot"><video playsinline preload="metadata" src="../assets/casalieve-market-new-year-en.mp4"></video><p id="retailError" hidden>Il video non è disponibile. Puoi comunque aprire la funzione scelta.</p><button id="retailPlay">Avvia video</button><button id="retailFallback" hidden>Apri la funzione</button></dialog><script src="../assets/real-menu-retail.js"></script></body>
+</html>

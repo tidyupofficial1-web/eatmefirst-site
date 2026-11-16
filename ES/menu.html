@@ -375,7 +375,8 @@
 <link rel="stylesheet" href="../css/messaggi-programmati-it.css">
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
-</head>
+<style>/* EMF MENU BANNER */
+.emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../css/spazi-menu.css"></head>
 <body>
 
 <!-- Navbar Superiore con Logo, Pulsante Abbonamento e Bandiere -->
@@ -442,10 +443,7 @@
                 <p>¡Soy Max, con Leo, que ha desarrollado la aplicación! Desde aquí llegas a las funciones principales. Eva dice que para organizarse bien hay que saber qué tenemos ya. ¡Y muchas veces tiene razón!</p>
                 <p>Controla las existencias y sus fechas para evitar desperdicios en casa.</p>
                 
-                <div class="usb-tip-box">
-                    💡 <strong>Guarda una copia de seguridad de tus datos:</strong><br>
-                    Los cambios confirmados se guardan en este navegador, tanto en el móvil como en el PC. Exporta la despensa desde Utilidades y guarda el archivo en otro dispositivo, una memoria USB o como adjunto de un correo que envíes tú mismo. Tras una avería o borrar los datos del navegador, podrás recuperar la situación del archivo. Para conservar cambios posteriores necesitas otra exportación. El móvil y el PC no se actualizan entre sí automáticamente.
-                </div>
+                <div class="usb-tip-box">💡 <strong>Tu despensa, también en otro dispositivo</strong><br>La aplicación guarda automáticamente los cambios en este dispositivo. En Utilidades puedes exportar la despensa a un archivo y guardarlo por separado para trasladarlo e importarlo en otro dispositivo. El traslado es manual: los dispositivos no se sincronizan automáticamente. La exportación es gratuita actualmente.</div>
             </div>
 
             <div class="guide-footer">
@@ -458,7 +456,8 @@
     </div>
 
     <!-- Griglia dei 6 Moduli Operativi della Dispensa -->
-    <main class="menu-grid">
+<!-- EMF BANNER START --><a class="eat-menu-sponsor" data-menu-sponsor hidden></a><!-- EMF BANNER END -->
+<main class="menu-grid">
         <a href="carga/carga.html" class="menu-card">
             <div class="card-icon">📦</div>
             <div class="card-title">Entradas</div>
@@ -501,6 +500,9 @@
             <div class="card-desc">Exporta, importa o recupera la despensa y prepara un nuevo comienzo.</div>
         </a>
     </main>
+
+
+<aside aria-labelledby="scuola-eatmefirst" style="margin:24px 0;padding:20px;border:1px solid var(--primary-color);border-radius:12px;background:var(--card-bg);line-height:1.6"><p>📣 ¡Última noticia!</p><h2 id="scuola-eatmefirst">🎓 ¡Ya está aquí nuestra escuela de EatMeFirst!</h2><p>Aprende a usar la aplicación jugando con Max, Eva y Leo, paso a paso.</p><p>Los productos son ficticios: no se lee ni modifica ningún dato de tu despensa.</p><a href="../sito-bozza/ES/gioco.html">🎮 Aprender jugando</a></aside>
     <aside aria-labelledby="invito-leo" style="margin:24px 0;padding:20px;border:1px solid #39434f;border-radius:12px;background:#161b22;line-height:1.6">
         <h2 id="invito-leo" style="font-size:1.15rem;color:#79c0ff">💬 Una invitación para ayudar a Leo</h2>
         <p>¿Cómo te va con EatMeFirst? Cuéntanos qué funciona, qué resulta incómodo y qué función te gustaría tener. ¡Las críticas también ayudan!</p>
@@ -691,6 +693,6 @@
 
 <script src="../js/messaggi-testi-es.js"></script>
 <script src="../js/messaggi-programmati-es.js"></script>
-</body>
+<script src="../js/spazi-menu-config.js"></script><script src="../js/spazi-menu.js"></script></body>
 </html>
 
