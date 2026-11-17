@@ -1,0 +1,16 @@
+/* Percorsi della home italiana: presentazione, gioco e accesso diretto. */
+.arrival-benefits{list-style:none;padding:0;margin:25px 0 0;display:flex;flex-wrap:wrap;gap:9px}
+.arrival-benefits li{padding:7px 12px;border:1px solid #b7c9b0;border-radius:20px;background:#eef3e3;color:var(--ink);font-size:14px;font-weight:650;line-height:1.45}
+.arrival{margin-bottom:60px;padding:32px;border:1px solid var(--line);border-radius:16px;background:#f0f3e8}
+.arrival-intro{max-width:860px}
+.arrival-intro .eyebrow{margin-bottom:12px}
+.arrival-intro h2{margin-bottom:16px}
+.arrival-paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+.arrival-paths article{display:flex;flex-direction:column;align-items:flex-start;padding:24px;background:var(--white);border:1px solid var(--line);border-radius:12px;min-width:0}
+.arrival-paths .arrival-start{background:#e1edcf;border-color:#a4bb8c}
+.arrival-number{font-size:13px;font-weight:800;letter-spacing:.12em;color:#597148;margin-bottom:14px}
+.arrival-paths h3{font-size:22px}
+.arrival-paths article>p:not(.arrival-number){font-size:16px;line-height:1.6}
+.arrival-paths .button{margin-top:auto;gap:12px;text-align:center;max-width:100%;font-size:14px;padding:12px 16px}
+@media(max-width:900px){.arrival-paths{grid-template-columns:1fr}.arrival-paths article{padding:24px}.arrival-paths .button{margin-top:0}}
+@media(max-width:560px){.arrival{padding:22px;margin-bottom:38px}.arrival-paths{gap:14px;margin-top:22px}.arrival-paths article{padding:20px}.arrival-benefits li{font-size:13px}.arrival-intro h2{font-size:30px}}
