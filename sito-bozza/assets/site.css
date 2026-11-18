@@ -28,3 +28,69 @@
 
 .app-direct{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:8px;background:#173d30;color:#fff;font-weight:700;text-decoration:none;order:3}.app-direct:hover{background:#285541}@media(max-width:700px){.app-direct{padding:10px 15px;order:0}}
 .contact>div{min-width:0;flex:1}.contact-form{display:grid;gap:10px;width:100%;max-width:760px}.contact-form label{font-weight:600;margin-top:8px}.contact-form input:not([type=hidden]),.contact-form textarea{box-sizing:border-box;width:100%;min-width:0;padding:12px;border:1px solid #8b9e91;border-radius:8px;background:#fff;color:#173d30;font:inherit}.contact-form textarea{resize:vertical;min-height:150px}.contact-form .button{justify-self:start;cursor:pointer;font:inherit}.contact-form [hidden]{display:none!important}.contact-form input:focus-visible,.contact-form textarea:focus-visible{outline:3px solid #397a65;outline-offset:2px}
+
+.home-video {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 4vw, 44px);
+  margin: 0 0 40px;
+  padding: clamp(14px, 2.5vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--ink);
+  text-decoration: none;
+}
+.home-video-cover {
+  position: relative;
+  display: block;
+}
+.home-video-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.home-video-play {
+  position: absolute;
+  inset: auto 10px 10px auto;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 36px;
+  border-radius: 8px;
+  background: #d90000;
+}
+.home-video-play::after {
+  content: "";
+  margin-inline-start: 3px;
+  border-block: 7px solid transparent;
+  border-inline-start: 12px solid #fff;
+}
+.home-video-copy h2 {
+  margin: 0 0 6px;
+}
+.home-video-copy p {
+  margin: 0;
+  color: var(--body);
+}
+.home-video:hover h2 {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.contact-youtube {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.contact-youtube svg {
+  flex: none;
+}
+@media (max-width: 640px) {
+  .home-video {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
