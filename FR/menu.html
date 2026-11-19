@@ -409,7 +409,7 @@
             <span class="alert-icon" aria-hidden="true">⚠️</span>
             <span class="alert-text">
                 <strong id="alertTitoloTesto">Produits dont les dates sont à vérifier</strong>
-                <span class="alert-description">Ouvre la liste par ordre de date. Jaune : date indicative · Rouge : date impérative.</span>
+                <span class="alert-description">Ouvre la liste par ordre de date. Jaune : date indicative · Rouge : date impérative ou date initialement estimée à vérifier.</span>
             </span>
         </span>
         <span style="font-size:1.2rem;color:var(--alert-color);font-weight:bold" aria-hidden="true">➔</span>
@@ -568,16 +568,16 @@
                 if (p.pezzi_rimanenti !== null && p.pezzi_rimanenti !== undefined && Number(p.pezzi_rimanenti) === 0) return false;
                 return EatScadenze.descrivi(p).allerta;
             }).sort(EatScadenze.confronta);
-            const rossi = interessati.filter(p => p.tassativo === true).length;
+            const rossi = interessati.filter(p => EatScadenze.descrivi(p).colore === 'rossa').length;
             const gialli = interessati.length - rossi;
             banner.style.setProperty('--alert-color', rossi ? '#ff7b72' : '#f1c40f');
             banner.style.display = interessati.length ? 'flex' : 'none';
-            titolo.textContent = `Produits à vérifier : ${interessati.length} · Dates impératives : ${rossi} · Dates indicatives : ${gialli}`;
+            titolo.textContent = `Produits à vérifier : ${interessati.length} · Rouge : ${rossi} · Jaune : ${gialli}`;
             if (!interessati.length) lista.textContent = 'Aucune date dépassée ni date dans les 10 jours.';
             interessati.forEach(p => {
                 const scadenza = EatScadenze.descrivi(p);
                 const card = document.createElement('div');
-                card.className = 'scadenza-item-card ' + (p.tassativo === true ? 'badge-tassativo' : 'badge-consigliata') + EatScadenze.classeAllerta(p);
+                card.className = 'scadenza-item-card ' + (scadenza.colore === 'rossa' ? 'badge-tassativo' : 'badge-consigliata') + EatScadenze.classeAllerta(p);
                 card.style.cssText = 'flex-wrap:wrap;gap:12px';
                 const info = document.createElement('div');
                 const nome = document.createElement('strong');

@@ -47,6 +47,10 @@
     }
 
     function prepare(index, openedByUser) {
+        const panel = document.querySelector('#modalDettaglio .modal-content');
+        panel.style.maxHeight = 'calc(100dvh - 40px)';
+        panel.style.overflowY = 'auto';
+        panel.scrollTop = 0;
         const old = document.getElementById('emf-edit-product-button');
         if (old) old.remove();
         prepareHelp(openedByUser);
@@ -108,8 +112,15 @@
                     modified.tipo_scadenza = date.value ? 'esatta' : 'nessuna';
                     modified.valore_scadenza = date.value || null;
                     modified.data_scadenza = valid.data;
-                    modified.data_scadenza_iniziale = valid.data;
+                    if (valid.data && EatScadenze.provieneDaStima(product)) {
+                        modified.scadenza_da_stima = true;
+                        modified.data_scadenza_iniziale = product.data_scadenza_iniziale || originalDate || valid.data;
+                    } else {
+                        delete modified.scadenza_da_stima;
+                        modified.data_scadenza_iniziale = valid.data;
+                    }
                 }
+                if (date.value && EatScadenze.provieneDaStima(product)) modified.scadenza_da_stima = true;
                 modified.tassativo = isStrict.checked;
             }
             if (!quantityChanged && !expiryChanged && modified.nome === product.nome) { dismiss(); return; }

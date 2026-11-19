@@ -55,19 +55,23 @@
     function formato(data) {
         return leggiData(data) ? data.split('-').reverse().join('/') : '';
     }
+    function provieneDaStima(p) {
+        return p.scadenza_da_stima === true || (p.tassativo !== true && ['giorni', 'mesi'].includes(p.tipo_scadenza));
+    }
     function descrivi(p, giorno = oggi()) {
         const risultato = dataProdotto(p);
         const tassativa = p.tassativo === true;
         const tipo = tassativa ? 'tassativa' : 'indicativa';
         if (!risultato.valida) return {data: null, giorni: null, allerta: false, colore: 'normale', testo: 'No se puede calcular la fecha: revisa los datos', tipo, posticipata: false};
         if (!risultato.data) return {data: null, giorni: null, allerta: false, colore: 'normale', testo: 'Sin fecha indicada', tipo, posticipata: false};
+        const daStima = !tassativa && provieneDaStima(p);
         const giorni = Math.round((leggiData(risultato.data) - leggiData(giorno)) / 86400000);
         const posticipata = !!leggiData(p.data_scadenza_iniziale) && risultato.data > p.data_scadenza_iniziale;
         const prefisso = tassativa ? 'Fecha estricta' : 'Fecha orientativa';
         const tempo = giorni < 0 ? `${prefisso} superada hace ${-giorni} ${giorni === -1 ? 'día' : 'días'}` :
             giorni === 0 ? `${prefisso}: hoy` : giorni === 1 ? `${prefisso}: mañana` : `${prefisso} dentro de ${giorni} días`;
         return {data: risultato.data, giorni, allerta: giorni <= ANTICIPO,
-            colore: giorni <= ANTICIPO ? (tassativa ? 'rossa' : 'gialla') : 'normale',
+            colore: giorni <= ANTICIPO ? (tassativa || daStima ? 'rossa' : 'gialla') : (daStima ? 'gialla' : 'normale'),
             testo: tempo, tipo, posticipata};
     }
     function confronta(a, b) {
@@ -85,8 +89,8 @@
     }
     function classeAllerta(p) {
         const s = descrivi(p);
-        if (s.giorni === 0) return ' scadenza-oggi' + (p.tassativo === true ? ' scadenza-oggi-tassativa' : '');
-        return s.giorni !== null && s.giorni < 0 ? ' scadenza-superata' + (p.tassativo === true ? ' scadenza-superata-tassativa' : '') : '';
+        if (s.giorni === 0) return ' scadenza-oggi' + (s.colore === 'rossa' ? ' scadenza-oggi-tassativa' : '');
+        return s.giorni !== null && s.giorni < 0 ? ' scadenza-superata' + (s.colore === 'rossa' ? ' scadenza-superata-tassativa' : '') : '';
     }
     function osserva(aggiorna) {
         let giorno = oggi();
@@ -99,5 +103,5 @@
         window.addEventListener('focus', aggiorna);
         window.addEventListener('storage', evento => { if (evento.key === 'eat_dispensa_locale' || evento.key === null) setTimeout(aggiorna, 100); });
     }
-    window.EatScadenze = {oggi, calcola, formato, descrivi, confronta, html, classeAllerta, osserva};
+    window.EatScadenze = {oggi, calcola, formato, descrivi, confronta, html, classeAllerta, osserva, provieneDaStima};
 })();
