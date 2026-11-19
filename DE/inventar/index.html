@@ -678,6 +678,7 @@
     <script src="../../js/promemoria-de.js"></script>
 
     <script src="../../js/categorie-de.js"></script>
+    <script src="../../js/modifica-inventario.js"></script>
 
     <script>
 
@@ -861,7 +862,7 @@
 
 
 
-        function apriDettaglioProdotto(index) {
+        function apriDettaglioProdotto(index, openedByUser = true) {
 
             const p = dispensaGlobale[index];
 
@@ -978,6 +979,7 @@
 
             document.getElementById('contenutoDettaglioProdotto').appendChild(sezione);
 
+            EatModificaInventario.prepare(index, openedByUser);
             document.getElementById('modalDettaglio').style.display = 'flex';
 
         }

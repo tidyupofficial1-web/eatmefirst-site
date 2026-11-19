@@ -340,6 +340,7 @@
     <script src="../../js/scadenze-en.js"></script>
     <script src="../../js/promemoria-en.js"></script>
     <script src="../../js/categorie-en.js"></script>
+    <script src="../../js/modifica-inventario.js"></script>
     <script>
         let dispensaGlobale = [];
         function quantitaInventario(p) {
@@ -431,7 +432,7 @@
             `).join('');
         }
 
-        function apriDettaglioProdotto(index) {
+        function apriDettaglioProdotto(index, openedByUser = true) {
             const p = dispensaGlobale[index];
             if (!p) return;
             document.getElementById('contenutoDettaglioProdotto').innerHTML = `
@@ -495,6 +496,7 @@
             avviso.textContent = 'Information may be incomplete or change: check the packaging label.';
             sezione.appendChild(avviso);
             document.getElementById('contenutoDettaglioProdotto').appendChild(sezione);
+            EatModificaInventario.prepare(index, openedByUser);
             document.getElementById('modalDettaglio').style.display = 'flex';
         }
         function chiudiModalDettaglio() { document.getElementById('modalDettaglio').style.display = 'none'; }
