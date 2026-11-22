@@ -14,3 +14,37 @@
 .arrival-paths .button{margin-top:auto;gap:12px;text-align:center;max-width:100%;font-size:14px;padding:12px 16px}
 @media(max-width:900px){.arrival-paths{grid-template-columns:1fr}.arrival-paths article{padding:24px}.arrival-paths .button{margin-top:0}}
 @media(max-width:560px){.arrival{padding:22px;margin-bottom:38px}.arrival-paths{gap:14px;margin-top:22px}.arrival-paths article{padding:20px}.arrival-benefits li{font-size:13px}.arrival-intro h2{font-size:30px}}
+
+.home-header-links {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.home-header-links .languages {
+  width: auto;
+}
+.home-social-nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.home-social-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 3px 9px;
+  border: 1px solid #b7c7b6;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+.home-social-nav a:hover,
+.home-social-nav a:focus-visible {
+  background: #e4edcf;
+}
