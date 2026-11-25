@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Agenda de casa | EatMeFirst</title>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <script defer src="../../js/agenda-texts.js?v=language-preview"></script>
+  <script defer src="../../js/agenda-it.js?v=language-preview"></script>
+</head>
+<body>
+  <header class="site-header wrap"><a class="brand" href="../../sito-bozza/PT/index.html">EatMeFirst</a><nav class="actions" aria-label="Como funciona"><a href="../../sito-bozza/PT/agenda.html">Como funciona</a></nav></header>
+  <main class="wrap section">
+    <h1>Agenda de casa</h1>
+    <div class="actions">
+      <button type="button" id="example" aria-pressed="false">Experimente com a Eva</button>
+      <button type="button" id="personal" aria-pressed="true">Minha agenda</button>
+    </div>
+    <p id="mode"></p>
+    <div class="actions" id="sample-controls">
+      <button type="button" id="clear-example">Limpar a demonstração</button>
+      <button type="button" id="load-example">Recarregar exemplos</button>
+    </div>
+    <form id="event-form">
+      <h2 id="form-heading">Novo compromisso</h2>
+      <p><label>Título <input name="title" required maxlength="100"></label></p>
+      <p><label>Data <input name="day" type="date" required></label> <label>Horário <input name="time" type="time"></label></p>
+      <p><label>Anotação <input name="note" maxlength="250"></label></p>
+      <p><label><input name="weekly" type="checkbox"> Repetir toda semana</label></p>
+      <div class="actions"><button type="submit" class="button">Salvar compromisso</button><button type="button" id="cancel-edit" hidden>Cancelar edição</button></div>
+    </form>
+    <p id="status" role="status"></p>
+    <h2>Hoje e próximos compromissos</h2>
+    <ul id="upcoming" class="advice-list"></ul>
+    <details><summary>Compromissos anteriores</summary><ul id="past" class="advice-list"></ul></details>
+    <noscript>Ative o JavaScript para usar a agenda.</noscript>
+  </main>
+</body>
+</html>
