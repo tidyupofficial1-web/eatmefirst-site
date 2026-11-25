@@ -129,3 +129,11 @@
 .site-header .home-social-nav a:focus-visible {
   background: #e4edcf;
 }
+
+.languages .flag{display:inline-block;width:1.15em;height:.78em;margin-inline-end:.35em;border:1px solid #0002;border-radius:2px;vertical-align:baseline}
+.flag-it{background:linear-gradient(90deg,#009246 33.33%,#fff 33.33% 66.66%,#ce2b37 66.66%)}
+.flag-en{background:linear-gradient(90deg,transparent 43%,#c8102e 43% 57%,transparent 57%),linear-gradient(transparent 38%,#c8102e 38% 62%,transparent 62%),linear-gradient(90deg,transparent 37%,#fff 37% 63%,transparent 63%),linear-gradient(transparent 31%,#fff 31% 69%,transparent 69%),linear-gradient(32deg,transparent 44%,#fff 44% 56%,transparent 56%),linear-gradient(-32deg,transparent 44%,#fff 44% 56%,transparent 56%),#012169}
+.flag-fr{background:linear-gradient(90deg,#0055a4 33.33%,#fff 33.33% 66.66%,#ef4135 66.66%)}
+.flag-de{background:linear-gradient(#171717 33.33%,#d00 33.33% 66.66%,#ffce00 66.66%)}
+.flag-es{background:linear-gradient(#aa151b 25%,#f1bf00 25% 75%,#aa151b 75%)}
+.flag-ja{background:radial-gradient(circle closest-side,#bc002d 58%,transparent 60%),#fff}
