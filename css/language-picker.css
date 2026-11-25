@@ -1,0 +1,9 @@
+/* Shared by the public site and app. */
+.language-picker{position:relative;display:inline-block;padding:0;border:0;text-align:start}
+.language-picker summary{width:max-content;cursor:pointer;padding:.45rem .75rem;border:1px solid #8da694;border-radius:.5rem;background:#f3f7ee;color:#173d30;font:600 .9rem/1.4 system-ui,sans-serif}
+.language-picker:focus-within{z-index:30}
+.language-picker-list{display:grid;margin-block-start:.35rem;gap:.125rem;width:max-content;min-width:9rem;max-width:calc(100vw - 2rem);max-height:min(10rem,50vh);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:.3rem;border:1px solid #8da694;border-radius:.5rem;background:#fff;box-shadow:0 .4rem 1rem #0002}
+.languages .language-picker-list{inset-inline-start:0;inset-inline-end:auto}
+.language-picker:not([open]) .language-picker-list{display:none}
+.language-picker .language-picker-list a{display:block;padding:.45rem .65rem;border-radius:.3rem;color:#173d30;font:500 .9rem/1.4 system-ui,sans-serif;text-decoration:none}
+.language-picker .language-picker-list a:is(:hover,:focus-visible,[aria-current]){background:#e4edcf;color:#173d30}

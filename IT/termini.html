@@ -147,6 +147,7 @@
     <script>if (new URLSearchParams(location.search).get('lettura') === '1') document.documentElement.classList.add('lettura');</script>
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
+<link rel="stylesheet" href="../css/language-picker.css?v=1">
 </head>
 <body>
 
@@ -156,13 +157,7 @@
         <img src="../IMG/logo_1024_white.png" alt="EatMeFirst Logo">
         <span>EatMeFirst</span>
     </a>
-    <div class="language-flags">
-        <a href="termini.html" title="Italiano"><img src="../IMG/bandiera_Italy.jpg" alt="Italiano" class="flag-icon"></a>
-        <a href="../EN/termini.html" title="English"><img src="../IMG/bandiera_England.jpg" alt="English" class="flag-icon"></a>
-        <a href="../DE/nutzungsbedingungen.html" title="Deutsch"><img src="../IMG/bandiera_Germany.jpg" alt="Deutsch" class="flag-icon"></a>
-        <a href="../FR/conditions.html" title="Français"><img src="../IMG/bandiera_France.jpg" alt="Français" class="flag-icon"></a>
-        <a href="../ES/termini.html" title="Español"><img src="../IMG/bandiera_Espana.jpg" alt="Español" class="flag-icon"></a>
-    </div>
+    <details class="language-picker"><summary>Lingue</summary><div class="language-picker-list"><a href="termini.html" lang="it" aria-current="page">Italiano</a><a href="../EN/termini.html" lang="en">English</a><a href="../DE/nutzungsbedingungen.html" lang="de">Deutsch</a><a href="../FR/conditions.html" lang="fr">Français</a><a href="../ES/termini.html" lang="es">Español</a></div></details>
 </header>
 
 <div class="main-wrapper">
