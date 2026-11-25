@@ -13,7 +13,10 @@
         next.setDate(next.getDate() + days);
         return next;
     };
-    const formatter = new Intl.DateTimeFormat('it-IT', { dateStyle: 'full' });
+    const language = document.documentElement.lang || 'it';
+    const formatter = new Intl.DateTimeFormat(language, { dateStyle: 'full' });
+    const texts = window.EatAgendaTexts?.[language];
+    const t = (key, fallback) => texts?.[key] ?? fallback;
     const storageKey = 'eat_agenda_personale_it_v1';
     const reminder = get('agenda-reminder');
 
@@ -82,11 +85,11 @@
         const now = new Date();
         const friday = addDays(now, (5 - now.getDay() + 7) % 7 || 7);
         return [
-            { id: 'judo', title: 'Accompagnare Gianni a judo', day: dateKey(friday), time: '17:30', note: 'Mettere la cintura nella borsa.', weekly: true },
-            { id: 'danza', title: 'Maria va a danza', day: dateKey(friday), time: '18:00', note: 'Ricordare le scarpette.', weekly: true },
-            { id: 'parrucchiera', title: 'Andare dalla parrucchiera', day: dateKey(addDays(friday, 1)), time: '10:30', note: '', weekly: false },
-            { id: 'merenda', title: 'Merenda con i compagni di Gianni', day: dateKey(addDays(friday, 1)), time: '16:00', note: 'Controllare biscotti, bibite e tovaglioli prima della spesa.', weekly: false },
-            { id: 'zaino', title: 'Controllare lo zaino per lunedì', day: dateKey(addDays(friday, 2)), time: '', note: 'Mettere la cartellina nello zaino.', weekly: false }
+            { id: 'judo', title: t('judo', 'Accompagnare Gianni a judo'), day: dateKey(friday), time: '17:30', note: t('belt', 'Mettere la cintura nella borsa.'), weekly: true },
+            { id: 'danza', title: t('dance', 'Maria va a danza'), day: dateKey(friday), time: '18:00', note: t('shoes', 'Ricordare le scarpette.'), weekly: true },
+            { id: 'parrucchiera', title: t('hair', 'Andare dalla parrucchiera'), day: dateKey(addDays(friday, 1)), time: '10:30', note: '', weekly: false },
+            { id: 'merenda', title: t('snack', 'Merenda con i compagni di Gianni'), day: dateKey(addDays(friday, 1)), time: '16:00', note: t('snackNote', 'Controllare biscotti, bibite e tovaglioli prima della spesa.'), weekly: false },
+            { id: 'zaino', title: t('bag', 'Controllare lo zaino per lunedì'), day: dateKey(addDays(friday, 2)), time: '', note: t('bagNote', 'Mettere la cartellina nello zaino.'), weekly: false }
         ];
     }
 
@@ -98,7 +101,7 @@
                 localStorage.setItem(storageKey, JSON.stringify(events));
                 personal = events;
             } catch {
-                get('status').textContent = 'Il browser non è riuscito a salvare. Riprova.';
+                get('status').textContent = t('saveFailed', 'Il browser non è riuscito a salvare. Riprova.');
                 return;
             }
         }
@@ -111,7 +114,7 @@
         editing = null;
         form.reset();
         fields.day.value = dateKey(new Date());
-        get('form-heading').textContent = 'Nuovo impegno';
+        get('form-heading').textContent = t('newTitle', 'Nuovo impegno');
         get('cancel-edit').hidden = true;
     }
 
@@ -132,21 +135,21 @@
         actions.className = 'actions';
         title.textContent = event.title;
         when.textContent = formatter.format(dateFromKey(day)) +
-            (event.time ? ' · ' + event.time : '') + (event.weekly ? ' · Ogni settimana' : '');
+            (event.time ? ' · ' + event.time : '') + (event.weekly ? ' · ' + t('weekly', 'Ogni settimana') : '');
         note.textContent = event.note;
         actions.append(
-            button('Modifica', () => {
+            button(t('edit', 'Modifica'), () => {
                 editing = event.id;
                 for (const name of ['title', 'day', 'time', 'note']) fields[name].value = event[name];
                 fields.weekly.checked = event.weekly;
-                get('form-heading').textContent = 'Modifica impegno';
+                get('form-heading').textContent = t('editTitle', 'Modifica impegno');
                 get('cancel-edit').hidden = false;
                 fields.title.focus();
             }),
-            button('Elimina', () => {
+            button(t('delete', 'Elimina'), () => {
                 const events = mode === 'example' ? example : readPersonal(new Date());
-                if (events && window.confirm('Eliminare l’impegno «' + event.title + '»?')) {
-                    setEvents(events.filter(candidate => candidate.id !== event.id), 'Impegno eliminato.');
+                if (events && window.confirm(t('deleteBefore', 'Eliminare l’impegno «') + event.title + t('deleteAfter', '»?'))) {
+                    setEvents(events.filter(candidate => candidate.id !== event.id), t('deleted', 'Impegno eliminato.'));
                 }
             })
         );
@@ -171,8 +174,8 @@
         get('personal').setAttribute('aria-pressed', String(!sampleMode));
         get('sample-controls').hidden = !sampleMode;
         form.hidden = events === null;
-        get('mode').textContent = sampleMode ? 'Stai usando gli esempi. Le modifiche di prova durano fino alla chiusura della pagina.' :
-            events === null ? 'L’agenda salvata non è leggibile in questo browser.' : 'Gli impegni personali vengono salvati in questo browser.';
+        get('mode').textContent = sampleMode ? t('demo', 'Stai usando gli esempi. Le modifiche di prova durano fino alla chiusura della pagina.') :
+            events === null ? t('unreadable', 'L’agenda salvata non è leggibile in questo browser.') : t('stored', 'Gli impegni personali vengono salvati in questo browser.');
         const now = new Date();
         const today = dateKey(now);
         const upcoming = get('upcoming');
@@ -192,7 +195,7 @@
         for (const list of [upcoming, past]) {
             if (list.children.length) continue;
             const item = document.createElement('li');
-            item.textContent = list === upcoming ? 'Nessun impegno in programma.' : 'Nessun impegno passato.';
+            item.textContent = list === upcoming ? t('emptyUpcoming', 'Nessun impegno in programma.') : t('emptyPast', 'Nessun impegno passato.');
             list.append(item);
         }
     }
@@ -207,14 +210,14 @@
 
     get('example').addEventListener('click', () => switchMode('example'));
     get('personal').addEventListener('click', () => switchMode('personal'));
-    get('clear-example').addEventListener('click', () => setEvents([], 'Agenda di prova azzerata.'));
-    get('load-example').addEventListener('click', () => setEvents(samples(), 'Esempi ripristinati.'));
+    get('clear-example').addEventListener('click', () => setEvents([], t('cleared', 'Agenda di prova azzerata.')));
+    get('load-example').addEventListener('click', () => setEvents(samples(), t('reloaded', 'Esempi ripristinati.')));
     get('cancel-edit').addEventListener('click', resetForm);
     form.addEventListener('submit', event => {
         event.preventDefault();
         const title = fields.title.value.trim();
         if (!title) {
-            get('status').textContent = 'Scrivi il titolo dell’impegno.';
+            get('status').textContent = t('titleRequired', 'Scrivi il titolo dell’impegno.');
             fields.title.focus();
             return;
         }
@@ -222,7 +225,7 @@
         if (!events) return;
         const item = { id: editing || String(Date.now()) + '-' + Math.random().toString(36).slice(2), title,
             day: fields.day.value, time: fields.time.value, note: fields.note.value.trim(), weekly: fields.weekly.checked };
-        setEvents(editing ? events.map(entry => entry.id === editing ? item : entry) : [...events, item], 'Impegno salvato.');
+        setEvents(editing ? events.map(entry => entry.id === editing ? item : entry) : [...events, item], t('saved', 'Impegno salvato.'));
     });
     resetForm();
     render();

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Agenda de la maison | EatMeFirst</title>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <script defer src="../../js/agenda-texts.js?v=20261126"></script>
+  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+</head>
+<body>
+  <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="Menu de l’application"><a href="../menu.html">Menu de l’application</a><a href="../courses/index.html">Liste de courses</a><a href="../../sito-bozza/FR/agenda.html">Mode d’emploi</a></nav></header>
+  <main class="wrap section">
+    <h1>Agenda de la maison</h1>
+    <div class="actions">
+      <button type="button" id="example" aria-pressed="false">Essayer avec Eva</button>
+      <button type="button" id="personal" aria-pressed="true">Mon agenda</button>
+    </div>
+    <p id="mode"></p>
+    <div class="actions" id="sample-controls">
+      <button type="button" id="clear-example">Vider l’agenda d’essai</button>
+      <button type="button" id="load-example">Recharger les exemples</button>
+    </div>
+    <form id="event-form">
+      <h2 id="form-heading">Nouveau rendez-vous</h2>
+      <p><label>Titre <input name="title" required maxlength="100"></label></p>
+      <p><label>Date <input name="day" type="date" required></label> <label>Heure <input name="time" type="time"></label></p>
+      <p><label>Note <input name="note" maxlength="250"></label></p>
+      <p><label><input name="weekly" type="checkbox"> Répéter chaque semaine</label></p>
+      <div class="actions"><button type="submit" class="button">Enregistrer</button><button type="button" id="cancel-edit" hidden>Annuler la modification</button></div>
+    </form>
+    <p id="status" role="status"></p>
+    <h2>Aujourd’hui et à venir</h2>
+    <ul id="upcoming" class="advice-list"></ul>
+    <details><summary>Rendez-vous passés</summary><ul id="past" class="advice-list"></ul></details>
+    <noscript>Activez JavaScript pour utiliser l’agenda.</noscript>
+  </main>
+</body>
+</html>

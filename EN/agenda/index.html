@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Household agenda | EatMeFirst</title>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <script defer src="../../js/agenda-texts.js?v=20261126"></script>
+  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+</head>
+<body>
+  <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="App menu"><a href="../menu.html">App menu</a><a href="../shopping/index.html">Shopping list</a><a href="../../sito-bozza/EN/agenda.html">How it works</a></nav></header>
+  <main class="wrap section">
+    <h1>Household agenda</h1>
+    <div class="actions">
+      <button type="button" id="example" aria-pressed="false">Try with Eva</button>
+      <button type="button" id="personal" aria-pressed="true">My agenda</button>
+    </div>
+    <p id="mode"></p>
+    <div class="actions" id="sample-controls">
+      <button type="button" id="clear-example">Reset the demo</button>
+      <button type="button" id="load-example">Reload examples</button>
+    </div>
+    <form id="event-form">
+      <h2 id="form-heading">New appointment</h2>
+      <p><label>Title <input name="title" required maxlength="100"></label></p>
+      <p><label>Date <input name="day" type="date" required></label> <label>Time <input name="time" type="time"></label></p>
+      <p><label>Note <input name="note" maxlength="250"></label></p>
+      <p><label><input name="weekly" type="checkbox"> Repeat weekly</label></p>
+      <div class="actions"><button type="submit" class="button">Save appointment</button><button type="button" id="cancel-edit" hidden>Cancel edit</button></div>
+    </form>
+    <p id="status" role="status"></p>
+    <h2>Today and upcoming</h2>
+    <ul id="upcoming" class="advice-list"></ul>
+    <details><summary>Past appointments</summary><ul id="past" class="advice-list"></ul></details>
+    <noscript>Enable JavaScript to use the agenda.</noscript>
+  </main>
+</body>
+</html>

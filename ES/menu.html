@@ -379,6 +379,22 @@
 <style>/* EMF MENU BANNER */
 .emf-menu-banner{box-sizing:border-box;margin:24px 0;padding:22px;display:flex;align-items:center;gap:18px;background:#f5edd9;color:#234636;border:1px solid #c5b487;border-radius:12px;text-decoration:none;line-height:1.5}.emf-menu-banner .emf-mark{flex:0 0 60px;height:60px;border:2px solid #a18a51;border-radius:50%;display:grid;place-items:center;font:24px Georgia}.emf-menu-banner strong{font:bold clamp(23px,4vw,32px) Georgia}.emf-menu-banner p{margin:4px 0}.emf-menu-banner small{font-size:14px;overflow-wrap:anywhere}.emf-menu-banner img{width:60px;height:60px;object-fit:contain}</style><link rel="stylesheet" href="../css/spazi-menu.css"><meta name="robots" content="index,follow"><script defer src="../js/analytics-consenso.js?v=removed-20261116"></script>
 <script defer src="../js/contatore-visite.js" data-visita="menu"></script>
+    <style>
+        #agenda-reminder { color: inherit; font-size: .85rem; font-weight: 700; }
+        #agenda-reminder::before {
+            content: ""; display: inline-block; width: .65em; height: .65em;
+            margin-inline-end: .4em; border-radius: 50%; background: #e14f31;
+            animation: agenda-pulse 1.8s ease-in-out 3;
+        }
+        @keyframes agenda-pulse {
+            50% { opacity: .45; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            #agenda-reminder::before { animation: none; }
+        }
+    </style>
+    <script defer src="../js/agenda-texts.js?v=20261126"></script>
+    <script defer src="../js/agenda-it.js?v=20261126"></script>
 </head>
 <body>
 
@@ -483,6 +499,13 @@
             <div class="card-icon">🛒</div>
             <div class="card-title">Lista de la compra</div>
             <div class="card-desc">Aquí encontrarás productos agotados, sugerencias para existencias escasas y tus apuntes de compra.</div>
+        </a>
+
+        <a href="agenda/index.html" class="menu-card">
+            <div class="card-icon" aria-hidden="true">&#128197;</div>
+            <div class="card-title">Agenda de casa</div>
+            <span id="agenda-reminder" hidden>Cita próxima</span>
+            <div class="card-desc">Consulta las citas y los planes familiares.</div>
         </a>
 
         <a href="operaciones/index.html" class="menu-card">
