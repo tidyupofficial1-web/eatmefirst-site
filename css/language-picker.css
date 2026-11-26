@@ -7,3 +7,21 @@
 .language-picker:not([open]) .language-picker-list{display:none}
 .language-picker .language-picker-list a{display:block;padding:.45rem .65rem;border-radius:.3rem;color:#173d30;font:500 .9rem/1.4 system-ui,sans-serif;text-decoration:none}
 .language-picker .language-picker-list a:is(:hover,:focus-visible,[aria-current]){background:#e4edcf;color:#173d30}
+
+@media (max-width: 640px) {
+  .language-picker-list {
+    box-sizing: border-box;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(16rem, calc(100vw - 2rem));
+    min-width: 0;
+    max-height: 55vh;
+    max-height: 55dvh;
+    overscroll-behavior-y: auto;
+  }
+  .language-picker .language-picker-list a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+  }
+}
