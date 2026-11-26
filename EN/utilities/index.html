@@ -212,7 +212,7 @@
         <section class="section-card" id="trasferimento-dispensa">
       <p>💬 <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" target="_blank" rel="noopener noreferrer">Advice and support on our website</a></p>
       <h2 class="section-title">💾 Export and import inventory</h2>
-<p><strong>Confirmed changes are saved automatically on your device, always free of charge.</strong></p><p>Export inventory creates a file you can open on another device with Import inventory. Exporting is optional, free during the trial period and available by subscription afterwards.</p><p>Transfer is manual: devices do not synchronise automatically.</p>
+<p><strong>Confirmed changes are saved automatically on your device, always free of charge.</strong></p><p>Export inventory creates a file you can open on another device with Import inventory. Exporting is optional and free.</p><p>Transfer is manual: devices do not synchronise automatically.</p>
 <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
 
 <div class="backup-comandi">
@@ -402,12 +402,12 @@
       if (type === 'nuovo_inizio') {
         title.innerText = "⚠️ Confirm Fresh start?";
         title.style.color = "#ed8936";
-        text.innerHTML = "Your active inventory will be empty: quantities, dates and old reminders will not be reused. Codes, names, photos, categories, pack sizes and stores stay in the Product Entry catalogue. Lists and noticeboard notes stay; history and usage estimates restart.<br><br>A recovery copy is kept first, replacing any previous recovery copy. Export a file too: a local copy does not protect against device failure.<br><br>Terms acceptance, subscription are kept.";
+        text.innerHTML = "Your active inventory will be empty: quantities, dates and old reminders will not be reused. Codes, names, photos, categories, pack sizes and stores stay in the Product Entry catalogue. Lists and noticeboard notes stay; history and usage estimates restart.<br><br>A recovery copy is kept first, replacing any previous recovery copy. Export a file too: a local copy does not protect against device failure.<br><br>Your acceptance of the terms is kept.";
         confirmBtn.style.background = "#ed8936";
       } else if (type === 'reset_totale') {
         title.innerText = "🚨 Confirm starting from scratch?";
         title.style.color = "#e53e3e";
-        text.innerHTML = "Inventory, catalogue, lists, noticeboard, history and preferences will be cleared. Original terms acceptance and external backup service entitlement, including extensions, stay: the free period does not restart.<br><br>A recovery copy is kept first, replacing the previous recovery copy. Export a file too: a local copy does not protect against device failure.<br><br>Terms remain accepted, without repeating the introduction.";
+        text.innerHTML = "Inventory, catalogue, lists, noticeboard, history and preferences will be cleared. Your original acceptance of the terms is kept.<br><br>A recovery copy is kept first, replacing the previous recovery copy. Export a file too: a local copy does not protect against device failure.<br><br>Terms remain accepted, without repeating the introduction.";
         confirmBtn.style.background = "#e53e3e";
       }
 
@@ -430,7 +430,7 @@
         importazioneInAttesa = null;
         document.getElementById('anteprimaImportazione').hidden = true;
         aggiornaSituazioneBackup();
-        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Fresh start complete: inventory empty, ${risultato.catalogo} products in the Product Entry catalogue. The previous situation is available through Recover.` : 'Start from scratch complete. Terms acceptance and service entitlement kept. The previous situation is available through Recover.';
+        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Fresh start complete: inventory empty, ${risultato.catalogo} products in the Product Entry catalogue. The previous situation is available through Recover.` : 'Start from scratch complete. Your acceptance of the terms was kept. The previous situation is available through Recover.';
         window.scrollTo({top:document.getElementById('trasferimento-dispensa').offsetTop,behavior:'smooth'});
       } catch (errore) { alert('Reset not completed. ' + EatErroriEN(errore.message)); }
     }
