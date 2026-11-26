@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>Household agenda | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=20261126"></script>
-  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="App menu"><a href="../menu.html">App menu</a><a href="../shopping/index.html">Shopping list</a><a href="../../sito-bozza/EN/agenda.html">How it works</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>Title <input name="title" required maxlength="100"></label></p>
       <p><label>Date <input name="day" type="date" required></label> <label>Time <input name="time" type="time"></label></p>
       <p><label>Note <input name="note" maxlength="250"></label></p>
+      <p><label>Category <select name="category">
+        <option value="">Household appointment</option>
+        <option value="documents">Documents</option>
+        <option value="vehicles">Cars, motorcycles and boats</option>
+        <option value="subscriptions">Tickets and subscriptions</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> Repeat weekly</label></p>
       <div class="actions"><button type="submit" class="button">Save appointment</button><button type="button" id="cancel-edit" hidden>Cancel edit</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>Today and upcoming</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>Past appointments</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">Deadlines and maintenance</h2>
+      <p>Choose a category to add a deadline. Past deadlines stay here until you update or delete them.</p>
+      <details><summary>Documents</summary><p>Track renewals for identity cards, driving licences, passports and health cards.</p></details>
+      <details><summary>Cars, motorcycles and boats</summary><p>Track inspections, tyre changes, oil changes and boat servicing.</p></details>
+      <details><summary>Tickets and subscriptions</summary><p>Track ticket expiry dates and renewals for public transport, gyms or other services.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>Enable JavaScript to use the agenda.</noscript>
   </main>
 </body>

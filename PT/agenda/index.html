@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>Agenda de casa | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=language-preview"></script>
-  <script defer src="../../js/agenda-it.js?v=language-preview"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../../sito-bozza/PT/index.html">EatMeFirst</a><nav class="actions" aria-label="Como funciona"><a href="../menu.html">Menu do aplicativo</a><a href="../../sito-bozza/PT/agenda.html">Como funciona</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>Título <input name="title" required maxlength="100"></label></p>
       <p><label>Data <input name="day" type="date" required></label> <label>Horário <input name="time" type="time"></label></p>
       <p><label>Anotação <input name="note" maxlength="250"></label></p>
+      <p><label>Categoria <select name="category">
+        <option value="">Compromisso de casa</option>
+        <option value="documents">Documentos</option>
+        <option value="vehicles">Carros, motos e barcos</option>
+        <option value="subscriptions">Bilhetes e assinaturas</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> Repetir toda semana</label></p>
       <div class="actions"><button type="submit" class="button">Salvar compromisso</button><button type="button" id="cancel-edit" hidden>Cancelar edição</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>Hoje e próximos compromissos</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>Compromissos anteriores</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">Vencimentos e manutenção</h2>
+      <p>Escolha uma categoria para adicionar um vencimento. Os prazos passados ficam aqui até você atualizar ou excluir o registro.</p>
+      <details><summary>Documentos</summary><p>Anote quando renovar a identidade, a carteira de motorista, o passaporte ou o cartão de saúde.</p></details>
+      <details><summary>Carros, motos e barcos</summary><p>Anote inspeções, trocas de pneus e óleo e revisões do barco.</p></details>
+      <details><summary>Bilhetes e assinaturas</summary><p>Anote a validade de bilhetes e a renovação de passes de transporte, academia ou outros serviços.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>Ative o JavaScript para usar a agenda.</noscript>
   </main>
 </body>

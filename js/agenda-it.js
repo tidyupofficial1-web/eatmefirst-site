@@ -15,10 +15,15 @@
     };
     const language = document.documentElement.lang || 'it';
     const formatter = new Intl.DateTimeFormat(language, { dateStyle: 'full' });
-    const texts = window.EatAgendaTexts?.[language];
+    const texts = window.EatAgendaTexts?.[language] ?? window.EatAgendaTexts?.[language.toLowerCase().split('-')[0]];
     const t = (key, fallback) => texts?.[key] ?? fallback;
     const storageKey = 'eat_agenda_personale_it_v1';
     const reminder = get('agenda-reminder');
+    const categories = new Map(
+        Array.from(get('event-form')?.querySelector('select[name="category"]')?.options || [])
+            .filter(option => option.value)
+            .map(option => [option.value, option.textContent.trim()])
+    );
 
     function readPersonal(now) {
         try {
@@ -26,7 +31,7 @@
             if (!Array.isArray(events) || events.some(event =>
                 !event || typeof event.day !== 'string' || typeof event.time !== 'string')) return null;
             const cutoff = addDays(now, -7);
-            const remaining = events.filter(event => event.weekly || !(eventEnd(event) <= cutoff));
+            const remaining = events.filter(event => event.weekly || categories.has(event.category) || !(eventEnd(event) <= cutoff));
             if (remaining.length !== events.length) {
                 try {
                     localStorage.setItem(storageKey, JSON.stringify(remaining));
@@ -76,6 +81,7 @@
     const form = get('event-form');
     if (!form) return;
     const fields = form.elements;
+    const deadlines = get('deadlines');
     let mode = new URLSearchParams(location.search).get('prova') === '1' ? 'example' : 'personal';
     let editing = null;
     let personal = readPersonal(new Date());
@@ -84,13 +90,19 @@
     function samples() {
         const now = new Date();
         const friday = addDays(now, (5 - now.getDay() + 7) % 7 || 7);
-        return [
+        const events = [
             { id: 'judo', title: t('judo', 'Accompagnare Gianni a judo'), day: dateKey(friday), time: '17:30', note: t('belt', 'Mettere la cintura nella borsa.'), weekly: true },
             { id: 'danza', title: t('dance', 'Maria va a danza'), day: dateKey(friday), time: '18:00', note: t('shoes', 'Ricordare le scarpette.'), weekly: true },
             { id: 'parrucchiera', title: t('hair', 'Andare dalla parrucchiera'), day: dateKey(addDays(friday, 1)), time: '10:30', note: '', weekly: false },
             { id: 'merenda', title: t('snack', 'Merenda con i compagni di Gianni'), day: dateKey(addDays(friday, 1)), time: '16:00', note: t('snackNote', 'Controllare biscotti, bibite e tovaglioli prima della spesa.'), weekly: false },
             { id: 'zaino', title: t('bag', 'Controllare lo zaino per lunedì'), day: dateKey(addDays(friday, 2)), time: '', note: t('bagNote', 'Mettere la cartellina nello zaino.'), weekly: false }
         ];
+        if (deadlines) events.push(
+            { id: 'patente', title: t('licence', 'Rinnovare la patente'), day: dateKey(addDays(now, 15)), time: '', note: '', weekly: false, category: 'documents' },
+            { id: 'revisione', title: t('inspection', 'Revisione dell’auto'), day: dateKey(addDays(now, 23)), time: '', note: t('booking', 'Prenotare il controllo.'), weekly: false, category: 'vehicles' },
+            { id: 'abbonamento', title: t('pass', 'Rinnovare l’abbonamento ai mezzi'), day: dateKey(addDays(now, 30)), time: '', note: '', weekly: false, category: 'subscriptions' }
+        );
+        return events;
     }
 
     function setEvents(events, message) {
@@ -136,12 +148,14 @@
         title.textContent = event.title;
         when.textContent = formatter.format(dateFromKey(day)) +
             (event.time ? ' · ' + event.time : '') + (event.weekly ? ' · ' + t('weekly', 'Ogni settimana') : '');
+        if (list === deadlines) when.textContent = categories.get(event.category) + ' · ' + when.textContent;
         note.textContent = event.note;
         actions.append(
             button(t('edit', 'Modifica'), () => {
                 editing = event.id;
                 for (const name of ['title', 'day', 'time', 'note']) fields[name].value = event[name];
                 fields.weekly.checked = event.weekly;
+                if (fields.category) fields.category.value = categories.has(event.category) ? event.category : '';
                 get('form-heading').textContent = t('editTitle', 'Modifica impegno');
                 get('cancel-edit').hidden = false;
                 fields.title.focus();
@@ -182,6 +196,7 @@
         const past = get('past');
         upcoming.replaceChildren();
         past.replaceChildren();
+        deadlines?.replaceChildren();
         const dated = (events || []).map(event => {
             let day = nextDay(event, today);
             if (event.weekly && event.time && new Date(day + 'T' + event.time) < now) {
@@ -190,13 +205,22 @@
             return { event, day, passed: event.time ? new Date(day + 'T' + event.time) < now : day < today };
         });
         const compare = (a, b) => a.day.localeCompare(b.day) || a.event.time.localeCompare(b.event.time);
-        dated.filter(item => !item.passed).sort(compare).forEach(({ event, day }) => append(upcoming, event, day));
-        dated.filter(item => item.passed).sort((a, b) => compare(b, a)).forEach(({ event, day }) => append(past, event, day));
+        const regular = deadlines ? dated.filter(({ event }) => !categories.has(event.category)) : dated;
+        regular.filter(item => !item.passed).sort(compare).forEach(({ event, day }) => append(upcoming, event, day));
+        regular.filter(item => item.passed).sort((a, b) => compare(b, a)).forEach(({ event, day }) => append(past, event, day));
+        if (deadlines) dated.filter(({ event }) => categories.has(event.category))
+            .sort((a, b) => Number(a.passed) - Number(b.passed) || compare(a, b))
+            .forEach(({ event, day }) => append(deadlines, event, day));
         for (const list of [upcoming, past]) {
             if (list.children.length) continue;
             const item = document.createElement('li');
             item.textContent = list === upcoming ? t('emptyUpcoming', 'Nessun impegno in programma.') : t('emptyPast', 'Nessun impegno passato.');
             list.append(item);
+        }
+        if (deadlines && !deadlines.children.length) {
+            const item = document.createElement('li');
+            item.textContent = t('emptyDeadlines', 'Nessuna scadenza o manutenzione registrata.');
+            deadlines.append(item);
         }
     }
 
@@ -225,6 +249,8 @@
         if (!events) return;
         const item = { id: editing || String(Date.now()) + '-' + Math.random().toString(36).slice(2), title,
             day: fields.day.value, time: fields.time.value, note: fields.note.value.trim(), weekly: fields.weekly.checked };
+        const category = fields.category ? fields.category.value : events.find(entry => entry.id === editing)?.category;
+        if (categories.has(category)) item.category = category;
         setEvents(editing ? events.map(entry => entry.id === editing ? item : entry) : [...events, item], t('saved', 'Impegno salvato.'));
     });
     resetForm();

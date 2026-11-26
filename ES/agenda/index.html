@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>Agenda de casa | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=20261126"></script>
-  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="Menú de la aplicación"><a href="../menu.html">Menú de la aplicación</a><a href="../compra/index.html">Lista de la compra</a><a href="../../sito-bozza/ES/agenda.html">Cómo funciona</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>Título <input name="title" required maxlength="100"></label></p>
       <p><label>Fecha <input name="day" type="date" required></label> <label>Hora <input name="time" type="time"></label></p>
       <p><label>Nota <input name="note" maxlength="250"></label></p>
+      <p><label>Categoría <select name="category">
+        <option value="">Cita del hogar</option>
+        <option value="documents">Documentos</option>
+        <option value="vehicles">Coches, motos y barcos</option>
+        <option value="subscriptions">Billetes y suscripciones</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> Repetir cada semana</label></p>
       <div class="actions"><button type="submit" class="button">Guardar cita</button><button type="button" id="cancel-edit" hidden>Cancelar cambios</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>Hoy y próximas citas</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>Citas pasadas</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">Vencimientos y mantenimiento</h2>
+      <p>Elige una categoría para añadir un vencimiento. Los vencimientos pasados se conservan hasta que los actualices o elimines.</p>
+      <details><summary>Documentos</summary><p>Anota cuándo renovar el documento de identidad, el permiso de conducir, el pasaporte o la tarjeta sanitaria.</p></details>
+      <details><summary>Coches, motos y barcos</summary><p>Anota inspecciones, cambios de neumáticos y de aceite, y revisiones del barco.</p></details>
+      <details><summary>Billetes y suscripciones</summary><p>Anota cuándo caduca un billete o cuándo renovar abonos de transporte, gimnasio u otros servicios.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>Activa JavaScript para usar la agenda.</noscript>
   </main>
 </body>

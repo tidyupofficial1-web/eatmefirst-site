@@ -203,3 +203,58 @@ window.EatAgendaTexts = {
     "bagNote": "ضع الملف في الحقيبة."
   }
 };
+
+const agendaDeadlineTexts = {
+    "en": {
+        "licence": "Renew driving licence",
+        "inspection": "Car inspection",
+        "booking": "Book the inspection.",
+        "pass": "Renew public transport pass",
+        "emptyDeadlines": "No deadlines or maintenance scheduled."
+    },
+    "fr": {
+        "licence": "Renouveler le permis de conduire",
+        "inspection": "Contrôle technique de la voiture",
+        "booking": "Prendre rendez-vous.",
+        "pass": "Renouveler l’abonnement aux transports",
+        "emptyDeadlines": "Aucune échéance ni aucun entretien enregistré."
+    },
+    "de": {
+        "licence": "Führerschein verlängern",
+        "inspection": "Hauptuntersuchung fürs Auto",
+        "booking": "Termin vereinbaren.",
+        "pass": "Nahverkehrsabo verlängern",
+        "emptyDeadlines": "Keine Fristen oder Wartungstermine eingetragen."
+    },
+    "es": {
+        "licence": "Renovar el permiso de conducir",
+        "inspection": "Inspección del coche",
+        "booking": "Pedir cita.",
+        "pass": "Renovar el abono de transporte",
+        "emptyDeadlines": "No hay vencimientos ni tareas de mantenimiento registrados."
+    },
+    "pt": {
+        "licence": "Renovar a carteira de motorista",
+        "inspection": "Revisão do carro",
+        "booking": "Agendar a revisão.",
+        "pass": "Renovar o passe de transporte",
+        "emptyDeadlines": "Nenhum vencimento ou manutenção registrado."
+    },
+    "ja": {
+        "licence": "運転免許証を更新する",
+        "inspection": "車の点検",
+        "booking": "点検を予約する。",
+        "pass": "定期券を更新する",
+        "emptyDeadlines": "期限やメンテナンスの予定はありません。"
+    },
+    "ar": {
+        "licence": "تجديد رخصة القيادة",
+        "inspection": "فحص السيارة",
+        "booking": "احجز موعد الفحص.",
+        "pass": "تجديد اشتراك النقل العام",
+        "emptyDeadlines": "لا توجد مواعيد نهائية أو أعمال صيانة مسجّلة."
+    }
+};
+for (const [locale, copy] of Object.entries(agendaDeadlineTexts)) {
+    Object.assign(window.EatAgendaTexts[locale] || (window.EatAgendaTexts[locale] = {}), copy);
+}

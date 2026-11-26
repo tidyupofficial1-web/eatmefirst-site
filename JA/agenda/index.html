@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>家族の予定表 | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=language-preview"></script>
-  <script defer src="../../js/agenda-it.js?v=language-preview"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../../sito-bozza/JA/index.html">EatMeFirst</a><nav class="actions" aria-label="使い方"><a href="../menu.html">アプリのメニュー</a><a href="../../sito-bozza/JA/agenda.html">使い方</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>件名 <input name="title" required maxlength="100"></label></p>
       <p><label>日付 <input name="day" type="date" required></label> <label>時刻 <input name="time" type="time"></label></p>
       <p><label>メモ <input name="note" maxlength="250"></label></p>
+      <p><label>カテゴリー <select name="category">
+        <option value="">家の予定</option>
+        <option value="documents">書類</option>
+        <option value="vehicles">車・バイク・船</option>
+        <option value="subscriptions">チケット・定期契約</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> 毎週繰り返す</label></p>
       <div class="actions"><button type="submit" class="button">予定を保存</button><button type="button" id="cancel-edit" hidden>編集を取り消す</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>今日とこれからの予定</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>終了した予定</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">期限とメンテナンス</h2>
+      <p>カテゴリーを選ぶと期限を登録できます。過ぎた期限も、更新または削除するまで残ります。</p>
+      <details><summary>書類</summary><p>身分証明書、運転免許証、パスポート、健康保険証などの更新日を記録できます。</p></details>
+      <details><summary>車・バイク・船</summary><p>車検、タイヤ交換、オイル交換、船の点検などを記録できます。</p></details>
+      <details><summary>チケット・定期契約</summary><p>チケットの有効期限や、交通機関の定期券、ジムなどの更新日を記録できます。</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>予定表を使うにはJavaScriptを有効にしてください。</noscript>
   </main>
 </body>

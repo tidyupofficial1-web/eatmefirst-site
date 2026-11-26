@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>Familienplaner | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=20261126"></script>
-  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="App-Menü"><a href="../menu.html">App-Menü</a><a href="../einkaufsliste/index.html">Einkaufsliste</a><a href="../../sito-bozza/DE/agenda.html">So geht’s</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>Titel <input name="title" required maxlength="100"></label></p>
       <p><label>Datum <input name="day" type="date" required></label> <label>Uhrzeit <input name="time" type="time"></label></p>
       <p><label>Notiz <input name="note" maxlength="250"></label></p>
+      <p><label>Kategorie <select name="category">
+        <option value="">Haushaltstermin</option>
+        <option value="documents">Dokumente</option>
+        <option value="vehicles">Autos, Motorräder und Boote</option>
+        <option value="subscriptions">Tickets und Abos</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> Wöchentlich wiederholen</label></p>
       <div class="actions"><button type="submit" class="button">Termin speichern</button><button type="button" id="cancel-edit" hidden>Bearbeitung abbrechen</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>Heute und demnächst</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>Vergangene Termine</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">Fristen und Wartung</h2>
+      <p>Wähle eine Kategorie, um eine Frist hinzuzufügen. Vergangene Fristen bleiben hier, bis du sie änderst oder löschst.</p>
+      <details><summary>Dokumente</summary><p>Notiere die Verlängerung von Ausweis, Führerschein, Reisepass oder Gesundheitskarte.</p></details>
+      <details><summary>Autos, Motorräder und Boote</summary><p>Notiere Hauptuntersuchungen, Reifen- und Ölwechsel sowie Bootswartungen.</p></details>
+      <details><summary>Tickets und Abos</summary><p>Notiere, wann Tickets verfallen oder Abos für Nahverkehr, Fitnessstudio oder andere Dienste verlängert werden müssen.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>Aktivieren Sie JavaScript, um den Planer zu verwenden.</noscript>
   </main>
 </body>

@@ -7,7 +7,7 @@
   <title>Agenda di casa | EatMeFirst</title>
   <script src="../../js/accettazione-it.js" data-proteggi></script>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="Menu"><a href="../menu.html">Menu dell’app</a><a href="../spesa/index.html">Lista della spesa</a><a href="../../sito-bozza/IT/agenda.html">Come funziona</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>Titolo <input name="title" required maxlength="100"></label></p>
       <p><label>Data <input name="day" type="date" required></label> <label>Ora <input name="time" type="time"></label></p>
       <p><label>Nota <input name="note" maxlength="250"></label></p>
+      <p><label>Categoria <select name="category">
+        <option value="">Impegno di casa</option>
+        <option value="documents">Documenti</option>
+        <option value="vehicles">Auto, moto e barche</option>
+        <option value="subscriptions">Biglietti e abbonamenti</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> Ripeti ogni settimana</label></p>
       <div class="actions"><button type="submit" class="button">Salva impegno</button><button type="button" id="cancel-edit" hidden>Annulla modifica</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>Oggi e prossimi impegni</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>Impegni passati</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">Scadenze e manutenzioni</h2>
+      <p>Uno spazio dell’Agenda pensato per i genitori. Per aggiungere una scadenza, scegli una delle tre categorie nel modulo. Le scadenze passate restano qui finché le aggiorni o le elimini.</p>
+      <details><summary>Documenti</summary><p>Segna quando rinnovare carta d’identità, patente, passaporto o tessera sanitaria. Bastano un titolo e una data.</p></details>
+      <details><summary>Auto, moto e barche</summary><p>Segna revisioni, cambio gomme, olio, tagliandi e controlli della barca. Quando hai fatto il controllo, puoi aggiornare la prossima data.</p></details>
+      <details><summary>Biglietti e abbonamenti</summary><p>Segna entro quando usare un biglietto o rinnovare un abbonamento ai trasporti, alla palestra o a un altro servizio.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>Attiva JavaScript per usare l’agenda.</noscript>
   </main>
 </body>

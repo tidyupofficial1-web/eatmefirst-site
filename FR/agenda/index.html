@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>Agenda de la maison | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=20261126"></script>
-  <script defer src="../../js/agenda-it.js?v=20261126"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <header class="site-header wrap"><a class="brand" href="../menu.html">EatMeFirst</a><nav class="actions" aria-label="Menu de l’application"><a href="../menu.html">Menu de l’application</a><a href="../courses/index.html">Liste de courses</a><a href="../../sito-bozza/FR/agenda.html">Mode d’emploi</a></nav></header>
@@ -27,6 +27,12 @@
       <p><label>Titre <input name="title" required maxlength="100"></label></p>
       <p><label>Date <input name="day" type="date" required></label> <label>Heure <input name="time" type="time"></label></p>
       <p><label>Note <input name="note" maxlength="250"></label></p>
+      <p><label>Catégorie <select name="category">
+        <option value="">Rendez-vous du foyer</option>
+        <option value="documents">Documents</option>
+        <option value="vehicles">Voitures, motos et bateaux</option>
+        <option value="subscriptions">Billets et abonnements</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> Répéter chaque semaine</label></p>
       <div class="actions"><button type="submit" class="button">Enregistrer</button><button type="button" id="cancel-edit" hidden>Annuler la modification</button></div>
     </form>
@@ -34,6 +40,14 @@
     <h2>Aujourd’hui et à venir</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>Rendez-vous passés</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">Échéances et entretien</h2>
+      <p>Choisissez une catégorie pour ajouter une échéance. Les échéances passées restent ici jusqu’à leur modification ou suppression.</p>
+      <details><summary>Documents</summary><p>Notez les dates de renouvellement de la carte d’identité, du permis, du passeport ou de la carte de santé.</p></details>
+      <details><summary>Voitures, motos et bateaux</summary><p>Notez les contrôles techniques, changements de pneus, vidanges et révisions du bateau.</p></details>
+      <details><summary>Billets et abonnements</summary><p>Notez les dates de validité des billets et de renouvellement des abonnements aux transports, à la salle de sport ou à d’autres services.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>Activez JavaScript pour utiliser l’agenda.</noscript>
   </main>
 </body>

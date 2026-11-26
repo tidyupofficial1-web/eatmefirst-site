@@ -6,8 +6,8 @@
   <meta name="robots" content="noindex">
   <title>مفكّرة المنزل | EatMeFirst</title>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-texts.js?v=language-preview"></script>
-  <script defer src="../../js/agenda-it.js?v=language-preview"></script>
+  <script defer src="../../js/agenda-texts.js?v=scadenze-1"></script>
+  <script defer src="../../js/agenda-it.js?v=scadenze-1"></script>
 </head>
 <body>
   <script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
@@ -28,6 +28,12 @@
       <p><label>العنوان <input name="title" dir="auto" required maxlength="100"></label></p>
       <p><label>التاريخ <input name="day" type="date" required></label> <label>الوقت <input name="time" type="time"></label></p>
       <p><label>ملاحظة <input name="note" dir="auto" maxlength="250"></label></p>
+      <p><label>الفئة <select name="category">
+        <option value="">موعد منزلي</option>
+        <option value="documents">الوثائق</option>
+        <option value="vehicles">السيارات والدراجات النارية والقوارب</option>
+        <option value="subscriptions">التذاكر والاشتراكات</option>
+      </select></label></p>
       <p><label><input name="weekly" type="checkbox"> كرّر كل أسبوع</label></p>
       <div class="actions"><button type="submit" class="button">احفظ الموعد</button><button type="button" id="cancel-edit" hidden>إلغاء التعديل</button></div>
     </form>
@@ -35,6 +41,14 @@
     <h2>مواعيد امصطفىم والمواعيد القادمة</h2>
     <ul id="upcoming" class="advice-list"></ul>
     <details><summary>المواعيد السابقة</summary><ul id="past" class="advice-list"></ul></details>
+    <section aria-labelledby="deadlines-heading">
+      <h2 id="deadlines-heading">المواعيد النهائية والصيانة</h2>
+      <p>اختر فئة لإضافة موعد نهائي. تبقى المواعيد المنقضية هنا إلى أن تحدّثها أو تحذفها.</p>
+      <details><summary>الوثائق</summary><p>سجّل مواعيد تجديد الهوية ورخصة القيادة وجواز السفر والبطاقة الصحية.</p></details>
+      <details><summary>السيارات والدراجات النارية والقوارب</summary><p>سجّل الفحص الدوري وتبديل الإطارات والزيت وصيانة القارب.</p></details>
+      <details><summary>التذاكر والاشتراكات</summary><p>سجّل صلاحية التذاكر ومواعيد تجديد اشتراكات النقل أو النادي الرياضي أو الخدمات الأخرى.</p></details>
+      <ul id="deadlines" class="advice-list"></ul>
+    </section>
     <noscript>فعّل JavaScript لاستخدام المفكّرة.</noscript>
   </main>
 </body>
