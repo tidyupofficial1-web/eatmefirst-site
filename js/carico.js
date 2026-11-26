@@ -224,7 +224,7 @@ async function cercaProdottoOnline(barcode) {
         } catch (errore) {
             esito.textContent += testoCarico(" Could not add the photo to saved products: ") + (testiCarico?.error ?? EatErroriEN(errore.message));
         }
-        if (scheda.nome && scheda.lingua_nome !== 'en') esito.textContent += testoCarico(" The name is from the original catalogue: an English version is unavailable.");
+        if (scheda.nome && scheda.lingua_nome !== document.documentElement.lang.toLowerCase().split('-')[0]) esito.textContent += testoCarico(" The name is from the original catalogue: an English version is unavailable.");
         if (scheda.nome && campoNome.value !== scheda.nome) esito.textContent += testoCarico(" Catalogue name: ") + scheda.nome + testoCarico(". Your chosen name was kept; you can change it if you prefer.");
     } else if (risultato.stato === 'non_trovato') {
         esito.textContent = testoCarico("Barcode not found in the four catalogues. You can save the details yourself: we will try again next time you scan it.");

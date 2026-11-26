@@ -3,6 +3,9 @@
  */
 (function () {
     let prossimaRichiesta = 0;
+    const linguaInterfaccia = window.document?.documentElement.lang?.toLowerCase().split('-')[0];
+    const lingua = ['en', 'pt', 'ja', 'ar'].includes(linguaInterfaccia) ? linguaInterfaccia : 'en';
+    const campoNome = 'product_name_' + lingua;
     const testo = valore => typeof valore === 'string' ? valore.trim() : '';
     const lista = valore => Array.isArray(valore) ? valore.filter(v => typeof v === 'string') : [];
     const codice = valore => String(valore || '').replace(/^0+/, '');
@@ -43,9 +46,10 @@
         const linguaOriginale = testo(p.lang).toLowerCase();
         const ingredientiItaliani = testo(p.ingredients_text_en);
         const ingredienti = ingredientiItaliani || testo(p.ingredients_text);
+        const nomeLocalizzato = testo(p[campoNome]);
         return {
-            nome: testo(p.product_name_en) || testo(p.product_name),
-            lingua_nome: testo(p.product_name_en) ? 'en' : linguaOriginale || 'non_specificata',
+            nome: nomeLocalizzato || testo(p.product_name),
+            lingua_nome: nomeLocalizzato ? lingua : linguaOriginale || 'non_specificata',
             immagine: /^https:\/\//i.test(immagine) ? immagine : '',
             ...categoria(tipo, lista(p.categories_tags)),
             pezzi_per_confezione: Number.isSafeInteger(pezzi) && pezzi > 0 ? pezzi : null,
@@ -81,8 +85,8 @@
         try {
             const url = new URL('https://world.openfoodfacts.org/api/v3/product/' + barcode);
             url.search = new URLSearchParams({
-                product_type: 'all', lc: 'en', app_name: 'EatMeFirst', app_version: '1.0',
-                fields: 'code,lang,product_type,product_name,product_name_en,image_front_url,image_url,categories,categories_tags,quantity,brands,ingredients_text,ingredients_text_en,allergens_tags,traces_tags,nutriments'
+                product_type: 'all', lc: lingua, app_name: 'EatMeFirst', app_version: '1.0',
+                fields: ['code', 'lang', 'product_type', 'product_name', campoNome, 'image_front_url', 'image_url', 'categories', 'categories_tags', 'quantity', 'brands', 'ingredients_text', 'ingredients_text_en', 'allergens_tags', 'traces_tags', 'nutriments'].join(',')
             }).toString();
             const risposta = await fetch(url.href, {signal: controller.signal, credentials: 'omit'});
             if (risposta.status === 429) {
