@@ -517,7 +517,8 @@
                         <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Ayuda del escáner
                     </a>
                 </div>
-                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Escribe o pega el código de barras" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <small id="lingua-nome-catalogo" style="display:block;margin-bottom:8px">Si el catálogo no tiene el nombre del producto en tu idioma, verás el nombre original. Puedes editarlo antes de guardar.</small>
+                <input type="text" id="prodotto-barcode" aria-describedby="lingua-nome-catalogo" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Escribe o pega el código de barras" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
                 <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">Buscar producto</button>
                 <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">También puedes dejar el código vacío e introducir el producto a mano.</small>
             </div>

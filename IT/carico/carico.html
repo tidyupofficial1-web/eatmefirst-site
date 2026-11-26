@@ -509,7 +509,8 @@
                         <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Guida Scansione
                     </a>
                 </div>
-                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Scrivi o incolla il codice a barre" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <small id="lingua-nome-catalogo" style="display:block;margin-bottom:8px">Se il catalogo non ha il nome del prodotto nella tua lingua, vedrai il nome originale. Puoi cambiarlo prima di salvare.</small>
+                <input type="text" id="prodotto-barcode" aria-describedby="lingua-nome-catalogo" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Scrivi o incolla il codice a barre" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
                 <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">Cerca prodotto</button>
                 <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">Puoi anche lasciare il codice vuoto e compilare il prodotto a mano.</small>
             </div>

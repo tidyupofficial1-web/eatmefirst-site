@@ -509,7 +509,8 @@
                         <img src="../../IMG/biglietto_info.jpg" alt="案内" class="postit-icon"> 読み取り方
                     </a>
                 </div>
-                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="バーコードを入力または貼り付け" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <small id="lingua-nome-catalogo" style="display:block;margin-bottom:8px">カタログに選択した言語の商品名がない場合は、元の商品名が表示されます。保存する前に編集できます。</small>
+                <input type="text" id="prodotto-barcode" aria-describedby="lingua-nome-catalogo" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="バーコードを入力または貼り付け" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
                 <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">商品を検索</button>
                 <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">バーコードを空欄にして手入力することもできます。</small>
             </div>

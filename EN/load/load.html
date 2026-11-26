@@ -509,7 +509,8 @@
                         <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Scanning help
                     </a>
                 </div>
-                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Type or paste the barcode" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <small id="lingua-nome-catalogo" style="display:block;margin-bottom:8px">If the catalogue doesn’t have the product name in your language, you’ll see the original name. You can edit it before saving.</small>
+                <input type="text" id="prodotto-barcode" aria-describedby="lingua-nome-catalogo" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Type or paste the barcode" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
                 <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">Find product</button>
                 <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">You can also leave the barcode empty and enter the product yourself.</small>
             </div>

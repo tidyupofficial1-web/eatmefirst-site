@@ -509,7 +509,8 @@
                         <img src="../../IMG/biglietto_info.jpg" alt="Info" class="postit-icon"> Scan-Hilfe
                     </a>
                 </div>
-                <input type="text" id="prodotto-barcode" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Barcode eingeben oder einfügen" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <small id="lingua-nome-catalogo" style="display:block;margin-bottom:8px">Wenn der Produktname im Katalog nicht in deiner Sprache verfügbar ist, siehst du den Originalnamen. Du kannst ihn vor dem Speichern ändern.</small>
+                <input type="text" id="prodotto-barcode" aria-describedby="lingua-nome-catalogo" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="Barcode eingeben oder einfügen" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
                 <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">Produkt suchen</button>
                 <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">Du kannst den Code auch leer lassen und das Produkt selbst eingeben.</small>
             </div>
