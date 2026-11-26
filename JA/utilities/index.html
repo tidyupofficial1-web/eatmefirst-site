@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーティリティ | EatMeFirst</title>
+  <meta name="description" content="在庫とバックアップ">
+  <meta name="robots" content="noindex,follow">
+
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --text-color: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent-color: #58a6ff;
+      --primary: #3182ce;
+      --primary-hover: #2b6cb0;
+      --success-color: #238636;
+      --success-hover: #2ea043;
+      --danger-color: #f85149;
+      --warning-color: #d29922;
+      --border-color: #30363d;
+      --light-bg: #21262d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .container { max-width: 850px; margin: 0 auto; width: 100%; }
+
+    /* CARTA INTESTATA SUPERIORE */
+    .app-bar {
+      background: rgba(22, 27, 34, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 40;
+      border-radius: 12px; margin-bottom: 20px;
+    }
+
+    .app-brand { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      background: var(--light-bg); color: var(--text-color);
+      border: 1px solid var(--border-color); padding: 6px 14px;
+      border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+    }
+    .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+    .language-flags {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--light-bg); padding: 4px 8px;
+      border-radius: 20px; border: 1px solid var(--border-color);
+    }
+    .flag-link { text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+    .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+    /* BANNER INTRODUTTIVO LEO */
+    .leo-welcome-banner {
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      border: 1px solid var(--primary); border-radius: 16px;
+      overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+    .leo-banner-img {
+      width: 100%; max-height: 320px; object-fit: contain;
+      background-color: #0d1117; border-bottom: 2px solid var(--primary);
+    }
+    .leo-banner-content { padding: 22px; }
+    .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
+    .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
+    .leo-banner-actions { display: flex; justify-content: flex-end; }
+
+    .btn-dismiss {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
+      color: var(--text-color); padding: 8px 16px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-dismiss:hover { background: rgba(239, 68, 68, 0.25); border-color: #f87171; color: #fca5a5; }
+
+    /* CARD SEZIONI */
+    .section-card {
+      background: var(--card-bg); border-radius: 16px;
+      border: 1px solid var(--border-color); padding: 25px;
+      margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 1.25rem; font-weight: 700; color: var(--text-color);
+      margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+    }
+
+    /* POST-IT GUIDA ICON */
+    .postit-link { display: inline-block; line-height: 0; position: relative; z-index: 10; }
+    .postit-icon {
+      width: 28px; height: 28px; object-fit: contain; border-radius: 4px; cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4); transition: transform 0.2s;
+    }
+    .postit-icon:hover { transform: scale(1.2) rotate(-3deg); }
+
+    /* BIBLIOTECA COMPLETA GRID */
+    .guides-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px; margin-top: 15px;
+    }
+    .guide-card-link {
+      background: #0d1117; border: 1px solid var(--border-color);
+      padding: 14px 16px; border-radius: 10px; text-decoration: none; color: var(--text-color);
+      display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+    }
+    .guide-card-link:hover { border-color: var(--accent-color); background: var(--light-bg); }
+
+    /* PRICING GRID */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px; margin-top: 15px;
+    }
+    .pricing-card {
+      background: #0d1117; border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .pricing-card.featured { border-color: #68d391; background: rgba(56, 161, 105, 0.1); }
+    .pricing-title { font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 6px; }
+    .pricing-price { font-size: 1.5rem; font-weight: 800; color: #38a169; margin-bottom: 8px; }
+    .pricing-sub { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ZONA PERICOLO */
+    .danger-zone { border-color: #7f1d1d; background: rgba(127, 29, 29, 0.12); }
+    .danger-title { color: #fca5a5; }
+
+    .btn-danger-action {
+      width: 100%; background: var(--danger-color); color: #fff; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-danger-action:hover { opacity: 0.9; }
+
+    .btn-warning-action {
+      width: 100%; background: var(--warning-color); color: #0d1117; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-warning-action:hover { opacity: 0.9; }
+
+    /* MODALE */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; max-width: 450px; width: 100%; padding: 25px; text-align: center;
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+    .modal-text { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; text-align: left; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 12px; }
+    .btn-modal-cancel { flex: 1; background: var(--light-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .btn-modal-confirm { flex: 1; background: var(--danger-color); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .backup-comandi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .backup-comandi > * { min-width: 0; width: 100%; text-align: center; }
+    .backup-comandi .backup-esporta { background: #238636; border: 2px solid #3fb950; color: #fff; font-size: 16px; font-weight: 700; }
+    .backup-comandi .backup-esporta:hover { background: #196c2e; }
+    .backup-comandi .backup-importa { background: #142c43; border: 2px solid #58a6ff; }
+    .backup-importa-titolo { color: #9dceff; font-size: 16px; font-weight: 700; }
+    .backup-comandi > :focus-visible, .backup-comandi input:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .backup-comandi input[type="file"] { display: block; width: 100%; min-width: 0; max-width: 100%; margin-top: 8px; font-size: 13px; }
+    @media (max-width: 768px) {
+      .backup-comandi { grid-template-columns: minmax(0, 1fr); }
+      .backup-comandi > * { padding: 16px 12px; }
+    }
+
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px; }
+
+    @media (max-width: 600px) {
+      .language-flags { display: flex; gap: 4px; padding: 2px 6px; }
+      .flag-img { width: 18px; height: 12px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<script defer src="../../js/analytics-consenso.js?v=removed-20261116"></script>
+<link rel="stylesheet" href="../../css/language-picker.css?v=1">
+</head>
+<body>
+<header class="app-bar">
+  <a href="../menu.html" class="btn-back">← メニュー</a>
+  <details class="language-picker"><summary>言語</summary><div class="language-picker-list"><a href="../../IT/utilita/index.html" lang="it">Italiano</a><a href="../../EN/utilities/index.html" lang="en">English</a><a href="../../FR/utilitaires/index.html" lang="fr">Français</a><a href="../../DE/hilfsmittel/index.html" lang="de">Deutsch</a><a href="../../ES/utilidades/index.html" lang="es">Español</a><a href="../../JA/utilities/index.html" lang="ja" aria-current="page">日本語</a><a href="../../PT/utilities/index.html" lang="pt-BR">Português (Brasil)</a></div></details>
+</header>
+<main class="container">
+  <h1>ユーティリティ</h1>
+  <section id="trasferimento-dispensa">
+    <h2 class="section-title">在庫とバックアップ</h2>
+    <p>確定した変更は現在の端末に自動で保存され、いつでも無料です。この公開段階ではエクスポートも無料です。端末間の転送はファイルを手動で行います。</p>
+    <p>アジェンダの予定はこのバックアップの対象外です。</p>
+    <p id="backupSituazione"></p>
+    <div class="backup-comandi">
+        <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">在庫をエクスポート</button>
+        <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">在庫をインポート</span>
+          <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
+        </label>
+      </div>
+
+
+      <p id="backupEsito" role="status" aria-live="polite" style="margin:14px 0"></p>
+      <div id="anteprimaImportazione" hidden style="border:2px solid #58a6ff;border-radius:12px;padding:18px;margin-top:18px">
+        <h3 id="titoloImportazione">置き換える前にファイルを確認</h3>
+        <p id="nomeImportazione" style="margin:12px 0;overflow-wrap:anywhere"></p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:12px 0">
+          <div><strong>現在のデータ</strong><p id="riepilogoLocale"></p></div>
+          <div><strong>読み込むデータ</strong><p id="riepilogoFile"></p></div>
+        </div>
+        <p id="confrontoImportazione" style="font-weight:bold;line-height:1.6"></p>
+        <label id="consensoImportazioneLabel" hidden style="margin-top:14px">
+          <input type="checkbox" id="consensoImportazione" onchange="aggiornaPulsanteImportazione()">
+          注意を読み、現在の在庫をファイルの内容で置き換えることを選びます。
+        </label>
+        <p style="font-size:14px;margin-top:14px">置き換える前に端末内コピーを1件保存します。商品の期限は変わりません。</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <button type="button" class="btn-modal-cancel" onclick="annullaImportazione()">現在のデータを維持</button>
+          <button type="button" class="btn-modal-confirm" id="confermaImportazione" disabled onclick="confermaImportazione()">置き換えを確定</button>
+        </div>
+      </div>
+      <button type="button" class="btn-modal-cancel" id="recuperaDispensa" disabled style="margin-top:18px" onclick="preparaRecupero()">転送・リセット前のデータを復元</button>
+
+  </section>
+  <section>
+    <h2 class="section-title danger-title">リセット</h2>
+    <p><button type="button" class="btn-warning-action" onclick="apriResetUtilita('nuovo_inizio')">数量をリセット</button></p>
+    <p><button type="button" class="btn-danger-action" onclick="apriResetUtilita('reset_totale')">最初からやり直す</button></p>
+  </section>
+  <ul><li><a href="export-guide.html">ファイルの転送</a></li><li><a href="usb-save-guide.html">USBへの保存</a></li><li><a href="leo-updates-guide.html">アプリの更新</a></li><li><a href="advanced-reset-guide.html">リセット</a></li></ul>
+</main>
+<dialog id="resetUtilita" aria-labelledby="titoloReset">
+  <h2 id="titoloReset">確認</h2>
+  <p id="riepilogoReset"></p>
+  <p><label><input type="checkbox" id="consensoReset"> 消去されるデータと残るデータを確認しました。</label></p>
+  <form method="dialog">
+    <button class="btn-modal-cancel">キャンセル</button>
+    <button type="button" class="btn-modal-confirm" onclick="confermaResetUtilita()">確定</button>
+  </form>
+</dialog>
+  <script src="../../js/errori-en.js"></script>
+  <script src="../../js/storico-it.js"></script>
+  <script src="../../js/backup-it.js"></script>
+  <script src="../../js/reset-it.js"></script>
+  <script src="../../js/utilita-testi.js"></script>
+  <script src="../../js/backup-interfaccia-en.js"></script>
+  <script src="../../js/utilita-reset.js"></script>
+</body>
+</html>

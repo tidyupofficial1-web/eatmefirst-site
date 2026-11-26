@@ -1,5 +1,8 @@
 /* Calendario locale: nessuna modifica della dispensa durante la consultazione. */
 (function () {
+    const locale = window.document?.documentElement.lang;
+    const labels = window.EatInventarioTesti?.[locale]?.dates;
+    const text = (key, fallback) => labels?.[key] ?? fallback;
     const ANTICIPO = 10;
     const pad = n => String(n).padStart(2, '0');
     function oggi(data = new Date()) {
@@ -53,7 +56,9 @@
         return calcola(p.tipo_scadenza, p.valore_scadenza, giornoCarico);
     }
     function formato(data) {
-        return leggiData(data) ? data.split('-').reverse().join('/') : '';
+        const parsed = leggiData(data);
+        if (!parsed) return '';
+        return labels ? new Intl.DateTimeFormat(locale, {dateStyle: 'short', timeZone: 'UTC'}).format(parsed) : data.split('-').reverse().join('/');
     }
     function provieneDaStima(p) {
         return p.scadenza_da_stima === true || (p.tassativo !== true && ['giorni', 'mesi'].includes(p.tipo_scadenza));
@@ -62,14 +67,16 @@
         const risultato = dataProdotto(p);
         const tassativa = p.tassativo === true;
         const tipo = tassativa ? 'tassativa' : 'indicativa';
-        if (!risultato.valida) return {data: null, giorni: null, allerta: false, colore: 'normale', testo: 'Product date cannot be calculated: check the details', tipo, posticipata: false};
-        if (!risultato.data) return {data: null, giorni: null, allerta: false, colore: 'normale', testo: 'No product date entered', tipo, posticipata: false};
+        if (!risultato.valida) return {data: null, giorni: null, allerta: false, colore: 'normale', testo: text('invalid', 'Product date cannot be calculated: check the details'), tipo, posticipata: false};
+        if (!risultato.data) return {data: null, giorni: null, allerta: false, colore: 'normale', testo: text('missing', 'No product date entered'), tipo, posticipata: false};
         const daStima = !tassativa && provieneDaStima(p);
         const giorni = Math.round((leggiData(risultato.data) - leggiData(giorno)) / 86400000);
         const posticipata = !!leggiData(p.data_scadenza_iniziale) && risultato.data > p.data_scadenza_iniziale;
-        const prefisso = tassativa ? 'Strict date' : 'Indicative date';
-        const tempo = giorni < 0 ? `${tassativa ? 'Strict' : 'Indicative'} date passed ${-giorni} ${giorni === -1 ? 'day' : 'days'} ago` :
+        const prefisso = tassativa ? text('strict', 'Strict date') : text('indicative', 'Indicative date');
+        const inEnglish = giorni < 0 ? `${tassativa ? 'Strict' : 'Indicative'} date passed ${-giorni} ${giorni === -1 ? 'day' : 'days'} ago` :
             giorni === 0 ? `${prefisso}: today` : giorni === 1 ? `${prefisso}: tomorrow` : `${prefisso} in ${giorni} days`;
+        const key = giorni < 0 ? 'passed' : giorni === 0 ? 'today' : giorni === 1 ? 'tomorrow' : 'inDays';
+        const tempo = text(key, inEnglish).replace('{label}', prefisso).replace('{n}', Math.abs(giorni));
         return {data: risultato.data, giorni, allerta: giorni <= ANTICIPO,
             colore: giorni <= ANTICIPO ? (tassativa || daStima ? 'rossa' : 'gialla') : (daStima ? 'gialla' : 'normale'),
             testo: tempo, tipo, posticipata};
@@ -83,9 +90,9 @@
     function html(p) {
         const s = descrivi(p);
         const colori = {rossa: '#ff7b72', gialla: '#f1c40f', normale: 'var(--text-muted)'};
-        const etichetta = s.giorni !== null && s.giorni < 0 ? 'DATE PASSED' : s.giorni === 0 ? 'DUE TODAY' : '';
+        const etichetta = s.giorni !== null && s.giorni < 0 ? text('badgePassed', 'DATE PASSED') : s.giorni === 0 ? text('badgeToday', 'DUE TODAY') : '';
         const richiamo = etichetta ? `<strong class="${s.giorni === 0 ? 'scadenza-badge-oggi' : 'scadenza-badge-superata'}" style="--scadenza-bordo:${colori[s.colore]}"><span class="scadenza-icona-superata" aria-hidden="true">⚠</span> ${etichetta}</strong><br>` : '';
-        return `<span style="color:${colori[s.colore]};font-size:13px">${richiamo}${s.data ? formato(s.data) + '<br>' : ''}${s.testo}${s.posticipata ? '<br>↻ Date previously postponed · original: ' + formato(p.data_scadenza_iniziale) : ''}</span>`;
+        return `<span style="color:${colori[s.colore]};font-size:13px">${richiamo}${s.data ? formato(s.data) + '<br>' : ''}${s.testo}${s.posticipata ? '<br>' + text('postponed', '↻ Date previously postponed · original: ') + formato(p.data_scadenza_iniziale) : ''}</span>`;
     }
     function classeAllerta(p) {
         const s = descrivi(p);

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Últimas 15 operações | EatMeFirst</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #0d1117; color: #f0f6fc; font: 16px/1.5 system-ui, sans-serif; }
+        main { max-width: 1100px; margin: auto; padding: 24px 16px; }
+        nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+        a { color: #79c0ff; }
+        h1 { font-size: 1.65rem; }
+        .intro { color: #b1bac4; }
+        .tabella { overflow-x: auto; border: 1px solid #30363d; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; background: #161b22; }
+        th, td { padding: 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #30363d; overflow-wrap: anywhere; }
+        th { color: #79c0ff; background: #21262d; }
+        td:first-child { min-width: 130px; }
+        .motivo { display: block; margin-top: 6px; max-width: 310px; font-size: 13px; color: #b1bac4; }
+        button { padding: 10px 14px; border: 1px solid #58a6ff; border-radius: 8px; background: #1f6feb; color: white; font: inherit; cursor: pointer; }
+        button:disabled { cursor: default; background: #30363d; border-color: #484f58; color: #b1bac4; }
+        .annullata { color: #b1bac4; }
+        #stato { padding: 12px 0; }
+        .overlay { position: fixed; inset: 0; padding: 18px; background: #000b; display: flex; justify-content: center; align-items: center; }
+        .overlay[hidden] { display: none; }
+        .dialogo { width: 100%; max-width: 680px; max-height: 85vh; overflow-y: auto; padding: 24px; border: 1px solid #58a6ff; border-radius: 14px; background: #161b22; }
+        .comandi { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+        #descrizioneConferma { white-space: pre-wrap; overflow-wrap: anywhere; }
+        @media (max-width: 768px) {
+            .tabella { overflow: visible; border: 0; }
+            .tabella table { display: block; min-width: 0; width: 100%; background: transparent; }
+            .tabella thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+            .tabella tbody { display: block; width: 100%; }
+            .tabella tbody tr { display: block; padding: 14px; margin-bottom: 14px; border: 1px solid #30363d; border-radius: 12px; background: #161b22; }
+            .tabella td, .tabella td:first-child { display: block; width: 100%; min-width: 0; padding: 8px 0; border: 0; }
+            .tabella td::before { display: block; margin-bottom: 4px; color: #79c0ff; font-weight: 600; }
+            .tabella td:nth-child(1)::before { content: 'Data e hora'; }
+            .tabella td:nth-child(2)::before { content: 'Operação'; }
+            .tabella td:nth-child(3)::before { content: 'Detalhes'; }
+            .tabella td:nth-child(4)::before { content: 'Ação'; }
+            .tabella td button { width: 100%; white-space: normal; }
+            .tabella .motivo { max-width: none; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<meta name="robots" content="noindex,follow"><script defer src="../../js/analytics-consenso.js?v=removed-20261116"></script>
+</head>
+<body>
+<main>
+    <nav aria-label="Navegação">
+        <a href="../menu.html">← Menu</a><a href="../load/load.html">Cadastro de produtos</a><a href="../unload/index.html">Consumo e uso</a>
+        <a href="../inventory/index.html">Inventário</a><a href="../shopping/index.html">Lista de compras</a>
+    </nav>
+    <h1>↩ Últimas 15 operações</h1>
+    <p class="intro">Veja as operações mais recentes registradas neste navegador desde que o histórico foi ativado. As operações desfeitas continuam visíveis com seu estado.</p>
+    <p class="intro">Você pode desfazer uma operação preservando as alterações independentes. Se operações mais recentes afetaram o mesmo produto ou item da lista, o histórico indica qual desfazer primeiro.</p>
+    <p id="stato" role="status" aria-live="polite"></p>
+    <div class="tabella"><table>
+        <thead><tr><th scope="col">Data e hora</th><th scope="col">Operação</th><th scope="col">Detalhes</th><th scope="col">Ação</th></tr></thead>
+        <tbody id="operazioni"></tbody>
+    </table></div>
+    <p class="intro">O histórico é separado da cópia de segurança. Só é possível desfazer operações entre as 15 mais recentes.</p>
+</main>
+<div id="confermaOperazione" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="titoloConferma" onkeydown="tastieraConferma(event)">
+    <div class="dialogo">
+        <h2 id="titoloConferma">Confirma que deseja desfazer esta operação?</h2>
+        <p id="descrizioneConferma"></p>
+        <p>Apenas a operação selecionada será desfeita. As demais alterações independentes serão mantidas.</p>
+        <div class="comandi">
+            <button type="button" id="nonAnnullare" onclick="chiudiConferma()">Manter operação</button>
+            <button type="button" id="annullaOperazione" onclick="eseguiAnnullamento()">Confirmar</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/errori-en.js"></script>
+<script src="../../js/operazioni-testi.js"></script>
+<script src="../../js/operazioni.js"></script>
+</body>
+</html>

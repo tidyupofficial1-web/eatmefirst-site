@@ -1,5 +1,7 @@
 (function () {
     const translations = {
+        ja: ["商品の情報を修正する方法", "保存した商品の名前、個数、期限、厳守する期限の設定を修正できます。見積もった期限を包装に記載された日付に置き換えることもできます。", "閉じる", "今後は表示しない", "編集", "名前", "在庫数", "期限", "厳守する期限", "キャンセル", "保存", "商品の修正", "在庫が変更されました。詳細を開き直してください。", "厳守する期限の日付を入力してください。", "数量の修正"],
+        pt: ["Como corrigir os dados do produto", "Você pode alterar o nome, corrigir o número de unidades e atualizar a data ou a opção Validade obrigatória. Se a data era estimada, substitua pela data impressa na embalagem.", "Fechar", "Não mostrar novamente", "Editar", "Nome", "Unidades disponíveis", "Validade", "Validade obrigatória", "Cancelar", "Salvar", "Editar produto", "Seu inventário mudou. Abra o produto novamente.", "Informe a data de validade obrigatória.", "Correção de quantidade"],
         it: ['Come modificare i dati del prodotto','Puoi correggere un prodotto già salvato. Tocca Modifica per cambiare il nome, correggere il numero di pezzi dopo averli contati o aggiornare la data e la spunta Articolo Tassativo. Se avevi stimato la data, puoi sostituirla con quella sulla confezione.','Chiudi','Chiudi sempre','Modifica','Nome','Pezzi disponibili','Scadenza','Articolo Tassativo','Annulla','Salva','Modifica prodotto','Riapri la scheda e riprova. La dispensa è cambiata.','Indica una data per un articolo tassativo.','Correzione quantità'],
         en: ['How to edit product details','You can correct a saved product. Select Edit to change its name, correct the number of items after counting them, or update its date and the Strict expiry checkbox. You can replace an estimated date with the date printed on the pack.','Close','Always close','Edit','Name','Items available','Expiry date','Strict expiry','Cancel','Save','Edit product','Reopen the product and try again. Your inventory has changed.','Enter a date for a product with a strict expiry.','Quantity correction'],
         fr: ['Comment modifier les données du produit','Vous pouvez corriger un produit déjà enregistré. Choisissez Modifier pour changer son nom, corriger le nombre de pièces après les avoir comptées ou mettre à jour la date et la case Date impérative. Vous pouvez remplacer une date estimée par celle de l’emballage.','Fermer','Ne plus afficher','Modifier','Nom','Pièces disponibles','Date de péremption','Date impérative','Annuler','Enregistrer','Modification du produit','Rouvrez la fiche et réessayez. Votre inventaire a changé.','Indiquez une date pour un produit à date impérative.','Correction de quantité'],
@@ -8,6 +10,17 @@
     };
     const [title, explanation, close, always, edit, name, quantity, expiry, strict, cancel, save, editType, stale, dateRequired, quantityType] =
         translations[document.documentElement.lang.slice(0, 2)] || translations.it;
+    const locale = document.documentElement.lang.slice(0, 2);
+    const editErrors = {
+        ja: {
+            date: '有効な期限を入力してください。',
+            save: '商品の変更を保存できませんでした。ブラウザーの空き容量を確認してからお試しください。'
+        },
+        pt: {
+            date: 'Informe uma data de validade válida.',
+            save: 'Não foi possível salvar o produto. Confira o espaço do navegador e tente novamente.'
+        }
+    };
     const storageKey = 'eat_dispensa_locale';
     const helpKey = 'emf_inventario_modifica_guida_v1';
 
@@ -108,7 +121,7 @@
             if (expiryChanged) {
                 if (date.value !== originalDate) {
                     const valid = EatScadenze.calcola(date.value ? 'esatta' : 'nessuna',date.value);
-                    if (!valid.valida) { fail(valid.messaggio); return; }
+                    if (!valid.valida) { fail(editErrors[locale]?.date ?? valid.messaggio); return; }
                     modified.tipo_scadenza = date.value ? 'esatta' : 'nessuna';
                     modified.valore_scadenza = date.value || null;
                     modified.data_scadenza = valid.data;
@@ -131,7 +144,7 @@
                 updated[index] = modified;
                 const detail = quantityChanged ? `${modified.nome}: ${originalPieces} → ${count}` : modified.nome;
                 EatStorico.registra(quantityChanged ? quantityType : editType,detail,{[storageKey]:updated},{[storageKey]:snapshot});
-            } catch (e) { fail(e.message); return; }
+            } catch (e) { fail(e.message === stale ? stale : (editErrors[locale]?.save ?? e.message)); return; }
             await caricaDispensaDalServer();
             apriDettaglioProdotto(index,false);
             document.getElementById('emf-edit-product-button').focus();

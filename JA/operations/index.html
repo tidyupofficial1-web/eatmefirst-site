@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>直近15件の操作 | EatMeFirst</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #0d1117; color: #f0f6fc; font: 16px/1.5 system-ui, sans-serif; }
+        main { max-width: 1100px; margin: auto; padding: 24px 16px; }
+        nav { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+        a { color: #79c0ff; }
+        h1 { font-size: 1.65rem; }
+        .intro { color: #b1bac4; }
+        .tabella { overflow-x: auto; border: 1px solid #30363d; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; background: #161b22; }
+        th, td { padding: 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #30363d; overflow-wrap: anywhere; }
+        th { color: #79c0ff; background: #21262d; }
+        td:first-child { min-width: 130px; }
+        .motivo { display: block; margin-top: 6px; max-width: 310px; font-size: 13px; color: #b1bac4; }
+        button { padding: 10px 14px; border: 1px solid #58a6ff; border-radius: 8px; background: #1f6feb; color: white; font: inherit; cursor: pointer; }
+        button:disabled { cursor: default; background: #30363d; border-color: #484f58; color: #b1bac4; }
+        .annullata { color: #b1bac4; }
+        #stato { padding: 12px 0; }
+        .overlay { position: fixed; inset: 0; padding: 18px; background: #000b; display: flex; justify-content: center; align-items: center; }
+        .overlay[hidden] { display: none; }
+        .dialogo { width: 100%; max-width: 680px; max-height: 85vh; overflow-y: auto; padding: 24px; border: 1px solid #58a6ff; border-radius: 14px; background: #161b22; }
+        .comandi { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+        #descrizioneConferma { white-space: pre-wrap; overflow-wrap: anywhere; }
+        @media (max-width: 768px) {
+            .tabella { overflow: visible; border: 0; }
+            .tabella table { display: block; min-width: 0; width: 100%; background: transparent; }
+            .tabella thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+            .tabella tbody { display: block; width: 100%; }
+            .tabella tbody tr { display: block; padding: 14px; margin-bottom: 14px; border: 1px solid #30363d; border-radius: 12px; background: #161b22; }
+            .tabella td, .tabella td:first-child { display: block; width: 100%; min-width: 0; padding: 8px 0; border: 0; }
+            .tabella td::before { display: block; margin-bottom: 4px; color: #79c0ff; font-weight: 600; }
+            .tabella td:nth-child(1)::before { content: '日時'; }
+            .tabella td:nth-child(2)::before { content: '操作'; }
+            .tabella td:nth-child(3)::before { content: '詳細'; }
+            .tabella td:nth-child(4)::before { content: '操作する'; }
+            .tabella td button { width: 100%; white-space: normal; }
+            .tabella .motivo { max-width: none; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<meta name="robots" content="noindex,follow"><script defer src="../../js/analytics-consenso.js?v=removed-20261116"></script>
+</head>
+<body>
+<main>
+    <nav aria-label="ナビゲーション">
+        <a href="../menu.html">← メニュー</a><a href="../load/load.html">商品登録</a><a href="../unload/index.html">使用・消費</a>
+        <a href="../inventory/index.html">在庫</a><a href="../shopping/index.html">買い物リスト</a>
+    </nav>
+    <h1>↩ 直近15件の操作</h1>
+    <p class="intro">履歴を有効にしてから、このブラウザーで記録した新しい操作を表示します。取り消した操作も状態とともに表示されます。</p>
+    <p class="intro">ほかの独立した変更を残したまま操作を取り消せます。同じ商品や買い物リストの項目に後の変更がある場合は、先に取り消す操作が表示されます。</p>
+    <p id="stato" role="status" aria-live="polite"></p>
+    <div class="tabella"><table>
+        <thead><tr><th scope="col">日時</th><th scope="col">操作</th><th scope="col">詳細</th><th scope="col">操作する</th></tr></thead>
+        <tbody id="operazioni"></tbody>
+    </table></div>
+    <p class="intro">履歴はバックアップとは別です。ここで取り消せるのは直近15件の範囲内です。</p>
+</main>
+<div id="confermaOperazione" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="titoloConferma" onkeydown="tastieraConferma(event)">
+    <div class="dialogo">
+        <h2 id="titoloConferma">この操作を取り消しますか？</h2>
+        <p id="descrizioneConferma"></p>
+        <p>選択した操作だけが取り消され、独立した変更はそのまま残ります。</p>
+        <div class="comandi">
+            <button type="button" id="nonAnnullare" onclick="chiudiConferma()">操作を残す</button>
+            <button type="button" id="annullaOperazione" onclick="eseguiAnnullamento()">取り消しを確定</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/errori-en.js"></script>
+<script src="../../js/operazioni-testi.js"></script>
+<script src="../../js/operazioni.js"></script>
+</body>
+</html>

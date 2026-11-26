@@ -1,27 +1,28 @@
 /* Stime locali: nessuna scadenza alimentare viene usata come consumo previsto. */
 (function () {
+    const messaggi = window.EatListaTesti?.[window.document?.documentElement.lang]?.forecast;
     const giorno = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const numeroGiorno = s => Date.parse(s + 'T00:00:00Z') / 86400000;
     const mediana = valori => { const a = [...valori].sort((a,b) => a-b); return (a[Math.floor((a.length-1)/2)] + a[Math.floor(a.length/2)]) / 2; };
     function calcola(dati, dispensa, adesso = new Date()) {
         const vuoto = testo => ({testo, prodotti: [], prossima: null});
-        if (!dati || dati.versione !== 1 || !Array.isArray(dati.giorni)) return vuoto('Green estimates need at least two months of recorded purchases and use.');
+        if (!dati || dati.versione !== 1 || !Array.isArray(dati.giorni)) return vuoto(messaggi?.[0] ?? 'Green estimates need at least two months of recorded purchases and use.');
         const oggi = giorno(adesso), nOggi = numeroGiorno(oggi);
         const inizio = new Date(dati.iniziato + 'T12:00:00');
         const mese = inizio.getMonth() + 2;
         const maturo = new Date(inizio.getFullYear(), mese, 1, 12);
         maturo.setDate(Math.min(inizio.getDate(), new Date(maturo.getFullYear(), maturo.getMonth()+1, 0).getDate()));
-        if (oggi < giorno(maturo)) return vuoto('We are learning your habits: estimates start after two months of records, with enough data.');
+        if (oggi < giorno(maturo)) return vuoto(messaggi?.[1] ?? 'We are learning your habits: estimates start after two months of records, with enough data.');
         const giorni = dati.giorni.filter(g => g.data <= oggi && numeroGiorno(g.data) >= nOggi - 180);
         // Tre prodotti distinti nello stesso giorno; più carichi nella giornata sono uniti.
         // I primi sette giorni possono rappresentare il riempimento iniziale della casa.
         const spese = giorni.filter(g => numeroGiorno(g.data) >= numeroGiorno(dati.iniziato) + 7 && new Set(g.prodotti.filter(p => p.carico > 0).map(p => p.prodotto)).size >= 3).map(g => g.data).sort();
-        if (spese.length < 4) return vuoto('We need at least four likely main shopping trips after the initial stock-up to estimate the next one.');
+        if (spese.length < 4) return vuoto(messaggi?.[2] ?? 'We need at least four likely main shopping trips after the initial stock-up to estimate the next one.');
         const recenti = spese.slice(-7), intervalli = recenti.slice(1).map((v,i) => numeroGiorno(v)-numeroGiorno(recenti[i]));
         const frequenza = mediana(intervalli);
-        if (frequenza < 3 || frequenza > 45 || Math.max(...intervalli) / Math.min(...intervalli) > 2.5) return vuoto('Shopping dates are still too irregular for a reliable estimate.');
+        if (frequenza < 3 || frequenza > 45 || Math.max(...intervalli) / Math.min(...intervalli) > 2.5) return vuoto(messaggi?.[3] ?? 'Shopping dates are still too irregular for a reliable estimate.');
         const prossimaNumero = numeroGiorno(recenti.at(-1)) + Math.round(frequenza);
-        if (prossimaNumero < nOggi) return vuoto('The expected shopping trip has not been recorded yet: waiting for new purchases before updating the estimate.');
+        if (prossimaNumero < nOggi) return vuoto(messaggi?.[4] ?? 'The expected shopping trip has not been recorded yet: waiting for new purchases before updating the estimate.');
         const prossima = new Date(prossimaNumero * 86400000).toISOString().slice(0,10);
         // La lista prepara la prossima spesa: la scorta deve coprire anche l'intervallo successivo.
         const coperturaNumero = prossimaNumero + Math.round(frequenza);
@@ -41,7 +42,9 @@
             const alGiorno = consumi.reduce((n,v) => n+v.consumo,0) / Math.max(1,nOggi-numeroGiorno(primo.data));
             if (p.quantita > 0 && p.quantita / alGiorno < coperturaNumero - nOggi) prodotti.push({...p, prossima});
         }
-        return {prossima, copertura, prodotti, testo: `Estimated next shopping trip: ${prossima.split('-').reverse().join('/')}. We check whether stock could last until the following trip, expected on ${copertura.split('-').reverse().join('/')}. Green means you still have some, but it might not last. You decide whether to buy it; tick it to leave it at the bottom.`};
+        const format = value => new Intl.DateTimeFormat(document.documentElement.lang).format(new Date(value + 'T12:00:00'));
+        const localizzato = messaggi?.[5]?.replace('{next}',format(prossima)).replace('{coverage}',format(copertura));
+        return {prossima, copertura, prodotti, testo: localizzato ?? `Estimated next shopping trip: ${prossima.split('-').reverse().join('/')}. We check whether stock could last until the following trip, expected on ${copertura.split('-').reverse().join('/')}. Green means you still have some, but it might not last. You decide whether to buy it; tick it to leave it at the bottom.`};
     }
     function aggiorna() {
         const dispensa = EatStorico.leggi('eat_dispensa_locale');

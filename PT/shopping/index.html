@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compras e anotações | EatMeFirst</title>
+  <meta name="robots" content="noindex">
+
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --text-color: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent-color: #58a6ff;
+      --border-color: #30363d;
+      --light-bg: #21262d;
+      --input-bg: #0d1117;
+
+      /* COLORI PRIORITÀ SPESA */
+      --bg-esaurito: #e53e3e;     /* Rosso / Scritta Bianca */
+      --text-esaurito: #ffffff;
+
+      --bg-in-scadenza: #238636;  /* Verde / Scritta Bianca (Quasi finito) */
+      --text-in-scadenza: #ffffff;
+
+      --bg-manuale: #4a5568;      /* Grigio / Scritta Bianca (Prodotto Nuovo) */
+      --text-manuale: #ffffff;
+
+      --postit-yellow: #fff59d;
+      --postit-text: #333333;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .container { max-width: 850px; margin: 0 auto; width: 100%; }
+
+    /* CARTA INTESTATA SUPERIORE */
+    .app-bar {
+      background: rgba(22, 27, 34, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 40;
+      border-radius: 12px; margin-bottom: 20px;
+    }
+
+    .app-brand { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      background: var(--light-bg); color: var(--text-color);
+      border: 1px solid var(--border-color); padding: 6px 14px;
+      border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+    }
+    .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+    .language-flags {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--light-bg); padding: 4px 8px;
+      border-radius: 20px; border: 1px solid var(--border-color);
+    }
+    .flag-link { text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+    .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+    /* TAB NAVIGAZIONE */
+    .nav-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .tab-btn {
+      flex: 1; padding: 12px; background: var(--card-bg);
+      border: 1px solid var(--border-color); color: var(--text-muted);
+      border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; text-align: center; transition: all 0.2s;
+    }
+    .tab-btn.active { background: var(--accent-color); color: #0d1117; border-color: var(--accent-color); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* SCHEDA NARRATIVA */
+    .narrative-card {
+      background: var(--card-bg); border-radius: 16px;
+      border: 1px solid var(--border-color); overflow: hidden;
+      margin-bottom: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .hero-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+    .narrative-content { padding: 20px; }
+    .narrative-title { font-size: 20px; color: var(--accent-color); margin-bottom: 10px; font-weight: 700; }
+    .narrative-text { font-size: 14.5px; color: var(--text-color); line-height: 1.6; }
+
+    .card-box {
+      background: var(--card-bg); border-radius: 16px;
+      border: 1px solid var(--border-color); padding: 24px;
+      margin-bottom: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .section-title {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 19px; color: var(--accent-color); font-weight: 700; margin-bottom: 16px;
+    }
+
+    .info-icon-link { display: inline-flex; align-items: center; text-decoration: none; transition: transform 0.2s; }
+    .info-icon-link:hover { transform: scale(1.15) rotate(-3deg); }
+    .info-icon-img { width: 28px; height: 28px; object-fit: contain; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); }
+
+    /* BARRA D'INSERIMENTO */
+    .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+    input[type="text"], textarea {
+      padding: 11px 14px; background: var(--input-bg);
+      border: 1px solid var(--border-color); border-radius: 8px;
+      color: var(--text-color); font-size: 14.5px; outline: none; flex: 1;
+    }
+    input[type="text"]:focus, textarea:focus { border-color: var(--accent-color); }
+
+    button.btn-add {
+      background: #238636; color: #fff; border: none; padding: 10px 22px;
+      border-radius: 8px; font-weight: bold; cursor: pointer; white-space: nowrap;
+      font-size: 14px; transition: background 0.2s;
+    }
+    button.btn-add:hover { background: #2ea043; }
+
+    /* LEGGENDA PRIORITÀ */
+    .priority-legend {
+      display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; font-size: 12.5px;
+    }
+    .legend-badge { padding: 4px 10px; border-radius: 6px; font-weight: 600; }
+    .badge-rosso { background: var(--bg-esaurito); color: var(--text-esaurito); }
+    .badge-verde { background: var(--bg-in-scadenza); color: var(--text-in-scadenza); }
+    .badge-grigio { background: var(--bg-manuale); color: var(--text-manuale); }
+
+    /* LISTA UNICA FLUIDA */
+    .item-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    /* RIGHE PRODOTTI CON COLORI */
+    .item-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; border-radius: 10px; font-size: 15px; font-weight: 600;
+      transition: all 0.25s ease;
+    }
+    .item-row.prio-esaurito { background: var(--bg-esaurito); color: var(--text-esaurito); }
+    .item-row.prio-scadenza { background: var(--bg-in-scadenza); color: var(--text-in-scadenza); }
+    .item-row.prio-manuale { background: var(--bg-manuale); color: var(--text-manuale); }
+
+    .qty-tag {
+      font-size: 12.5px;
+      background: rgba(0,0,0,0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      font-weight: normal;
+    }
+
+    /* PRODOTTI SPUNTATI BARRATI E IN FONDO */
+    .item-row.checked {
+      background: var(--light-bg) !important;
+      color: var(--text-muted) !important;
+      opacity: 0.55;
+    }
+    .item-row.checked span { text-decoration: line-through; }
+
+    .item-left { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .item-left input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+    .btn-delete { background: transparent; border: none; color: inherit; font-size: 18px; cursor: pointer; padding: 0 4px; }
+
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px; }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<script defer src="../../js/analytics-consenso.js?v=removed-20261116"></script>
+<link rel="stylesheet" href="../../css/language-picker.css?v=1">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- CARTA INTESTATA SUPERIORE -->
+    <header class="app-bar">
+      <div class="app-brand">
+        <a href="../menu.html" class="btn-back">← Menu</a>
+        <div class="mini-logo" style="display: inline-flex; align-items: center;">
+          <img src="../../IMG/logo_1024_white.png" alt="Logo EatMeFirst" style="height: 32px; width: auto;">
+        </div>
+        <span class="brand-title">Compras e anotações</span>
+      </div>
+      <div class="app-nav-right">
+        <details class="language-picker"><summary>Idiomas</summary><div class="language-picker-list"><a href="../../IT/spesa/index.html" lang="it">Italiano</a><a href="../../EN/shopping/index.html" lang="en">English</a><a href="../../FR/courses/index.html" lang="fr">Français</a><a href="../../DE/einkaufsliste/index.html" lang="de">Deutsch</a><a href="../../ES/compra/index.html" lang="es">Español</a><a href="../../JA/shopping/index.html" lang="ja">日本語</a><a href="../../PT/shopping/index.html" lang="pt-BR" aria-current="page">Português (Brasil)</a></div></details>
+        <a href="../operations/index.html">Últimas 15 operações</a>
+      </div>
+    </header>
+
+    <!-- TAB NAVIGAZIONE -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="openTab(event, 'tab-spesa')">Lista de compras</button>
+      <button class="tab-btn" onclick="openTab(event, 'tab-cose-da-fare')">Tarefas</button>
+      <button class="tab-btn" onclick="openTab(event, 'tab-block-notes')">Anotações</button>
+    </nav>
+
+    <!-- TAB 1: LISTA SPESA -->
+    <section id="tab-spesa" class="tab-content active">
+
+      <article class="narrative-card">
+        <img src="../../IT/IMG/gestione-lista-spesa-corsia-supermercato.png" alt="Eva no supermercado" class="hero-img">
+        <div class="narrative-content">
+          <h2 class="narrative-title">Tudo pronto para ir ao mercado?</h2>
+          <div class="narrative-text">
+            <p>Prepare sua lista de compras. Se a montar no computador, transfira o arquivo da despensa para o celular antes de sair. Os aparelhos não se atualizam automaticamente. Você encontra a exportação e a importação em <strong>Utilidades</strong>.</p>
+            <p style="margin-top: 8px;">Ao colocar um produto no carrinho, marque a caixa. O item escurece, fica riscado e vai para o fim da lista. Desta vez até o Max vai conseguir trazer tudo!</p>
+          </div>
+        </div>
+      </article>
+
+      <div class="card-box">
+        <h2 class="section-title">
+          <span>Lista de compras</span>
+          <a href="grocery-shopping-list-guide.html" class="info-icon-link" title="Ajuda da lista de compras">
+            <img src="../../IMG/biglietto_info.jpg" alt="Ajuda da lista de compras" class="info-icon-img">
+          </a>
+        </h2>
+
+        <!-- LEGGENDA PRIORITÀ -->
+        <div class="priority-legend">
+          <span class="legend-badge badge-rosso">🔴 Vermelho: acabou</span>
+          <span class="legend-badge badge-verde">🟢 Verde: pode acabar</span>
+          <span class="legend-badge badge-grigio">🩶 Cinza: novo produto</span>
+        </div>
+
+        <!-- BARRA AGGIUNTA MANUALE -->
+        <div class="field-label" style="margin-bottom: 6px; font-size: 13.5px; color: var(--text-muted);">Adicione uma anotação ou um novo produto:</div>
+        <div class="input-group">
+          <input type="text" id="input-spesa" placeholder="Ex.: 1 pote de geleia, cogumelos, peixe fresco…" onkeypress="if(event.key === 'Enter') addManualItem()">
+          <button class="btn-add" onclick="addManualItem()">+ Adicionar</button>
+        </div>
+
+        <!-- LISTA UNICA FLUIDA (VUOTA) -->
+        <ul id="lista-spesa-ul" class="item-list"></ul>
+      </div>
+    </section>
+
+    <!-- TAB 2: COSE DA FARE (COMMISSIONI) -->
+    <section id="tab-cose-da-fare" class="tab-content">
+      <div class="card-box">
+        <h2 class="section-title">
+          <span>Lista de tarefas</span>
+          <a href="to-do-list-guide.html" class="info-icon-link" title="Ajuda da lista de tarefas">
+            <img src="../../IMG/biglietto_info.jpg" alt="Ajuda da lista de tarefas" class="info-icon-img">
+          </a>
+        </h2>
+        <p class="field-label" style="margin-bottom: 12px; font-size: 13.5px; color: var(--text-muted);">Lembre-se das tarefas fora de casa, como passar na farmácia, na loja de ferragens ou na livraria.</p>
+
+        <div class="input-group">
+          <input type="text" id="input-todo" placeholder="Ex.: farmácia, cópia da chave…" onkeypress="if(event.key === 'Enter') addTodoItem()">
+          <button class="btn-add" onclick="addTodoItem()">+ Adicionar</button>
+        </div>
+
+        <ul id="list-todo" class="item-list"></ul>
+      </div>
+    </section>
+
+    <!-- TAB 3: BLOCK NOTES & FOTO -->
+    <section id="tab-block-notes" class="tab-content">
+      <div class="card-box">
+        <h2 class="section-title">
+          <span>Anotações e fotos</span>
+          <a href="notepad-guide.html" class="info-icon-link" title="Ajuda das anotações">
+            <img src="../../IMG/biglietto_info.jpg" alt="Ajuda das anotações" class="info-icon-img">
+          </a>
+        </h2>
+        <p class="field-label" style="margin-bottom: 12px; font-size: 13.5px; color: var(--text-muted);">Viu uma roupa, um presente ou algo na vitrine? Guarde uma foto e uma anotação para pensar depois ou conversar com a família. Baixe uma cópia da imagem e escolha como compartilhá-la.</p>
+
+        <textarea id="note-text" rows="3" placeholder="Escreva uma anotação, receita ou lembrete…"></textarea>
+
+        <!-- DUE PULSANTI DISTINTi: ATTIVA FOTOCAMERA LIVE E CARICA FILE -->
+        <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+
+          <!-- Pulsante per aprire la fotocamera live -->
+          <button type="button" onclick="startCamera()" style="flex: 1; min-width: 140px; background: #238636; border: none; padding: 11px 12px; border-radius: 8px; text-align: center; cursor: pointer; font-size: 13.5px; color: #fff; font-weight: 600; transition: background 0.2s;">
+            📸 Abrir câmera
+          </button>
+
+          <!-- Pulsante per caricare un file o immagine esistente dalla galleria -->
+          <label style="flex: 1; min-width: 140px; background: var(--light-bg); border: 1px solid var(--border-color); padding: 11px 12px; border-radius: 8px; text-align: center; cursor: pointer; font-size: 13.5px; color: var(--text-color); font-weight: 600; display: block; transition: border-color 0.2s;">
+            📁 Escolher imagem
+            <input type="file" accept="image/*" style="display: none;" onchange="previewImage(event)">
+          </label>
+
+        </div>
+
+        <!-- BOX VIDEO LIVE FOTOCAMERA (Nascosto finché non si clicca su Apri Fotocamera) -->
+        <div id="camera-stream-box" style="display: none; margin-top: 12px; text-align: center; background: #000; border-radius: 8px; padding: 10px; border: 1px solid var(--border-color);">
+          <video id="video-elem" autoplay playsinline style="width: 100%; max-height: 220px; border-radius: 6px; object-fit: cover;"></video>
+          <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
+            <button type="button" onclick="takeSnapshot()" style="background: #238636; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">🔴 Tirar foto</button>
+            <button type="button" onclick="stopCamera()" style="background: #e53e3e; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">✕ Fechar</button>
+          </div>
+        </div>
+        <canvas id="canvas-elem" style="display: none;"></canvas>
+
+        <!-- ANTEPRIMA FOTO ACQUISITA -->
+        <div id="foto-preview-container" style="display: none; margin-top: 12px; position: relative; text-align: center;">
+          <img id="img-preview" src="" alt="Prévia" style="max-height: 150px; border-radius: 8px; border: 1px solid var(--border-color);">
+          <button onclick="clearPhoto()" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px;">✕</button>
+        </div>
+
+        <button class="btn-add" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="savePostItNote()">💾 Salvar no mural</button>
+
+        <h3 style="color: var(--accent-color); margin-top: 25px; margin-bottom: 10px;">📌 Mural</h3>
+        <div id="postit-bacheca" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>© EatMeFirst · Inventário salvo no dispositivo</span>
+  </footer>
+
+  <script src="../../js/errori-en.js"></script>
+<script src="../../js/storico-it.js?v=foto-rimozione-definitiva-3"></script>
+  <script src="../../js/lista-spesa-testi.js"></script>
+  <script src="../../js/previsioni-en.js"></script>
+  <script src="../../js/lista-spesa.js"></script>
+</body>
+</html>

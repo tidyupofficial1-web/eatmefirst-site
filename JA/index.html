@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>EatMeFirstへようこそ | EatMeFirst</title>
+  <link rel="icon" href="../sito-bozza/assets/logo.png">
+  <link rel="stylesheet" href="../css/language-picker.css?v=1">
+  <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --border-color: #30363d;
+            --light-bg: #21262d;
+            --success-color: #2ea44f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* COMMON HEADER BAR */
+        .language-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-badge {
+            width: 36px; height: 36px; background-color: #FFFFFF;
+            border-radius: 50%; padding: 2px; display: flex;
+            align-items: center; justify-content: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+        }
+
+        .logo-badge img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+        .brand-name { font-size: 16px; font-weight: 700; color: var(--text-color); }
+
+        .flags-container { display: flex; gap: 6px; align-items: center; }
+        .flag-link {
+            text-decoration: none; display: flex; align-items: center; gap: 4px;
+            font-size: 11px; font-weight: bold; color: var(--text-color);
+            padding: 4px 6px; border-radius: 4px; border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .flag-link:hover, .flag-link.active { border-color: var(--border-color); background: var(--light-bg); }
+        .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+        .main-container { max-width: 900px; margin: 75px auto 40px auto; padding: 0 16px; }
+        .hero-card {
+            background: var(--card-bg); border-radius: 16px;
+            border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            overflow: hidden; margin-bottom: 30px;
+        }
+        .hero-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+        .story-content { padding: 24px; }
+        .story-content h1 { font-size: 24px; color: var(--accent-color); margin-bottom: 15px; font-weight: 700; }
+        .story-content h2 { font-size: 18px; color: var(--accent-color); margin-top: 20px; margin-bottom: 10px; }
+        .story-text { font-size: 15.5px; color: var(--text-color); margin-bottom: 15px; line-height: 1.65; }
+
+        .greeting-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 15.5px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .user-name-inline {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: var(--accent-color);
+            font-size: 14.5px;
+            font-weight: bold;
+            outline: none;
+            width: 220px;
+            transition: border-color 0.2s;
+        }
+
+        .user-name-inline:focus {
+            border-color: var(--accent-color);
+        }
+
+        .hidden-story {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .hidden-story.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .leo-box {
+            background: var(--light-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 15px;
+        }
+
+        .consent-box {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 25px 20px; text-align: center;
+            margin-top: 25px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .btn-conditions {
+            background: none; border: none; color: var(--accent-color);
+            font-size: 14px; font-weight: 600; text-decoration: underline;
+            cursor: pointer; margin-bottom: 15px; display: inline-block;
+        }
+
+        .checkbox-label {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+            margin-bottom: 20px; color: var(--text-color);
+        }
+
+        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+
+        .btn-enter {
+            background-color: var(--accent-color); color: #0d1117; border: none;
+            padding: 14px 32px; font-size: 16px; font-weight: 700; border-radius: 8px;
+            cursor: pointer; transition: all 0.3s; opacity: 0.4; pointer-events: none;
+            text-decoration: none; display: inline-block; width: 100%; max-width: 320px;
+        }
+
+        .btn-enter.active { opacity: 1; pointer-events: auto; box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3); }
+        .btn-enter.active:hover { transform: translateY(-2px); background-color: #79c0ff; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8); display: none; justify-content: center;
+            align-items: center; z-index: 100; padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; max-width: 650px; width: 100%; max-height: 80vh;
+            overflow-y: auto; padding: 25px; position: relative;
+        }
+
+        .modal-content h2 { font-size: 20px; margin-bottom: 15px; color: var(--accent-color); }
+        .modal-body { font-size: 13.5px; color: var(--text-color); line-height: 1.6; margin-bottom: 20px; text-align: left; }
+        .modal-body h3 { font-size: 14px; margin-top: 16px; margin-bottom: 6px; color: var(--accent-color); }
+
+        .btn-close-modal {
+            background: var(--light-bg); color: var(--text-color); border: 1px solid var(--border-color);
+            padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; float: right;
+        }
+
+        @media (max-width: 600px) {
+            .brand-name { display: none; }
+            .story-content { padding: 18px; }
+            .story-content h1 { font-size: 20px; }
+            .story-text { font-size: 14.5px; }
+            .language-bar { padding: 8px 12px; }
+            .user-name-inline { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+  <header class="language-bar">
+    <div class="logo-container"><div class="logo-badge"><img src="../IMG/logo_1024_white.png" alt=""></div><span class="brand-name">EatMeFirst</span></div>
+    <details class="language-picker"><summary>言語</summary><div class="language-picker-list"><a href="../IT/index.html" lang="it">Italiano</a><a href="../EN/index.html" lang="en">English</a><a href="../FR/index.html" lang="fr">Français</a><a href="../DE/index.html" lang="de">Deutsch</a><a href="../ES/index.html" lang="es">Español</a><a href="../JA/index.html" lang="ja" aria-current="page">日本語</a><a href="../PT/index.html" lang="pt-BR">Português (Brasil)</a></div></details>
+  </header>
+  <main class="main-container">
+    <article class="hero-card">
+      <img src="../EN/IMG/home-pantry-inventory-organization.png" alt="" class="hero-img">
+      <div class="story-content">
+        <h1>EatMeFirstへようこそ</h1>
+        <p>こんにちは、マックスとエヴァです！</p>
+        <div class="story-text">
+          <h2>買い物と食品ストックをもっと分かりやすく</h2>
+          <p>冷蔵庫の奥に食品を置いたまま忘れたり、同じものを買ったりしたことはありませんか。EatMeFirstでは、家にある量と保管場所、期限を確認してから買い物に出かけられます。</p>
+          <p>バーコードがない市場の果物や作り置きの料理も、名前を入力して登録できます。開封した容器は、たとえば残り30％と記録できます。</p>
+        </div>
+      </div>
+    </article>
+    <article class="hero-card">
+      <img src="../EN/IMG/food-expiration-date-tracker-app.png" alt="" class="hero-img">
+      <div class="story-content"><div class="story-text leo-box"><p><strong>レオ（開発担当）</strong></p><p>確定した変更は、今使っている端末のブラウザーにすぐ無料で保存されます。アカウントは不要です。バーコードで検索するときは、商品データベースにコードが送られます。</p></div></div>
+    </article>
+    <form class="consent-box" id="app-consent" action="menu.html" data-error="このブラウザーに同意を保存できませんでした。サイトデータの保存を許可して、もう一度お試しください。">
+      <p><label for="userName">お名前（任意）</label><br><input type="text" id="userName" name="userName" class="user-name-inline" maxlength="80"></p>
+      <p><a href="termini.html" class="btn-conditions" target="_blank" rel="noopener">利用条件を読む</a></p>
+      <label class="checkbox-label"><input type="checkbox" name="accept" required><span>利用条件を読み、同意します。</span></label>
+      <button type="submit" class="btn-enter active">はじめる</button>
+      <p role="status" id="consent-error"></p>
+    </form>
+  </main>
+  <script src="../js/ingresso-ja-pt.js"></script>
+</body>
+</html>

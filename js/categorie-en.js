@@ -1,6 +1,7 @@
 /* Categorie italiane: nessuna riclassificazione dei prodotti esistenti. */
 (function () {
     const KEY = 'eat_categorie_personalizzate_v1';
+    const labels = window.EatInventarioTesti?.[window.document?.documentElement.lang]?.inventory;
     const iniziali = []; // Le categorie vengono ricordate solo dopo l’inserimento dell’utente.
     const pulisci = v => typeof v === 'string' ? v.trim().replace(/\s+/g, ' ') : '';
     const id = v => pulisci(v).toLocaleLowerCase('en');
@@ -83,12 +84,12 @@
         const sub = document.getElementById('filtroSottocategoria');
         if (reset) {
             const valore = cat.value;
-            cat.replaceChildren(new Option('All categories', ''));
+            cat.replaceChildren(new Option(labels?.['All categories'] ?? 'All categories', ''));
             [...new Set(prodotti.map(p => p.categoria).filter(Boolean))].sort().forEach(c => cat.appendChild(new Option(c, c)));
             if ([...cat.options].some(o => o.value === valore)) cat.value = valore;
         }
         const valoreSub = sub.value;
-        sub.replaceChildren(new Option('All subcategories', ''));
+        sub.replaceChildren(new Option(labels?.['All subcategories'] ?? 'All subcategories', ''));
         const scelte = prodotti.filter(p => !cat.value || p.categoria === cat.value);
         [...new Set(scelte.map(p => p.sottocategoria).filter(Boolean))].sort().forEach(s => sub.appendChild(new Option(s, s)));
         sub.disabled = !cat.value;
