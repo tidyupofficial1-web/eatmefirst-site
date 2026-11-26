@@ -27,6 +27,6 @@ window.EatMessaggiTestiDE = [
     "giorno": 110,
     "mittente": "Max, Eva & Leo 🤝",
     "avatar": "avatar_trio.png",
-    "testo": "Änderungen am Vorrat werden automatisch und kostenlos auf Ihrem Gerät gespeichert. Auch der Export einer externen Kopie ist während dieser Startphase kostenlos, ohne Countdown. Künftig kann der Export ein optionaler kostenpflichtiger Dienst werden. Preis und Bedingungen werden vor einer Änderung mitgeteilt. Die Grundfunktionen und der Import vorhandener Kopien bleiben kostenlos."
+    "testo": "Änderungen am Vorrat werden automatisch und kostenlos auf Ihrem Gerät gespeichert. Der Export einer externen Kopie ist optional."
   }
 ];

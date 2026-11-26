@@ -27,6 +27,6 @@ window.EatMessaggiTestiES = [
     "giorno": 110,
     "mittente": "Max, Eva & Leo 🤝",
     "avatar": "avatar_trio.png",
-    "testo": "Los cambios del inventario se guardan automáticamente en tu dispositivo, gratis. Exportar una copia externa también es gratis durante esta fase de lanzamiento, sin cuenta atrás. En el futuro, la exportación podrá convertirse en un servicio de pago opcional: el precio y las condiciones se comunicarán antes de cualquier cambio. Las funciones básicas y la importación de copias seguirán siendo gratuitas."
+    "testo": "Los cambios del inventario se guardan automáticamente y gratis en tu dispositivo. Exportar una copia externa es opcional."
   }
 ];

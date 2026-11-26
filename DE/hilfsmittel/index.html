@@ -212,7 +212,7 @@
         <section class="section-card" id="trasferimento-dispensa">
       <p>💬 <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" target="_blank" rel="noopener noreferrer">Tipps und Hilfe auf der Website</a></p>
       <h2 class="section-title">💾 Bestand exportieren und importieren</h2>
-<p><strong>Bestätigte Änderungen werden automatisch auf deinem Gerät gespeichert, dauerhaft kostenlos.</strong></p><p>Vorrat exportieren erstellt eine Datei, die du auf einem anderen Gerät mit Vorrat importieren öffnen kannst. Der Export ist optional, während der Testphase kostenlos und anschließend im Abonnement verfügbar.</p><p>Die Übertragung erfolgt manuell: Geräte synchronisieren sich nicht automatisch.</p>
+<p><strong>Bestätigte Änderungen werden automatisch auf deinem Gerät gespeichert, dauerhaft kostenlos.</strong></p><p>Vorrat exportieren erstellt eine Datei, die du auf einem anderen Gerät mit Vorrat importieren öffnen kannst. Der Export einer externen Kopie ist optional.</p><p>Die Übertragung erfolgt manuell: Geräte synchronisieren sich nicht automatisch.</p>
 <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
 
 <div class="backup-comandi">
@@ -326,7 +326,7 @@
       <div>
         <h3 style="font-size: 1.05rem; color: #fca5a5;">2. Ganz von vorn beginnen</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
-          Leert Bestand, Katalog, Listen, Notizen, Einstellungen. Erste Zustimmung, Dienstlaufzeit und Verlängerungen bleiben erhalten: Die kostenlose Zeit beginnt nicht neu und die Einführung wird nicht wiederholt.
+          Leert Bestand, Katalog, Listen, Notizen, Einstellungen. Ihre ursprüngliche Zustimmung zu den Nutzungsbedingungen bleibt erhalten.
         </p>
         <button class="btn-danger-action" onclick="openResetModal('reset_totale')">Ganz von vorn beginnen</button>
       </div>
@@ -402,12 +402,12 @@
       if (type === 'nuovo_inizio') {
         title.innerText = "⚠️ Neustart bestätigen?";
         title.style.color = "#ed8936";
-        text.innerHTML = "Der aktive Bestand wird geleert: Mengen, Haltbarkeitsdaten und alte Erinnerungen werden nicht übernommen. Codes, Namen, Fotos, Kategorien, Packungsgrößen und Geschäfte bleiben im Zugangskatalog. Listen und Pinnwandnotizen bleiben; Verlauf und Verbrauchsschätzungen beginnen neu.<br><br>Vorher wird eine wiederherstellbare Kopie gespeichert, die eine frühere Wiederherstellungskopie ersetzt. Exportiere zusätzlich eine Datei: Eine lokale Kopie schützt nicht vor einem Gerätedefekt.<br><br>Zustimmung und Abonnement bleiben erhalten.";
+        text.innerHTML = "Der aktive Bestand wird geleert: Mengen, Haltbarkeitsdaten und alte Erinnerungen werden nicht übernommen. Codes, Namen, Fotos, Kategorien, Packungsgrößen und Geschäfte bleiben im Zugangskatalog. Listen und Pinnwandnotizen bleiben; Verlauf und Verbrauchsschätzungen beginnen neu.<br><br>Vorher wird eine wiederherstellbare Kopie gespeichert, die eine frühere Wiederherstellungskopie ersetzt. Exportiere zusätzlich eine Datei: Eine lokale Kopie schützt nicht vor einem Gerätedefekt.<br><br>Ihre Zustimmung zu den Nutzungsbedingungen bleibt erhalten.";
         confirmBtn.style.background = "#ed8936";
       } else if (type === 'reset_totale') {
         title.innerText = "🚨 Ganz von vorn beginnen?";
         title.style.color = "#e53e3e";
-        text.innerHTML = "Bestand, Katalog, Listen, Pinnwandnotizen, Verlauf und Einstellungen werden geleert. Erste Zustimmung und Anspruch auf den externen Sicherungsdienst einschließlich Verlängerungen bleiben erhalten: Die kostenlose Zeit beginnt nicht neu.<br><br>Vorher wird eine wiederherstellbare Kopie gespeichert und ersetzt die vorherige. Exportiere zusätzlich eine Datei an einen anderen Ort: Die lokale Kopie schützt nicht vor einem Defekt.<br><br>Die Bedingungen bleiben akzeptiert. Die Einführung wird nicht wiederholt.";
+        text.innerHTML = "Bestand, Katalog, Listen, Pinnwandnotizen, Verlauf und Einstellungen werden geleert. Ihre ursprüngliche Zustimmung zu den Nutzungsbedingungen bleibt erhalten.<br><br>Vorher wird eine wiederherstellbare Kopie gespeichert und ersetzt die vorherige. Exportiere zusätzlich eine Datei an einen anderen Ort: Die lokale Kopie schützt nicht vor einem Defekt.<br><br>Die Bedingungen bleiben akzeptiert. Die Einführung wird nicht wiederholt.";
         confirmBtn.style.background = "#e53e3e";
       }
 
@@ -430,7 +430,7 @@
         importazioneInAttesa = null;
         document.getElementById('anteprimaImportazione').hidden = true;
         aggiornaSituazioneBackup();
-        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Neustart abgeschlossen: Bestand leer, ${risultato.catalogo} Produkte im Zugangskatalog. Der vorherige Stand ist über Wiederherstellen verfügbar.` : 'Neubeginn abgeschlossen. Zustimmung und Dienstanspruch erhalten. Der vorherige Stand ist über Wiederherstellen verfügbar.';
+        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Neustart abgeschlossen: Bestand leer, ${risultato.catalogo} Produkte im Zugangskatalog. Der vorherige Stand ist über Wiederherstellen verfügbar.` : 'Neubeginn abgeschlossen. Ihre Zustimmung zu den Nutzungsbedingungen bleibt erhalten. Der vorherige Stand ist über Wiederherstellen verfügbar.';
         window.scrollTo({top:document.getElementById('trasferimento-dispensa').offsetTop,behavior:'smooth'});
       } catch (errore) { alert('Zurücksetzen nicht durchgeführt. ' + EatErroriDE(errore.message)); }
     }

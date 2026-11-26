@@ -27,6 +27,6 @@ window.EatMessaggiTestiFR = [
     "giorno": 110,
     "mittente": "Max, Eva & Leo 🤝",
     "avatar": "avatar_trio.png",
-    "testo": "Les modifications de votre inventaire sont enregistrées automatiquement sur votre appareil, gratuitement. L’exportation d’une copie externe est également gratuite pendant cette phase de lancement, sans compte à rebours. Elle pourra devenir un service payant facultatif à l’avenir : le prix et les conditions seront annoncés avant tout changement. Les fonctions de base et l’importation des copies restent gratuites."
+    "testo": "Les modifications sont enregistrées automatiquement et gratuitement sur votre appareil. L’exportation d’une copie externe est facultative."
   }
 ];

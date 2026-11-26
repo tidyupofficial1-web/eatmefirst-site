@@ -27,6 +27,6 @@ window.EatMessaggiTestiEN = [
     "giorno": 110,
     "mittente": "Max, Eva & Leo 🤝",
     "avatar": "avatar_trio.png",
-    "testo": "Changes to your inventory are saved automatically on your device, free of charge. Exporting an external copy is also free during this launch phase, with no countdown. In the future, export may become an optional paid service: the price and terms will be announced before any change. Basic functions and importing existing copies remain free."
+    "testo": "Changes to your inventory are saved automatically on your device, free of charge. Exporting an external copy is optional."
   }
 ];

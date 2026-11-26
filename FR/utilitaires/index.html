@@ -212,7 +212,7 @@
         <section class="section-card" id="trasferimento-dispensa">
       <p>💬 <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" target="_blank" rel="noopener noreferrer">Conseils et aide sur le site</a></p>
       <h2 class="section-title">💾 Exporter et importer les réserves</h2>
-<p><strong>Les modifications confirmées sont enregistrées automatiquement sur votre appareil, toujours gratuitement.</strong></p><p>Exporter les réserves crée un fichier à ouvrir sur un autre appareil avec Importer les réserves. L’exportation est facultative et gratuite pendant la période d’essai. Elle sera ensuite disponible sur abonnement.</p><p>Le transfert est manuel : les appareils ne se synchronisent pas automatiquement.</p>
+<p><strong>Les modifications confirmées sont enregistrées automatiquement sur votre appareil, toujours gratuitement.</strong></p><p>Exporter les réserves crée un fichier à ouvrir sur un autre appareil avec Importer les réserves. L’exportation d’une copie externe est facultative.</p><p>Le transfert est manuel : les appareils ne se synchronisent pas automatiquement.</p>
 <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
 
 <div class="backup-comandi">
@@ -326,7 +326,7 @@
       <div>
         <h3 style="font-size: 1.05rem; color: #fca5a5;">2. Repartir de zéro</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
-          Vide inventaire, catalogue, listes, notes, préférences. Conserve la première acceptation des conditions, la durée du service et les prolongations : la période gratuite ne recommence pas et la présentation initiale n’est pas répétée.
+          Vide inventaire, catalogue, listes, notes, préférences. Conserve la première acceptation des conditions.
         </p>
         <button class="btn-danger-action" onclick="openResetModal('reset_totale')">Repartir de zéro</button>
       </div>
@@ -402,12 +402,12 @@
       if (type === 'nuovo_inizio') {
         title.innerText = "⚠️ Confirmer le nouveau départ ?";
         title.style.color = "#ed8936";
-        text.innerHTML = "L’inventaire actif sera vide : quantités, dates et anciens rappels ne seront pas repris. Codes, noms, photos, catégories, formats et magasins restent dans le catalogue des entrées. Listes et notes du tableau restent ; historique et estimations de consommation repartent de zéro.<br><br>Une copie récupérable est conservée avant l’opération, en remplaçant l’ancienne copie de récupération. Exporte aussi un fichier : une copie locale ne protège pas d’une panne.<br><br>Acceptation et abonnement restent conservés.";
+        text.innerHTML = "L’inventaire actif sera vide : quantités, dates et anciens rappels ne seront pas repris. Codes, noms, photos, catégories, formats et magasins restent dans le catalogue des entrées. Listes et notes du tableau restent ; historique et estimations de consommation repartent de zéro.<br><br>Une copie récupérable est conservée avant l’opération, en remplaçant l’ancienne copie de récupération. Exporte aussi un fichier : une copie locale ne protège pas d’une panne.<br><br>Votre acceptation des conditions est conservée.";
         confirmBtn.style.background = "#ed8936";
       } else if (type === 'reset_totale') {
         title.innerText = "🚨 Confirmer le retour à zéro ?";
         title.style.color = "#e53e3e";
-        text.innerHTML = "Inventaire, catalogue, listes, tableau de notes, historique et préférences seront vidés. La première acceptation et le droit au service de sauvegarde externe, prolongations comprises, restent : la période gratuite ne recommence pas.<br><br>Une copie récupérable est conservée avant l’opération et remplace la précédente. Exporte aussi un fichier ailleurs : la copie locale ne protège pas d’une panne.<br><br>Les conditions restent acceptées, sans répéter la présentation initiale.";
+        text.innerHTML = "Inventaire, catalogue, listes, tableau de notes, historique et préférences seront vidés. Votre première acceptation des conditions est conservée.<br><br>Une copie récupérable est conservée avant l’opération et remplace la précédente. Exporte aussi un fichier ailleurs : la copie locale ne protège pas d’une panne.<br><br>Les conditions restent acceptées, sans répéter la présentation initiale.";
         confirmBtn.style.background = "#e53e3e";
       }
 
@@ -430,7 +430,7 @@
         importazioneInAttesa = null;
         document.getElementById('anteprimaImportazione').hidden = true;
         aggiornaSituazioneBackup();
-        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Nouveau départ terminé : inventaire vide, ${risultato.catalogo} produits dans le catalogue des entrées. La situation précédente est disponible avec le bouton de récupération.` : 'Retour à zéro terminé. Acceptation et droit au service conservés. La situation précédente est disponible avec le bouton de récupération.';
+        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Nouveau départ terminé : inventaire vide, ${risultato.catalogo} produits dans le catalogue des entrées. La situation précédente est disponible avec le bouton de récupération.` : 'Retour à zéro terminé. Votre acceptation des conditions est conservée. La situation précédente est disponible avec le bouton de récupération.';
         window.scrollTo({top:document.getElementById('trasferimento-dispensa').offsetTop,behavior:'smooth'});
       } catch (errore) { alert('Réinitialisation non effectuée. ' + EatErroriFR(errore.message)); }
     }

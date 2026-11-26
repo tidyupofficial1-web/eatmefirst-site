@@ -212,7 +212,7 @@
         <section class="section-card" id="trasferimento-dispensa">
       <p>💬 <a href="https://tidyupofficial1-web.github.io/eatmefirst-site/" target="_blank" rel="noopener noreferrer">Consejos y ayuda en el sitio web</a></p>
       <h2 class="section-title">💾 Exportar e importar la despensa</h2>
-<p><strong>Los cambios confirmados se guardan automáticamente en tu dispositivo, siempre gratis.</strong></p><p>Exportar despensa crea un archivo para abrir en otro dispositivo con Importar despensa. La exportación es opcional, gratuita durante el período de prueba y después estará disponible por suscripción.</p><p>La transferencia es manual: los dispositivos no se sincronizan automáticamente.</p>
+<p><strong>Los cambios confirmados se guardan automáticamente en tu dispositivo, siempre gratis.</strong></p><p>Exportar despensa crea un archivo para abrir en otro dispositivo con Importar despensa. Exportar una copia externa es opcional.</p><p>La transferencia es manual: los dispositivos no se sincronizan automáticamente.</p>
 <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
 
 <div class="backup-comandi">
@@ -326,7 +326,7 @@
       <div>
         <h3 style="font-size: 1.05rem; color: #fca5a5;">2. Empezar desde cero</h3>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
-          Vacía despensa, catálogo, listas, notas, preferencias. Conserva la primera aceptación, el período del servicio y sus ampliaciones: no reinicia el período gratuito ni repite la presentación.
+          Vacía despensa, catálogo, listas, notas, preferencias. Conserva la primera aceptación de las condiciones.
         </p>
         <button class="btn-danger-action" onclick="openResetModal('reset_totale')">Empezar desde cero</button>
       </div>
@@ -402,12 +402,12 @@
       if (type === 'nuovo_inizio') {
         title.innerText = "⚠️ ¿Confirmas el nuevo comienzo?";
         title.style.color = "#ed8936";
-        text.innerHTML = "La despensa activa quedará vacía: no se conservarán cantidades, fechas ni antiguos recordatorios. Códigos, nombres, fotos, categorías, formatos y tiendas permanecerán en el catálogo de Entradas. Las listas y notas permanecen; el historial y las estimaciones empiezan de nuevo.<br><br>Antes se guarda una copia recuperable que sustituye la copia anterior. Exporta también un archivo: la copia local no protege frente a una avería.<br><br>La aceptación, suscripción se conservan.";
+        text.innerHTML = "La despensa activa quedará vacía: no se conservarán cantidades, fechas ni antiguos recordatorios. Códigos, nombres, fotos, categorías, formatos y tiendas permanecerán en el catálogo de Entradas. Las listas y notas permanecen; el historial y las estimaciones empiezan de nuevo.<br><br>Antes se guarda una copia recuperable que sustituye la copia anterior. Exporta también un archivo: la copia local no protege frente a una avería.<br><br>Se conserva tu aceptación de las condiciones.";
         confirmBtn.style.background = "#ed8936";
       } else if (type === 'reset_totale') {
         title.innerText = "🚨 ¿Confirmas empezar desde cero?";
         title.style.color = "#e53e3e";
-        text.innerHTML = "Se vaciarán despensa, catálogo, listas, notas, historial y preferencias. Se conservan la primera aceptación y el derecho al servicio de copia externa, incluidas las ampliaciones: el período gratuito no comienza de nuevo.<br><br>Antes se conserva una copia recuperable que sustituye la anterior. Exporta también un archivo a otro lugar: la copia local no protege frente a una avería.<br><br>Las condiciones siguen aceptadas y no se repite la presentación.";
+        text.innerHTML = "Se vaciarán despensa, catálogo, listas, notas, historial y preferencias. Se conserva tu primera aceptación de las condiciones.<br><br>Antes se conserva una copia recuperable que sustituye la anterior. Exporta también un archivo a otro lugar: la copia local no protege frente a una avería.<br><br>Las condiciones siguen aceptadas y no se repite la presentación.";
         confirmBtn.style.background = "#e53e3e";
       }
 
@@ -430,7 +430,7 @@
         importazioneInAttesa = null;
         document.getElementById('anteprimaImportazione').hidden = true;
         aggiornaSituazioneBackup();
-        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Nuevo comienzo completado: despensa vacía, ${risultato.catalogo} productos en el catálogo de Entradas. Situación anterior disponible en Recuperar.` : 'Reinicio completado. Aceptación y derecho al servicio conservados. Situación anterior disponible en Recuperar.';
+        document.getElementById('backupEsito').textContent = tipo === 'nuovo_inizio' ? `Nuevo comienzo completado: despensa vacía, ${risultato.catalogo} productos en el catálogo de Entradas. Situación anterior disponible en Recuperar.` : 'Reinicio completado. Se conserva tu aceptación de las condiciones. Situación anterior disponible en Recuperar.';
         window.scrollTo({top:document.getElementById('trasferimento-dispensa').offsetTop,behavior:'smooth'});
       } catch (errore) { alert('Reinicio no realizado. ' + EatErroriES(errore.message)); }
     }

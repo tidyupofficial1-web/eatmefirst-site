@@ -27,6 +27,6 @@ window.EatMessaggiTestiIT = [
     "giorno": 110,
     "mittente": "Max, Eva & Leo 🤝",
     "avatar": "avatar_trio.png",
-    "testo": "Le modifiche alla dispensa si salvano automaticamente nel dispositivo, gratuitamente. Anche l’esportazione di una copia esterna è gratuita in questa fase di lancio, senza conto alla rovescia. In futuro potrà diventare un servizio facoltativo a pagamento: condizioni e prezzo saranno comunicati prima del cambiamento. Le funzioni di base e l’importazione delle copie restano gratuite."
+    "testo": "Le modifiche alla dispensa si salvano automaticamente e gratuitamente sul dispositivo. Esportare una copia esterna è facoltativo."
   }
 ];
