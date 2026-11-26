@@ -1,4 +1,5 @@
 const testiCarico = window.EatCaricoTesti?.[document.documentElement.lang];
+const chiavePresentazioneCarico = document.documentElement.lang === 'ar' ? 'emf_ar_intro_load' : 'eat_hide_max_carico';
 function testoCarico(originale) {
     return testiCarico?.messages[originale] ?? originale;
 }
@@ -43,7 +44,7 @@ function completaFotoMancante(barcode, immagine) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('eat_hide_max_carico') !== 'true') {
+    if (localStorage.getItem(chiavePresentazioneCarico) !== 'true') {
         document.getElementById('maxPresentationBox').style.display = 'flex';
     }
     ripristinaUltimiValoriMemoria();
@@ -58,7 +59,7 @@ function chiudiMaxTemporaneo() {
 
 function chiudiMaxDefinitivo() {
     document.getElementById('maxPresentationBox').style.display = 'none';
-    localStorage.setItem('eat_hide_max_carico', 'true');
+    localStorage.setItem(chiavePresentazioneCarico, 'true');
 }
 
 function ripristinaUltimiValoriMemoria() {

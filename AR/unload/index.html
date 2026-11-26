@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<!-- Versione interfaccia: ubicazioni verticali compatte v2, 10 novembre 2026. -->
+<html lang="ar" dir="rtl">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستخدام والاستهلاك | EatMeFirst</title>
+    <meta name="description" content="سجّل ما تستخدمه من المؤونة، وحدّد النسبة المتبقية أو انقل المنتجات.">
+    <meta name="robots" content="noindex,follow">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --success-color: #238636;
+            --danger-color: #da3633;
+            --warning-color: #d29922;
+            --border-color: #30363d;
+            --light-bg: #21262d;
+            --input-bg: #0d1117;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- BARRA NAVIGAZIONE --- */
+        .app-bar {
+            background: rgba(22, 27, 34, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 40;
+        }
+
+        .app-brand { display: flex; align-items: center; gap: 12px; }
+        .btn-back {
+            background: var(--light-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); padding: 6px 14px;
+            border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+        }
+        .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+        .app-nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .language-flags {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            background: var(--light-bg);
+            padding: 4px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .flag-link {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+        .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+        .container { max-width: 900px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
+
+        /* --- BOX MESSAGGIO DI EVA (DISMISSIBILE) --- */
+        .eva-welcome-box {
+            background: #16222f;
+            border: 1px solid #3182ce;
+            border-left: 5px solid #3182ce;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .eva-avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .eva-welcome-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-color);
+            padding-right: 25px;
+        }
+
+        .eva-welcome-content strong { color: var(--accent-color); }
+
+        .eva-welcome-content a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+
+        .eva-welcome-content a:hover { color: #79c0ff; }
+
+        .btn-close-eva {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            border-radius: 4px;
+        }
+
+        .btn-close-eva:hover { color: var(--text-color); background: rgba(255, 255, 255, 0.1); }
+
+        /* CARD FILTRI & RICERCA */
+        .card-box {
+            background: var(--card-bg); border-radius: 16px;
+            border: 1px solid var(--border-color); padding: 24px;
+            margin-bottom: 24px; box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .card-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .card-title { font-size: 19px; color: var(--accent-color); font-weight: 700; }
+
+        .filtri-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .search-input, .filter-select {
+            width: 100%; padding: 11px 14px; background: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            color: var(--text-color); font-size: 14px; outline: none;
+        }
+
+        /* LISTA PRODOTTI */
+        .product-list { display: flex; flex-direction: column; gap: 10px; }
+        .product-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 16px; background: var(--light-bg);
+            border: 1px solid var(--border-color); border-radius: 10px;
+            gap: 15px;
+        }
+
+        .product-info-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .product-thumb {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #0d1117;
+        }
+
+        .actions-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+        .btn-esaurito {
+            background-color: var(--danger-color); color: #fff;
+            border: none; padding: 6px 10px; border-radius: 6px;
+            font-weight: bold; cursor: pointer; font-size: 13px;
+        }
+        .btn-esaurito:hover { opacity: 0.9; }
+
+        .btn-parziale {
+            background-color: var(--warning-color); color: #0d1117;
+            border: none; padding: 6px 10px; border-radius: 6px;
+            font-weight: bold; cursor: pointer; font-size: 13px;
+        }
+        .btn-parziale:hover { opacity: 0.9; }
+
+        .btn-modifica {
+            background-color: var(--accent-color); color: #0d1117;
+            border: none; padding: 6px 10px; border-radius: 6px;
+            font-weight: bold; cursor: pointer; font-size: 13px;
+        }
+        .btn-modifica:hover { opacity: 0.9; }
+
+        /* --- MODALI --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85); display: flex; justify-content: center;
+            align-items: center; z-index: 100; padding: 20px; overflow-y: auto;
+        }
+        .modal-content {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; max-width: 520px; width: 100%; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin: auto;
+        }
+        #modalRiepilogoScarico { z-index: 200; }
+        .riepilogo-scarico {
+            max-width: 740px;
+            height: min(86vh, 760px);
+            height: min(86dvh, 760px);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .riepilogo-scarico h3 { flex-shrink: 0; color: var(--accent-color); margin: 0; }
+        .riepilogo-scarico-corpo { min-height: 0; flex: 1; overflow-y: auto; padding: 4px; }
+        .riepilogo-scarico-richiamo { padding: 12px; border: 2px solid var(--warning-color); border-radius: 8px; margin-bottom: 16px; }
+        #riepilogoScaricoTesto { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+        .riepilogo-scarico .modal-buttons { flex-shrink: 0; margin-top: 0; }
+
+        .interactive-shape-wrapper {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            user-select: none;
+        }
+
+        .shape-canvas { cursor: pointer; transition: transform 0.1s ease; }
+        .slider-level-control { width: 80%; margin-top: 12px; accent-color: var(--success-color); cursor: pointer; }
+
+        .status-badge-container {
+            display: flex; justify-content: space-around; width: 100%;
+            margin-top: 10px; font-size: 13px; font-weight: 600;
+        }
+        .badge-ver { color: #2ecc71; }
+        .badge-ros { color: #e74c3c; }
+
+        .location-change-box {
+            background: #0d1117; border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 14px; margin-bottom: 15px;
+        }
+        .location-change-box label { font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 6px; font-weight: 600; }
+
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
+        .btn-secondary {
+            background: var(--light-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;
+        }
+        .btn-confirm {
+            background-color: var(--success-color); color: #fff;
+            border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer;
+        }
+        .btn-confirm:hover { background-color: #2ea043; }
+
+        /* --- FOOTER CON LINK GUIDE PERMANENTI --- */
+        .app-footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 16px 20px;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover { color: var(--accent-color); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            #modalSpostaPezzi { padding: 6px; }
+            #modalSpostaPezzi .modal-content { max-width: none; width: 100%; padding: 12px; }
+            #modalSpostaPezzi .search-input { padding: 9px 10px; margin-bottom: 8px; }
+            .filtri-grid { grid-template-columns: 1fr; }
+            .language-flags { display: flex; gap: 4px; padding: 2px 6px; }
+            .flag-img { width: 18px; height: 12px; }
+            .eva-welcome-box { flex-direction: column; align-items: center; text-align: center; }
+            .eva-welcome-content { padding-right: 0; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<link rel="stylesheet" href="../../css/language-picker.css?v=1">
+<link rel="stylesheet" href="../../css/presentazioni-ar.css">
+</head>
+<body>
+
+    <!-- BARRA NAVIGAZIONE SUPERIORE CON LOGO E BANDIERE -->
+    <header class="app-bar">
+        <div class="app-brand">
+            <a href="../menu.html" class="btn-back">القائمة ←</a>
+            <div class="mini-logo" style="display: inline-flex; align-items: center;">
+                <img src="../../IMG/logo_1024_white.png" alt="شعار EatMeFirst" style="height: 36px; width: auto; filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.8));">
+            </div>
+            <span class="brand-title">الاستخدام والاستهلاك</span>
+        </div>
+
+        <div class="app-nav-right">
+            <details class="language-picker"><summary>اللغات</summary><div class="language-picker-list"><a href="../../IT/scarico/index.html" lang="it">Italiano</a><a href="../../EN/unload/index.html" lang="en">English</a><a href="../../DE/entnahme/index.html" lang="de">Deutsch</a><a href="../../FR/dechargement/index.html" lang="fr">Français</a><a href="../../ES/descarga/index.html" lang="es">Español</a><a href="../../JA/unload/index.html" lang="ja">日本語</a><a href="../../PT/unload/index.html" lang="pt-BR" dir="ltr">Português (Brasil)</a><a href="index.html" lang="ar" aria-current="page">العربية</a></div></details>
+        </div>
+    </header>
+    <p style="margin:8px 20px"><a href="../operations/index.html" style="color:#79c0ff">↩ آخر 15 عملية</a></p>
+
+    <main class="container">
+
+        <!-- MESSAGGIO D'IMPATTO INIZIALE DI EVA (DISMISSIBILE) -->
+        <div data-intro="unload" class="eva-welcome-box">
+            <img src="../../sito-bozza/AR/images/leila-partial-use.webp" alt="ليلى تعيد مرطبان العدس إلى المطبخ بعد استخدام جزء منه" class="eva-avatar-large" style="object-fit:cover;object-position:right center">
+            <div class="eva-welcome-content">
+                <p style="margin-bottom:14px"><strong>ليلى: نطبخ أولًا ونحدّث الجرد بعد ذلك!</strong> إذا كانت يداك مبلّلتين أو عليهما طحين، اترك الهاتف جانبًا. دوّن على ورقة ما استخدمته: مكعّبي مرق، نصف لتر حليب أو 250 غرامًا من المعكرونة. حتى عبد الله ينسى بعض الأشياء عندما يعتمد على ذاكرته!</p>
+                <p>عندما تتفرّغ، افتح «إخراج وحدات» إذا استخدمت وحدات كاملة. إذا فتحت عبوة واستخدمت جزءًا منها، اختر «استخدام جزء من العبوة» وحدّد ما بقي منها. إلى أن تسجّل التغيير، قد لا تعكس الكميات في الجرد واقتراحات التسوّق ما لديك بالفعل.</p>
+                <p>أصررتُ على شرح أمرين بعد نقاش طويل مع عبد الله ومصطفى. يوضّح <a href="partial-consumption-guide.html" target="_blank" rel="noopener">دليل الاستخدام الجزئي</a> كيف تضبط النسبة المتبقية في زجاجة أو عبوة مفتوحة. وإذا نقلت ما بقي إلى مكان آخر، راجع <a href="location-change-guide.html" target="_blank" rel="noopener">دليل تغيير مكان التخزين</a> حتى تعرف أين تجده في المرّة المقبلة.</p>
+                <div class="intro-actions">
+  <button type="button" data-intro-close>إغلاق</button>
+  <button type="button" data-intro-hide>عدم العرض مجددًا</button>
+</div>
+            </div>
+        </div>
+
+        <div class="card-box">
+            <div class="card-title-row">
+                <div class="card-title">🔍 ابحث عن منتج لاستخدامه أو إخراجه</div>
+            </div>
+
+            <div class="filtri-grid">
+                <input type="text" id="filtroNome" dir="auto" class="search-input" placeholder="ابحث بالاسم…" oninput="filtraDispensa()">
+                <select id="filtroUbicazione" class="filter-select" onchange="filtraDispensa()">
+                    <option value="">جميع الأماكن</option>
+                </select>
+                <select id="filtroCategoria" class="filter-select" onchange="document.getElementById('filtroSottocategoria').value=''; EatCategorie.filtri(dispensaGlobale); filtraDispensa()">
+                    <option value="">جميع الفئات</option>
+                </select>
+                <select id="filtroSottocategoria" class="filter-select" disabled onchange="filtraDispensa()"><option value="">جميع الفئات الفرعية</option></select>
+            </div>
+
+            <div id="listaRisultati" class="product-list"></div>
+        </div>
+    </main>
+
+    <!-- Numero dei pezzi da scaricare: volutamente senza valore iniziale -->
+    <div id="modalScaricoPezzi" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3 style="color:var(--accent-color)">إخراج وحدات</h3>
+            <p id="infoScaricoPezzi" style="color:var(--text-muted)"></p>
+            <label for="quantitaPezziScarico">كم وحدة تريد إخراجها؟</label>
+            <input type="number" id="quantitaPezziScarico" class="search-input" min="1" placeholder="أدخل الكمية" autocomplete="off">
+            <div class="modal-buttons">
+                <button type="button" class="btn-secondary" onclick="chiudiScaricoPezzi()">إلغاء</button>
+                <button type="button" class="btn-confirm" onclick="confermaNumeroPezziScarico()">تابع إلى الملخّص</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Riepilogo interno all'app: dimensioni controllabili e comandi sempre visibili. -->
+    <div id="modalRiepilogoScarico" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="titoloRiepilogoScarico" onkeydown="tastieraRiepilogoScarico(event)">
+        <div class="modal-content riepilogo-scarico">
+            <h3 id="titoloRiepilogoScarico">ملخّص الإخراج</h3>
+            <div class="riepilogo-scarico-corpo">
+                <div id="riepilogoScaricoRichiamo" class="riepilogo-scarico-richiamo" hidden></div>
+                <div id="riepilogoScaricoTesto"></div>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" id="riepilogoScaricoAnnulla" class="btn-secondary" onclick="concludiRiepilogoScarico(false)">إلغاء</button>
+                <button type="button" id="riepilogoScaricoConferma" class="btn-confirm" onclick="concludiRiepilogoScarico(true)">أكّد الإخراج واحفظه</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE SCARICO PARZIALE (SENZA POST-IT) -->
+    <div id="modalScaricoVisual" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3 id="modalNomeProdotto" style="color: var(--accent-color); font-size: 18px; text-align: center; margin-bottom: 4px;">اسم المنتج</h3>
+            <p id="modalUbicazioneAttuale" style="text-align: center; color: var(--text-muted); font-size: 12px; margin-bottom: 16px;">مكان التخزين الحالي: -</p>
+
+            <div class="interactive-shape-wrapper">
+                <div id="sceltaPezzoParziale" style="display:none; margin-bottom:12px; text-align:start;">
+                    <label for="numeroPezzoParziale">الوحدة المراد فتحها (واحدة فقط):</label>
+                    <select id="numeroPezzoParziale" class="filter-select"><option value="1">وحدة واحدة</option></select>
+                    <small style="color:var(--text-muted)">يُطبَّق شريط التمرير على وحدة واحدة فقط.</small>
+                </div>
+                <div id="shapeContainer"></div>
+                <input type="range" id="levelSlider" dir="ltr" aria-label="النسبة المتبقية" class="slider-level-control" min="0" max="100" value="100" oninput="aggiornaLivelloVisivo(this.value)">
+
+                <div class="status-badge-container">
+                    <span class="badge-ver">🟢 المتبقي: <strong id="lblRimanente">100%</strong></span>
+                    <span class="badge-ros">🔴 المستخدم: <strong id="lblConsumato">0%</strong></span>
+                </div>
+            </div>
+
+            <div class="location-change-box">
+                <label for="nuovaUbicazioneSelect">📍 أين ستضع الوحدة المفتوحة؟</label>
+                <select id="nuovaUbicazioneSelect" class="filter-select" style="margin-bottom: 8px;" onchange="verificaNuovaUbicazione(this.value)">
+                </select>
+                <input type="text" id="inputNuovaUbicazioneCustom" class="search-input" placeholder="أو أدخل مكانًا جديدًا…" style="display:none;">
+            </div>
+
+            <div class="modal-buttons">
+                <button type="button" class="btn-secondary" onclick="chiudiModalScarico()">إلغاء</button>
+                <button type="button" class="btn-confirm" onclick="confermaScaricoEffettivo()">أكّد واحفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spostamento di pezzi interi senza considerarli consumati -->
+    <div id="modalSpostaPezzi" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h3 id="titoloSpostaPezzi" style="color:var(--accent-color)">نقل الوحدات</h3>
+            <p id="riepilogoSpostaPezzi" style="color:var(--text-muted)"></p>
+            <label for="numeroPezziDaSpostare">كم وحدة تريد نقلها؟</label>
+            <input type="number" id="numeroPezziDaSpostare" class="search-input" min="1" value="1">
+            <label for="destinazioneSpostaPezzi" style="display:block;margin-top:12px">المكان الجديد (مثل الثلاجة)</label>
+            <div id="scelteDestinazioneSposta" role="group" aria-label="أماكن التخزين المتاحة" style="display:flex;flex-direction:column;gap:3px;max-height:min(34dvh,260px);overflow-y:auto;margin:6px 0"></div>
+            <input type="text" id="destinazioneSpostaPezzi" class="search-input" placeholder="اختر مكانًا أو أدخل مكانًا جديدًا" aria-label="مكان النقل">
+            <div class="modal-buttons">
+                <button type="button" class="btn-secondary" onclick="chiudiModalSpostaPezzi()">إلغاء</button>
+                <button type="button" class="btn-confirm" onclick="confermaSpostaPezzi()">أكّد النقل</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTE E PROMEMORIA: NON MODIFICA LE QUANTITÀ -->
+    <div id="modalModificaScheda" class="modal-overlay" style="display:none;">
+        <div class="modal-content" style="max-height:85vh;overflow-y:auto">
+            <h3 style="color:var(--accent-color);margin-bottom:12px">📌 الملاحظات والتذكيرات</h3>
+            <p id="modNomeProdotto" style="margin-bottom:14px;font-weight:bold"></p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+                <div>
+                    <label for="modEditNote">ملاحظات</label>
+                    <textarea id="modEditNote" class="search-input" rows="3" placeholder="مثل: احتفظ به لأمي"></textarea>
+                </div>
+                <div>
+                    <label for="modDestinazione">مخصّص لشخص أو مناسبة (اختياري)</label>
+                    <input type="text" id="modDestinazione" class="search-input" placeholder="مثل: حفل الصيف">
+                </div>
+                <div>
+                    <label for="modDataEvento">تاريخ المناسبة (اختياري)</label>
+                    <input type="date" id="modDataEvento" class="search-input" oninput="aggiornaConflittoEvento()">
+                </div>
+                <div>
+                    <label for="modAnticipoEvento">قبل كم يوم تريد التذكير؟</label>
+                    <input type="number" id="modAnticipoEvento" class="search-input" min="0" max="365" step="1" placeholder="0 يعني يوم المناسبة">
+                    <small>يمكن ترك التاريخ وعدد الأيام فارغين إذا أردت فقط تخصيص المنتج.</small>
+                </div>
+                <div id="modAvvisoEvento" hidden style="padding:12px;border:2px solid #f1c40f;border-radius:8px">
+                    <p id="modTestoAvvisoEvento" role="status"></p>
+                    <label id="modConfermaEventoLabel" style="display:block;margin-top:10px">
+                        <input type="checkbox" id="modConfermaEvento">
+                        قرأت التنبيه وأريد تخصيص المنتج لهذه المناسبة.
+                    </label>
+                </div>
+                <small>يبقى تاريخ المنتج كما هو. تظهر التذكيرات عندما يكون التطبيق مفتوحًا.</small>
+            </div>
+            <div class="modal-buttons" style="margin-top:20px">
+                <button type="button" class="btn-secondary" onclick="chiudiModalModifica()">إلغاء</button>
+                <button type="button" class="btn-confirm" onclick="salvaModificaScheda()">💾 احفظ الملاحظات والتذكيرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER PERMANENTE CON LINK GUIDE -->
+    <footer class="app-footer">
+        <div class="footer-links">
+            <a href="partial-consumption-guide.html" target="_blank" class="footer-link">📌 دليل الاستخدام الجزئي</a>
+            <a href="location-change-guide.html" target="_blank" class="footer-link">📍 دليل تغيير مكان التخزين</a>
+        </div>
+    </footer>
+
+    <datalist id="ubicazioni-scarico"></datalist>
+    <script src="../../js/errori-en.js"></script>
+    <script src="../../js/storico-it.js"></script>
+    <script src="../../js/scadenze-it.js"></script>
+    <script src="../../js/inventario-testi.js"></script>
+    <script src="../../js/inventario-testi-ar.js"></script>
+    <script src="../../js/promemoria-en.js"></script>
+    <script src="../../js/ubicazioni-en.js"></script>
+    <script src="../../js/categorie-en.js"></script>
+    <script src="../../js/scarico-testi.js"></script>
+    <script src="../../js/scarico-testi-ar.js"></script>
+    <script src="../../js/scarico.js"></script>
+<script src="../../js/presentazioni-ar.js"></script>
+</body>
+</html>

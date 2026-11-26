@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatMeFirst - تسجيل المنتجات</title>
+    <meta name="description" content="سجّل مشتريات البيت يدويًا أو بالرمز الشريطي، مع الفئة ومكان التخزين والتاريخ.">
+    <meta name="robots" content="noindex,follow">
+
+    <!-- Libreria per la scansione live del codice a barre -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <style>
+        :root {
+            --bg-color: #12181b;
+            --card-bg: #1e272c;
+            --primary-color: #2ecc71;
+            --text-color: #e0e6ed;
+            --text-muted: #a0aec0;
+            --border-color: #2d3748;
+            --postit-bg: #fff59d;
+            --postit-text: #333333;
+            --info-bg: #1a2634;
+            --info-border: #3182ce;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* Carta Intestata Superiore Standard */
+        .top-navbar {
+            width: 100%;
+            max-width: 950px;
+            background-color: #101416;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .brand-logo img { height: 32px; width: auto; }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-flags {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .flag-icon {
+            width: 26px;
+            height: 17px;
+            cursor: pointer;
+            object-fit: cover;
+            border-radius: 3px;
+            transition: transform 0.2s, opacity 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.6;
+            display: inline-block;
+        }
+
+        .flag-icon:hover {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Finestra Overlay Scanner Live */
+        #scanner-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #scanner-container {
+            width: 100%;
+            max-width: 450px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-chiudi-scanner {
+            margin-top: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Presentazione di Max con Avatar SOPRA al testo */
+        .max-presentation-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            border-left: 4px solid var(--info-border);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .max-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            object-fit: cover;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .max-text-content h3 {
+            color: var(--primary-color);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .max-text-content p {
+            font-size: 0.93rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .max-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .btn-max-action {
+            background: #101416;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-max-action:hover {
+            border-color: var(--primary-color);
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .header-title {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Griglia principale */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .sidebar-scanner-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-scan-main {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: #12181b;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-scan-main:hover {
+            opacity: 0.9;
+        }
+
+        .product-image-box {
+            width: 100%;
+            height: 200px;
+            background: #101416;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .product-image-box img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .peso-badge {
+            font-size: 0.8rem;
+            background: #101416;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .row-group-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .label-with-postit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        label {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .postit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.78rem;
+            background: rgba(255, 245, 157, 0.15);
+            border: 1px solid rgba(255, 245, 157, 0.4);
+            color: #fff59d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .postit-link:hover {
+            background: rgba(255, 245, 157, 0.3);
+            transform: scale(1.05);
+        }
+        .postit-icon {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
+        }
+
+        input[type="text"], input[type="number"], input[type="date"], select, textarea {
+            width: 100%;
+            background: #101416;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #101416;
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            height: 42px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .scadenza-options-box {
+            background: #101416;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .scadenza-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .scadenza-row select, .scadenza-row input {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+        }
+
+        .info-tech {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #101416;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+            line-height: 1.4;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: #12181b; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary { background-color: var(--border-color); color: var(--text-color); }
+        .btn-secondary:hover { background-color: #3e4c62; }
+
+        /* Responsive Mobile a piena larghezza */
+        @media (max-width: 768px) {
+            body { padding: 5px; }
+            .container { padding: 12px; border-radius: 8px; }
+            .form-grid { grid-template-columns: 1fr; gap: 15px; }
+            .row-group-2 { grid-template-columns: 1fr; }
+            .product-image-box { height: 170px; }
+            .actions { justify-content: stretch; }
+            .actions .btn { flex: 1; justify-content: center; }
+        }
+    </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<link rel="stylesheet" href="../../css/language-picker.css?v=1">
+</head>
+<body>
+
+<!-- Finestra Overlay Scanner Live -->
+<div id="scanner-overlay">
+    <div id="scanner-container"></div>
+    <button type="button" class="btn-chiudi-scanner" onclick="chiudiScannerLive()">❌ إغلاق الماسح</button>
+</div>
+
+<!-- Carta Intestata Superiore -->
+<header class="top-navbar">
+    <a href="../menu.html" class="brand-logo">
+        <img src="../../IMG/logo_1024_white.png" alt="شعار EatMeFirst">
+        <span>EatMeFirst</span>
+    </a>
+
+    <div class="navbar-right">
+        <details class="language-picker"><summary>اللغات</summary><div class="language-picker-list"><a href="../../IT/carico/carico.html" lang="it">Italiano</a><a href="../../EN/load/load.html" lang="en">English</a><a href="../../DE/lagerung/einlagerung.html" lang="de">Deutsch</a><a href="../../FR/chargement/chargement.html" lang="fr">Français</a><a href="../../ES/carga/carga-productos.html" lang="es">Español</a><a href="../../JA/load/load.html" lang="ja">日本語</a><a href="../../PT/load/load.html" lang="pt-BR">Português (Brasil)</a><a href="load.html" lang="ar" aria-current="page">العربية</a></div></details>
+        <a href="../menu.html" class="btn btn-secondary" style="padding: 6px 10px; font-size: 0.8rem;">🏠 القائمة</a>
+    </div>
+</header>
+    <p style="margin:8px 20px"><a href="../operations/index.html" style="color:#79c0ff">↩ آخر 15 عملية</a></p>
+
+<div class="container">
+
+    <!-- PRESENTAZIONE DI MAX (Avatar sopra e testo dettagliato) -->
+    <div id="maxPresentationBox" class="max-presentation-box" style="display: none;">
+        <img src="../../sito-bozza/AR/images/omani-family-grocery-entry.webp" alt="أب وابنته يسجّلان مشتريات السوق بالهاتف" class="max-avatar" style="object-fit:cover;object-position:center">
+        <div class="max-text-content">
+            <h3 id="max-title">أهلًا! لنسجّل المشتريات مع عبد الله</h3>
+            <p id="max-text">أنا عبد الله. في هذه الصفحة نسجّل ما اشتريناه. أضف الأطعمة، وكذلك المناديل والمنظّفات ومستلزمات العناية الشخصية. إذا اشتريت خبزًا من المخبز أو خضارًا من السوق بلا رمز شريطي، اكتب اسمها يدويًا.</p>
+            <p>مع كل تسجيل، يتذكّر التطبيق الفئات وأماكن التخزين ويقترح آخر متجر كتبته. في المرّة التالية تختار من الاقتراحات بدل كتابة كل شيء من جديد. وإذا احتَرت في أي خانة، مثل عدد العبوات أو الوحدات داخلها، افتح بطاقة المساعدة الصفراء بجانب عنوان الخانة. ستجد فيها مثالًا يوضّح ما ينبغي إدخاله.</p>
+            <div class="max-actions">
+                <button type="button" class="btn-max-action" onclick="chiudiMaxTemporaneo()">إغلاق</button>
+                <button type="button" class="btn-max-action" onclick="chiudiMaxDefinitivo()">عدم العرض مجددًا</button>
+            </div>
+        </div>
+    </div>
+
+<div class="header-title">
+        <h1>📦 إضافة منتج إلى الجرد</h1>
+    </div>
+
+    <section id="catalogo-ricordato" hidden style="margin:18px 0;padding:16px;border:1px solid #39434f;border-radius:10px">
+        <label for="scegli-catalogo">منتجات محفوظة بعد البدء من جديد</label>
+        <select id="scegli-catalogo" onchange="usaProdottoCatalogo(this.value)" style="width:100%;margin-top:8px"><option value="">اختر منتجًا لتسجيله مرة أخرى…</option></select>
+        <p>أدخل الكمية والتاريخ لهذه المشتريات. تُضاف إلى الجرد بعد تأكيد الحفظ.</p>
+    </section>
+    <div class="form-grid">
+        <div class="sidebar-scanner-box">
+            <button type="button" class="btn-scan-main" onclick="avviaScannerLive()">
+                📷 قراءة الرمز الشريطي
+            </button>
+
+            <div id="box-foto-prodotto" class="product-image-box">
+                <img id="prodotto-foto" src="../../IMG/logo_1024_white.png" data-foto-prodotto="" alt="شعار EatMeFirst، صورة المنتج غير متوفرة">
+                <div id="prodotto-peso-badge" class="peso-badge" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div class="form-fields">
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>الرمز الشريطي</label>
+                    <a href="guide-barcode-scanning.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة في القراءة
+                    </a>
+                </div>
+                <small id="lingua-nome-catalogo" style="display:block;margin-bottom:8px">إذا لم يكن اسم المنتج متاحًا بلغتك في الكتالوج، فسيظهر اسمه الأصلي. يمكنك تعديله قبل الحفظ.</small>
+                <input type="text" id="prodotto-barcode" aria-describedby="lingua-nome-catalogo" dir="ltr" inputmode="numeric" oninput="annullaRicercaCodice()" placeholder="اكتب الرمز الشريطي أو الصقه" onkeydown="if (event.key === 'Enter') { event.preventDefault(); cercaCodiceManuale(); }">
+                <button type="button" class="btn btn-secondary" style="margin-top:8px" onclick="cercaCodiceManuale()">ابحث عن المنتج</button>
+                <small id="esito-ricerca-codice" role="status" aria-live="polite" style="display:block;margin-top:8px">يمكنك ترك الرمز فارغًا وتسجيل المنتج يدويًا.</small>
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>اسم المنتج أو وصفه</label>
+                    <a href="guide-product-name.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة في تسمية المنتج
+                    </a>
+                </div>
+                <input type="text" id="prodotto-nome" dir="auto" placeholder="اسم المنتج…">
+            </div>
+
+            <div class="row-group-2">
+                <div class="field-group">
+                    <div class="label-with-postit">
+                        <label>فئة المنتج</label>
+                        <a href="guide-category.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة في اختيار الفئة
+                        </a>
+                    </div>
+                    <input type="text" id="prodotto-categoria" list="categorie-carico" placeholder="اختر فئة أو اكتبها" oninput="EatCategorie.cambiaCategoria()">
+                    <label for="prodotto-sottocategoria" style="display:block;margin-top:10px">الفئة الفرعية (اختيارية)</label>
+                    <input type="text" id="prodotto-sottocategoria" list="sottocategorie-carico" placeholder="اختر فئة فرعية أو اكتبها">
+                    <small>اختر الفئة أولًا. تظهر الأسماء الجديدة ضمن الاقتراحات بعد الحفظ.</small>
+                </div>
+                <div class="field-group">
+                    <div class="label-with-postit">
+                        <label>مكان التخزين</label>
+                        <a href="guide-location.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة في تحديد المكان
+                        </a>
+                    </div>
+                    <input type="text" id="prodotto-ubicazione" list="ubicazioni-carico" placeholder="مثل الثلاجة أو خزانة المؤونة…">
+                </div>
+            </div>
+
+            <div class="row-group-2">
+                <div class="field-group">
+                    <div class="row-group-2" style="gap: 8px;">
+                        <div>
+                            <div class="label-with-postit">
+                                <label>عدد العبوات المشتراة</label>
+                                <a href="guide-quantity.html" class="postit-link" target="_blank">
+                                    <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة
+                                </a>
+                            </div>
+                            <input type="number" id="prodotto-quantita" value="1" min="1">
+                        </div>
+                        <div>
+                            <div class="label-with-postit">
+                                <label>عدد الوحدات في العبوة</label>
+                                <a href="guide-pieces.html" class="postit-link" target="_blank">
+                                    <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة
+                                </a>
+                            </div>
+                            <input type="number" id="prodotto-pezzi" value="1" min="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <div class="label-with-postit">
+                        <label>خيارات التاريخ</label>
+                        <a href="guide-mandatory.html" class="postit-link" target="_blank">
+                            <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة بشأن التاريخ الملزم
+                        </a>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="prodotto-tassativo">
+                        <label for="prodotto-tassativo">🔒 تاريخ ملزم</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>المورّد أو المتجر</label>
+                    <a href="guide-supplier.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة في تحديد المتجر
+                    </a>
+                </div>
+                <input type="text" id="prodotto-fornitore" placeholder="مثل السوق أو المتجر القريب…">
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>تاريخ المنتج</label>
+                    <a href="guide-expiration.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> مساعدة بشأن التاريخ
+                    </a>
+                </div>
+                <div class="scadenza-options-box">
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-1" value="nessuna" checked onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-1">1) 🚫 بلا تاريخ (ورق، مواد تنظيف وغيرها)</label>
+                    </div>
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-2" value="giorni" onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-2">2) ⏱️ عدد الأيام:</label>
+                        <input type="number" id="valore-giorni" min="1" max="365" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">يوم</span>
+                    </div>
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-3" value="mesi" onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-3">3) 🗓️ عدد الأشهر (مثل المعكرونة والمعلّبات):</label>
+                        <input type="number" id="valore-mesi" min="1" max="60" style="width: 80px;" disabled> <span style="font-size:0.85rem; color:var(--text-muted);">شهر</span>
+                    </div>
+                    <div class="scadenza-row">
+                        <input type="radio" name="tipo-scadenza" id="scad-opt-4" value="esatta" onclick="aggiornaScadenzaUI()">
+                        <label for="scad-opt-4">4) 📅 تاريخ محدّد:</label>
+                        <input type="date" id="valore-data-esatta" style="width: 155px;" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div id="box-info-tecniche" class="info-tech" style="display:none;">
+                <strong>ℹ️ معلومات من دليل المنتجات على الإنترنت:</strong> <span id="testo-info-tecniche"></span>
+            </div>
+
+            <div class="field-group">
+                <div class="label-with-postit">
+                    <label>مساعدة في كتابة الملاحظات</label>
+                    <a href="guide-notes.html" class="postit-link" target="_blank">
+                        <img src="../../IMG/biglietto_info.jpg" alt="معلومات" class="postit-icon"> ملاحظات
+                    </a>
+                </div>
+                <input type="text" id="prodotto-note" placeholder="مثل مفتوح بالفعل أو مخصّص لنزهة…">
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="../menu.html" class="btn btn-secondary">إلغاء</a>
+        <button type="button" class="btn btn-primary" onclick="salvaProdotto()">➕ أضف إلى الجرد</button>
+    </div>
+</div>
+
+<datalist id="ubicazioni-carico"></datalist>
+<datalist id="categorie-carico"></datalist>
+<datalist id="sottocategorie-carico"></datalist>
+<script src="../../js/storico-it.js"></script>
+<script src="../../js/scadenze-it.js"></script>
+<script src="../../js/ricerca-prodotti-en.js"></script>
+<script src="../../js/categorie-en.js"></script>
+<script src="../../js/ubicazioni-en.js"></script>
+<script src="../../js/errori-en.js"></script>
+<script src="../../js/carico-testi-ar.js"></script>
+<script src="../../js/carico.js"></script>
+
+<script src="../../js/guide-carico.js"></script></body>
+</html>

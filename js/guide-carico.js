@@ -1,6 +1,6 @@
 /* Le guide si aprono senza abbandonare il modulo e senza salvare una bozza. */
 (() => {
-    const labels = {it:'Chiudi guida',en:'Close guide',fr:'Fermer le guide',de:'Anleitung schließen',es:'Cerrar guía',ja:'ガイドを閉じる',pt:'Fechar guia'};
+    const labels = {it:'Chiudi guida',en:'Close guide',fr:'Fermer le guide',de:'Anleitung schließen',es:'Cerrar guía',ja:'ガイドを閉じる',pt:'Fechar guia',ar:'إغلاق الدليل'};
     const label = labels[document.documentElement.lang.slice(0,2)] || labels.en;
     let dialog, frame, trigger;
     function close() { dialog.close(); frame.src = 'about:blank'; trigger?.focus(); }

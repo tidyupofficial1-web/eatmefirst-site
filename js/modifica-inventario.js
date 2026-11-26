@@ -1,5 +1,6 @@
 (function () {
     const translations = {
+        ar: ["كيفية تعديل بيانات المنتج", "يمكنك تعديل الاسم أو الكمية أو التاريخ المسجّل. راجع ما هو مكتوب على العبوة قبل تغيير التاريخ.", "إغلاق", "عدم الإظهار مجددًا", "تعديل", "الاسم", "الوحدات المتاحة", "الصلاحية", "تاريخ ملزم", "إلغاء", "حفظ", "تعديل المنتج", "تغيّر الجرد. أعد فتح المنتج وحاول مرة أخرى.", "أدخل تاريخًا للمنتج ذي التاريخ الملزم.", "تصحيح الكمية"],
         ja: ["商品の情報を修正する方法", "保存した商品の名前、個数、期限、厳守する期限の設定を修正できます。見積もった期限を包装に記載された日付に置き換えることもできます。", "閉じる", "今後は表示しない", "編集", "名前", "在庫数", "期限", "厳守する期限", "キャンセル", "保存", "商品の修正", "在庫が変更されました。詳細を開き直してください。", "厳守する期限の日付を入力してください。", "数量の修正"],
         pt: ["Como corrigir os dados do produto", "Você pode alterar o nome, corrigir o número de unidades e atualizar a data ou a opção Validade obrigatória. Se a data era estimada, substitua pela data impressa na embalagem.", "Fechar", "Não mostrar novamente", "Editar", "Nome", "Unidades disponíveis", "Validade", "Validade obrigatória", "Cancelar", "Salvar", "Editar produto", "Seu inventário mudou. Abra o produto novamente.", "Informe a data de validade obrigatória.", "Correção de quantidade"],
         it: ['Come modificare i dati del prodotto','Puoi correggere un prodotto già salvato. Tocca Modifica per cambiare il nome, correggere il numero di pezzi dopo averli contati o aggiornare la data e la spunta Articolo Tassativo. Se avevi stimato la data, puoi sostituirla con quella sulla confezione.','Chiudi','Chiudi sempre','Modifica','Nome','Pezzi disponibili','Scadenza','Articolo Tassativo','Annulla','Salva','Modifica prodotto','Riapri la scheda e riprova. La dispensa è cambiata.','Indica una data per un articolo tassativo.','Correzione quantità'],
@@ -12,6 +13,7 @@
         translations[document.documentElement.lang.slice(0, 2)] || translations.it;
     const locale = document.documentElement.lang.slice(0, 2);
     const editErrors = {
+        ar: {date: "أدخل تاريخًا صالحًا.", save: "تعذّر حفظ التعديل. راجع مساحة التخزين في المتصفح وأعد المحاولة."},
         ja: {
             date: '有効な期限を入力してください。',
             save: '商品の変更を保存できませんでした。ブラウザーの空き容量を確認してからお試しください。'

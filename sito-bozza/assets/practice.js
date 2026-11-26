@@ -54,7 +54,8 @@
  function render(){
   if(step===17)broken=true;
   $('game-progress').textContent=step===18?d.finished:fmt(d.progress,step+1,18);
-  $('game-speaker').textContent=['Max','Max','Eva','Leo','Eva','Leo','Eva','Leo','Max','Eva','Leo','Max','Eva','Leo','Eva','Max','Leo','Eva','Leo'][step];
+  const speakers=d.speakers||['Max','Eva','Leo'];
+  $('game-speaker').textContent=speakers[[0,0,1,2,1,2,1,2,0,1,2,0,1,2,1,0,2,1,2][step]];
   $('game-question').textContent=d.questions[step]||'';$('game-hint').textContent=d.hints[step]||'';
   $('game-controls').replaceChildren();$('game-feedback').textContent='';$('game-next').hidden=true;
   if(step>=1&&step<=3)product(step-1);

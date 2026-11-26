@@ -2,7 +2,8 @@
     'use strict';
 
     const locale = document.documentElement.lang;
-    const entry = new URL('../' + (locale === 'ja' ? 'JA' : 'PT') + '/index.html', document.currentScript.src).href;
+    const cartella = {'ja': 'JA', 'pt-BR': 'PT', 'ar': 'AR'}[locale];
+    const entry = new URL('../' + cartella + '/index.html', document.currentScript.src).href;
     const root = new URL('.', entry);
     const requested = new URL(window.location.href).searchParams.get('next');
 
@@ -19,7 +20,7 @@
     }
 
     const consentKey = 'eatmefirst_terms_' + locale;
-    const termsVersion = 'IT-2026-11-15-lancio-2';
+    const termsVersion = locale === 'ar' ? 'ar-2026-11-launch-1' : 'IT-2026-11-15-lancio-2';
     const dateKey = 'eatmefirst_consent_date';
     const nameKey = 'eatmefirst_username';
 

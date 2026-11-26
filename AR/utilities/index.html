@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<script src="../../js/ingresso-ja-pt.js" data-proteggi></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الأدوات | EatMeFirst</title>
+  <meta name="description" content="الجرد والنسخ الاحتياطي">
+  <meta name="robots" content="noindex,follow">
+
+  <style>
+    :root {
+      --bg-color: #0d1117;
+      --card-bg: #161b22;
+      --text-color: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent-color: #58a6ff;
+      --primary: #3182ce;
+      --primary-hover: #2b6cb0;
+      --success-color: #238636;
+      --success-hover: #2ea043;
+      --danger-color: #f85149;
+      --warning-color: #d29922;
+      --border-color: #30363d;
+      --light-bg: #21262d;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    .container { max-width: 850px; margin: 0 auto; width: 100%; }
+
+    /* CARTA INTESTATA SUPERIORE */
+    .app-bar {
+      background: rgba(22, 27, 34, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky; top: 0; z-index: 40;
+      border-radius: 12px; margin-bottom: 20px;
+    }
+
+    .app-brand { display: flex; align-items: center; gap: 12px; }
+    .btn-back {
+      background: var(--light-bg); color: var(--text-color);
+      border: 1px solid var(--border-color); padding: 6px 14px;
+      border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 600;
+    }
+    .btn-back:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    .brand-title { font-size: 18px; font-weight: bold; color: var(--text-color); }
+
+    .language-flags {
+      display: flex; gap: 6px; align-items: center;
+      background: var(--light-bg); padding: 4px 8px;
+      border-radius: 20px; border: 1px solid var(--border-color);
+    }
+    .flag-link { text-decoration: none; display: flex; align-items: center; opacity: 0.7; transition: opacity 0.2s, transform 0.2s; }
+    .flag-link:hover, .flag-link.active { opacity: 1; transform: scale(1.1); }
+    .flag-img { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+    /* BANNER INTRODUTTIVO LEO */
+    .leo-welcome-banner {
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      border: 1px solid var(--primary); border-radius: 16px;
+      overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+    .leo-banner-img {
+      width: 100%; max-height: 320px; object-fit: contain;
+      background-color: #0d1117; border-bottom: 2px solid var(--primary);
+    }
+    .leo-banner-content { padding: 22px; }
+    .leo-banner-title { font-size: 1.25rem; color: #bfdbfe; font-weight: 700; margin-bottom: 10px; }
+    .leo-banner-text { font-size: 0.98rem; color: #ffffff; line-height: 1.6; margin-bottom: 16px; }
+    .leo-banner-actions { display: flex; justify-content: flex-end; }
+
+    .btn-dismiss {
+      background: rgba(255, 255, 255, 0.12); border: 1px solid var(--border-color);
+      color: var(--text-color); padding: 8px 16px; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-dismiss:hover { background: rgba(239, 68, 68, 0.25); border-color: #f87171; color: #fca5a5; }
+
+    /* CARD SEZIONI */
+    .section-card {
+      background: var(--card-bg); border-radius: 16px;
+      border: 1px solid var(--border-color); padding: 25px;
+      margin-bottom: 25px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 1.25rem; font-weight: 700; color: var(--text-color);
+      margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+    }
+
+    /* POST-IT GUIDA ICON */
+    .postit-link { display: inline-block; line-height: 0; position: relative; z-index: 10; }
+    .postit-icon {
+      width: 28px; height: 28px; object-fit: contain; border-radius: 4px; cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4); transition: transform 0.2s;
+    }
+    .postit-icon:hover { transform: scale(1.2) rotate(-3deg); }
+
+    /* BIBLIOTECA COMPLETA GRID */
+    .guides-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px; margin-top: 15px;
+    }
+    .guide-card-link {
+      background: #0d1117; border: 1px solid var(--border-color);
+      padding: 14px 16px; border-radius: 10px; text-decoration: none; color: var(--text-color);
+      display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+    }
+    .guide-card-link:hover { border-color: var(--accent-color); background: var(--light-bg); }
+
+    /* PRICING GRID */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px; margin-top: 15px;
+    }
+    .pricing-card {
+      background: #0d1117; border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .pricing-card.featured { border-color: #68d391; background: rgba(56, 161, 105, 0.1); }
+    .pricing-title { font-size: 1.05rem; font-weight: 700; color: #bfdbfe; margin-bottom: 6px; }
+    .pricing-price { font-size: 1.5rem; font-weight: 800; color: #38a169; margin-bottom: 8px; }
+    .pricing-sub { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* ZONA PERICOLO */
+    .danger-zone { border-color: #7f1d1d; background: rgba(127, 29, 29, 0.12); }
+    .danger-title { color: #fca5a5; }
+
+    .btn-danger-action {
+      width: 100%; background: var(--danger-color); color: #fff; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-danger-action:hover { opacity: 0.9; }
+
+    .btn-warning-action {
+      width: 100%; background: var(--warning-color); color: #0d1117; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.2s;
+    }
+    .btn-warning-action:hover { opacity: 0.9; }
+
+    /* MODALE */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; max-width: 450px; width: 100%; padding: 25px; text-align: center;
+    }
+    .modal-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+    .modal-text { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px; text-align: left; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 12px; }
+    .btn-modal-cancel { flex: 1; background: var(--light-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .btn-modal-confirm { flex: 1; background: var(--danger-color); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .backup-comandi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    .backup-comandi > * { min-width: 0; width: 100%; text-align: center; }
+    .backup-comandi .backup-esporta { background: #238636; border: 2px solid #3fb950; color: #fff; font-size: 16px; font-weight: 700; }
+    .backup-comandi .backup-esporta:hover { background: #196c2e; }
+    .backup-comandi .backup-importa { background: #142c43; border: 2px solid #58a6ff; }
+    .backup-importa-titolo { color: #9dceff; font-size: 16px; font-weight: 700; }
+    .backup-comandi > :focus-visible, .backup-comandi input:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+    .backup-comandi input[type="file"] { display: block; width: 100%; min-width: 0; max-width: 100%; margin-top: 8px; font-size: 13px; }
+    @media (max-width: 768px) {
+      .backup-comandi { grid-template-columns: minmax(0, 1fr); }
+      .backup-comandi > * { padding: 16px 12px; }
+    }
+
+    footer { text-align: center; padding: 20px; font-size: 13px; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px; }
+
+    @media (max-width: 600px) {
+      .language-flags { display: flex; gap: 4px; padding: 2px 6px; }
+      .flag-img { width: 18px; height: 12px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../css/responsive-it.css">
+<link rel="stylesheet" href="../../css/collegamenti.css">
+<script defer src="../../js/analytics-consenso.js?v=removed-20261116"></script>
+<link rel="stylesheet" href="../../css/language-picker.css?v=1">
+<link rel="stylesheet" href="../../css/presentazioni-ar.css">
+</head>
+<body>
+<header class="app-bar">
+  <a href="../menu.html" class="btn-back">القائمة →</a>
+  <details class="language-picker"><summary>اللغات</summary><div class="language-picker-list"><a href="../../IT/utilita/index.html" lang="it">Italiano</a><a href="../../EN/utilities/index.html" lang="en">English</a><a href="../../FR/utilitaires/index.html" lang="fr">Français</a><a href="../../DE/hilfsmittel/index.html" lang="de">Deutsch</a><a href="../../ES/utilidades/index.html" lang="es">Español</a><a href="../../JA/utilities/index.html" lang="ja">日本語</a><a href="../../PT/utilities/index.html" lang="pt-BR">Português (Brasil)</a><a href="index.html" lang="ar" aria-current="page">العربية</a></div></details>
+</header>
+<main class="container">
+  <h1>الأدوات</h1>
+  <section class="intro-ar" data-intro="utilities" aria-labelledby="intro-utilities">
+    <img src="../../sito-bozza/AR/images/mustafa-usb-backup.webp" width="1536" height="1024" alt="مصطفى يحتفظ بنسخة من الجرد على ذاكرة USB" style="display:block;width:100%;max-width:32rem;height:auto;border-radius:12px">
+    <h2 id="intro-utilities">مصطفى يشرح لك طريقة نقل الجرد</h2>
+    <p><strong>يسأل عبد الله: هل عليّ حفظ نسخة في كل مرة؟</strong> حين تؤكّد إضافة منتج أو تسجيل استهلاكه أو أي عملية أخرى، يحفظ EatMeFirst التغيير في المتصفح الذي تستخدمه، سواء على الهاتف أو الحاسوب. إذا ظهر زر «حفظ» أو «تأكيد»، اضغط عليه لإتمام العملية، فالكتابة في الحقول وحدها لا تكفي. بعد التأكيد، تبقى التغييرات على الجهاز نفسه من دون الحاجة إلى تصدير الجرد.</p>
+    <p><strong>وما فائدة ذاكرة USB إذن؟</strong> تجيب ليلى: «إنها للنسخة الاحتياطية يا عبد الله!» إذا تعطل جهازك أو فقدته أو مسحت بيانات المتصفح، فقد تفقد البيانات المحفوظة عليه. يتيح لك «تصدير الجرد» إنشاء ملف يمكنك الاحتفاظ به على ذاكرة USB أو على جهاز آخر.</p>
+    <p><strong>هل يمكنني إرسال الملف إلى نفسي بالبريد الإلكتروني؟</strong> نعم. صدّر الملف أولًا، ثم افتح بريدك وأرفقه وأرسله بنفسك. لا يرسل EatMeFirst الجرد تلقائيًا. للاستعادة، نزّل المرفق واختر «استيراد الجرد». ستستعيد البيانات كما كانت وقت التصدير. صدّر نسخة جديدة لتشمل أي تغييرات أجريتها بعد ذلك.</p>
+    <p>يقول مصطفى: استخدم الهاتف لمسح الرموز الشريطية، ثم انقل الملف إلى الحاسوب لعرض الجرد على شاشة أكبر. ويمكنك أيضًا تسجيل المشتريات على الحاسوب باستخدام قارئ الرموز ونقل نسخة إلى الهاتف قبل التسوّق. تأكّد قبل الخروج من أن قائمة التسوّق على الهاتف محدّثة.</p>
+    <p><strong>النسخة الاحتياطية مثل المفتاح الاحتياطي.</strong> إذا وضعت المفتاحين في الحقيبة نفسها ثم فقدت الحقيبة، فلن ينفعك المفتاح الاحتياطي. احتفظ بالملف خارج الجهاز وحدّثه بعد التغييرات المهمة. يفيدك في استعادة الجرد عند تعطل الجهاز وفي نقله بين الهاتف والحاسوب.</p>
+    <p>قبل الانتقال إلى جهاز آخر، صدّر الملف من الجهاز الذي يحتوي على أحدث البيانات. على الجهاز الآخر، اختر «استيراد الجرد» وحدّد الملف وراجع المقارنة قبل التأكيد. يحلّ الملف محلّ الجرد الموجود. إذا عدّلت النسختين كلًّا على حدة، فلن تُدمج التغييرات، وقد لا يكفي التاريخ وحده لمعرفة أيهما يشمل التعديلات التي تريدها.</p>
+    <p>على الحاسوب، انسخ الملف إلى ذاكرة USB بعد تصديره. توصيل الذاكرة وحده لا يبدأ النسخ. وعلى الهاتف يمكنك إرفاق الملف برسالة بريد إلكتروني وإرساله يدويًا. يبقى جردك في المتصفح، ولا يُرفع تلقائيًا إلى خادم.</p>
+    <p>يشمل الملف المنتجات والكتالوج المحفوظ والقوائم والملاحظات والتذكيرات والتفضيلات وآخر 15 عملية. تُضمّن صور الملاحظات، وتبقى صور المنتجات المسترجعة من الكتالوج روابط إلى مصادرها. مواعيد مفكّرة المنزل خارج هذه النسخة.</p>
+    <div class="intro-actions"><button type="button" data-intro-close>إغلاق الشرح</button><button type="button" data-intro-hide>عدم إظهار الشرح مجددًا</button></div>
+  </section>
+  <section id="trasferimento-dispensa">
+    <h2 class="section-title">الجرد والنسخ الاحتياطي</h2>
+    <p>تُحفظ التغييرات المؤكدة تلقائيًا على جهازك مجانًا دائمًا. تصدير نسخة خارجية اختياري. يمكنك نقل البيانات بين الأجهزة يدويًا باستخدام ملف.</p>
+    <p>لا تشمل هذه النسخة الاحتياطية مواعيد مفكّرة المنزل.</p>
+    <p id="backupSituazione"></p>
+    <div class="backup-comandi">
+        <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">تصدير الجرد</button>
+        <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">استيراد الجرد</span>
+          <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
+        </label>
+      </div>
+
+
+      <p id="backupEsito" role="status" aria-live="polite" style="margin:14px 0"></p>
+      <div id="anteprimaImportazione" hidden style="border:2px solid #58a6ff;border-radius:12px;padding:18px;margin-top:18px">
+        <h3 id="titoloImportazione">راجع الملف قبل استبدال البيانات</h3>
+        <p id="nomeImportazione" style="margin:12px 0;overflow-wrap:anywhere"></p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:12px 0">
+          <div><strong>البيانات الحالية</strong><p id="riepilogoLocale"></p></div>
+          <div><strong>البيانات المراد استيرادها</strong><p id="riepilogoFile"></p></div>
+        </div>
+        <p id="confrontoImportazione" style="font-weight:bold;line-height:1.6"></p>
+        <label id="consensoImportazioneLabel" hidden style="margin-top:14px">
+          <input type="checkbox" id="consensoImportazione" onchange="aggiornaPulsanteImportazione()">
+          قرأت التنبيه وأوافق على استبدال الجرد الحالي ببيانات الملف.
+        </label>
+        <p style="font-size:14px;margin-top:14px">تُحفظ نسخة محلية قبل الاستبدال. تبقى تواريخ المنتجات كما هي.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+          <button type="button" class="btn-modal-cancel" onclick="annullaImportazione()">الاحتفاظ بالبيانات الحالية</button>
+          <button type="button" class="btn-modal-confirm" id="confermaImportazione" disabled onclick="confermaImportazione()">تأكيد الاستبدال</button>
+        </div>
+      </div>
+      <button type="button" class="btn-modal-cancel" id="recuperaDispensa" disabled style="margin-top:18px" onclick="preparaRecupero()">استعادة البيانات السابقة للنقل أو إعادة الضبط</button>
+
+  </section>
+  <section aria-labelledby="updates-title">
+    <h2 class="section-title" id="updates-title">تحديث EatMeFirst</h2>
+    <p>تصل الميزات الجديدة والإصلاحات عبر الموقع. اتصل بالإنترنت وأعد فتح التطبيق، وإذا لم تظهر التحديثات فورًا فأعد تحميل الصفحة. لا حاجة إلى تنزيل ملف تثبيت.</p>
+  </section>
+  <section>
+    <h2 class="section-title danger-title">إعادة ضبط البيانات</h2>
+    <p>يمكنك تفريغ الكميات وإزالة تواريخ الصلاحية مع الاحتفاظ بأسماء المنتجات ورموزها وفئاتها وصورها وأحجام العبوات والمتاجر في كتالوج التسجيل. تبقى القوائم والملاحظات العامة والتفضيلات، ويبدأ سجل العمليات وتقديرات الاستهلاك من جديد. لا تعود ملاحظات المنتجات القديمة وتذكيراتها عند تسجيلها مجددًا.</p>
+    <p><button type="button" class="btn-warning-action" onclick="apriResetUtilita('nuovo_inizio')">مسح الكميات والبدء من جديد</button></p>
+    <p>البدء من الصفر يمسح الجرد والكتالوج والقوائم والملاحظات والسجل والتفضيلات. تبقى موافقتك على الشروط، ويمكنك العودة إلى استخدام التطبيق مباشرة.</p>
+    <p><button type="button" class="btn-danger-action" onclick="apriResetUtilita('reset_totale')">البدء من الصفر</button></p>
+  </section>
+  <ul><li><a href="export-guide.html">النقل باستخدام ملف</a></li><li><a href="usb-save-guide.html">نسخة على ذاكرة USB</a></li><li><a href="leo-updates-guide.html">تحديث التطبيق</a></li><li><a href="advanced-reset-guide.html">إعادة الضبط</a></li></ul>
+</main>
+<dialog id="resetUtilita" aria-labelledby="titoloReset">
+  <h2 id="titoloReset">أكّد العملية</h2>
+  <p id="riepilogoReset"></p>
+  <p><label><input type="checkbox" id="consensoReset"> اطّلعت على البيانات التي ستُحذف والبيانات التي ستبقى.</label></p>
+  <form method="dialog">
+    <button class="btn-modal-cancel">إلغاء</button>
+    <button type="button" class="btn-modal-confirm" onclick="confermaResetUtilita()">تأكيد</button>
+  </form>
+</dialog>
+  <script src="../../js/errori-en.js"></script>
+  <script src="../../js/storico-it.js"></script>
+  <script src="../../js/backup-it.js"></script>
+  <script src="../../js/reset-it.js"></script>
+  <script src="../../js/utilita-testi-ar.js"></script>
+  <script src="../../js/backup-interfaccia-en.js"></script>
+  <script src="../../js/utilita-reset.js"></script>
+  <script src="../../js/presentazioni-ar.js"></script>
+</body>
+</html>

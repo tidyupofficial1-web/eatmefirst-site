@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://tidyupofficial1-web.github.io/eatmefirst-site/sito-bozza/AR/gioco.html">
+  <meta name="description" content="تمرّن على تسجيل المشتريات وتحديث الكميات وإعداد قائمة التسوّق باستخدام منتجات وهمية.">
+  <title>لعبة تنظيم مؤونة المنزل | EatMeFirst</title>
+  <link rel="icon" href="../assets/logo.png">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="../assets/gioco.css">
+  <style>
+    #practice-remaining, .game-controls input[inputmode="numeric"], .game-controls output { direction: ltr; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">انتقل إلى المحتوى</a>
+  <header class="site-header wrap">
+    <a class="brand" href="index.html"><bdi>EatMeFirst</bdi></a>
+    <nav class="actions" aria-label="قائمة الموقع">
+      <a href="index.html">الرئيسية</a>
+      <a href="menu.html">كيف يعمل التطبيق؟</a>
+      <a href="gioco.html">تعلّم باللعب</a>
+      <a href="../../AR/index.html">جرّب التطبيق</a>
+    </nav>
+  </header>
+  <main id="content">
+    <section class="wrap page-intro">
+      <h1>تعلّم تنظيم مؤونة المنزل باللعب</h1>
+      <p class="lead">تمرّن مع عبد الله وليلى ومصطفى باستخدام منتجات وهمية. يمكنك إعادة التمرين من البداية في أي وقت.</p>
+    </section>
+    <section class="wrap game-shell">
+      <img class="game-welcome" src="images/jordanian-eatmefirst-team.webp" width="1536" height="1024" alt="ليلى وعبد الله ومصطفى حول طاولة المطبخ">
+      <div class="game-toolbar"><span id="game-progress"></span><button id="game-restart" type="button">إعادة التمرين</button></div>
+      <div class="game-layout">
+        <div>
+          <article class="game-dialogue"><p id="game-speaker" class="speaker"></p><h2 id="game-question" tabindex="-1"></h2><p id="game-hint"></p></article>
+          <div id="game-controls" class="game-controls"></div>
+          <p id="game-feedback" role="status" aria-live="polite"></p>
+          <button id="game-next" type="button" hidden>متابعة ←</button>
+        </div>
+        <aside class="game-display"><h3>مؤونة التمرين</h3><div id="game-device"></div><div id="game-stock"></div></aside>
+      </div>
+      <noscript>فعّل JavaScript لتشغيل اللعبة.</noscript>
+    </section>
+    <section class="wrap closing">
+      <div><h2>جرّبوا ما تعلّمتموه في المنزل</h2><p>اختاروا ثلاثة أصناف معًا. راجعوا أماكنها والكميات المتبقية وحدّدوا ما ستستخدمونه أولًا.</p></div>
+      <a class="button" href="avoid-duplicate-groceries.html">اقرأ دليل التسوّق</a>
+    </section>
+  </main>
+  <script src="practice-ar.js"></script>
+  <script src="../assets/practice.js"></script>
+</body>
+</html>
