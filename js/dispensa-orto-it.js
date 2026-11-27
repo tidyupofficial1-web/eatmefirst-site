@@ -32,11 +32,7 @@
     const listaAcquisti = document.getElementById('orto-acquisti');
     const statoScorta = document.getElementById('orto-stato-scorta');
     const statoAcquisto = document.getElementById('orto-stato-acquisto');
-    const statoInventario = document.getElementById('orto-stato-inventario');
     const statoScarico = document.getElementById('orto-stato-scarico');
-    const annullaScorta = document.getElementById('orto-annulla-scorta');
-    const dialogoModifica = document.getElementById('orto-modifica');
-    const campiModifica = document.getElementById('orto-modifica-campi');
     const campiScorta = ['barcode', 'nome', 'categoria', 'quantita', 'ubicazione', 'scadenza', 'note'];
     const campoScorta = nome => scorta.elements[nome === 'ubicazione' ? 'conservazione-orto' : nome];
     const postoScarico = scarico.elements['posto-orto'];
@@ -47,8 +43,6 @@
     let ricerca;
     let scanner;
     let avvioScanner = false;
-    let modifica = null;
-    let prodottoInModifica = null;
     let scorte = [];
     let prova = null;
 
@@ -93,17 +87,6 @@
         } catch {
             stato.textContent = 'Il browser non è riuscito a salvare i dati dell’orto.';
             return false;
-        }
-    }
-
-    function fineModifica() {
-        const id = modifica;
-        modifica = null;
-        prodottoInModifica = null;
-        if (id) {
-            if (dialogoModifica.open) dialogoModifica.close();
-            const riga = [...listaScorte.children].find(elemento => elemento.dataset.prodotto === id);
-            (riga?.querySelector('button') ?? cerca).focus();
         }
     }
 
@@ -207,7 +190,6 @@
 
     function riga(voce, dettagli, ...pulsanti) {
         const li = document.createElement('li');
-        li.dataset.prodotto = voce.id;
         const nome = document.createElement('strong');
         nome.textContent = voce.nome;
         li.append(nome);
@@ -238,40 +220,7 @@
             voce.barcode && 'Codice: ' + voce.barcode,
             voce.scadenza && 'Scadenza: ' + voce.scadenza.split('-').reverse().join('/'),
             noteProdotto(voce) && 'Note: ' + noteProdotto(voce)
-        ],
-        pulsante('Modifica', () => {
-            modifica = voce.id;
-            prodottoInModifica = {...voce};
-            const perPezzi = haPezzi(voce);
-            document.getElementById('orto-modifica-quantita').hidden = perPezzi;
-            document.getElementById('orto-modifica-pezzi').hidden = !perPezzi;
-            campiModifica.elements.quantita.disabled = perPezzi;
-            campiModifica.elements.pezzi.disabled = !perPezzi;
-            campiModifica.elements.pezzi.required = perPezzi;
-            for (const campo of ['nome', 'quantita', 'scadenza']) {
-                campiModifica.elements[campo].value = voce[campo] ?? '';
-            }
-            campiModifica.elements.note.value = noteProdotto(voce);
-            campiModifica.elements.pezzi.value = voce.pezziRimasti ?? '';
-            dialogoModifica.showModal();
-            campiModifica.elements.nome.focus();
-        }),
-        ...(confezioneParziale(voce) || haPezzi(voce) && voce.pezziRimasti > 0 ? [pulsante('Parziale', () => {
-            scarico.elements.id.value = voce.id;
-            scarico.elements.id.dispatchEvent(new Event('change'));
-            location.hash = 'scarico';
-            cambiaVista();
-            apriParziale.click();
-        })] : []),
-        pulsante('Metti in lista acquisti', () => {
-            if (aggiungiAcquisto(voce.nome, '')) statoInventario.textContent = 'Aggiunto alla lista acquisti.';
-            else statoInventario.textContent = statoAcquisto.textContent;
-        }),
-        pulsante('Rimuovi', () => {
-            if (confirm('Rimuovere «' + voce.nome + '» dalla dispensa dell’orto?') &&
-                aggiorna(stato => { stato.scorte = stato.scorte.filter(item => item.id !== voce.id); }, statoInventario, 'Scorta rimossa.') &&
-                modifica === voce.id) fineModifica();
-        }))));
+        ])));
         if (!visibili.length) {
             const li = document.createElement('li');
             li.textContent = query ? 'Nessun prodotto corrisponde alla ricerca.' : 'Nessun prodotto registrato. Comincia dal Carico.';
@@ -372,7 +321,7 @@
         posti.replaceChildren(...ubicazioni.sort((a, b) => a.localeCompare(b, 'it')).map(ubicazione => new Option(ubicazione, ubicazione)));
         mostraInventario();
         const selezione = scarico.elements.id.value;
-        scarico.elements.id.replaceChildren(...scorte.map(voce => {
+        scarico.elements.id.replaceChildren(new Option('Scegli un prodotto', ''), ...scorte.map(voce => {
             const confezione = confezioneParziale(voce);
             const aperta = confezione?.livello < 100 ? ' · aperta, ' + confezione.livello + '%' : '';
             return new Option(voce.nome + (voce.ubicazione ? ' · ' + voce.ubicazione : '') + aperta, voce.id);
@@ -423,25 +372,8 @@
         }
         apriRiepilogo(voce);
     });
-    campiModifica.addEventListener('submit', evento => {
-        evento.preventDefault();
-        if (!prodottoInModifica) return;
-        const campi = campiModifica.elements;
-        const voce = {...prodottoInModifica};
-        for (const campo of ['nome', 'scadenza', 'note']) voce[campo] = campi[campo].value.trim();
-        if (!voce.nome) return;
-        delete voce.semina;
-        if (haPezzi(voce)) {
-            if (voce.pezziRimasti !== campi.pezzi.valueAsNumber) delete voce.livelloPezzo;
-            voce.pezziRimasti = campi.pezzi.valueAsNumber;
-        } else {
-            voce.quantita = campi.quantita.value.trim();
-        }
-        apriRiepilogo(voce, prodottoInModifica);
-    });
-    function apriRiepilogo(voce, precedente) {
-        prodottoDaSalvare = {voce, precedente};
-        document.getElementById('orto-riepilogo-titolo').textContent = precedente ? 'Riepilogo modifiche' : 'Riepilogo nuovo prodotto';
+    function apriRiepilogo(voce) {
+        prodottoDaSalvare = voce;
         const elenco = document.getElementById('orto-riepilogo-dati');
         elenco.replaceChildren();
         const dettagli = [
@@ -461,32 +393,14 @@
     }
     document.getElementById('orto-conferma-prodotto').addEventListener('click', () => {
         if (!riepilogo.open) return;
-        const {voce, precedente} = prodottoDaSalvare;
         if (aggiorna(dati => {
-            if (!precedente) {
-                dati.scorte.push(voce);
-                return;
-            }
-            const indice = dati.scorte.findIndex(item => item.id === voce.id);
-            if (indice < 0 || JSON.stringify(dati.scorte[indice]) !== JSON.stringify(precedente)) {
-                throw new Error('Prodotto modificato');
-            }
-            dati.scorte[indice] = voce;
+            dati.scorte.push(prodottoDaSalvare);
         }, statoRiepilogo, 'Prodotto salvato.')) {
             riepilogo.close();
-            if (precedente) {
-                statoInventario.textContent = 'Modifiche salvate.';
-                fineModifica();
-            } else {
-                annullaRicerca();
-                scorta.reset();
-                statoScorta.textContent = 'Prodotto salvato.';
-            }
+            annullaRicerca();
+            scorta.reset();
+            statoScorta.textContent = 'Prodotto salvato.';
         }
-    });
-    annullaScorta.addEventListener('click', fineModifica);
-    dialogoModifica.addEventListener('close', () => {
-        if (modifica) fineModifica();
     });
     cerca.addEventListener('input', mostraInventario);
     scarico.elements.id.addEventListener('change', () => {
@@ -621,7 +535,6 @@
             opzioneScarico(null);
             scarico.elements.resto.value = '';
             postoScarico.value = '';
-            if (modifica === voce.id) fineModifica();
         }
     });
     function salvaSpostamento() {
@@ -639,12 +552,13 @@
         }, statoScarico, 'Posto di conservazione aggiornato.')) postoScarico.value = '';
     }
     function iniziaProva() {
-        fineModifica();
         prova = {scorte: [
             {id: 'vassoio-prova', nome: 'Piantine di lattuga', categoria: 'Piantine',
                 confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: 'Serra'},
             {id: 'bottiglie-prova', nome: 'Bottiglie di concime', categoria: 'Terriccio e concimi',
-                confezioni: 1, pezziPerConfezione: 3, pezziRimasti: 3, ubicazione: 'Capanno'}
+                confezioni: 1, pezziPerConfezione: 3, pezziRimasti: 3, ubicazione: 'Capanno'},
+            {id: 'bustine-prova', nome: 'Semi di basilico', categoria: 'Semi',
+                quantita: '2 bustine', ubicazione: 'Scatola dei semi'}
         ], acquisti: []};
         avvisoProva.hidden = false;
         scarico.reset();
@@ -653,11 +567,9 @@
         statoScarico.textContent = '';
     }
     document.getElementById('orto-inizia-prova').addEventListener('click', iniziaProva);
-    document.getElementById('orto-prova-inventario').addEventListener('click', iniziaProva);
     function terminaProva() {
         prova = null;
         avvisoProva.hidden = true;
-        fineModifica();
         scarico.reset();
         opzioneScarico(null);
         statoScarico.textContent = '';

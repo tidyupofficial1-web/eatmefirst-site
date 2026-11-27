@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=cursore-bottiglie"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=scarico-dedicato"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -47,8 +47,8 @@
     .orto-main button.orto-aiuto:not(.button){padding:0;width:28px;height:28px;line-height:1;border-radius:50%;color:#8fdfb2;font-weight:bold}
     #orto-scanner,#orto-guida{width:min(440px,94vw);color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px}
     #orto-scanner::backdrop,#orto-guida::backdrop{background:#0009}
-    #orto-modifica,#orto-riepilogo{width:min(720px,94vw);max-height:90dvh;color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px;padding:20px}
-    #orto-modifica::backdrop,#orto-riepilogo::backdrop{background:#0009}
+    #orto-riepilogo{width:min(720px,94vw);max-height:90dvh;color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px;padding:20px}
+    #orto-riepilogo::backdrop{background:#0009}
     #orto-riepilogo dd{margin:0 0 .6rem;overflow-wrap:anywhere;white-space:pre-wrap}
     .orto-panel form,#event-form{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:18px}
     .orto-panel ul{margin-top:16px}
@@ -184,7 +184,7 @@
           <div class="orto-campo"><label>Dove lo conservi <input name="conservazione-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Scatola dei semi"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Dove lo conservi" data-guida-titolo="Dove lo conservi" data-guida-testo="Scrivi dove riponi la confezione, per esempio «Scatola dei semi» o «Scaffale del capanno». Se quel posto è già stato usato nell’orto, puoi sceglierlo tra i suggerimenti.">?</button></div>
           <datalist id="orto-posti"></datalist>
           <div class="orto-campo"><label>Scadenza facoltativa <input name="scadenza" type="date"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Scadenza" data-guida-titolo="Scadenza" data-guida-testo="Inserisci la data riportata sulla confezione, se presente. Se non c’è una scadenza, lascia il campo vuoto.">?</button></div>
-          <div class="orto-campo orto-note"><label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3" placeholder="Es. L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco."></textarea></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Note sul prodotto" data-guida-titolo="Note sul prodotto" data-guida-testo="Scrivi quello che vorrai ricordare, per esempio «L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco». Puoi aggiornare la nota dall’Inventario.">?</button></div>
+          <div class="orto-campo orto-note"><label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3" placeholder="Es. L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco."></textarea></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Note sul prodotto" data-guida-titolo="Note sul prodotto" data-guida-testo="Scrivi quello che vorrai ricordare, per esempio «L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco». La ritrovi nell’Inventario.">?</button></div>
         </div>
         <button class="button" type="submit">Salva prodotto</button>
       </form>
@@ -197,8 +197,8 @@
     </section>
     <section class="orto-panel" id="scarico" data-orto-vista hidden>
       <h1>Scarico dell’orto</h1>
-      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>Scegli un prodotto e l’operazione da fare.</p></div>
-      <p><button type="button" id="orto-inizia-prova">Prova con piantine e bottiglie di concime</button></p>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Scelgo un prodotto. Se ho usato solo un po’ di insetticida o di semi, tocco Parziale e regolo quanto resta di quella confezione.»</p></div>
+      <p><button type="button" id="orto-inizia-prova">Prova con bottiglie, bustine e piantine</button></p>
       <form id="orto-scarico">
         <div class="orto-fields">
           <div class="orto-campo"><label>Prodotto <select name="id" required></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Prodotto da scaricare" data-guida-titolo="Prodotto da scaricare" data-guida-testo="Scegli il prodotto che hai usato o spostato. Se hai più confezioni dello stesso prodotto, controlla il luogo di conservazione.">?</button></div>
@@ -244,13 +244,9 @@
     </section>
     <section class="orto-panel" id="inventario" data-orto-vista hidden>
       <h1>Inventario dell’orto</h1>
-      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Per una bottiglia o bustina aperta, uso Parziale direttamente dalla scheda del prodotto.»</p></div>
-      <div class="actions">
-        <a class="button" href="#carico">Carica un prodotto</a>
-        <button type="button" id="orto-prova-inventario">Prova con piantine e bottiglie di concime</button>
-      </div>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Qui controllo quanto mi rimane e dove l’ho riposto. Quando uso qualcosa, lo registro nello Scarico.»</p></div>
+      <p><a href="#scarico">Vai allo Scarico</a></p>
       <div class="orto-fields"><div class="orto-campo"><label>Cerca un prodotto <input id="orto-cerca" type="search" placeholder="Nome, codice, categoria o ubicazione"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Cerca un prodotto" data-guida-titolo="Cerca un prodotto" data-guida-testo="Digita parte del nome, il codice a barre, la categoria o il posto dove lo conservi. Cancella la ricerca per rivedere tutti i prodotti.">?</button></div></div>
-      <p id="orto-stato-inventario" role="status"></p>
       <ul id="orto-scorte" class="advice-list"></ul>
     </section>
     <section class="orto-panel" id="acquisti-orto" data-orto-vista hidden>
@@ -265,24 +261,8 @@
       <p id="orto-stato-acquisto" role="status"></p>
       <ul id="orto-acquisti" class="advice-list"></ul>
     </section>
-    <dialog id="orto-modifica" aria-labelledby="orto-titolo-modifica">
-      <h2 id="orto-titolo-modifica">Modifica prodotto</h2>
-      <form id="orto-modifica-campi">
-        <div class="orto-fields">
-          <label>Nome <input name="nome" required maxlength="100"></label>
-          <label id="orto-modifica-quantita">Quantità disponibile <input name="quantita" maxlength="60"></label>
-          <label id="orto-modifica-pezzi" hidden>Pezzi disponibili <input name="pezzi" type="number" min="0" max="100000000" step="1"></label>
-          <label>Scadenza <input name="scadenza" type="date"></label>
-          <label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3"></textarea></label>
-        </div>
-        <div class="actions">
-          <button type="button" id="orto-annulla-scorta">Annulla</button>
-          <button class="button" type="submit">Salva modifiche</button>
-        </div>
-      </form>
-    </dialog>
     <dialog id="orto-riepilogo" aria-labelledby="orto-riepilogo-titolo">
-      <h2 id="orto-riepilogo-titolo"></h2>
+      <h2 id="orto-riepilogo-titolo">Riepilogo nuovo prodotto</h2>
       <dl id="orto-riepilogo-dati"></dl>
       <p id="orto-riepilogo-stato" role="status"></p>
       <div class="actions">
