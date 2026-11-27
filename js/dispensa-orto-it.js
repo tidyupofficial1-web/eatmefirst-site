@@ -246,6 +246,13 @@
             cambiaVista();
             scorta.elements.nome.focus();
         }),
+        ...(confezioneParziale(voce) ? [pulsante('Parziale', () => {
+            scarico.elements.id.value = voce.id;
+            scarico.elements.id.dispatchEvent(new Event('change'));
+            location.hash = 'scarico';
+            cambiaVista();
+            apriParziale.click();
+        })] : []),
         pulsante('Metti in lista acquisti', () => {
             if (aggiungiAcquisto(voce.nome, '')) statoInventario.textContent = 'Aggiunto alla lista acquisti.';
             else statoInventario.textContent = statoAcquisto.textContent;
@@ -476,6 +483,20 @@
         }, statoScarico, 'Contenuto rimanente aggiornato.')) postoParziale.value = '';
     }
     cursore.addEventListener('input', aggiornaLivello);
+    function indicaLivello(evento) {
+        const rettangolo = forma.getBoundingClientRect();
+        const percentuale = Math.round(100 * (rettangolo.bottom - evento.clientY) / rettangolo.height);
+        cursore.value = Math.max(0, Math.min(Number(cursore.max), percentuale));
+        aggiornaLivello();
+    }
+    forma.addEventListener('pointerdown', evento => {
+        if (evento.button !== 0) return;
+        forma.setPointerCapture(evento.pointerId);
+        indicaLivello(evento);
+    });
+    forma.addEventListener('pointermove', evento => {
+        if (forma.hasPointerCapture(evento.pointerId)) indicaLivello(evento);
+    });
     tipoParziale.addEventListener('change', () => configuraParziale(scorte.find(item => item.id === scarico.elements.id.value)));
     mezza.addEventListener('click', () => {
         salvaLivello(Number(cursore.max) - 50);

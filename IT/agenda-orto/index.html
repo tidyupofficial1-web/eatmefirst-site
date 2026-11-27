@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=livello-orto"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=consumo-inventario"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -33,12 +33,13 @@
     .orto-intro p{margin:0}
     .orto-livello{max-width:360px;margin:18px auto;text-align:center}
     .orto-livello input{width:100%;accent-color:var(--primary-color)}
-    .orto-forma{position:relative;isolation:isolate;width:64px;height:95px;margin:20px auto 12px;border:2px solid #8fdfb2;border-radius:9px;background:#101416}
-    .orto-forma::after{content:"";position:absolute;inset:auto 0 0;height:var(--livello,100%);background:#2ecc7180;border-radius:0 0 6px 6px;z-index:-1}
+    .orto-forma{position:relative;width:64px;height:95px;margin:20px auto 12px;border:2px solid #8fdfb2;border-radius:9px;background:linear-gradient(to top,#26734d var(--livello,100%),#9d383d var(--livello,100%));cursor:ns-resize;touch-action:none}
     .orto-forma[data-forma="bottiglia"]{width:45px;border-radius:14px 14px 8px 8px}
     .orto-forma[data-forma="bottiglia"]::before{content:"";position:absolute;top:-13px;left:11px;right:11px;height:12px;border:2px solid #8fdfb2;background:#253238;border-radius:4px}
     .orto-livello small{color:var(--text-muted)}
     .orto-badge{display:inline-block;padding:3px 8px;margin:2px;background:#253238;border-radius:6px}
+    .orto-badge-rimanente{color:#8fdfb2}
+    .orto-badge-usato{color:#ffb2b4}
     .orto-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-bottom:14px}
     .orto-fields label{display:grid;gap:4px;font-weight:600}
     .orto-fields input,.orto-fields select,.orto-fields textarea,#event-form input:not([type=checkbox]),#event-form select{width:100%;min-width:0;padding:9px;border:1px solid var(--border-color);border-radius:8px;background:#101416;color:var(--ink);font:inherit}
@@ -209,25 +210,27 @@
         </div>
         <div id="orto-parziale" hidden>
           <div id="orto-riduzione-tipo" class="orto-fields" hidden>
-            <label>Tipo di scarico parziale <select name="tipo-parziale"><option value="livello">Contenuto di una confezione</option><option value="pezzi">Pezzi interi</option></select></label>
+            <div class="orto-campo"><label>Tipo di scarico parziale <select name="tipo-parziale"><option value="livello">Contenuto di una confezione</option><option value="pezzi">Pezzi interi</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Tipo di scarico parziale" data-guida-titolo="Tipo di scarico parziale" data-guida-testo="Scegli Contenuto per una bottiglia o bustina aperta. Scegli Pezzi interi per togliere un certo numero di pezzi, come 6 piantine da un vassoio.">?</button></div>
           </div>
           <div id="orto-livello" class="orto-livello" hidden>
+            <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Se uso solo una parte, indico quanto resta. Il verde è quello che mi rimane, il rosso quello che ho già usato.»</p></div>
             <p id="orto-oggetto-livello"></p>
             <div class="orto-forma" id="orto-forma" aria-hidden="true"></div>
             <label for="orto-cursore">Contenuto rimanente</label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Contenuto rimanente" data-guida-titolo="Contenuto rimanente" data-guida-testo="Trascina il cursore o indica il livello sulla bottiglia o bustina. Per una mezza bustina lascia il 50%. Il rosso mostra la parte già usata. Premi Salva quando il livello è giusto.">?</button>
             <input type="range" id="orto-cursore" name="percentuale" min="0" max="100" value="100">
-            <span class="orto-badge">Rimanente: <strong id="orto-rimanente">100%</strong></span>
-            <span class="orto-badge">Usato: <strong id="orto-consumato">0%</strong></span>
+            <span class="orto-badge orto-badge-rimanente">Rimanente: <strong id="orto-rimanente">100%</strong></span>
+            <span class="orto-badge orto-badge-usato">Usato: <strong id="orto-consumato">0%</strong></span>
             <div><small>Il cursore si applica a una sola confezione. Se ne avevi già aperta una, riparte da quella.</small></div>
           </div>
-          <div class="orto-fields" id="orto-pezzi-scarico" hidden><label>Pezzi da scaricare <input name="pezzi-usati" type="number" min="1" step="1" placeholder="Es. 6"></label></div>
+          <div class="orto-fields" id="orto-pezzi-scarico" hidden><div class="orto-campo"><label>Pezzi da scaricare <input name="pezzi-usati" type="number" min="1" step="1" placeholder="Es. 6"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Pezzi da scaricare" data-guida-titolo="Pezzi da scaricare" data-guida-testo="Indica quanti pezzi hai usato. Se dal vassoio da 12 prendi 6 piantine, scrivi 6 e premi Salva.">?</button></div></div>
           <div class="orto-fields">
             <div class="orto-campo" id="orto-resto-libero"><label>Quantità rimasta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità rimasta" data-guida-titolo="Quantità rimasta" data-guida-testo="Scrivi quello che rimane, per esempio «5 litri» o «30%». Se hai finito il prodotto, scegli «Scarica tutto».">?</button></div>
           </div>
           <div class="actions">
             <button type="button" id="orto-mezza" hidden>Ho seminato mezza bustina</button>
           </div>
-          <div class="orto-fields" id="orto-posto-parziale" hidden><label>Dove riponi il prodotto? <input name="posto-parziale-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Lascia vuoto per mantenere il posto attuale"></label></div>
+          <div class="orto-fields" id="orto-posto-parziale" hidden><div class="orto-campo"><label>Dove riponi il prodotto? <input name="posto-parziale-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Lascia vuoto per mantenere il posto attuale"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Dove riponi il prodotto" data-guida-titolo="Dove riponi il prodotto" data-guida-testo="Se hai cambiato posto alla bottiglia o bustina aperta, indica il nuovo luogo di conservazione. Lascia il campo vuoto se è rimasta al suo posto.">?</button></div></div>
         </div>
         <div id="orto-cambio-posto" hidden>
           <div class="orto-fields">
@@ -240,7 +243,8 @@
     </section>
     <section class="orto-panel" id="inventario" data-orto-vista hidden>
       <h1>Inventario dell’orto</h1>
-      <div class="orto-fields"><label>Cerca un prodotto <input id="orto-cerca" type="search" placeholder="Nome, codice, categoria o ubicazione"></label></div>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Per una bottiglia o bustina aperta, uso Parziale direttamente dalla scheda del prodotto.»</p></div>
+      <div class="orto-fields"><div class="orto-campo"><label>Cerca un prodotto <input id="orto-cerca" type="search" placeholder="Nome, codice, categoria o ubicazione"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Cerca un prodotto" data-guida-titolo="Cerca un prodotto" data-guida-testo="Digita parte del nome, il codice a barre, la categoria o il posto dove lo conservi. Cancella la ricerca per rivedere tutti i prodotti.">?</button></div></div>
       <p id="orto-stato-inventario" role="status"></p>
       <ul id="orto-scorte" class="advice-list"></ul>
     </section>
