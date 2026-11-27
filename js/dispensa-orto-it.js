@@ -8,7 +8,11 @@
     const cerca = document.getElementById('orto-cerca');
     const mezza = document.getElementById('orto-mezza');
     const finito = document.getElementById('orto-finito');
-    const sposta = document.getElementById('orto-sposta');
+    const salvaScarico = document.getElementById('orto-salva-scarico');
+    const pezziScarico = document.getElementById('orto-pezzi-scarico');
+    const restoLibero = document.getElementById('orto-resto-libero');
+    const usatiCampo = scarico.elements['pezzi-usati'];
+    const avvisoProva = document.getElementById('orto-prova-attiva');
     const parziale = document.getElementById('orto-parziale');
     const cambioPosto = document.getElementById('orto-cambio-posto');
     const apriParziale = document.getElementById('orto-apri-parziale');
@@ -34,6 +38,7 @@
     let avvioScanner = false;
     let modifica = null;
     let scorte = [];
+    let prova = null;
 
     const viste = [...document.querySelectorAll('[data-orto-vista]')];
     const guida = document.getElementById('orto-guida');
@@ -50,6 +55,7 @@
         const hash = location.hash.slice(1);
         const richiesta = hash === 'dispensa-orto' ? 'inventario' : hash === 'agenda-attivita' ? 'agenda' : hash;
         const attiva = viste.find(vista => vista.id === richiesta)?.id ?? 'home';
+        if (attiva === 'agenda' && prova) terminaProva();
         for (const vista of viste) vista.hidden = vista.id !== attiva;
         for (const link of document.querySelectorAll('.orto-nav a')) {
             if (link.hash === '#' + attiva) link.setAttribute('aria-current', 'page');
@@ -58,6 +64,7 @@
     }
 
     function leggi() {
+        if (prova) return prova;
         const stato = JSON.parse(localStorage.getItem(key) ?? '{"scorte":[],"acquisti":[]}');
         if (!Array.isArray(stato?.scorte) || !Array.isArray(stato?.acquisti)) throw new Error('Formato non valido');
         return stato;
@@ -67,7 +74,7 @@
         try {
             const dati = leggi();
             mutazione(dati);
-            localStorage.setItem(key, JSON.stringify(dati));
+            if (!prova) localStorage.setItem(key, JSON.stringify(dati));
             mostra(dati);
             stato.textContent = messaggio;
             return true;
@@ -169,6 +176,10 @@
     function noteProdotto(voce) {
         return [voce.note, voce.semina && 'Destinazione di semina: ' + voce.semina].filter(Boolean).join('\n');
     }
+    const haPezzi = voce => Number.isSafeInteger(voce?.pezziRimasti);
+    const quantitaProdotto = voce => haPezzi(voce)
+        ? voce.pezziRimasti + (voce.pezziRimasti === 1 ? ' pezzo' : ' pezzi')
+        : voce.quantita;
 
     function pulsante(testo, azione) {
         const elemento = document.createElement('button');
@@ -204,7 +215,8 @@
         const visibili = scorte.filter(voce => [voce.nome, voce.barcode, voce.categoria, voce.ubicazione, noteProdotto(voce)]
             .some(valore => valore?.toLocaleLowerCase('it').includes(query)));
         listaScorte.replaceChildren(...visibili.map(voce => riga(voce, [
-            voce.categoria, voce.quantita,
+            voce.categoria, quantitaProdotto(voce),
+            haPezzi(voce) && 'Formato originale: ' + voce.confezioni + ' × ' + voce.pezziPerConfezione,
             voce.ubicazione && 'Conservazione: ' + voce.ubicazione,
             voce.barcode && 'Codice: ' + voce.barcode,
             voce.scadenza && 'Scadenza: ' + voce.scadenza.split('-').reverse().join('/'),
@@ -215,6 +227,8 @@
             modifica = voce.id;
             for (const campo of campiScorta) campoScorta(campo).value = voce[campo] ?? '';
             scorta.elements.note.value = noteProdotto(voce);
+            scorta.elements.confezioni.value = voce.confezioni ?? '';
+            scorta.elements.pezzi.value = voce.pezziPerConfezione ?? '';
             salvaScorta.textContent = 'Salva modifiche';
             annullaScorta.hidden = false;
             location.hash = 'carico';
@@ -238,7 +252,7 @@
     }
 
     function bustine(voce) {
-        if (voce?.categoria !== 'Semi') return null;
+        if (voce?.categoria !== 'Semi' || haPezzi(voce)) return null;
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
         if (testo === 'mezza bustina') return 0.5;
         if (testo === 'una bustina') return 1;
@@ -251,21 +265,27 @@
         cambioPosto.hidden = pannello !== cambioPosto;
         apriParziale.setAttribute('aria-expanded', String(!parziale.hidden));
         apriSposta.setAttribute('aria-expanded', String(!cambioPosto.hidden));
+        salvaScarico.disabled = !pannello || !scarico.elements.id.value;
+        usatiCampo.disabled = parziale.hidden || pezziScarico.hidden;
     }
 
     function selezionaScarico() {
         const voce = scorte.find(item => item.id === scarico.elements.id.value);
         const numero = bustine(voce);
+        const perPezzi = haPezzi(voce);
         mezza.hidden = numero === null || numero < 0.5;
         quantitaAttuale.hidden = !voce;
         quantitaAttuale.textContent = voce
-            ? 'Quantità attuale: ' + (voce.quantita || 'non indicata') + (voce.ubicazione ? ' · Conservazione: ' + voce.ubicazione : '')
+            ? 'Quantità attuale: ' + (quantitaProdotto(voce) || 'non indicata') + (voce.ubicazione ? ' · Conservazione: ' + voce.ubicazione : '')
             : '';
-        scarico.elements.resto.disabled = !voce;
+        pezziScarico.hidden = !perPezzi;
+        restoLibero.hidden = perPezzi;
+        usatiCampo.disabled = !perPezzi || parziale.hidden;
+        usatiCampo.max = perPezzi ? voce.pezziRimasti : '';
+        scarico.elements.resto.disabled = !voce || perPezzi;
         postoScarico.disabled = !voce;
-        scarico.querySelector('[type="submit"]').disabled = !voce;
+        salvaScarico.disabled = !voce || (parziale.hidden && cambioPosto.hidden);
         finito.disabled = !voce;
-        sposta.disabled = !voce;
         apriParziale.disabled = !voce;
         apriSposta.disabled = !voce;
         if (!voce) opzioneScarico(null);
@@ -307,8 +327,21 @@
             return;
         }
         voce.id = modifica ?? crypto.randomUUID();
+        const confezioni = scorta.elements.confezioni.valueAsNumber;
+        const pezzi = scorta.elements.pezzi.valueAsNumber;
+        if (Number.isFinite(confezioni) !== Number.isFinite(pezzi)) {
+            statoScorta.textContent = 'Per usare le confezioni, compila entrambi i campi.';
+            return;
+        }
         if (aggiorna(dati => {
             const indice = dati.scorte.findIndex(item => item.id === voce.id);
+            const precedente = dati.scorte[indice];
+            if (Number.isSafeInteger(confezioni) && Number.isSafeInteger(pezzi)) {
+                voce.confezioni = confezioni;
+                voce.pezziPerConfezione = pezzi;
+                voce.pezziRimasti = haPezzi(precedente) && precedente.confezioni === confezioni && precedente.pezziPerConfezione === pezzi
+                    ? precedente.pezziRimasti : confezioni * pezzi;
+            }
             if (indice < 0) dati.scorte.push(voce);
             else dati.scorte[indice] = voce;
         }, statoScorta, 'Prodotto salvato.')) fineModifica();
@@ -317,6 +350,7 @@
     cerca.addEventListener('input', mostraInventario);
     scarico.elements.id.addEventListener('change', () => {
         scarico.elements.resto.value = '';
+        usatiCampo.value = '';
         postoScarico.value = '';
         statoScarico.textContent = '';
         opzioneScarico(null);
@@ -324,7 +358,7 @@
     });
     apriParziale.addEventListener('click', () => {
         opzioneScarico(parziale);
-        scarico.elements.resto.focus();
+        (pezziScarico.hidden ? scarico.elements.resto : usatiCampo).focus();
     });
     apriSposta.addEventListener('click', () => {
         opzioneScarico(cambioPosto);
@@ -332,8 +366,26 @@
     });
     scarico.addEventListener('submit', evento => {
         evento.preventDefault();
+        if (!cambioPosto.hidden) {
+            salvaSpostamento();
+            return;
+        }
         if (parziale.hidden) return;
         const id = scarico.elements.id.value;
+        const prodotto = scorte.find(item => item.id === id);
+        if (haPezzi(prodotto)) {
+            const usati = usatiCampo.valueAsNumber;
+            if (!Number.isSafeInteger(usati) || usati < 1 || usati > prodotto.pezziRimasti) {
+                statoScarico.textContent = 'Indica quanti pezzi hai usato, entro la quantità disponibile.';
+                return;
+            }
+            if (aggiorna(dati => {
+                const voce = dati.scorte.find(item => item.id === id);
+                if (!haPezzi(voce) || voce.pezziRimasti < usati) throw new Error('Quantità insufficiente');
+                voce.pezziRimasti -= usati;
+            }, statoScarico, 'Quantità rimanente aggiornata.')) usatiCampo.value = '';
+            return;
+        }
         const resto = scarico.elements.resto.value.trim();
         if (!resto) {
             statoScarico.textContent = 'Indica la quantità rimasta oppure usa «Scarica tutto».';
@@ -368,7 +420,7 @@
             if (modifica === voce.id) fineModifica();
         }
     });
-    sposta.addEventListener('click', () => {
+    function salvaSpostamento() {
         const id = scarico.elements.id.value;
         const posto = postoScarico.value.trim();
         if (!posto) {
@@ -381,7 +433,27 @@
             if (!voce) throw new Error('Scorta non trovata');
             voce.ubicazione = posto;
         }, statoScarico, 'Posto di conservazione aggiornato.')) postoScarico.value = '';
+    }
+    document.getElementById('orto-inizia-prova').addEventListener('click', () => {
+        fineModifica();
+        prova = {scorte: [{id: 'vassoio-prova', nome: 'Piantine di lattuga', categoria: 'Piantine',
+            confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: 'Serra'}], acquisti: []};
+        avvisoProva.hidden = false;
+        scarico.reset();
+        opzioneScarico(null);
+        mostra(prova);
+        statoScarico.textContent = '';
     });
+    function terminaProva() {
+        prova = null;
+        avvisoProva.hidden = true;
+        fineModifica();
+        scarico.reset();
+        opzioneScarico(null);
+        statoScarico.textContent = '';
+        ricarica();
+    }
+    document.getElementById('orto-fine-prova').addEventListener('click', terminaProva);
     acquisto.addEventListener('submit', evento => {
         evento.preventDefault();
         const nome = acquisto.elements.nome.value.trim();

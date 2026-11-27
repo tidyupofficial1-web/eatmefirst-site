@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=scarico-opzioni"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=vassoi-orto"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -20,6 +20,7 @@
     .orto-nav{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:22px}
     .orto-nav a[aria-current]{font-weight:700;color:var(--primary-color)}
     [data-orto-vista][hidden]{display:none}
+    #orto-prova-attiva[hidden]{display:none}
     .orto-hero{background:var(--card-bg);border:1px solid var(--border-color);border-top:4px solid var(--primary-color);border-radius:12px;overflow:hidden;margin-bottom:26px;box-shadow:0 8px 20px #0006}
     .orto-hero > img{display:block;width:100%;height:clamp(160px,30vw,290px);object-fit:cover}
     .orto-hero div{padding:18px 24px}
@@ -98,6 +99,10 @@
       <a href="#home">Home</a><a href="#carico">Carico</a><a href="#scarico">Scarico</a>
       <a href="#inventario">Inventario</a><a href="#acquisti-orto">Acquisti</a><a href="#agenda">Agenda</a>
     </nav>
+    <div id="orto-prova-attiva" class="actions" hidden>
+      <strong>Prova con dati di esempio</strong>
+      <button type="button" id="orto-fine-prova">Torna al mio orto</button>
+    </div>
     <section id="home" data-orto-vista>
       <div class="orto-hero">
         <img src="../../sito-bozza/assets/consigli-max-orto.webp" width="1000" height="667" alt="Bustine di semi e attrezzi sul tavolo dell’orto">
@@ -160,11 +165,14 @@
           <div class="orto-campo"><label>Prodotto <input name="nome" required maxlength="100" placeholder="Es. Semi di pomodoro"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Prodotto" data-guida-titolo="Prodotto" data-guida-testo="Se il prodotto non ha un codice a barre, come semi sfusi, piantine del mercato o una bustina scambiata con un vicino, lascia il codice vuoto e scrivi il nome a mano. Per esempio: «Semi di pomodoro San Marzano». Poi scegli la categoria, indica la quantità e salva. Puoi fare lo stesso se la ricerca del codice non trova il nome. Se invece il nome viene proposto, controllalo prima di salvare.">?</button></div>
           <div class="orto-campo"><label>Categoria <select name="categoria"><option>Semi</option><option>Piantine</option><option>Terriccio e concimi</option><option>Attrezzi</option><option>Insetticidi e cura delle piante</option><option>Altro</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Categoria" data-guida-titolo="Categoria" data-guida-testo="Scegli il gruppo che ti aiuterà a ritrovare il prodotto nell’Inventario, per esempio «Semi» o «Terriccio e concimi».">?</button></div>
           <div class="orto-campo"><label>Quantità <input name="quantita" maxlength="60" placeholder="Es. 2 bustine"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità" data-guida-titolo="Quantità" data-guida-testo="Indica quanto stai mettendo via e l’unità di misura, per esempio «2 bustine», «1 sacco» o «10 litri». Se registri i semi in bustine, lo Scarico può scalare mezza bustina.">?</button></div>
+          <label>Confezioni o vassoi <input name="confezioni" type="number" min="1" max="10000" step="1" placeholder="Es. 1"></label>
+          <label>Pezzi per confezione <input name="pezzi" type="number" min="1" max="10000" step="1" placeholder="Es. 12"></label>
           <div class="orto-campo"><label>Dove lo conservi <input name="conservazione-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Scatola dei semi"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Dove lo conservi" data-guida-titolo="Dove lo conservi" data-guida-testo="Scrivi dove riponi la confezione, per esempio «Scatola dei semi» o «Scaffale del capanno». Se quel posto è già stato usato nell’orto, puoi sceglierlo tra i suggerimenti.">?</button></div>
           <datalist id="orto-posti"></datalist>
           <div class="orto-campo"><label>Scadenza facoltativa <input name="scadenza" type="date"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Scadenza" data-guida-titolo="Scadenza" data-guida-testo="Inserisci la data riportata sulla confezione, se presente. Se non c’è una scadenza, lascia il campo vuoto.">?</button></div>
           <div class="orto-campo orto-note"><label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3" placeholder="Es. L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco."></textarea></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Note sul prodotto" data-guida-titolo="Note sul prodotto" data-guida-testo="Scrivi quello che vorrai ricordare, per esempio «L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco». Puoi aggiornare la nota dall’Inventario.">?</button></div>
         </div>
+        <p>Per registrare un vassoio da 12 piantine, indica 1 confezione e 12 pezzi. Per quantità come «2 bustine» o «10 litri», usa il campo Quantità.</p>
         <button class="button" type="submit" id="orto-salva-scorta">Salva prodotto</button>
         <button type="button" id="orto-annulla-scorta" hidden>Annulla modifica</button>
       </form>
@@ -178,6 +186,7 @@
     <section class="orto-panel" id="scarico" data-orto-vista hidden>
       <h1>Scarico dell’orto</h1>
       <p>Scegli un prodotto e l’operazione da fare.</p>
+      <p><button type="button" id="orto-inizia-prova">Prova con un vassoio da 12 piantine</button></p>
       <form id="orto-scarico">
         <div class="orto-fields">
           <div class="orto-campo"><label>Prodotto <select name="id" required></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Prodotto da scaricare" data-guida-titolo="Prodotto da scaricare" data-guida-testo="Scegli il prodotto che hai usato o spostato. Se hai più confezioni dello stesso prodotto, controlla il luogo di conservazione.">?</button></div>
@@ -189,11 +198,11 @@
           <button type="button" id="orto-apri-sposta" aria-expanded="false" aria-controls="orto-cambio-posto">Sposta</button>
         </div>
         <div id="orto-parziale" hidden>
+          <div class="orto-fields" id="orto-pezzi-scarico" hidden><label>Pezzi da scaricare <input name="pezzi-usati" type="number" min="1" step="1" placeholder="Es. 6"></label></div>
           <div class="orto-fields">
-            <div class="orto-campo"><label>Quantità rimasta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità rimasta" data-guida-titolo="Quantità rimasta" data-guida-testo="Scrivi quello che rimane, per esempio «5 litri» o «30%». Se hai finito il prodotto, scegli «Scarica tutto».">?</button></div>
+            <div class="orto-campo" id="orto-resto-libero"><label>Quantità rimasta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità rimasta" data-guida-titolo="Quantità rimasta" data-guida-testo="Scrivi quello che rimane, per esempio «5 litri» o «30%». Se hai finito il prodotto, scegli «Scarica tutto».">?</button></div>
           </div>
           <div class="actions">
-            <button class="button" type="submit">Salva il rimanente</button>
             <button type="button" id="orto-mezza" hidden>Ho seminato mezza bustina</button>
           </div>
         </div>
@@ -201,8 +210,8 @@
           <div class="orto-fields">
             <div class="orto-campo"><label>Nuovo posto di conservazione <input name="posto-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Armadio attrezzi"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Nuovo posto" data-guida-titolo="Nuovo posto" data-guida-testo="Scrivi il nuovo posto di conservazione. Lo spostamento lascia la quantità invariata.">?</button></div>
           </div>
-          <button class="button" type="button" id="orto-sposta">Conferma spostamento</button>
         </div>
+        <p><button class="button" type="submit" id="orto-salva-scarico" disabled>Salva</button></p>
       </form>
       <p id="orto-stato-scarico" role="status"></p>
     </section>
