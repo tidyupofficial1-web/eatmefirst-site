@@ -394,6 +394,10 @@
         }));
     }
 
+    const riepilogo = document.getElementById('orto-riepilogo');
+    const statoRiepilogo = document.getElementById('orto-riepilogo-stato');
+    let prodottoDaSalvare;
+
     scorta.addEventListener('submit', evento => {
         evento.preventDefault();
         const voce = Object.fromEntries(campiScorta.map(nome => [nome, campoScorta(nome).value.trim()]));
@@ -411,20 +415,50 @@
             statoScorta.textContent = 'Per usare le confezioni, compila entrambi i campi.';
             return;
         }
+        const precedente = modifica && leggi().scorte.find(item => item.id === voce.id);
+        if (Number.isSafeInteger(confezioni) && Number.isSafeInteger(pezzi)) {
+            voce.confezioni = confezioni;
+            voce.pezziPerConfezione = pezzi;
+            const stessoFormato = haPezzi(precedente) && precedente.confezioni === confezioni && precedente.pezziPerConfezione === pezzi;
+            voce.pezziRimasti = stessoFormato ? precedente.pezziRimasti : confezioni * pezzi;
+            if (stessoFormato && precedente.livelloPezzo != null) voce.livelloPezzo = precedente.livelloPezzo;
+        }
+        prodottoDaSalvare = {voce, precedente, inModifica: Boolean(modifica)};
+        document.getElementById('orto-riepilogo-titolo').textContent = modifica ? 'Riepilogo modifiche' : 'Riepilogo nuovo prodotto';
+        const elenco = document.getElementById('orto-riepilogo-dati');
+        elenco.replaceChildren();
+        const dettagli = [
+            ['Prodotto', voce.nome], ['Codice a barre', voce.barcode], ['Categoria', voce.categoria],
+            ['Quantità', quantitaProdotto(voce)], ['Ubicazione', voce.ubicazione],
+            ['Scadenza', voce.scadenza], ['Note', noteProdotto(voce)]
+        ];
+        for (const [titolo, valore] of dettagli) {
+            const termine = document.createElement('dt');
+            const descrizione = document.createElement('dd');
+            termine.textContent = titolo;
+            descrizione.textContent = valore || '—';
+            elenco.append(termine, descrizione);
+        }
+        statoRiepilogo.textContent = '';
+        riepilogo.showModal();
+    });
+    document.getElementById('orto-conferma-prodotto').addEventListener('click', () => {
+        if (!riepilogo.open) return;
+        const {voce, precedente, inModifica} = prodottoDaSalvare;
         if (aggiorna(dati => {
-            const indice = dati.scorte.findIndex(item => item.id === voce.id);
-            const precedente = dati.scorte[indice];
-            if (Number.isSafeInteger(confezioni) && Number.isSafeInteger(pezzi)) {
-                voce.confezioni = confezioni;
-                voce.pezziPerConfezione = pezzi;
-                const stessoFormato = haPezzi(precedente) && precedente.confezioni === confezioni && precedente.pezziPerConfezione === pezzi;
-                voce.pezziRimasti = stessoFormato ? precedente.pezziRimasti : confezioni * pezzi;
-                if (stessoFormato && precedente.livelloPezzo != null) voce.livelloPezzo = precedente.livelloPezzo;
+            if (!inModifica) {
+                dati.scorte.push(voce);
+                return;
             }
-            if (indice < 0) dati.scorte.push(voce);
-            else dati.scorte[indice] = voce;
-        }, statoScorta, 'Prodotto salvato.')) {
-            if (modifica) statoInventario.textContent = 'Modifiche salvate.';
+            const indice = dati.scorte.findIndex(item => item.id === voce.id);
+            if (indice < 0 || JSON.stringify(dati.scorte[indice]) !== JSON.stringify(precedente)) {
+                throw new Error('Prodotto modificato');
+            }
+            dati.scorte[indice] = voce;
+        }, statoRiepilogo, 'Prodotto salvato.')) {
+            riepilogo.close();
+            if (inModifica) statoInventario.textContent = 'Modifiche salvate.';
+            else statoScorta.textContent = 'Prodotto salvato.';
             fineModifica();
         }
     });
@@ -554,7 +588,7 @@
             voce.ubicazione = posto;
         }, statoScarico, 'Posto di conservazione aggiornato.')) postoScarico.value = '';
     }
-    document.getElementById('orto-inizia-prova').addEventListener('click', () => {
+    function iniziaProva() {
         fineModifica();
         prova = {scorte: [{id: 'vassoio-prova', nome: 'Piantine di lattuga', categoria: 'Piantine',
             confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: 'Serra'}], acquisti: []};
@@ -563,7 +597,9 @@
         opzioneScarico(null);
         mostra(prova);
         statoScarico.textContent = '';
-    });
+    }
+    document.getElementById('orto-inizia-prova').addEventListener('click', iniziaProva);
+    document.getElementById('orto-prova-inventario').addEventListener('click', iniziaProva);
     function terminaProva() {
         prova = null;
         avvisoProva.hidden = true;
