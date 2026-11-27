@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=scheda-inventario"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=confezione-singola"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -213,7 +213,7 @@
         </div>
         <div id="orto-parziale" hidden>
           <div id="orto-riduzione-tipo" class="orto-fields" hidden>
-            <div class="orto-campo"><label>Tipo di scarico parziale <select name="tipo-parziale"><option value="livello">Contenuto di una confezione</option><option value="pezzi">Pezzi interi</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Tipo di scarico parziale" data-guida-titolo="Tipo di scarico parziale" data-guida-testo="Scegli Contenuto per una bottiglia o bustina aperta. Scegli Pezzi interi per togliere un certo numero di pezzi, come 6 piantine da un vassoio.">?</button></div>
+            <div class="orto-campo"><label>Tipo di scarico parziale <select name="tipo-parziale"><option value="livello" id="orto-tipo-automatico">Contenuto di una confezione</option><option value="pezzi">Pezzi interi</option><option value="bottiglia">Contenuto di una bottiglia</option><option value="bustina">Contenuto di una bustina</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Tipo di scarico parziale" data-guida-titolo="Tipo di scarico parziale" data-guida-testo="Scegli il contenuto per regolare una sola bottiglia o bustina. Scegli Pezzi interi per togliere un certo numero di pezzi, come 6 piantine da un vassoio.">?</button></div>
           </div>
           <div id="orto-livello" class="orto-livello" hidden>
             <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Se uso solo una parte, indico quanto resta. Il verde è quello che mi rimane, il rosso quello che ho già usato.»</p></div>
@@ -224,7 +224,7 @@
             <input type="range" id="orto-cursore" name="percentuale" min="0" max="100" value="100">
             <span class="orto-badge orto-badge-rimanente">Rimanente: <strong id="orto-rimanente">100%</strong></span>
             <span class="orto-badge orto-badge-usato">Usato: <strong id="orto-consumato">0%</strong></span>
-            <div><small>Il cursore si applica a una sola confezione. Se ne avevi già aperta una, riparte da quella.</small></div>
+            <div><small>Regola una sola confezione. Al salvataggio, la confezione aperta compare a parte nell’Inventario e le altre restano al loro posto.</small></div>
           </div>
           <div class="orto-fields" id="orto-pezzi-scarico" hidden><div class="orto-campo"><label>Pezzi da scaricare <input name="pezzi-usati" type="number" min="1" step="1" placeholder="Es. 6"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Pezzi da scaricare" data-guida-titolo="Pezzi da scaricare" data-guida-testo="Indica quanti pezzi hai usato. Se dal vassoio da 12 prendi 6 piantine, scrivi 6 e premi Salva.">?</button></div></div>
           <div class="orto-fields">

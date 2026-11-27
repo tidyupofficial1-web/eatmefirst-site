@@ -256,7 +256,7 @@
             dialogoModifica.showModal();
             campiModifica.elements.nome.focus();
         }),
-        ...(confezioneParziale(voce) ? [pulsante('Parziale', () => {
+        ...(confezioneParziale(voce) || haPezzi(voce) && voce.pezziRimasti > 0 ? [pulsante('Parziale', () => {
             scarico.elements.id.value = voce.id;
             scarico.elements.id.dispatchEvent(new Event('change'));
             location.hash = 'scarico';
@@ -280,7 +280,6 @@
     }
 
     function bustine(voce) {
-        if (voce?.categoria !== 'Semi' || haPezzi(voce)) return null;
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
         if (testo === 'mezza bustina') return 0.5;
         if (testo === 'una bustina') return 1;
@@ -288,11 +287,11 @@
         return numero === undefined ? null : Number(numero.replace(',', '.'));
     }
 
-    function confezioneParziale(voce) {
+    function confezioneParziale(voce, tipoScelto) {
         if (!voce) return null;
         const descrizione = [voce.nome, voce.quantita].join(' ').toLocaleLowerCase('it');
-        const tipo = /\b(?:bottigli[ae]|flacon[ei])\b/.test(descrizione) ? 'bottiglia'
-            : (voce.categoria === 'Semi' || /\bbustin[ae]\b/.test(descrizione)) ? 'bustina' : null;
+        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei])\b/.test(descrizione) ? 'bottiglia'
+            : (voce.categoria === 'Semi' || /\bbustin[ae]\b/.test(descrizione)) ? 'bustina' : tipoScelto);
         if (!tipo) return null;
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
         const bottiglie = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei])$/)?.[1];
@@ -313,11 +312,19 @@
 
     function configuraParziale(voce) {
         const perPezzi = haPezzi(voce);
-        const confezione = confezioneParziale(voce);
-        const mostraLivello = Boolean(confezione && (!perPezzi || tipoParziale.value === 'livello'));
-        bloccoTipo.hidden = !(confezione && perPezzi);
+        const riconosciuta = confezioneParziale(voce);
+        tipoParziale.options.namedItem('orto-tipo-automatico').hidden = !riconosciuta;
+        for (const opzione of tipoParziale.options) {
+            if (opzione.value === 'bottiglia' || opzione.value === 'bustina') opzione.hidden = Boolean(riconosciuta);
+        }
+        if (riconosciuta && tipoParziale.selectedOptions[0]?.hidden) tipoParziale.value = 'livello';
+        if (!riconosciuta && tipoParziale.value === 'livello') tipoParziale.value = 'pezzi';
+        const tipo = tipoParziale.value;
+        const confezione = riconosciuta || (perPezzi && tipo !== 'pezzi' && confezioneParziale(voce, tipo));
+        const mostraLivello = Boolean(confezione && (!perPezzi || tipo !== 'pezzi'));
+        bloccoTipo.hidden = !perPezzi;
         bloccoLivello.hidden = !mostraLivello;
-        bloccoPostoParziale.hidden = !mostraLivello || confezione.totale > 1;
+        bloccoPostoParziale.hidden = !mostraLivello;
         pezziScarico.hidden = !perPezzi || mostraLivello;
         restoLibero.hidden = perPezzi || mostraLivello;
         mezza.hidden = !mostraLivello || confezione.tipo !== 'bustina' || confezione.livello < 50;
@@ -364,7 +371,11 @@
         posti.replaceChildren(...ubicazioni.sort((a, b) => a.localeCompare(b, 'it')).map(ubicazione => new Option(ubicazione, ubicazione)));
         mostraInventario();
         const selezione = scarico.elements.id.value;
-        scarico.elements.id.replaceChildren(...scorte.map(voce => new Option(voce.nome + (voce.ubicazione ? ' · ' + voce.ubicazione : ''), voce.id)));
+        scarico.elements.id.replaceChildren(...scorte.map(voce => {
+            const confezione = confezioneParziale(voce);
+            const aperta = confezione?.livello < 100 ? ' · aperta, ' + confezione.livello + '%' : '';
+            return new Option(voce.nome + (voce.ubicazione ? ' · ' + voce.ubicazione : '') + aperta, voce.id);
+        }));
         if (scorte.some(voce => voce.id === selezione)) scarico.elements.id.value = selezione;
         selezionaScarico();
         listaAcquisti.replaceChildren(...dati.acquisti.map(voce => {
@@ -536,22 +547,50 @@
     function salvaLivello(valore) {
         const id = scarico.elements.id.value;
         const posto = bloccoPostoParziale.hidden ? '' : postoParziale.value.trim();
+        let selezione = id;
         if (aggiorna(dati => {
-            const voce = dati.scorte.find(item => item.id === id);
-            const confezione = confezioneParziale(voce);
+            const indice = dati.scorte.findIndex(item => item.id === id);
+            const voce = dati.scorte[indice];
+            const confezione = confezioneParziale(voce, tipoParziale.value);
             if (!confezione || valore < 0 || valore > confezione.livello) throw new Error('Quantità non valida');
-            if (haPezzi(voce)) {
-                if (valore === 0) voce.pezziRimasti--;
-                if (valore > 0 && valore < 100) voce.livelloPezzo = valore;
-                else delete voce.livelloPezzo;
-            } else {
-                const resto = Math.round((confezione.totale - (confezione.livello - valore) / 100) * 1000) / 1000;
+            const perPezzi = haPezzi(voce);
+            const intere = perPezzi ? confezione.totale - 1 : Math.round(confezione.totale - confezione.livello / 100);
+            const impostaQuantita = (prodotto, interi, livello) => {
+                if (perPezzi) {
+                    prodotto.pezziRimasti = interi + Number(livello > 0);
+                    delete prodotto.livelloPezzo;
+                    if (livello > 0 && livello < 100) prodotto.livelloPezzo = livello;
+                    return;
+                }
+                const totale = interi + livello / 100;
                 const plurale = confezione.tipo === 'bottiglia' ? 'bottiglie' : 'bustine';
-                voce.quantita = resto === 0.5 ? 'Mezza ' + confezione.tipo
-                    : new Intl.NumberFormat('it-IT').format(resto) + ' ' + (resto === 1 ? confezione.tipo : plurale);
+                prodotto.quantita = totale === 0.5 ? 'Mezza ' + confezione.tipo
+                    : new Intl.NumberFormat('it-IT', {useGrouping: false}).format(totale) + ' ' + (totale === 1 ? confezione.tipo : plurale);
+            };
+            if (intere && valore > 0 && (valore < 100 || posto && posto !== voce.ubicazione)) {
+                const aperta = {...voce, id: crypto.randomUUID(), ubicazione: posto || voce.ubicazione};
+                if (perPezzi) {
+                    aperta.confezioni = 1;
+                    aperta.pezziPerConfezione = 1;
+                    aperta.tipoConfezione = confezione.tipo;
+                }
+                impostaQuantita(aperta, 0, valore);
+                impostaQuantita(voce, intere, 0);
+                dati.scorte.splice(indice + 1, 0, aperta);
+                selezione = aperta.id;
+            } else if (!intere && valore === 0) {
+                dati.scorte.splice(indice, 1);
+                selezione = '';
+            } else {
+                impostaQuantita(voce, intere, valore);
+                if (perPezzi) voce.tipoConfezione = confezione.tipo;
+                if (posto && !intere) voce.ubicazione = posto;
             }
-            if (posto && confezione.totale <= 1) voce.ubicazione = posto;
-        }, statoScarico, 'Contenuto rimanente aggiornato.')) postoParziale.value = '';
+        }, statoScarico, 'Contenuto rimanente aggiornato.')) {
+            postoParziale.value = '';
+            scarico.elements.id.value = selezione;
+            selezionaScarico();
+        }
     }
     cursore.addEventListener('input', aggiornaLivello);
     function indicaLivello(evento) {
