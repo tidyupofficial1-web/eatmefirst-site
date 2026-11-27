@@ -1,0 +1,13 @@
+.editorial-guide { padding-block: clamp(1.5rem, 4vw, 4rem); }
+.editorial-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .75fr); align-items: center; gap: clamp(1rem, 4vw, 3rem); }
+.editorial-grid h1 { font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.1; margin-block: .4em; }
+.editorial-grid figure { margin: 0; }
+.editorial-grid img, .editorial-cover img { display: block; width: 100%; height: auto; border-radius: 1rem; }
+.editorial-copy { max-width: 66ch; margin-block: 2rem; }
+.editorial-copy h2 { margin-block-start: 1.4em; }
+.advice-picture.editorial-cover { max-width: 460px; margin-block: 1rem 2rem; }
+.editorial-cover img { aspect-ratio: 1; object-fit: cover; }
+@media (max-width: 650px) {
+  .editorial-grid { grid-template-columns: 1fr; }
+  .editorial-grid figure { max-width: 360px; }
+}
