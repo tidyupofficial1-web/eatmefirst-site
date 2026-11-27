@@ -16,8 +16,21 @@
     const language = document.documentElement.lang || 'it';
     const formatter = new Intl.DateTimeFormat(language, { dateStyle: 'full' });
     const texts = window.EatAgendaTexts?.[language] ?? window.EatAgendaTexts?.[language.toLowerCase().split('-')[0]];
-    const t = (key, fallback) => texts?.[key] ?? fallback;
-    const storageKey = 'eat_agenda_personale_it_v1';
+    const form = get('event-form');
+    const garden = form?.dataset.agenda === 'orto';
+    const gardenTexts = garden ? {
+        newTitle: 'Nuova attività',
+        editTitle: 'Modifica attività',
+        stored: 'Le attività dell’orto vengono salvate in questo browser.',
+        emptyUpcoming: 'Nessuna attività in programma.',
+        emptyPast: 'Nessuna attività passata.',
+        titleRequired: 'Scrivi il nome dell’attività.',
+        saved: 'Attività salvata.',
+        deleted: 'Attività eliminata.',
+        deleteBefore: 'Eliminare l’attività «'
+    } : null;
+    const t = (key, fallback) => gardenTexts?.[key] ?? texts?.[key] ?? fallback;
+    const storageKey = garden ? 'eat_agenda_orto_it_v1' : 'eat_agenda_personale_it_v1';
     const reminder = get('agenda-reminder');
     const categories = new Map(
         Array.from(get('event-form')?.querySelector('select[name="category"]')?.options || [])
@@ -30,6 +43,7 @@
             const events = JSON.parse(localStorage.getItem(storageKey) || '[]');
             if (!Array.isArray(events) || events.some(event =>
                 !event || typeof event.day !== 'string' || typeof event.time !== 'string')) return null;
+            if (garden) return events;
             const cutoff = addDays(now, -7);
             const remaining = events.filter(event => event.weekly || categories.has(event.category) || !(eventEnd(event) <= cutoff));
             if (remaining.length !== events.length) {
@@ -78,7 +92,6 @@
         window.setInterval(updateReminder, 60000);
     }
 
-    const form = get('event-form');
     if (!form) return;
     const fields = form.elements;
     const deadlines = get('deadlines');
@@ -89,6 +102,14 @@
 
     function samples() {
         const now = new Date();
+        if (garden) {
+            return [
+                {id: 'semine', title: 'Controllare le bustine dei semi', day: dateKey(addDays(now, 1)), time: '', note: 'Annotare le varietà già disponibili prima di comprarne altre.', weekly: false, category: 'semine'},
+                {id: 'trapianti', title: 'Rinvasare il basilico', day: dateKey(addDays(now, 3)), time: '', note: 'Preparare due vasi e il terriccio.', weekly: false, category: 'trapianti'},
+                {id: 'cura', title: 'Controllare il terriccio dei vasi', day: dateKey(addDays(now, 4)), time: '', note: 'Verificare l’umidità prima di decidere se bagnare.', weekly: true, category: 'cura'},
+                {id: 'raccolta', title: 'Annotare il primo raccolto', day: dateKey(addDays(now, 6)), time: '', note: 'Scrivere quantità e varietà per il confronto con la prossima stagione.', weekly: false, category: 'raccolta'}
+            ];
+        }
         const friday = addDays(now, (5 - now.getDay() + 7) % 7 || 7);
         const events = [
             { id: 'judo', title: t('judo', 'Accompagnare Gianni a judo'), day: dateKey(friday), time: '17:30', note: t('belt', 'Mettere la cintura nella borsa.'), weekly: true },
@@ -148,7 +169,7 @@
         title.textContent = event.title;
         when.textContent = formatter.format(dateFromKey(day)) +
             (event.time ? ' · ' + event.time : '') + (event.weekly ? ' · ' + t('weekly', 'Ogni settimana') : '');
-        if (list === deadlines) when.textContent = categories.get(event.category) + ' · ' + when.textContent;
+        if (list === deadlines || (garden && categories.has(event.category))) when.textContent = categories.get(event.category) + ' · ' + when.textContent;
         note.textContent = event.note;
         actions.append(
             button(t('edit', 'Modifica'), () => {

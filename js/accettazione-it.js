@@ -4,7 +4,8 @@
     const versione = 'IT-2026-11-15-lancio-2';
     window.EatLancioGratuitoIT = true;
     const script = document.currentScript;
-    const ingresso = new URL('../IT/index.html', script.src).href;
+    const ingresso = new URL('../IT/index.html', script.src);
+    if (script.dataset.destinazione === 'orto') ingresso.searchParams.set('dest', 'orto');
     function valida() {
         try {
             return localStorage.getItem('eatmefirst_consent') === 'accepted' &&
@@ -22,7 +23,8 @@
         localStorage.setItem('eatmefirst_consent', 'accepted');
         if (!valida()) throw new Error('Accettazione non salvata.');
     }
-    window.EatAccettazione = Object.freeze({ versione, valida, accetta });
+    const destinazione = () => new URLSearchParams(window.location.search).get('dest') === 'orto' ? 'agenda-orto/index.html' : 'menu.html';
+    window.EatAccettazione = Object.freeze({ versione, valida, accetta, destinazione });
     if (script.hasAttribute('data-proteggi')) {
         if (!valida()) {
             window.location.replace(ingresso);

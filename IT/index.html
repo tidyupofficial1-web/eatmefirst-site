@@ -192,7 +192,7 @@
     </style>
 <link rel="stylesheet" href="../css/responsive-it.css">
 <link rel="stylesheet" href="../css/collegamenti.css">
-<script src="../js/accettazione-it.js"></script>
+<script src="../js/accettazione-it.js?v=agenda-orto"></script>
 <script defer src="../js/analytics-consenso.js?v=removed-20261116"></script>
 <script defer src="../js/contatore-visite.js" data-visita="apertura"></script>
 <link rel="stylesheet" href="../css/language-picker.css?v=2">
@@ -202,7 +202,7 @@
     <!-- SCRIPT DI CONTROLLO CONSENSO INIZIALE -->
     <script>
         if (EatAccettazione.valida()) {
-            window.location.replace('menu.html');
+            window.location.replace(EatAccettazione.destinazione());
         }
     </script>
 
@@ -302,9 +302,16 @@
                 document.getElementById('userName').value = savedName;
             }
             
-            timerIniziale10s = setTimeout(() => {
+            const destinazione = EatAccettazione.destinazione();
+            if (destinazione === 'agenda-orto/index.html') {
+                const entra = document.getElementById('btnEntra');
+                entra.href = destinazione;
+                entra.textContent = 'Apri l’Agenda dell’orto';
                 mostraTestoEContenuti();
-            }, 10000);
+                return;
+            }
+
+            timerIniziale10s = setTimeout(mostraTestoEContenuti, 10000);
         });
 
         function gestisciInputUtente() {
@@ -391,7 +398,7 @@
                 localStorage.removeItem('eatmefirst_username');
             }
             } catch (_) { /* Il nome è facoltativo. */ }
-            window.location.href = 'menu.html';
+            window.location.href = EatAccettazione.destinazione();
         }
     </script>
 <p style="text-align:center"><a href="../sito-bozza/IT/privacy-statistiche.html">Conteggio delle aperture</a></p>
