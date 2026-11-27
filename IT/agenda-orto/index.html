@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=guide-orto"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=scarico-opzioni"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -177,19 +177,31 @@
     </section>
     <section class="orto-panel" id="scarico" data-orto-vista hidden>
       <h1>Scarico dell’orto</h1>
-      <p>Scegli un prodotto per indicare quanto resta, segnalarlo come finito o cambiargli posto.</p>
+      <p>Scegli un prodotto e l’operazione da fare.</p>
       <form id="orto-scarico">
         <div class="orto-fields">
           <div class="orto-campo"><label>Prodotto <select name="id" required></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Prodotto da scaricare" data-guida-titolo="Prodotto da scaricare" data-guida-testo="Scegli il prodotto che hai usato o spostato. Se hai più confezioni dello stesso prodotto, controlla il luogo di conservazione.">?</button></div>
-          <div class="orto-campo"><label>Quanto resta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quanto resta" data-guida-titolo="Quanto resta" data-guida-testo="Scrivi la quantità rimasta, per esempio «5 litri» o «30%», e premi «Salva il rimanente». Se hai finito il prodotto, usa «Segna come finito».">?</button></div>
-          <div class="orto-campo"><label>Nuovo posto di conservazione <input name="posto-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Armadio attrezzi"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Nuovo posto" data-guida-titolo="Nuovo posto" data-guida-testo="Scrivi il nuovo posto di conservazione e premi «Sposta il prodotto». Lo spostamento lascia la quantità invariata.">?</button></div>
         </div>
-        <p id="orto-quantita-attuale"></p>
+        <p id="orto-quantita-attuale" hidden></p>
         <div class="actions">
-          <button class="button" type="submit">Salva il rimanente</button>
-          <button type="button" id="orto-mezza" hidden>Ho seminato mezza bustina</button>
-          <button type="button" id="orto-finito">Segna come finito</button>
-          <button type="button" id="orto-sposta">Sposta il prodotto</button>
+          <button type="button" id="orto-finito">Scarica tutto</button>
+          <button type="button" id="orto-apri-parziale" aria-expanded="false" aria-controls="orto-parziale">Parziale</button>
+          <button type="button" id="orto-apri-sposta" aria-expanded="false" aria-controls="orto-cambio-posto">Sposta</button>
+        </div>
+        <div id="orto-parziale" hidden>
+          <div class="orto-fields">
+            <div class="orto-campo"><label>Quantità rimasta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità rimasta" data-guida-titolo="Quantità rimasta" data-guida-testo="Scrivi quello che rimane, per esempio «5 litri» o «30%». Se hai finito il prodotto, scegli «Scarica tutto».">?</button></div>
+          </div>
+          <div class="actions">
+            <button class="button" type="submit">Salva il rimanente</button>
+            <button type="button" id="orto-mezza" hidden>Ho seminato mezza bustina</button>
+          </div>
+        </div>
+        <div id="orto-cambio-posto" hidden>
+          <div class="orto-fields">
+            <div class="orto-campo"><label>Nuovo posto di conservazione <input name="posto-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Armadio attrezzi"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Nuovo posto" data-guida-titolo="Nuovo posto" data-guida-testo="Scrivi il nuovo posto di conservazione. Lo spostamento lascia la quantità invariata.">?</button></div>
+          </div>
+          <button class="button" type="button" id="orto-sposta">Conferma spostamento</button>
         </div>
       </form>
       <p id="orto-stato-scarico" role="status"></p>

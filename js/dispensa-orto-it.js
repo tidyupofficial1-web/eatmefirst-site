@@ -9,6 +9,10 @@
     const mezza = document.getElementById('orto-mezza');
     const finito = document.getElementById('orto-finito');
     const sposta = document.getElementById('orto-sposta');
+    const parziale = document.getElementById('orto-parziale');
+    const cambioPosto = document.getElementById('orto-cambio-posto');
+    const apriParziale = document.getElementById('orto-apri-parziale');
+    const apriSposta = document.getElementById('orto-apri-sposta');
     const quantitaAttuale = document.getElementById('orto-quantita-attuale');
     const listaScorte = document.getElementById('orto-scorte');
     const listaAcquisti = document.getElementById('orto-acquisti');
@@ -242,18 +246,29 @@
         return numero === undefined ? null : Number(numero.replace(',', '.'));
     }
 
+    function opzioneScarico(pannello) {
+        parziale.hidden = pannello !== parziale;
+        cambioPosto.hidden = pannello !== cambioPosto;
+        apriParziale.setAttribute('aria-expanded', String(!parziale.hidden));
+        apriSposta.setAttribute('aria-expanded', String(!cambioPosto.hidden));
+    }
+
     function selezionaScarico() {
         const voce = scorte.find(item => item.id === scarico.elements.id.value);
         const numero = bustine(voce);
         mezza.hidden = numero === null || numero < 0.5;
+        quantitaAttuale.hidden = !voce;
         quantitaAttuale.textContent = voce
             ? 'Quantità attuale: ' + (voce.quantita || 'non indicata') + (voce.ubicazione ? ' · Conservazione: ' + voce.ubicazione : '')
-            : 'Registra prima una scorta nel Carico.';
+            : '';
         scarico.elements.resto.disabled = !voce;
         postoScarico.disabled = !voce;
         scarico.querySelector('[type="submit"]').disabled = !voce;
         finito.disabled = !voce;
         sposta.disabled = !voce;
+        apriParziale.disabled = !voce;
+        apriSposta.disabled = !voce;
+        if (!voce) opzioneScarico(null);
     }
 
     function mostra(dati) {
@@ -304,14 +319,24 @@
         scarico.elements.resto.value = '';
         postoScarico.value = '';
         statoScarico.textContent = '';
+        opzioneScarico(null);
         selezionaScarico();
+    });
+    apriParziale.addEventListener('click', () => {
+        opzioneScarico(parziale);
+        scarico.elements.resto.focus();
+    });
+    apriSposta.addEventListener('click', () => {
+        opzioneScarico(cambioPosto);
+        postoScarico.focus();
     });
     scarico.addEventListener('submit', evento => {
         evento.preventDefault();
+        if (parziale.hidden) return;
         const id = scarico.elements.id.value;
         const resto = scarico.elements.resto.value.trim();
         if (!resto) {
-            statoScarico.textContent = 'Indica quanto resta oppure usa «Segna come finita».';
+            statoScarico.textContent = 'Indica la quantità rimasta oppure usa «Scarica tutto».';
             return;
         }
         if (aggiorna(dati => {
@@ -337,6 +362,7 @@
         if (aggiorna(dati => {
             dati.scorte = dati.scorte.filter(item => item.id !== voce.id);
         }, statoScarico, 'Scorta finita e rimossa dall’inventario.')) {
+            opzioneScarico(null);
             scarico.elements.resto.value = '';
             postoScarico.value = '';
             if (modifica === voce.id) fineModifica();
