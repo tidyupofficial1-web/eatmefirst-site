@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=consumo-inventario"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=modifica-inventario"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -48,6 +48,8 @@
     .orto-main button.orto-aiuto:not(.button){padding:0;width:28px;height:28px;line-height:1;border-radius:50%;color:#8fdfb2;font-weight:bold}
     #orto-scanner,#orto-guida{width:min(440px,94vw);color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px}
     #orto-scanner::backdrop,#orto-guida::backdrop{background:#0009}
+    #orto-modifica{width:min(720px,94vw);max-height:90dvh;color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px;padding:20px}
+    #orto-modifica::backdrop{background:#0009}
     .orto-panel form,#event-form{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:18px}
     .orto-panel ul{margin-top:16px}
     .advice-list li:nth-child(n){background:var(--card-bg);border-color:var(--line);border-left-color:var(--primary-color)}
@@ -260,6 +262,10 @@
       <p id="orto-stato-acquisto" role="status"></p>
       <ul id="orto-acquisti" class="advice-list"></ul>
     </section>
+    <dialog id="orto-modifica" aria-labelledby="orto-titolo-modifica">
+      <h2 id="orto-titolo-modifica">Modifica prodotto</h2>
+      <div id="orto-modifica-campi"></div>
+    </dialog>
     <dialog id="orto-guida" aria-labelledby="orto-guida-titolo">
       <h2 id="orto-guida-titolo"></h2>
       <p id="orto-guida-testo"></p>

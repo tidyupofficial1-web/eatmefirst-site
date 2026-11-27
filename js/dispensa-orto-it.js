@@ -36,6 +36,12 @@
     const statoScarico = document.getElementById('orto-stato-scarico');
     const salvaScorta = document.getElementById('orto-salva-scorta');
     const annullaScorta = document.getElementById('orto-annulla-scorta');
+    const dialogoModifica = document.getElementById('orto-modifica');
+    const campiModifica = document.getElementById('orto-modifica-campi');
+    const posizioneCarico = document.createComment('Modulo del Carico');
+    const posizioneStato = document.createComment('Stato del Carico');
+    scorta.before(posizioneCarico);
+    statoScorta.before(posizioneStato);
     const campiScorta = ['barcode', 'nome', 'categoria', 'quantita', 'ubicazione', 'scadenza', 'note'];
     const campoScorta = nome => scorta.elements[nome === 'ubicazione' ? 'conservazione-orto' : nome];
     const postoScarico = scarico.elements['posto-orto'];
@@ -47,6 +53,7 @@
     let scanner;
     let avvioScanner = false;
     let modifica = null;
+    let bozzaCarico = null;
     let scorte = [];
     let prova = null;
 
@@ -95,9 +102,20 @@
     }
 
     function fineModifica() {
+        const id = modifica;
         annullaRicerca();
         modifica = null;
         scorta.reset();
+        if (bozzaCarico) {
+            posizioneCarico.after(scorta);
+            posizioneStato.after(statoScorta);
+            for (const [nome, valore] of bozzaCarico.campi) scorta.elements[nome].value = valore;
+            statoScorta.textContent = bozzaCarico.stato;
+            bozzaCarico = null;
+            if (dialogoModifica.open) dialogoModifica.close();
+            const riga = [...listaScorte.children].find(elemento => elemento.dataset.prodotto === id);
+            (riga?.querySelector('button') ?? cerca).focus();
+        }
         salvaScorta.textContent = 'Salva prodotto';
         annullaScorta.hidden = true;
     }
@@ -202,6 +220,7 @@
 
     function riga(voce, dettagli, ...pulsanti) {
         const li = document.createElement('li');
+        li.dataset.prodotto = voce.id;
         const nome = document.createElement('strong');
         nome.textContent = voce.nome;
         li.append(nome);
@@ -235,6 +254,8 @@
         ],
         pulsante('Modifica', () => {
             annullaRicerca();
+            bozzaCarico = {campi: new FormData(scorta), stato: statoScorta.textContent};
+            statoScorta.textContent = '';
             modifica = voce.id;
             for (const campo of campiScorta) campoScorta(campo).value = voce[campo] ?? '';
             scorta.elements.note.value = noteProdotto(voce);
@@ -242,8 +263,8 @@
             scorta.elements.pezzi.value = voce.pezziPerConfezione ?? '';
             salvaScorta.textContent = 'Salva modifiche';
             annullaScorta.hidden = false;
-            location.hash = 'carico';
-            cambiaVista();
+            campiModifica.append(scorta, statoScorta);
+            dialogoModifica.showModal();
             scorta.elements.nome.focus();
         }),
         ...(confezioneParziale(voce) ? [pulsante('Parziale', () => {
@@ -402,9 +423,15 @@
             }
             if (indice < 0) dati.scorte.push(voce);
             else dati.scorte[indice] = voce;
-        }, statoScorta, 'Prodotto salvato.')) fineModifica();
+        }, statoScorta, 'Prodotto salvato.')) {
+            if (modifica) statoInventario.textContent = 'Modifiche salvate.';
+            fineModifica();
+        }
     });
     annullaScorta.addEventListener('click', fineModifica);
+    dialogoModifica.addEventListener('close', () => {
+        if (modifica) fineModifica();
+    });
     cerca.addEventListener('input', mostraInventario);
     scarico.elements.id.addEventListener('change', () => {
         scarico.elements.resto.value = '';
