@@ -19,6 +19,9 @@
     const salvaScorta = document.getElementById('orto-salva-scorta');
     const annullaScorta = document.getElementById('orto-annulla-scorta');
     const campiScorta = ['barcode', 'nome', 'categoria', 'quantita', 'ubicazione', 'scadenza', 'note'];
+    const campoScorta = nome => scorta.elements[nome === 'ubicazione' ? 'conservazione-orto' : nome];
+    const postoScarico = scarico.elements['posto-orto'];
+    const posti = document.getElementById('orto-posti');
     const codiceCampo = scorta.elements.barcode;
     const esitoCodice = document.getElementById('orto-esito-barcode');
     const dialogoScanner = document.getElementById('orto-scanner');
@@ -119,7 +122,13 @@
         dialogoScanner.showModal();
         try {
             scanner ??= new Html5Qrcode('orto-scanner-camera');
-            await scanner.start({facingMode: 'environment'}, {fps: 10, qrbox: {width: 240, height: 120}}, codice => {
+            await scanner.start({facingMode: 'environment'}, {
+                fps: 10,
+                qrbox: (larghezza, altezza) => ({
+                    width: Math.floor(larghezza * 0.9),
+                    height: Math.floor(altezza * 0.45)
+                })
+            }, codice => {
                 if (!dialogoScanner.open || !/^\d{8,14}$/.test(codice)) return;
                 codiceCampo.value = codice;
                 dialogoScanner.close();
@@ -190,7 +199,7 @@
         pulsante('Modifica', () => {
             annullaRicerca();
             modifica = voce.id;
-            for (const campo of campiScorta) scorta.elements[campo].value = voce[campo] ?? '';
+            for (const campo of campiScorta) campoScorta(campo).value = voce[campo] ?? '';
             scorta.elements.note.value = noteProdotto(voce);
             salvaScorta.textContent = 'Salva modifiche';
             annullaScorta.hidden = false;
@@ -231,7 +240,7 @@
             ? 'Quantità attuale: ' + (voce.quantita || 'non indicata') + (voce.ubicazione ? ' · Conservazione: ' + voce.ubicazione : '')
             : 'Registra prima una scorta nel Carico.';
         scarico.elements.resto.disabled = !voce;
-        scarico.elements.posto.disabled = !voce;
+        postoScarico.disabled = !voce;
         scarico.querySelector('[type="submit"]').disabled = !voce;
         finito.disabled = !voce;
         sposta.disabled = !voce;
@@ -239,6 +248,8 @@
 
     function mostra(dati) {
         scorte = dati.scorte;
+        const ubicazioni = [...new Set(scorte.map(voce => voce.ubicazione).filter(Boolean))];
+        posti.replaceChildren(...ubicazioni.sort((a, b) => a.localeCompare(b, 'it')).map(ubicazione => new Option(ubicazione, ubicazione)));
         mostraInventario();
         const selezione = scarico.elements.id.value;
         scarico.elements.id.replaceChildren(...scorte.map(voce => new Option(voce.nome + (voce.ubicazione ? ' · ' + voce.ubicazione : ''), voce.id)));
@@ -262,7 +273,7 @@
 
     scorta.addEventListener('submit', evento => {
         evento.preventDefault();
-        const voce = Object.fromEntries(campiScorta.map(nome => [nome, scorta.elements[nome].value.trim()]));
+        const voce = Object.fromEntries(campiScorta.map(nome => [nome, campoScorta(nome).value.trim()]));
         if (!voce.nome) return;
         voce.barcode = voce.barcode.replace(/\s+/g, '');
         if (voce.barcode && !/^\d{8,14}$/.test(voce.barcode)) {
@@ -281,7 +292,7 @@
     cerca.addEventListener('input', mostraInventario);
     scarico.elements.id.addEventListener('change', () => {
         scarico.elements.resto.value = '';
-        scarico.elements.posto.value = '';
+        postoScarico.value = '';
         statoScarico.textContent = '';
         selezionaScarico();
     });
@@ -317,23 +328,23 @@
             dati.scorte = dati.scorte.filter(item => item.id !== voce.id);
         }, statoScarico, 'Scorta finita e rimossa dall’inventario.')) {
             scarico.elements.resto.value = '';
-            scarico.elements.posto.value = '';
+            postoScarico.value = '';
             if (modifica === voce.id) fineModifica();
         }
     });
     sposta.addEventListener('click', () => {
         const id = scarico.elements.id.value;
-        const posto = scarico.elements.posto.value.trim();
+        const posto = postoScarico.value.trim();
         if (!posto) {
             statoScarico.textContent = 'Scrivi il nuovo posto dove conservi la scorta.';
-            scarico.elements.posto.focus();
+            postoScarico.focus();
             return;
         }
         if (aggiorna(dati => {
             const voce = dati.scorte.find(item => item.id === id);
             if (!voce) throw new Error('Scorta non trovata');
             voce.ubicazione = posto;
-        }, statoScarico, 'Posto di conservazione aggiornato.')) scarico.elements.posto.value = '';
+        }, statoScarico, 'Posto di conservazione aggiornato.')) postoScarico.value = '';
     });
     acquisto.addEventListener('submit', evento => {
         evento.preventDefault();

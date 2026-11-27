@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=carico-prodotti"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=carico-orto-2"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -157,7 +157,8 @@
           <label>Prodotto <input name="nome" required maxlength="100" placeholder="Es. Semi di pomodoro"></label>
           <label>Categoria <select name="categoria"><option>Semi</option><option>Piantine</option><option>Terriccio e concimi</option><option>Attrezzi</option><option>Insetticidi e cura delle piante</option><option>Altro</option></select></label>
           <label>Quantità <input name="quantita" maxlength="60" placeholder="Es. 2 bustine"></label>
-          <label>Dove lo conservi <input name="ubicazione" maxlength="100" placeholder="Es. Scatola dei semi"></label>
+          <label>Dove lo conservi <input name="conservazione-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Scatola dei semi"></label>
+          <datalist id="orto-posti"></datalist>
           <label>Scadenza facoltativa <input name="scadenza" type="date"></label>
           <label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3" placeholder="Es. L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco."></textarea></label>
         </div>
@@ -166,6 +167,7 @@
       </form>
       <dialog id="orto-scanner" aria-label="Scansione codice a barre">
         <button type="button" id="orto-chiudi-scanner">Chiudi scanner</button>
+        <p>Inquadra tutte le barre del codice sulla confezione e tieni fermo il telefono finché viene letto.</p>
         <div id="orto-scanner-camera"></div>
       </dialog>
       <p id="orto-stato-scorta" role="status"></p>
@@ -177,7 +179,7 @@
         <div class="orto-fields">
           <label>Prodotto <select name="id" required></select></label>
           <label>Quanto resta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label>
-          <label>Nuovo posto di conservazione <input name="posto" maxlength="100" placeholder="Es. Armadio attrezzi"></label>
+          <label>Nuovo posto di conservazione <input name="posto-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Es. Armadio attrezzi"></label>
         </div>
         <p id="orto-quantita-attuale"></p>
         <div class="actions">
