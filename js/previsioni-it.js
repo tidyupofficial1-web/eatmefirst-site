@@ -1,8 +1,50 @@
-/* Stime locali: nessuna scadenza alimentare viene usata come consumo previsto. */
+/* Stime locali ricavate dai consumi registrati. */
 (function () {
     const giorno = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     const numeroGiorno = s => Date.parse(s + 'T00:00:00Z') / 86400000;
     const mediana = valori => { const a = [...valori].sort((a,b) => a-b); return (a[Math.floor((a.length-1)/2)] + a[Math.floor(a.length/2)]) / 2; };
+    function ritmo(giorni, prodotto, nOggi) {
+        const osservati = giorni.flatMap(g => g.prodotti.filter(v => v.prodotto === prodotto).map(v => ({...v, data: g.data})));
+        const consumi = osservati.filter(v => v.consumo > 0);
+        const primo = osservati[0];
+        if (!primo || consumi.length < 3 || nOggi - numeroGiorno(primo.data) < 14 || nOggi - numeroGiorno(consumi.at(-1).data) > 45) return null;
+        const media = consumi.reduce((totale, v) => totale + Number(v.consumo), 0) / (nOggi - numeroGiorno(primo.data));
+        return Number.isFinite(media) && media > 0 ? media : null;
+    }
+
+    function eccedenze(dati, dispensa, adesso = new Date()) {
+        if (dati?.versione !== 1 || !Array.isArray(dati.giorni)) return [];
+        const oggi = giorno(adesso);
+        const nOggi = numeroGiorno(oggi);
+        const storico = dati.giorni
+            .filter(g => Array.isArray(g?.prodotti) && g.data <= oggi && numeroGiorno(g.data) >= nOggi - 180)
+            .sort((a, b) => a.data.localeCompare(b.data));
+        const gruppi = new Map();
+        for (const prodotto of dispensa) {
+            const {data, giorni} = EatScadenze.descrivi(prodotto, oggi);
+            const quantita = EatStorico.quantitaUtile(prodotto);
+            if (!data || giorni < 0 || quantita <= 0) continue;
+            const chiave = EatStorico.chiaveProdotto(prodotto);
+            if (!gruppi.has(chiave)) gruppi.set(chiave, {nome: prodotto.nome, lotti: new Map()});
+            const lotti = gruppi.get(chiave).lotti;
+            lotti.set(data, {giorni, quantita: (lotti.get(data)?.quantita || 0) + quantita});
+        }
+        const avvisi = [];
+        for (const [chiave, {nome, lotti}] of gruppi) {
+            const alGiorno = ritmo(storico, chiave, nOggi);
+            if (alGiorno === null) continue;
+            let consumoAssegnato = 0;
+            // Il consumo previsto va prima alla scorta con la data più vicina.
+            for (const [data, {giorni, quantita}] of [...lotti].sort(([a], [b]) => a.localeCompare(b))) {
+                const consumo = Math.min(quantita, Math.max(0, alGiorno * giorni - consumoAssegnato));
+                consumoAssegnato += consumo;
+                const avanzo = Math.round((quantita - consumo) * 100) / 100;
+                if (avanzo > 0) avvisi.push({nome, data, avanzo});
+            }
+        }
+        return avvisi.sort((a, b) => a.data.localeCompare(b.data));
+    }
+
     function calcola(dati, dispensa, adesso = new Date()) {
         const vuoto = testo => ({testo, prodotti: [], prossima: null});
         if (!dati || dati.versione !== 1 || !Array.isArray(dati.giorni)) return vuoto('Le stime verdi richiedono almeno due mesi di carichi e consumi registrati.');
@@ -34,11 +76,8 @@
         }
         const prodotti = [];
         for (const p of gruppi.values()) {
-            const osservati = giorni.flatMap(g => g.prodotti.filter(v => v.prodotto === p.prodotto).map(v => ({...v, data:g.data})));
-            const consumi = osservati.filter(v => v.consumo > 0);
-            const primo = osservati[0];
-            if (!primo || consumi.length < 3 || nOggi - numeroGiorno(primo.data) < 14 || nOggi - numeroGiorno(consumi.at(-1).data) > 45) continue;
-            const alGiorno = consumi.reduce((n,v) => n+v.consumo,0) / Math.max(1,nOggi-numeroGiorno(primo.data));
+            const alGiorno = ritmo(giorni, p.prodotto, nOggi);
+            if (alGiorno === null) continue;
             if (p.quantita > 0 && p.quantita / alGiorno < coperturaNumero - nOggi) prodotti.push({...p, prossima});
         }
         return {prossima, copertura, prodotti, testo: `Prossima spesa stimata: ${prossima.split('-').reverse().join('/')}. Valutiamo se la scorta basterà fino alla spesa seguente, prevista per il ${copertura.split('-').reverse().join('/')}. Verde: il prodotto c’è, ma potrebbe non bastare. Decidi tu se acquistarlo; puoi spuntarlo per lasciarlo in fondo.`};
@@ -70,5 +109,5 @@
         if (cambiata) EatStorico.registra('Previsione spesa', 'Aggiornamento dei suggerimenti verdi', {eat_lista_spesa_v1:dopo}, {eat_lista_spesa_v1:rawLista, eat_dispensa_locale:rawDispensa, [EatStorico.chiaveConsumi]:rawConsumi});
         return previsione;
     }
-    window.EatPrevisioni = {calcola, aggiorna};
+    window.EatPrevisioni = {calcola, aggiorna, eccedenze};
 })();
