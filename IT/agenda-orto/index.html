@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=vassoi-orto"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=livello-orto"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -31,6 +31,14 @@
     .orto-intro{display:flex;align-items:center;gap:12px;margin-bottom:16px}
     .orto-intro img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none}
     .orto-intro p{margin:0}
+    .orto-livello{max-width:360px;margin:18px auto;text-align:center}
+    .orto-livello input{width:100%;accent-color:var(--primary-color)}
+    .orto-forma{position:relative;isolation:isolate;width:64px;height:95px;margin:20px auto 12px;border:2px solid #8fdfb2;border-radius:9px;background:#101416}
+    .orto-forma::after{content:"";position:absolute;inset:auto 0 0;height:var(--livello,100%);background:#2ecc7180;border-radius:0 0 6px 6px;z-index:-1}
+    .orto-forma[data-forma="bottiglia"]{width:45px;border-radius:14px 14px 8px 8px}
+    .orto-forma[data-forma="bottiglia"]::before{content:"";position:absolute;top:-13px;left:11px;right:11px;height:12px;border:2px solid #8fdfb2;background:#253238;border-radius:4px}
+    .orto-livello small{color:var(--text-muted)}
+    .orto-badge{display:inline-block;padding:3px 8px;margin:2px;background:#253238;border-radius:6px}
     .orto-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-bottom:14px}
     .orto-fields label{display:grid;gap:4px;font-weight:600}
     .orto-fields input,.orto-fields select,.orto-fields textarea,#event-form input:not([type=checkbox]),#event-form select{width:100%;min-width:0;padding:9px;border:1px solid var(--border-color);border-radius:8px;background:#101416;color:var(--ink);font:inherit}
@@ -175,7 +183,6 @@
           <div class="orto-campo"><label>Scadenza facoltativa <input name="scadenza" type="date"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Scadenza" data-guida-titolo="Scadenza" data-guida-testo="Inserisci la data riportata sulla confezione, se presente. Se non c’è una scadenza, lascia il campo vuoto.">?</button></div>
           <div class="orto-campo orto-note"><label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3" placeholder="Es. L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco."></textarea></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Note sul prodotto" data-guida-titolo="Note sul prodotto" data-guida-testo="Scrivi quello che vorrai ricordare, per esempio «L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco». Puoi aggiornare la nota dall’Inventario.">?</button></div>
         </div>
-        <p>Per registrare un vassoio da 12 piantine, indica 1 confezione e 12 pezzi. Per quantità come «2 bustine» o «10 litri», usa il campo Quantità.</p>
         <button class="button" type="submit" id="orto-salva-scorta">Salva prodotto</button>
         <button type="button" id="orto-annulla-scorta" hidden>Annulla modifica</button>
       </form>
@@ -188,7 +195,7 @@
     </section>
     <section class="orto-panel" id="scarico" data-orto-vista hidden>
       <h1>Scarico dell’orto</h1>
-      <p>Scegli un prodotto e l’operazione da fare.</p>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>Scegli un prodotto e l’operazione da fare.</p></div>
       <p><button type="button" id="orto-inizia-prova">Prova con un vassoio da 12 piantine</button></p>
       <form id="orto-scarico">
         <div class="orto-fields">
@@ -201,6 +208,18 @@
           <button type="button" id="orto-apri-sposta" aria-expanded="false" aria-controls="orto-cambio-posto">Sposta</button>
         </div>
         <div id="orto-parziale" hidden>
+          <div id="orto-riduzione-tipo" class="orto-fields" hidden>
+            <label>Tipo di scarico parziale <select name="tipo-parziale"><option value="livello">Contenuto di una confezione</option><option value="pezzi">Pezzi interi</option></select></label>
+          </div>
+          <div id="orto-livello" class="orto-livello" hidden>
+            <p id="orto-oggetto-livello"></p>
+            <div class="orto-forma" id="orto-forma" aria-hidden="true"></div>
+            <label for="orto-cursore">Contenuto rimanente</label>
+            <input type="range" id="orto-cursore" name="percentuale" min="0" max="100" value="100">
+            <span class="orto-badge">Rimanente: <strong id="orto-rimanente">100%</strong></span>
+            <span class="orto-badge">Usato: <strong id="orto-consumato">0%</strong></span>
+            <div><small>Il cursore si applica a una sola confezione. Se ne avevi già aperta una, riparte da quella.</small></div>
+          </div>
           <div class="orto-fields" id="orto-pezzi-scarico" hidden><label>Pezzi da scaricare <input name="pezzi-usati" type="number" min="1" step="1" placeholder="Es. 6"></label></div>
           <div class="orto-fields">
             <div class="orto-campo" id="orto-resto-libero"><label>Quantità rimasta <input name="resto" maxlength="60" placeholder="Es. Mezza bustina, 5 litri, 30%"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità rimasta" data-guida-titolo="Quantità rimasta" data-guida-testo="Scrivi quello che rimane, per esempio «5 litri» o «30%». Se hai finito il prodotto, scegli «Scarica tutto».">?</button></div>
@@ -208,6 +227,7 @@
           <div class="actions">
             <button type="button" id="orto-mezza" hidden>Ho seminato mezza bustina</button>
           </div>
+          <div class="orto-fields" id="orto-posto-parziale" hidden><label>Dove riponi il prodotto? <input name="posto-parziale-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Lascia vuoto per mantenere il posto attuale"></label></div>
         </div>
         <div id="orto-cambio-posto" hidden>
           <div class="orto-fields">

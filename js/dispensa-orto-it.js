@@ -12,6 +12,16 @@
     const pezziScarico = document.getElementById('orto-pezzi-scarico');
     const restoLibero = document.getElementById('orto-resto-libero');
     const usatiCampo = scarico.elements['pezzi-usati'];
+    const cursore = scarico.elements.percentuale;
+    const tipoParziale = scarico.elements['tipo-parziale'];
+    const postoParziale = scarico.elements['posto-parziale-orto'];
+    const bloccoLivello = document.getElementById('orto-livello');
+    const bloccoTipo = document.getElementById('orto-riduzione-tipo');
+    const bloccoPostoParziale = document.getElementById('orto-posto-parziale');
+    const forma = document.getElementById('orto-forma');
+    const rimanente = document.getElementById('orto-rimanente');
+    const consumato = document.getElementById('orto-consumato');
+    const oggettoLivello = document.getElementById('orto-oggetto-livello');
     const avvisoProva = document.getElementById('orto-prova-attiva');
     const parziale = document.getElementById('orto-parziale');
     const cambioPosto = document.getElementById('orto-cambio-posto');
@@ -178,7 +188,8 @@
     }
     const haPezzi = voce => Number.isSafeInteger(voce?.pezziRimasti);
     const quantitaProdotto = voce => haPezzi(voce)
-        ? voce.pezziRimasti + (voce.pezziRimasti === 1 ? ' pezzo' : ' pezzi')
+        ? voce.pezziRimasti + (voce.pezziRimasti === 1 ? ' pezzo' : ' pezzi') +
+            (voce.livelloPezzo != null ? ' · uno al ' + voce.livelloPezzo + '%' : '')
         : voce.quantita;
 
     function pulsante(testo, azione) {
@@ -260,6 +271,50 @@
         return numero === undefined ? null : Number(numero.replace(',', '.'));
     }
 
+    function confezioneParziale(voce) {
+        if (!voce) return null;
+        const descrizione = [voce.nome, voce.quantita].join(' ').toLocaleLowerCase('it');
+        const tipo = /\b(?:bottigli[ae]|flacon[ei])\b/.test(descrizione) ? 'bottiglia'
+            : (voce.categoria === 'Semi' || /\bbustin[ae]\b/.test(descrizione)) ? 'bustina' : null;
+        if (!tipo) return null;
+        const testo = voce.quantita?.trim().toLocaleLowerCase('it');
+        const bottiglie = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei])$/)?.[1];
+        const totale = haPezzi(voce) ? voce.pezziRimasti : (tipo === 'bustina' ? bustine(voce) :
+            testo === 'mezza bottiglia' ? 0.5 : testo === 'una bottiglia' ? 1 :
+                bottiglie === undefined ? null : Number(bottiglie.replace(',', '.')));
+        if (!totale || !Number.isFinite(totale)) return null;
+        const livello = haPezzi(voce) ? (voce.livelloPezzo ?? 100) : Math.round((totale % 1 || 1) * 100);
+        return {tipo, totale, livello};
+    }
+
+    function aggiornaLivello() {
+        const valore = Number(cursore.value);
+        forma.style.setProperty('--livello', valore + '%');
+        rimanente.textContent = valore + '%';
+        consumato.textContent = (100 - valore) + '%';
+    }
+
+    function configuraParziale(voce) {
+        const perPezzi = haPezzi(voce);
+        const confezione = confezioneParziale(voce);
+        const mostraLivello = Boolean(confezione && (!perPezzi || tipoParziale.value === 'livello'));
+        bloccoTipo.hidden = !(confezione && perPezzi);
+        bloccoLivello.hidden = !mostraLivello;
+        bloccoPostoParziale.hidden = !mostraLivello || confezione.totale > 1;
+        pezziScarico.hidden = !perPezzi || mostraLivello;
+        restoLibero.hidden = perPezzi || mostraLivello;
+        mezza.hidden = !mostraLivello || confezione.tipo !== 'bustina' || confezione.livello < 50;
+        usatiCampo.disabled = pezziScarico.hidden || parziale.hidden;
+        scarico.elements.resto.disabled = !voce || restoLibero.hidden;
+        if (mostraLivello) {
+            cursore.max = confezione.livello;
+            cursore.value = confezione.livello;
+            forma.dataset.forma = confezione.tipo;
+            oggettoLivello.textContent = 'Contenuto di una ' + confezione.tipo;
+            aggiornaLivello();
+        }
+    }
+
     function opzioneScarico(pannello) {
         parziale.hidden = pannello !== parziale;
         cambioPosto.hidden = pannello !== cambioPosto;
@@ -271,18 +326,13 @@
 
     function selezionaScarico() {
         const voce = scorte.find(item => item.id === scarico.elements.id.value);
-        const numero = bustine(voce);
         const perPezzi = haPezzi(voce);
-        mezza.hidden = numero === null || numero < 0.5;
         quantitaAttuale.hidden = !voce;
         quantitaAttuale.textContent = voce
             ? 'Quantità attuale: ' + (quantitaProdotto(voce) || 'non indicata') + (voce.ubicazione ? ' · Conservazione: ' + voce.ubicazione : '')
             : '';
-        pezziScarico.hidden = !perPezzi;
-        restoLibero.hidden = perPezzi;
-        usatiCampo.disabled = !perPezzi || parziale.hidden;
         usatiCampo.max = perPezzi ? voce.pezziRimasti : '';
-        scarico.elements.resto.disabled = !voce || perPezzi;
+        configuraParziale(voce);
         postoScarico.disabled = !voce;
         salvaScarico.disabled = !voce || (parziale.hidden && cambioPosto.hidden);
         finito.disabled = !voce;
@@ -339,8 +389,9 @@
             if (Number.isSafeInteger(confezioni) && Number.isSafeInteger(pezzi)) {
                 voce.confezioni = confezioni;
                 voce.pezziPerConfezione = pezzi;
-                voce.pezziRimasti = haPezzi(precedente) && precedente.confezioni === confezioni && precedente.pezziPerConfezione === pezzi
-                    ? precedente.pezziRimasti : confezioni * pezzi;
+                const stessoFormato = haPezzi(precedente) && precedente.confezioni === confezioni && precedente.pezziPerConfezione === pezzi;
+                voce.pezziRimasti = stessoFormato ? precedente.pezziRimasti : confezioni * pezzi;
+                if (stessoFormato && precedente.livelloPezzo != null) voce.livelloPezzo = precedente.livelloPezzo;
             }
             if (indice < 0) dati.scorte.push(voce);
             else dati.scorte[indice] = voce;
@@ -352,13 +403,15 @@
         scarico.elements.resto.value = '';
         usatiCampo.value = '';
         postoScarico.value = '';
+        postoParziale.value = '';
+        tipoParziale.value = 'livello';
         statoScarico.textContent = '';
         opzioneScarico(null);
         selezionaScarico();
     });
     apriParziale.addEventListener('click', () => {
         opzioneScarico(parziale);
-        (pezziScarico.hidden ? scarico.elements.resto : usatiCampo).focus();
+        (!bloccoLivello.hidden ? cursore : pezziScarico.hidden ? scarico.elements.resto : usatiCampo).focus();
     });
     apriSposta.addEventListener('click', () => {
         opzioneScarico(cambioPosto);
@@ -373,6 +426,10 @@
         if (parziale.hidden) return;
         const id = scarico.elements.id.value;
         const prodotto = scorte.find(item => item.id === id);
+        if (!bloccoLivello.hidden) {
+            salvaLivello(Number(cursore.value));
+            return;
+        }
         if (haPezzi(prodotto)) {
             const usati = usatiCampo.valueAsNumber;
             if (!Number.isSafeInteger(usati) || usati < 1 || usati > prodotto.pezziRimasti) {
@@ -383,6 +440,7 @@
                 const voce = dati.scorte.find(item => item.id === id);
                 if (!haPezzi(voce) || voce.pezziRimasti < usati) throw new Error('Quantità insufficiente');
                 voce.pezziRimasti -= usati;
+                if (!voce.pezziRimasti) delete voce.livelloPezzo;
             }, statoScarico, 'Quantità rimanente aggiornata.')) usatiCampo.value = '';
             return;
         }
@@ -397,16 +455,30 @@
             voce.quantita = resto;
         }, statoScarico, 'Quantità rimanente aggiornata.')) scarico.elements.resto.value = '';
     });
-    mezza.addEventListener('click', () => {
+    function salvaLivello(valore) {
         const id = scarico.elements.id.value;
-        aggiorna(dati => {
+        const posto = bloccoPostoParziale.hidden ? '' : postoParziale.value.trim();
+        if (aggiorna(dati => {
             const voce = dati.scorte.find(item => item.id === id);
-            const numero = bustine(voce);
-            if (numero === null || numero < 0.5) throw new Error('Scorta insufficiente');
-            const resto = Math.round((numero - 0.5) * 1000) / 1000;
-            const quantita = new Intl.NumberFormat('it-IT').format(resto);
-            voce.quantita = resto === 0.5 ? 'Mezza bustina' : quantita + (resto === 1 ? ' bustina' : ' bustine');
-        }, statoScarico, 'Mezza bustina scalata dalla scorta.');
+            const confezione = confezioneParziale(voce);
+            if (!confezione || valore < 0 || valore > confezione.livello) throw new Error('Quantità non valida');
+            if (haPezzi(voce)) {
+                if (valore === 0) voce.pezziRimasti--;
+                if (valore > 0 && valore < 100) voce.livelloPezzo = valore;
+                else delete voce.livelloPezzo;
+            } else {
+                const resto = Math.round((confezione.totale - (confezione.livello - valore) / 100) * 1000) / 1000;
+                const plurale = confezione.tipo === 'bottiglia' ? 'bottiglie' : 'bustine';
+                voce.quantita = resto === 0.5 ? 'Mezza ' + confezione.tipo
+                    : new Intl.NumberFormat('it-IT').format(resto) + ' ' + (resto === 1 ? confezione.tipo : plurale);
+            }
+            if (posto && confezione.totale <= 1) voce.ubicazione = posto;
+        }, statoScarico, 'Contenuto rimanente aggiornato.')) postoParziale.value = '';
+    }
+    cursore.addEventListener('input', aggiornaLivello);
+    tipoParziale.addEventListener('change', () => configuraParziale(scorte.find(item => item.id === scarico.elements.id.value)));
+    mezza.addEventListener('click', () => {
+        salvaLivello(Number(cursore.max) - 50);
     });
     finito.addEventListener('click', () => {
         const voce = scorte.find(item => item.id === scarico.elements.id.value);
