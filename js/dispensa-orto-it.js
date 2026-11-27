@@ -32,6 +32,16 @@
     let scorte = [];
 
     const viste = [...document.querySelectorAll('[data-orto-vista]')];
+    const guida = document.getElementById('orto-guida');
+    const guidaTitolo = document.getElementById('orto-guida-titolo');
+    const guidaTesto = document.getElementById('orto-guida-testo');
+    for (const pulsante of document.querySelectorAll('[data-guida-titolo]')) {
+        pulsante.addEventListener('click', () => {
+            guidaTitolo.textContent = pulsante.dataset.guidaTitolo;
+            guidaTesto.textContent = pulsante.dataset.guidaTesto;
+            guida.showModal();
+        });
+    }
     function cambiaVista() {
         const hash = location.hash.slice(1);
         const richiesta = hash === 'dispensa-orto' ? 'inventario' : hash === 'agenda-attivita' ? 'agenda' : hash;
