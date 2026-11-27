@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=riepilogo-prodotto"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=scheda-inventario"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -42,6 +42,7 @@
     .orto-badge-usato{color:#ffb2b4}
     .orto-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-bottom:14px}
     .orto-fields label{display:grid;gap:4px;font-weight:600}
+    #orto-modifica-campi label[hidden]{display:none}
     .orto-fields input,.orto-fields select,.orto-fields textarea,#event-form input:not([type=checkbox]),#event-form select{width:100%;min-width:0;padding:9px;border:1px solid var(--border-color);border-radius:8px;background:#101416;color:var(--ink);font:inherit}
     .orto-fields .orto-note{grid-column:1/-1}
     .orto-campo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
@@ -187,8 +188,7 @@
           <div class="orto-campo"><label>Scadenza facoltativa <input name="scadenza" type="date"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Scadenza" data-guida-titolo="Scadenza" data-guida-testo="Inserisci la data riportata sulla confezione, se presente. Se non c’è una scadenza, lascia il campo vuoto.">?</button></div>
           <div class="orto-campo orto-note"><label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3" placeholder="Es. L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco."></textarea></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Note sul prodotto" data-guida-titolo="Note sul prodotto" data-guida-testo="Scrivi quello che vorrai ricordare, per esempio «L’anno scorso l’aglio nell’aiuola 2 è cresciuto poco». Puoi aggiornare la nota dall’Inventario.">?</button></div>
         </div>
-        <button class="button" type="submit" id="orto-salva-scorta">Salva prodotto</button>
-        <button type="button" id="orto-annulla-scorta" hidden>Annulla modifica</button>
+        <button class="button" type="submit">Salva prodotto</button>
       </form>
       <dialog id="orto-scanner" aria-label="Scansione codice a barre">
         <button type="button" id="orto-chiudi-scanner">Chiudi scanner</button>
@@ -269,7 +269,19 @@
     </section>
     <dialog id="orto-modifica" aria-labelledby="orto-titolo-modifica">
       <h2 id="orto-titolo-modifica">Modifica prodotto</h2>
-      <div id="orto-modifica-campi"></div>
+      <form id="orto-modifica-campi">
+        <div class="orto-fields">
+          <label>Nome <input name="nome" required maxlength="100"></label>
+          <label id="orto-modifica-quantita">Quantità disponibile <input name="quantita" maxlength="60"></label>
+          <label id="orto-modifica-pezzi" hidden>Pezzi disponibili <input name="pezzi" type="number" min="0" max="100000000" step="1"></label>
+          <label>Scadenza <input name="scadenza" type="date"></label>
+          <label class="orto-note">Note sul prodotto <textarea name="note" maxlength="500" rows="3"></textarea></label>
+        </div>
+        <div class="actions">
+          <button type="button" id="orto-annulla-scorta">Annulla</button>
+          <button class="button" type="submit">Salva modifiche</button>
+        </div>
+      </form>
     </dialog>
     <dialog id="orto-riepilogo" aria-labelledby="orto-riepilogo-titolo">
       <h2 id="orto-riepilogo-titolo"></h2>

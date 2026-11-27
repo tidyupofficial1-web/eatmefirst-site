@@ -34,14 +34,9 @@
     const statoAcquisto = document.getElementById('orto-stato-acquisto');
     const statoInventario = document.getElementById('orto-stato-inventario');
     const statoScarico = document.getElementById('orto-stato-scarico');
-    const salvaScorta = document.getElementById('orto-salva-scorta');
     const annullaScorta = document.getElementById('orto-annulla-scorta');
     const dialogoModifica = document.getElementById('orto-modifica');
     const campiModifica = document.getElementById('orto-modifica-campi');
-    const posizioneCarico = document.createComment('Modulo del Carico');
-    const posizioneStato = document.createComment('Stato del Carico');
-    scorta.before(posizioneCarico);
-    statoScorta.before(posizioneStato);
     const campiScorta = ['barcode', 'nome', 'categoria', 'quantita', 'ubicazione', 'scadenza', 'note'];
     const campoScorta = nome => scorta.elements[nome === 'ubicazione' ? 'conservazione-orto' : nome];
     const postoScarico = scarico.elements['posto-orto'];
@@ -53,7 +48,7 @@
     let scanner;
     let avvioScanner = false;
     let modifica = null;
-    let bozzaCarico = null;
+    let prodottoInModifica = null;
     let scorte = [];
     let prova = null;
 
@@ -103,21 +98,13 @@
 
     function fineModifica() {
         const id = modifica;
-        annullaRicerca();
         modifica = null;
-        scorta.reset();
-        if (bozzaCarico) {
-            posizioneCarico.after(scorta);
-            posizioneStato.after(statoScorta);
-            for (const [nome, valore] of bozzaCarico.campi) scorta.elements[nome].value = valore;
-            statoScorta.textContent = bozzaCarico.stato;
-            bozzaCarico = null;
+        prodottoInModifica = null;
+        if (id) {
             if (dialogoModifica.open) dialogoModifica.close();
             const riga = [...listaScorte.children].find(elemento => elemento.dataset.prodotto === id);
             (riga?.querySelector('button') ?? cerca).focus();
         }
-        salvaScorta.textContent = 'Salva prodotto';
-        annullaScorta.hidden = true;
     }
 
     function annullaRicerca() {
@@ -253,19 +240,21 @@
             noteProdotto(voce) && 'Note: ' + noteProdotto(voce)
         ],
         pulsante('Modifica', () => {
-            annullaRicerca();
-            bozzaCarico = {campi: new FormData(scorta), stato: statoScorta.textContent};
-            statoScorta.textContent = '';
             modifica = voce.id;
-            for (const campo of campiScorta) campoScorta(campo).value = voce[campo] ?? '';
-            scorta.elements.note.value = noteProdotto(voce);
-            scorta.elements.confezioni.value = voce.confezioni ?? '';
-            scorta.elements.pezzi.value = voce.pezziPerConfezione ?? '';
-            salvaScorta.textContent = 'Salva modifiche';
-            annullaScorta.hidden = false;
-            campiModifica.append(scorta, statoScorta);
+            prodottoInModifica = {...voce};
+            const perPezzi = haPezzi(voce);
+            document.getElementById('orto-modifica-quantita').hidden = perPezzi;
+            document.getElementById('orto-modifica-pezzi').hidden = !perPezzi;
+            campiModifica.elements.quantita.disabled = perPezzi;
+            campiModifica.elements.pezzi.disabled = !perPezzi;
+            campiModifica.elements.pezzi.required = perPezzi;
+            for (const campo of ['nome', 'quantita', 'scadenza']) {
+                campiModifica.elements[campo].value = voce[campo] ?? '';
+            }
+            campiModifica.elements.note.value = noteProdotto(voce);
+            campiModifica.elements.pezzi.value = voce.pezziRimasti ?? '';
             dialogoModifica.showModal();
-            scorta.elements.nome.focus();
+            campiModifica.elements.nome.focus();
         }),
         ...(confezioneParziale(voce) ? [pulsante('Parziale', () => {
             scarico.elements.id.value = voce.id;
@@ -408,23 +397,39 @@
             codiceCampo.focus();
             return;
         }
-        voce.id = modifica ?? crypto.randomUUID();
+        voce.id = crypto.randomUUID();
         const confezioni = scorta.elements.confezioni.valueAsNumber;
         const pezzi = scorta.elements.pezzi.valueAsNumber;
         if (Number.isFinite(confezioni) !== Number.isFinite(pezzi)) {
             statoScorta.textContent = 'Per usare le confezioni, compila entrambi i campi.';
             return;
         }
-        const precedente = modifica && leggi().scorte.find(item => item.id === voce.id);
         if (Number.isSafeInteger(confezioni) && Number.isSafeInteger(pezzi)) {
             voce.confezioni = confezioni;
             voce.pezziPerConfezione = pezzi;
-            const stessoFormato = haPezzi(precedente) && precedente.confezioni === confezioni && precedente.pezziPerConfezione === pezzi;
-            voce.pezziRimasti = stessoFormato ? precedente.pezziRimasti : confezioni * pezzi;
-            if (stessoFormato && precedente.livelloPezzo != null) voce.livelloPezzo = precedente.livelloPezzo;
+            voce.pezziRimasti = confezioni * pezzi;
         }
-        prodottoDaSalvare = {voce, precedente, inModifica: Boolean(modifica)};
-        document.getElementById('orto-riepilogo-titolo').textContent = modifica ? 'Riepilogo modifiche' : 'Riepilogo nuovo prodotto';
+        apriRiepilogo(voce);
+    });
+    campiModifica.addEventListener('submit', evento => {
+        evento.preventDefault();
+        if (!prodottoInModifica) return;
+        const campi = campiModifica.elements;
+        const voce = {...prodottoInModifica};
+        for (const campo of ['nome', 'scadenza', 'note']) voce[campo] = campi[campo].value.trim();
+        if (!voce.nome) return;
+        delete voce.semina;
+        if (haPezzi(voce)) {
+            if (voce.pezziRimasti !== campi.pezzi.valueAsNumber) delete voce.livelloPezzo;
+            voce.pezziRimasti = campi.pezzi.valueAsNumber;
+        } else {
+            voce.quantita = campi.quantita.value.trim();
+        }
+        apriRiepilogo(voce, prodottoInModifica);
+    });
+    function apriRiepilogo(voce, precedente) {
+        prodottoDaSalvare = {voce, precedente};
+        document.getElementById('orto-riepilogo-titolo').textContent = precedente ? 'Riepilogo modifiche' : 'Riepilogo nuovo prodotto';
         const elenco = document.getElementById('orto-riepilogo-dati');
         elenco.replaceChildren();
         const dettagli = [
@@ -441,12 +446,12 @@
         }
         statoRiepilogo.textContent = '';
         riepilogo.showModal();
-    });
+    }
     document.getElementById('orto-conferma-prodotto').addEventListener('click', () => {
         if (!riepilogo.open) return;
-        const {voce, precedente, inModifica} = prodottoDaSalvare;
+        const {voce, precedente} = prodottoDaSalvare;
         if (aggiorna(dati => {
-            if (!inModifica) {
+            if (!precedente) {
                 dati.scorte.push(voce);
                 return;
             }
@@ -457,9 +462,14 @@
             dati.scorte[indice] = voce;
         }, statoRiepilogo, 'Prodotto salvato.')) {
             riepilogo.close();
-            if (inModifica) statoInventario.textContent = 'Modifiche salvate.';
-            else statoScorta.textContent = 'Prodotto salvato.';
-            fineModifica();
+            if (precedente) {
+                statoInventario.textContent = 'Modifiche salvate.';
+                fineModifica();
+            } else {
+                annullaRicerca();
+                scorta.reset();
+                statoScorta.textContent = 'Prodotto salvato.';
+            }
         }
     });
     annullaScorta.addEventListener('click', fineModifica);
