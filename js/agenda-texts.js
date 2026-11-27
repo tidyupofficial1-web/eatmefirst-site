@@ -233,7 +233,7 @@ const agendaDeadlineTexts = {
         "pass": "Renovar el abono de transporte",
         "emptyDeadlines": "No hay vencimientos ni tareas de mantenimiento registrados."
     },
-    "pt": {
+    "pt-BR": {
         "licence": "Renovar a carteira de motorista",
         "inspection": "Revisão do carro",
         "booking": "Agendar a revisão.",
