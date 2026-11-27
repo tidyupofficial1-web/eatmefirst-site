@@ -1,6 +1,8 @@
+window.EatCaricoTesti ??= {};
 window.EatCaricoTesti.ar = {
   "messages": {
     "⚠️ Unable to start the camera. Check your browser permissions.": "⚠️ تعذّر تشغيل الكاميرا. تحقّق من أذونات المتصفح.",
+    "The scanner is unavailable. You can type the barcode or enter the product by hand.": "الماسح غير متاح. يمكنك كتابة الباركود أو تسجيل المنتج يدوياً.",
     "Enter an 8–14 digit barcode, keeping any leading zeros.": "أدخل رمزًا شريطيًا من 8 إلى 14 رقمًا مع الإبقاء على الأصفار في البداية.",
     "Press Find product to check this barcode, or enter the product yourself.": "اضغط على ابحث عن المنتج أو أدخل بياناته يدويًا.",
     "Invalid barcode: enter 8–14 digits or fill in the product yourself.": "الرمز غير صالح. أدخل من 8 إلى 14 رقمًا أو سجّل المنتج يدويًا.",

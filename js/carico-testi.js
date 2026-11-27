@@ -3,6 +3,7 @@ window.EatCaricoTesti = {
     "messages": {
       "You can also leave the barcode empty and enter the product yourself.": "バーコードを空欄にして手入力することもできます。",
       "⚠️ Unable to start the camera. Check your browser permissions.": "⚠️ カメラを起動できません。ブラウザーの権限を確認してください。",
+      "The scanner is unavailable. You can type the barcode or enter the product by hand.": "スキャナーを利用できません。バーコードや商品情報を手入力できます。",
       "Enter an 8–14 digit barcode, keeping any leading zeros.": "先頭のゼロも含めて、8～14桁のバーコードを入力してください。",
       "Press Find product to check this barcode, or enter the product yourself.": "「商品を検索」を押すか、商品を手入力してください。",
       "Invalid barcode: enter 8–14 digits or fill in the product yourself.": "バーコードが無効です。8～14桁を入力するか、商品を手入力してください。",
@@ -43,6 +44,7 @@ window.EatCaricoTesti = {
     "messages": {
       "You can also leave the barcode empty and enter the product yourself.": "Você também pode deixar o código em branco e cadastrar o produto manualmente.",
       "⚠️ Unable to start the camera. Check your browser permissions.": "⚠️ Não foi possível abrir a câmera. Confira as permissões do navegador.",
+      "The scanner is unavailable. You can type the barcode or enter the product by hand.": "O leitor não está disponível. Digite o código de barras ou cadastre o produto à mão.",
       "Enter an 8–14 digit barcode, keeping any leading zeros.": "Digite um código de 8 a 14 dígitos, incluindo os zeros iniciais.",
       "Press Find product to check this barcode, or enter the product yourself.": "Toque em Buscar produto ou preencha os dados manualmente.",
       "Invalid barcode: enter 8–14 digits or fill in the product yourself.": "Código inválido. Digite de 8 a 14 dígitos ou preencha os dados manualmente.",

@@ -739,6 +739,11 @@
 
     /* --- GESTIONE SCANNER LIVE INTERNO --- */
     function avviaScannerLive() {
+        if (typeof Html5Qrcode !== "function") {
+            alert("Lo scanner non è disponibile. Puoi inserire il codice a barre o il prodotto a mano.");
+            return;
+        }
+
         const overlay = document.getElementById('scanner-overlay');
         overlay.style.display = 'flex';
 

@@ -734,6 +734,11 @@
 
     /* --- GESTIONE SCANNER LIVE INTERNO --- */
     function avviaScannerLive() {
+        if (typeof Html5Qrcode !== "function") {
+            alert("Der Scanner ist nicht verfügbar. Du kannst den Barcode oder das Produkt von Hand eingeben.");
+            return;
+        }
+
         const overlay = document.getElementById('scanner-overlay');
         overlay.style.display = 'flex';
 

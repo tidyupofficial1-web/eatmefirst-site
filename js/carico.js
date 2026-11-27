@@ -80,6 +80,11 @@ function ripristinaUltimiValoriMemoria() {
 
 /* --- GESTIONE SCANNER LIVE INTERNO --- */
 function avviaScannerLive() {
+    if (typeof Html5Qrcode !== "function") {
+        alert(testoCarico("The scanner is unavailable. You can type the barcode or enter the product by hand."));
+        return;
+    }
+
     const overlay = document.getElementById('scanner-overlay');
     overlay.style.display = 'flex';
 

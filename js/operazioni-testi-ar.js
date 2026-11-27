@@ -1,3 +1,4 @@
+window.EatOperazioniTesti ??= {};
 window.EatOperazioniTesti.ar = {
   "count": "آخر {count} عملية، من الأحدث إلى الأقدم.",
   "empty": "لا توجد عمليات مسجّلة.",
