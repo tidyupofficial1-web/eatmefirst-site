@@ -288,7 +288,7 @@
     }
 
     function confezioneParziale(voce, tipoScelto) {
-        if (!voce) return null;
+        if (!voce || voce.categoria === 'Piantine') return null;
         const descrizione = [voce.nome, voce.quantita].join(' ').toLocaleLowerCase('it');
         const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei])\b/.test(descrizione) ? 'bottiglia'
             : (voce.categoria === 'Semi' || /\bbustin[ae]\b/.test(descrizione)) ? 'bustina' : tipoScelto);
@@ -312,6 +312,7 @@
 
     function configuraParziale(voce) {
         const perPezzi = haPezzi(voce);
+        const soloInteri = voce?.categoria === 'Piantine';
         const riconosciuta = confezioneParziale(voce);
         tipoParziale.options.namedItem('orto-tipo-automatico').hidden = !riconosciuta;
         for (const opzione of tipoParziale.options) {
@@ -322,7 +323,7 @@
         const tipo = tipoParziale.value;
         const confezione = riconosciuta || (perPezzi && tipo !== 'pezzi' && confezioneParziale(voce, tipo));
         const mostraLivello = Boolean(confezione && (!perPezzi || tipo !== 'pezzi'));
-        bloccoTipo.hidden = !perPezzi;
+        bloccoTipo.hidden = !perPezzi || soloInteri;
         bloccoLivello.hidden = !mostraLivello;
         bloccoPostoParziale.hidden = !mostraLivello;
         pezziScarico.hidden = !perPezzi || mostraLivello;
@@ -639,8 +640,12 @@
     }
     function iniziaProva() {
         fineModifica();
-        prova = {scorte: [{id: 'vassoio-prova', nome: 'Piantine di lattuga', categoria: 'Piantine',
-            confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: 'Serra'}], acquisti: []};
+        prova = {scorte: [
+            {id: 'vassoio-prova', nome: 'Piantine di lattuga', categoria: 'Piantine',
+                confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: 'Serra'},
+            {id: 'bottiglie-prova', nome: 'Bottiglie di concime', categoria: 'Terriccio e concimi',
+                confezioni: 1, pezziPerConfezione: 3, pezziRimasti: 3, ubicazione: 'Capanno'}
+        ], acquisti: []};
         avvisoProva.hidden = false;
         scarico.reset();
         opzioneScarico(null);
