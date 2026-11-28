@@ -1,189 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<script src="../js/accesso-app.js" data-lang="FR"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EatMeFirst - Conditions Générales et Propriété Intellectuelle</title>
-    <meta name="description" content="Conditions d'utilisation, informations sur la confidentialité et le stockage local de l'application EatMeFirst.">
-    <meta name="robots" content="index,follow">
-    <style>
-        :root {
-            --bg-color: #12181b;
-            --card-bg: #1e272c;
-            --primary-color: #2ecc71;
-            --text-color: #e0e6ed;
-            --text-muted: #a0aec0;
-            --border-color: #2d3748;
-            --info-bg: #1a2634;
-            --info-border: #3182ce;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .top-navbar {
-            width: 100%;
-            max-width: 950px;
-            background-color: #101416;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .brand-logo img {
-            height: 32px;
-            width: auto;
-        }
-
-        .language-flags {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .flag-icon {
-            width: 26px;
-            height: 17px;
-            cursor: pointer;
-            object-fit: cover;
-            border-radius: 3px;
-            transition: transform 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: inline-block;
-        }
-
-        .flag-icon:hover {
-            transform: scale(1.15);
-        }
-
-        .main-wrapper {
-            width: 100%;
-            max-width: 950px;
-        }
-
-        .container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color);
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .btn-back {
-            background-color: #101416;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 8px 14px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .btn-back:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        h1 {
-            font-size: 1.4rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 12px;
-        }
-
-        h3 {
-            color: #ffffff;
-            margin-top: 20px;
-            margin-bottom: 6px;
-            font-size: 1.05rem;
-        }
-
-        p {
-            color: var(--text-color);
-            font-size: 0.93rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 15px; }
-        }
-    </style>
-<link rel="stylesheet" href="../css/collegamenti.css">
-<link rel="stylesheet" href="../css/language-picker.css?v=2">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Conditions d’utilisation d’EatMeFirst et d’OrtoFirst</title>
+  <style>
+    :root {color-scheme:dark}
+    body {margin:0;padding:24px 16px;background:#12181b;color:#e0e6ed;font:17px/1.6 system-ui,sans-serif}
+    main {max-width:780px;margin:auto;padding:clamp(16px,4vw,28px);background:#1e272c;border-radius:12px;overflow-wrap:anywhere}
+    h1,h2 {line-height:1.3}
+    h2 {font-size:1.25rem;margin-top:1.5em}
+    a {color:#8fdfb2}
+    summary {cursor:pointer}
+  </style>
 </head>
 <body>
-
-<!-- Barre de navigation supérieure -->
-<header class="top-navbar">
-    <a href="menu.html" class="brand-logo">
-        <img src="../IMG/logo_1024_white.png" alt="EatMeFirst Logo">
-        <span>EatMeFirst</span>
-    </a>
-    <details class="language-picker"><summary>Langues</summary><div class="language-picker-list"><a href="../IT/termini.html" lang="it">Italiano</a><a href="../EN/termini.html" lang="en">English</a><a href="../DE/nutzungsbedingungen.html" lang="de">Deutsch</a><a href="conditions.html" lang="fr" aria-current="page">Français</a><a href="../ES/termini.html" lang="es">Español</a><a href="../JA/termini.html" lang="ja" hreflang="ja" dir="ltr">日本語</a><a href="../PT/termini.html" lang="pt-BR" hreflang="pt-BR" dir="ltr">Português (Brasil)</a><a href="../AR/termini.html" lang="ar" hreflang="ar" dir="rtl">العربية</a></div></details>
-</header>
-
-<div class="main-wrapper">
-    <div class="container">
-        
-        <div class="top-bar">
-            <a href="chargement/connexion.html" class="btn-back">← Retour</a>
-        </div>
-
-        <h1>Conditions Générales d'Utilisation et Propriété Intellectuelle</h1>
-        
-        <h3>1. Propriété Intellectuelle du Logiciel</h3>
-        <p>L'application EatMeFirst, incluant le code source, les graphismes, les logos, les textes, les clips multimédias et la structure logique, est protégée par les lois relatives aux droits d'auteur et à la propriété intellectuelle. Tous droits réservés. Toute reproduction, distribution ou commercialisation non autorisée du logiciel ou de parties de celui-ci est strictement interdite sans consentement exprès.</p>
-
-        <h3>2. Acceptation des Conditions</h3>
-        <p>En utilisant l'application EatMeFirst, l'utilisateur accepte dans leur intégralité les présentes conditions d'utilisation. L'application est fournie « en l'état » pour aider l'utilisateur dans la gestion de son garde-manger domestique et la réduction du gaspillage alimentaire quotidien.</p>
-
-        <h3>3. Stockage Local et Confidentialité des Données</h3>
-        <p>EatMeFirst est conçu pour fonctionner entièrement sur l'appareil local de l'utilisateur grâce à la mémoire du navigateur (LocalStorage). Aucune donnée personnelle, aucun inventaire ni aucune habitude d'achat n'est transmis à des serveurs distants ou vendu à des tiers, garantissant une confidentialité et une souveraineté totales des informations.</p>
-
-        <h3>4. Limitation de Responsabilité</h3>
-        <p>Les indications concernant les dates de péremption et les fonctions d'assistance intelligente ont une valeur purement indicative. L'utilisateur est seul responsable de la vérification de l'état réel des aliments avant leur consommation, afin de préserver sa santé et celle de sa famille.</p>
-
-        <h3>5. Fonctions de base gratuites et copies externes</h3><p>L’enregistrement automatique et immédiat sur votre appareil et les fonctions de base resteront toujours gratuits. L’exportation d’une copie externe est facultative. Le transfert est manuel : les appareils ne se synchronisent pas automatiquement.</p>
-
-
-    </div>
-</div>
-
+  <main>
+    <a href="index.html" target="_top">Retour à l’application</a>
+    <h1>Conditions d’utilisation d’EatMeFirst et d’OrtoFirst</h1>
+    <p><time datetime="2026-11-28">2026-11-28</time> · IT-2026-11-28-eat-orto-1</p>
+    <h2>1. Objet et acceptation</h2>
+    <p>EatMeFirst aide à gérer les provisions, les dates et les courses. OrtoFirst aide à organiser les produits du jardin, les achats, les travaux et l’agenda du potager. Cochez la case d’acceptation avant d’entrer. Vous pouvez relire ces conditions à tout moment.</p>
+    <h2>2. Enregistrement local gratuit et export facultatif</h2>
+    <p>Les modifications confirmées sont enregistrées automatiquement et immédiatement dans le navigateur de votre téléphone ou ordinateur. L’enregistrement local et les fonctions de base restent toujours gratuits, même si vous n’utilisez pas l’export ou ne souscrivez pas à un éventuel abonnement futur. Le prix et les conditions seraient indiqués avant toute souscription. Aucun achat, abonnement, code de licence ou renouvellement n’est actuellement proposé.</p>
+    <h2>3. Conservation et restauration des données</h2>
+    <p>Les deux applications conservent leurs données séparément dans votre navigateur. Elles ne synchronisent pas les appareils et ne conservent pas de copie de vos données sur un serveur. Effacer les données du site, utiliser la navigation privée, désinstaller le navigateur, changer ou perdre d’appareil peut rendre les données indisponibles. L’export de l’inventaire concerne actuellement EatMeFirst, y compris les listes et notes prises en charge. Conservez le fichier à part et exportez à nouveau après modification. L’import remplace les données concernées par celles du fichier sans les fusionner. L’inventaire, les achats, l’agenda et les archives d’OrtoFirst ne sont pas inclus.</p>
+    <h2>4. Codes-barres, services externes et confidentialité</h2>
+    <p>La lecture des codes-barres est surtout prévue sur téléphone. Elle nécessite une caméra compatible et l’autorisation du navigateur. Vous pouvez aussi saisir le code ou le produit à la main. La recherche en ligne envoie le code au réseau Open Facts, qui peut consulter les catalogues alimentaires, pour animaux, cosmétiques et de produits non alimentaires. Les images du catalogue peuvent provenir de sources externes. La recherche ne transmet ni inventaire, ni quantités, ni notes ni fiches d’agenda. Vérifiez les résultats sur l’emballage. La notice liée détaille le comptage des ouvertures de certains écrans d’EatMeFirst.</p>
+    <p><a href="../sito-bozza/IT/privacy-statistiche.html" lang="it">Notice sur le comptage des ouvertures</a></p>
+    <h2>5. Dates alimentaires et produits du jardin</h2>
+    <p>EatMeFirst sert à organiser les dates et à penser à vérifier les aliments. Il ne détermine pas s’ils peuvent être consommés. Respectez les dates impératives de l’emballage et signalez-les comme telles. Les dates estimées servent de repères. Les quantités, pourcentages et dates d’OrtoFirst sont des notes d’organisation. Suivez l’étiquette et les instructions du fabricant pour conserver, utiliser ou éliminer les produits. Pour les produits phytopharmaceutiques, respectez aussi les prescriptions applicables, notamment le délai avant récolte.</p>
+    <h2>6. Propriété intellectuelle</h2>
+    <p>Les composants déjà publiés sous licence MIT conservent les droits associés. Les contenus de tiers restent soumis à leurs licences. Les droits sur les nouveaux apports originaux sont réservés lorsque leur titulaire en dispose. L’utilisation normale et les copies nécessaires sont permises. La distribution ou la revente de ces apports exige une autorisation, sauf disposition légale ou licence applicable.</p>
+    <details>
+      <summary>Licences et avis des tiers</summary>
+      <ul>
+        <li><a href="../licenza-eatmefirst/MIT-versione-precedente.txt">MIT</a> · <a href="../LICENSE">EatMeFirst</a></li>
+        <li><a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0</a> · <a href="https://opendatacommons.org/licenses/dbcl/1-0/">DbCL 1.0</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></li>
+        <li><a href="https://world.openfoodfacts.org/privacy">Open Food Facts</a> · <a href="https://world.openpetfoodfacts.org/privacy">Open Pet Food Facts</a> · <a href="https://world.openbeautyfacts.org/privacy">Open Beauty Facts</a> · <a href="https://world.openproductsfacts.org/privacy">Open Products Facts</a></li>
+      </ul>
+    </details>
+    <h2>7. Disponibilité et responsabilité</h2>
+    <p>Les applications sont fournies dans leur état actuel. Des erreurs ou interruptions sont possibles. Dans les limites prévues par la loi, le fournisseur ne répond pas des pertes dues à une suppression par l’utilisateur, à un changement d’appareil ou de navigateur sans copie exploitable, ou à une défaillance externe qui ne lui est pas imputable. Les droits impératifs et les recours légaux restent applicables, de même que la responsabilité pour les défauts imputables au fournisseur, le dol et la faute lourde.</p>
+    <p>Contact <a href="mailto:eatmefirst.contatti@gmail.com">eatmefirst.contatti@gmail.com</a></p>
+    <p><a href="../IT/termini-IT-2026-11-28-eat-orto-1.html" target="_blank" rel="noopener">Version italienne</a></p>
+  </main>
 </body>
 </html>
