@@ -21,6 +21,15 @@
 
     const key = 'eat_dispensa_orto_it_v1';
     const scorta = document.getElementById('orto-scorta');
+    const categoriaPersonale = document.getElementById('orto-categoria-personale');
+    const nomeCategoriaPersonale = scorta.elements['categoria-personale'];
+    function aggiornaCategoriaPersonale() {
+        if (!categoriaPersonale) return;
+        const mostra = scorta.elements.categoria.value === 'Altro';
+        categoriaPersonale.hidden = !mostra;
+        nomeCategoriaPersonale.disabled = !mostra;
+    }
+    scorta.elements.categoria.addEventListener('change', aggiornaCategoriaPersonale);
     const acquisto = document.getElementById('orto-acquisto');
     const scarico = document.getElementById('orto-scarico');
     const cerca = document.getElementById('orto-cerca');
@@ -475,6 +484,10 @@
         evento.preventDefault();
         const voce = Object.fromEntries(campiScorta.map(nome => [nome, campoScorta(nome).value.trim()]));
         if (!voce.nome) return;
+        voce.categoria = voce.categoria || 'Altro';
+        if (voce.categoria === 'Altro' && nomeCategoriaPersonale && !nomeCategoriaPersonale.disabled) {
+            voce.categoria = nomeCategoriaPersonale.value.trim() || 'Altro';
+        }
         voce.barcode = cifre(voce.barcode).replace(/\s+/g, '');
         if (voce.barcode && !/^\d{8,14}$/.test(voce.barcode)) {
             statoScorta.textContent = trad('Controlla il codice a barre o lascia il campo vuoto.');
@@ -522,6 +535,7 @@
             riepilogo.close();
             annullaRicerca();
             scorta.reset();
+            aggiornaCategoriaPersonale();
             statoScorta.textContent = trad('Prodotto salvato.');
         }
     });

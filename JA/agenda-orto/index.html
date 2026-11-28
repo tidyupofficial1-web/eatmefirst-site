@@ -13,7 +13,7 @@
   <script defer src="../../js/ricerca-prodotti-en.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
   <script defer src="../../js/ortofirst-ja.js?v=esito-catalogo"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=ritorno-orto"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=categoria-personale"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -255,7 +255,8 @@
         <img id="orto-foto-catalogo" width="112" height="112" alt="カタログの商品画像" referrerpolicy="no-referrer" style="object-fit:contain" hidden>
         <div class="orto-fields">
           <div class="orto-campo"><label>商品 <input name="nome" required maxlength="100" placeholder="例：トマトの種"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="ヘルプ：商品" data-guida-titolo="商品" data-guida-testo="量り売りの種、市場で買った苗、近所の人から分けてもらった種の袋など、バーコードがない場合はコード欄を空にして「サンマルツァーノトマトの種」などと入力します。カテゴリーと数量を指定して保存します。検索で見つからなかった場合も同じです。名前が提案されたら、保存前に確認します。">?</button></div>
-          <div class="orto-campo"><label>カテゴリー <select name="categoria"><option value="Semi">種</option><option value="Piantine">苗</option><option value="Terriccio e concimi">培養土・肥料</option><option value="Attrezzi">道具</option><option value="Insetticidi e cura delle piante">殺虫剤・植物の手入れ用品</option><option value="Altro">その他</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="ヘルプ：カテゴリー" data-guida-titolo="カテゴリー" data-guida-testo="「種」や「培養土・肥料」など、在庫から探すときに分かりやすいグループを選びます。">?</button></div>
+          <div class="orto-campo"><label>カテゴリー <select name="categoria"><option value="">カテゴリを選択</option><option value="Semi">種</option><option value="Piantine">苗</option><option value="Terriccio e concimi">培養土・肥料</option><option value="Attrezzi">道具</option><option value="Insetticidi e cura delle piante">殺虫剤・植物の手入れ用品</option><option value="Altro">その他</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="ヘルプ：カテゴリー" data-guida-titolo="カテゴリー" data-guida-testo="「種」や「培養土・肥料」など、在庫から探すときに分かりやすいグループを選びます。 「その他」を選ぶと、好きなカテゴリ名を入力できます。空欄のままでも構いません。">?</button></div>
+          <div class="orto-campo" id="orto-categoria-personale" hidden><label>自由入力のカテゴリ（任意） <input name="categoria-personale" maxlength="60" disabled></label></div>
           <div class="orto-campo"><label>数量 <input name="quantita" maxlength="60" placeholder="例：2袋"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="ヘルプ：数量" data-guida-titolo="数量" data-guida-testo="「2袋」「1袋」「10リットル」など、保管する量と単位を入力します。種を袋単位で登録した場合、出庫では半袋分を差し引けます。">?</button></div>
           <div class="orto-campo"><label>パック・トレーの数 <input name="confezioni" type="number" min="1" max="10000" step="1" placeholder="例：1"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="ヘルプ：パック・トレーの数" data-guida-titolo="パック・トレーの数" data-guida-testo="購入したパックやトレーの数を入力します。12本入りの苗を2トレー買った場合は、ここに2、「1パックあたりの個数」に12と入力します。">?</button></div>
           <div class="orto-campo"><label>1パックあたりの個数 <input name="pezzi" type="number" min="1" max="10000" step="1" placeholder="例：12"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="ヘルプ：1パックあたりの個数" data-guida-titolo="1パックあたりの個数" data-guida-testo="1パックに入っている数を入力します。12本入りのトレーは12個、2トレーなら在庫には24本と表示されます。出庫では使った分だけ差し引けます。">?</button></div>
