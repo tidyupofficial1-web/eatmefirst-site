@@ -43,6 +43,8 @@
     .orto-fields label{display:grid;gap:4px;font-weight:600}
     .orto-fields input,.orto-fields select,.orto-fields textarea,#event-form input:not([type=checkbox]),#event-form select{width:100%;min-width:0;padding:9px;border:1px solid var(--border-color);border-radius:8px;background:#101416;color:var(--ink);font:inherit}
     .orto-fields .orto-note{grid-column:1/-1}
+    .orto-campo .orto-ripeti{display:flex;align-items:center;gap:8px}
+    .orto-ripeti input[type=checkbox]{width:auto;accent-color:var(--primary-color)}
     .orto-campo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
     .orto-main button.orto-aiuto:not(.button){padding:0;width:28px;height:28px;line-height:1;border-radius:50%;color:#8fdfb2;font-weight:bold}
     #orto-scanner,#orto-guida{width:min(440px,94vw);color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px}
@@ -138,7 +140,10 @@
     </section>
     <section id="agenda" data-orto-vista hidden>
       <h1>Agenda dell’orto</h1>
-      <p>Segna quando seminare, trapiantare e raccogliere. Aggiungi una nota per la prossima stagione.</p>
+      <div class="orto-intro">
+        <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+        <p>«Qui segno quando seminare, trapiantare, annaffiare e raccogliere. Mi annoto anche dove ho piantato una varietà e com’è andata, così la prossima stagione me lo ricordo. Se vuoi vedere qualche esempio, premi “Prova con Max”.»</p>
+      </div>
     <div class="actions" id="agenda-attivita">
       <button type="button" id="example" aria-pressed="false">Prova con Max</button>
       <button type="button" id="personal" aria-pressed="true">Il mio orto</button>
@@ -150,18 +155,39 @@
     </div>
     <form id="event-form" data-agenda="orto">
       <h2 id="form-heading">Nuova attività</h2>
-      <p><label>Attività <input name="title" required maxlength="100" placeholder="Es. Trapiantare il basilico"></label></p>
-      <p><label>Data <input name="day" type="date" required></label> <label>Ora facoltativa <input name="time" type="time"></label></p>
-      <p><label>Categoria <select name="category">
-        <option value="">Altro</option>
-        <option value="semine">Semine</option>
-        <option value="trapianti">Trapianti e rinvasi</option>
-        <option value="cura">Cura dell’orto</option>
-        <option value="raccolta">Raccolti</option>
-        <option value="note">Osservazioni</option>
-      </select></label></p>
-      <p><label>Nota <input name="note" maxlength="250" placeholder="Es. Varietà, aiuola o quantità raccolta"></label></p>
-      <p><label><input name="weekly" type="checkbox"> Ripeti ogni settimana</label></p>
+      <div class="orto-fields">
+        <div class="orto-campo orto-note">
+          <label>Attività <input name="title" required maxlength="100" placeholder="Es. Trapiantare il basilico"></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Attività" data-guida-titolo="Attività" data-guida-testo="Scrivi il lavoro da fare o quello che vuoi ricordare, per esempio «Trapiantare il basilico» o «Raccolti i primi pomodori».">?</button>
+        </div>
+        <div class="orto-campo">
+          <label>Data <input name="day" type="date" required></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Data" data-guida-titolo="Data" data-guida-testo="Scegli il giorno previsto per il lavoro. Se stai annotando qualcosa di già fatto, scegli il giorno in cui è successo.">?</button>
+        </div>
+        <div class="orto-campo">
+          <label>Ora facoltativa <input name="time" type="time"></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Ora facoltativa" data-guida-titolo="Ora facoltativa" data-guida-testo="Indica un orario se vuoi ricordare quando fare il lavoro, per esempio le 7:00 per annaffiare. Se basta la data, lascia il campo vuoto.">?</button>
+        </div>
+        <div class="orto-campo">
+          <label>Categoria <select name="category">
+            <option value="">Altro</option>
+            <option value="semine">Semine</option>
+            <option value="trapianti">Trapianti e rinvasi</option>
+            <option value="cura">Cura dell’orto</option>
+            <option value="raccolta">Raccolti</option>
+            <option value="note">Osservazioni</option>
+          </select></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Categoria dell’attività" data-guida-titolo="Categoria dell’attività" data-guida-testo="Scegli il tipo di attività. Usa «Cura dell’orto» per lavori come annaffiare e «Osservazioni» per annotare come stanno crescendo le piante.">?</button>
+        </div>
+        <div class="orto-campo orto-note">
+          <label>Nota <input name="note" maxlength="250" placeholder="Es. Varietà, aiuola o quantità raccolta"></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Nota" data-guida-titolo="Nota" data-guida-testo="Aggiungi i dettagli che vuoi ritrovare, come la varietà seminata, l’aiuola, la quantità raccolta o come è andato il lavoro. Il campo è facoltativo.">?</button>
+        </div>
+        <div class="orto-campo orto-note">
+          <label class="orto-ripeti"><input name="weekly" type="checkbox"> Ripeti ogni settimana</label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Ripeti ogni settimana" data-guida-titolo="Ripeti ogni settimana" data-guida-testo="Spunta la casella per un’attività che torna ogni settimana, come controllare i semenzai il sabato. Lascia la casella vuota per un’attività singola.">?</button>
+        </div>
+      </div>
       <div class="actions"><button type="submit" class="button">Salva attività</button><button type="button" id="cancel-edit" hidden>Annulla modifica</button></div>
     </form>
     <p id="status" role="status"></p>
