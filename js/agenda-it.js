@@ -19,7 +19,18 @@
     const form = get('event-form');
     const garden = form?.dataset.agenda === 'orto';
     const gardenEnglish = garden && language === 'en';
-    const gardenTexts = garden && language === 'ja' ? {
+    const gardenTexts = garden && language === 'ar' ? {
+        newTitle: 'مهمة جديدة', editTitle: 'تعديل المهمة',
+        stored: 'تُحفظ مهام الحديقة في هذا المتصفح.',
+        emptyUpcoming: 'لا توجد مهام قادمة.', emptyPast: 'لا توجد مهام سابقة.',
+        titleRequired: 'أدخل اسم المهمة.', saved: 'تم حفظ المهمة.', deleted: 'حُذفت المهمة.',
+        deleteBefore: 'هل تريد حذف «', deleteAfter: '»؟', edit: 'تعديل', delete: 'حذف', weekly: 'كل أسبوع',
+        archive: 'أرشفة', archived: 'أُرشفت البطاقة.', uncategorised: 'بلا فئة',
+        allCategories: 'كل الفئات', archiveEmpty: 'لا توجد بطاقات مؤرشفة تطابق هذا الفلتر.',
+        newCategoryRequired: 'اكتب اسم الفئة الجديدة.',
+        taskMissing: 'حُذفت هذه البطاقة. أنشئ بطاقة جديدة لحفظ المهمة.',
+        restored: 'أُعيدت البطاقة إلى المفكرة.'
+    } : garden && language === 'ja' ? {
         newTitle: '新しい作業', editTitle: '作業を編集',
         stored: '菜園の作業はこのブラウザーに保存されます。',
         emptyUpcoming: '今後の作業はありません。', emptyPast: '過去の作業はありません。',

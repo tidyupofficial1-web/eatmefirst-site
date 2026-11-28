@@ -7,8 +7,10 @@
     const pt = lingua === 'pt-BR';
     const de = lingua === 'de';
     const ja = lingua === 'ja';
-    const dizionario = ja ? window.OrtoFirstJapanese : de ? window.OrtoFirstGerman : pt ? window.OrtoFirstPortuguese : es ? window.OrtoFirstSpanish : fr ? window.OrtoFirstFrench : lingua === 'en' ? window.OrtoFirstEnglish : null;
+    const ar = lingua === 'ar';
+    const dizionario = ar ? window.OrtoFirstArabic : ja ? window.OrtoFirstJapanese : de ? window.OrtoFirstGerman : pt ? window.OrtoFirstPortuguese : es ? window.OrtoFirstSpanish : fr ? window.OrtoFirstFrench : lingua === 'en' ? window.OrtoFirstEnglish : null;
     const trad = testo => dizionario?.[testo] ?? testo;
+    const cifre = testo => testo.normalize('NFKC').replace(/[٠-٩۰-۹]/g, carattere => String(carattere.charCodeAt(0) & 15)).replace(/٫/g, '.');
     const mostraCategoria = categoria => trad(categoria);
 
     const key = 'eat_dispensa_orto_it_v1';
@@ -109,7 +111,7 @@
 
     async function cercaCodice() {
         annullaRicerca();
-        const codice = codiceCampo.value.replace(/\s+/g, '');
+        const codice = cifre(codiceCampo.value).replace(/\s+/g, '');
         if (!/^\d{8,14}$/.test(codice)) {
             esitoCodice.textContent = trad('Inserisci un codice numerico da 8 a 14 cifre, mantenendo gli zeri iniziali.');
             return;
@@ -194,7 +196,8 @@
 
     function mostraQuantita(quantita) {
         if (!dizionario || !quantita) return quantita;
-        const parole = ja ? {'mezza bustina': '半袋', 'mezza bottiglia': '半ボトル', 'una bustina': '1袋', 'una bottiglia': '1本'} :
+        const parole = ar ? {'mezza bustina': 'نصف كيس', 'mezza bottiglia': 'نصف زجاجة', 'una bustina': 'كيس واحد', 'una bottiglia': 'زجاجة واحدة'} :
+            ja ? {'mezza bustina': '半袋', 'mezza bottiglia': '半ボトル', 'una bustina': '1袋', 'una bottiglia': '1本'} :
             de ? {'mezza bustina': 'Halbe Tüte', 'mezza bottiglia': 'Halbe Flasche', 'una bustina': 'Eine Tüte', 'una bottiglia': 'Eine Flasche'} :
             pt ? {'mezza bustina': 'Meio sachê', 'mezza bottiglia': 'Meia garrafa', 'una bustina': 'Um sachê', 'una bottiglia': 'Uma garrafa'} :
             es ? {'mezza bustina': 'Medio sobre', 'mezza bottiglia': 'Media botella', 'una bustina': 'Un sobre', 'una bottiglia': 'Una botella'} :
@@ -206,6 +209,7 @@
         if (!formato) return quantita;
         const numero = Number(formato[1].replace(',', '.'));
         const pacchetto = formato[2].startsWith('bustin');
+        if (ar) return new Intl.NumberFormat(lingua, {useGrouping: false}).format(numero) + (pacchetto ? ' كيس' : ' زجاجة');
         if (ja) return new Intl.NumberFormat(lingua, {useGrouping: false}).format(numero) + (pacchetto ? '袋' : '本');
         const unita = pacchetto ? (pt ? 'sachê' : es ? 'sobre' : fr ? 'sachet' : 'packet') :
             (pt ? 'garrafa' : es ? 'botella' : fr ? 'bouteille' : 'bottle');
@@ -327,24 +331,25 @@
 
     function bustine(voce) {
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
-        if (testo === '半袋') return 0.5;
+        if (testo === '半袋' || testo === 'نصف كيس') return 0.5;
+        if (testo === 'كيس واحد') return 1;
         if (['mezza bustina', 'half a packet', 'demi-sachet', 'un demi-sachet', 'medio sobre', 'meio sachê', 'halbe tüte', 'eine halbe tüte'].includes(testo)) return 0.5;
         if (['una bustina', 'one packet', 'un sachet', 'un sobre', 'um sachê', 'eine tüte'].includes(testo)) return 1;
-        const numero = testo?.normalize('NFKC').match(/^(\d+(?:[.,]\d+)?)\s*(?:bustin[ae]|packets?|sachets?|sobres?|sachês?|tüten?|袋)$/)?.[1];
+        const numero = testo && cifre(testo).match(/^(\d+(?:[.,]\d+)?)\s*(?:bustin[ae]|packets?|sachets?|sobres?|sachês?|tüten?|袋|كيس|أكياس)$/)?.[1];
         return numero === undefined ? null : Number(numero.replace(',', '.'));
     }
 
     function confezioneParziale(voce, tipoScelto) {
         if (!voce || voce.categoria === 'Piantine') return null;
         const descrizione = [voce.nome, voce.quantita].join(' ').toLocaleLowerCase('it');
-        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?|botellas?|garrafas?|flaschen?)\b|ボトル/.test(descrizione) ? 'bottiglia'
-            : (voce.categoria === 'Semi' || /\b(?:bustin[ae]|packets?|sachets?|sobres?|tüten?)\b|\bsachê(?:s\b|(?=\s|$))|種の袋/.test(descrizione)) ? 'bustina' : tipoScelto);
+        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?|botellas?|garrafas?|flaschen?)\b|ボトル|زجاجة|زجاجات/.test(descrizione) ? 'bottiglia'
+            : (voce.categoria === 'Semi' || /\b(?:bustin[ae]|packets?|sachets?|sobres?|tüten?)\b|\bsachê(?:s\b|(?=\s|$))|種の袋|كيس|أكياس/.test(descrizione)) ? 'bustina' : tipoScelto);
         if (!tipo) return null;
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
-        const bottiglie = testo?.normalize('NFKC').match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?|botellas?|garrafas?|flaschen?|本|ボトル)$/)?.[1];
+        const bottiglie = testo && cifre(testo).match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?|botellas?|garrafas?|flaschen?|本|ボトル|زجاجة|زجاجات)$/)?.[1];
         const totale = haPezzi(voce) ? voce.pezziRimasti : (tipo === 'bustina' ? bustine(voce) :
-            ['mezza bottiglia', 'half a bottle', 'demi-bouteille', 'une demi-bouteille', 'media botella', 'meia garrafa', 'halbe flasche', 'eine halbe flasche', '半ボトル'].includes(testo) ? 0.5 :
-                ['una bottiglia', 'one bottle', 'une bouteille', 'una botella', 'uma garrafa', 'eine flasche'].includes(testo) ? 1 :
+            ['mezza bottiglia', 'half a bottle', 'demi-bouteille', 'une demi-bouteille', 'media botella', 'meia garrafa', 'halbe flasche', 'eine halbe flasche', '半ボトル', 'نصف زجاجة'].includes(testo) ? 0.5 :
+                ['una bottiglia', 'one bottle', 'une bouteille', 'una botella', 'uma garrafa', 'eine flasche', 'زجاجة واحدة'].includes(testo) ? 1 :
                 bottiglie === undefined ? null : Number(bottiglie.replace(',', '.')));
         if (!totale || !Number.isFinite(totale)) return null;
         const livello = haPezzi(voce) ? (voce.livelloPezzo ?? 100) : Math.round((totale % 1 || 1) * 100);
@@ -438,7 +443,7 @@
         evento.preventDefault();
         const voce = Object.fromEntries(campiScorta.map(nome => [nome, campoScorta(nome).value.trim()]));
         if (!voce.nome) return;
-        voce.barcode = voce.barcode.replace(/\s+/g, '');
+        voce.barcode = cifre(voce.barcode).replace(/\s+/g, '');
         if (voce.barcode && !/^\d{8,14}$/.test(voce.barcode)) {
             statoScorta.textContent = trad('Controlla il codice a barre o lascia il campo vuoto.');
             codiceCampo.focus();

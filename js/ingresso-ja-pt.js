@@ -22,7 +22,7 @@
     const consentKey = 'eatmefirst_terms_' + locale;
     const termsVersion = locale === 'ar' ? 'ar-2026-11-launch-1' : 'IT-2026-11-15-lancio-2';
     const commonVersion = 'IT-2026-11-28-eat-orto-1';
-    const supportsOrto = locale === 'pt-BR' || locale === 'ja';
+    const supportsOrto = ['pt-BR', 'ja', 'ar'].includes(locale);
     const ortoRequested = supportsOrto &&
         (window.location.pathname.startsWith(new URL('agenda-orto/', root).pathname) ||
             new URL(destinazione()).pathname.startsWith(new URL('agenda-orto/', root).pathname));
