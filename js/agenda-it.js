@@ -19,7 +19,18 @@
     const form = get('event-form');
     const garden = form?.dataset.agenda === 'orto';
     const gardenEnglish = garden && language === 'en';
-    const gardenTexts = garden && language === 'de' ? {
+    const gardenTexts = garden && language === 'ja' ? {
+        newTitle: '新しい作業', editTitle: '作業を編集',
+        stored: '菜園の作業はこのブラウザーに保存されます。',
+        emptyUpcoming: '今後の作業はありません。', emptyPast: '過去の作業はありません。',
+        titleRequired: '作業名を入力してください。', saved: '作業を保存しました。', deleted: '作業を削除しました。',
+        deleteBefore: '「', deleteAfter: '」を削除しますか？', edit: '編集', delete: '削除', weekly: '毎週',
+        archive: 'アーカイブ', archived: 'カードをアーカイブしました。', uncategorised: 'カテゴリーなし',
+        allCategories: 'すべてのカテゴリー', archiveEmpty: '条件に合うアーカイブ済みカードはありません。',
+        newCategoryRequired: '新しいカテゴリー名を入力してください。',
+        taskMissing: 'このカードは削除されました。新しいカードを作成してください。',
+        restored: 'カードをカレンダーに戻しました。'
+    } : garden && language === 'de' ? {
         newTitle: 'Neue Aufgabe', editTitle: 'Aufgabe bearbeiten',
         stored: 'Die Gartenaufgaben werden in diesem Browser gespeichert.',
         emptyUpcoming: 'Keine anstehenden Aufgaben.', emptyPast: 'Keine vergangenen Aufgaben.',

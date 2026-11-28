@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>カレンダーの記入例 | OrtoFirst</title>
+  <script defer src="../../js/ingresso-ja-pt.js?v=orto-ja" data-proteggi></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="言語"><a href="../../IT/agenda-orto/simulazione-agenda.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/simulazione-agenda.html" hreflang="en" lang="en">English</a> · <a href="../../FR/agenda-orto/simulazione-agenda.html" hreflang="fr" lang="fr">Français</a> · <a href="../../ES/agenda-orto/simulazione-agenda.html" hreflang="es" lang="es">Español</a> · <a href="../../PT/agenda-orto/simulazione-agenda.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> · <a href="../../DE/agenda-orto/simulazione-agenda.html" hreflang="de" lang="de">Deutsch</a> · <a href="../../JA/agenda-orto/simulazione-agenda.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></nav>
+    <a href="index.html#agenda">← 菜園カレンダーに戻る</a>
+    <h1>カレンダーの記入例</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="マックス">
+      <p>「バジルの作業カードをどう書くか、どこで見直せるか、アーカイブからどう予定を入れ直すかを紹介します。」例は閲覧専用です。</p>
+    </div>
+    <nav class="demo-nav" aria-label="記入例の画面">
+      <a href="#compila">入力フォーム</a>
+      <a href="#schede">カード一覧</a>
+      <a href="#archivio">アーカイブ</a>
+      <a href="#riprogramma">新しい日付</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>カードに記入する</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>作業名</dt><dd>バジルを植え替える</dd></div>
+        <div><dt>日付</dt><dd>2027年5月18日</dd></div>
+        <div><dt>時刻（任意）</dt><dd>18:30</dd></div>
+        <div><dt>カテゴリー</dt><dd>植え替え・鉢替え</dd></div>
+        <div><dt>メモ</dt><dd>20cmの鉢を2つ用意し、新しい培養土を使う。</dd></div>
+        <div><dt>毎週繰り返す</dt><dd>チェックなし</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>？ カテゴリーはどう選びますか？</summary><p>既存のカテゴリーを選ぶか、「＋ カテゴリーを追加」を使います。たとえば「温室」を作ると、後で絞り込みに使えます。</p></details>
+      <p class="demo-actions"><a href="#schede">保存したカードの表示先を見る →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>カレンダーのカード一覧</h2>
+      <p>今後の作業は日付順に並びます。カテゴリーで絞り込むと、探している作業が見つかります。</p>
+      <article class="demo-scheda">
+        <h3>育苗トレーを確認する</h3>
+        <p>菜園の手入れ · 2027年5月15日 · 毎週</p>
+        <p>培養土の湿り具合を確認する。</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>バジルを植え替える</h3>
+        <p>植え替え・鉢替え · 2027年5月18日 · 18:30</p>
+        <p>20cmの鉢を2つ用意し、新しい培養土を使う。</p>
+      </article>
+      <details class="demo-aiuto"><summary>？ カードにはどんな操作ができますか？</summary><p>カレンダーではカードを編集したり、アーカイブしたりできます。削除するときは確認が表示されます。</p></details>
+      <p class="demo-actions"><a href="#archivio">アーカイブしたカードを見る →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>カレンダーのアーカイブ</h2>
+      <article class="demo-scheda">
+        <h3>バジルを植え替える</h3>
+        <p>植え替え・鉢替え · 2027年5月18日 · 18:30</p>
+        <p>20cmの鉢を2つ用意し、新しい培養土を使う。</p>
+      </article>
+      <details class="demo-aiuto"><summary>？ カードを戻すには？</summary><p>アーカイブでもカテゴリーで絞り込めます。予定を入れ直すには「編集」で日付を変え、「保存してカレンダーに戻す」を選びます。</p></details>
+      <p class="demo-actions"><a href="#riprogramma">新しい日付での表示を見る →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>カレンダーに戻したカード</h2>
+      <article class="demo-scheda">
+        <h3>バジルを植え替える</h3>
+        <p>植え替え・鉢替え · 2028年5月20日 · 18:30</p>
+        <p>20cmの鉢を2つ用意し、新しい培養土を使う。</p>
+      </article>
+      <p>カードはカテゴリーとメモを保ったまま、新しい日付で今後の作業に戻ります。</p>
+      <p class="demo-actions"><a href="#compila">入力フォームを見直す</a><a href="index.html#agenda">菜園カレンダーに戻る</a></p>
+    </section>
+  </main>
+</body>
+</html>
