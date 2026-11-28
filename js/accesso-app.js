@@ -6,7 +6,12 @@
     const script = document.currentScript;
     const lang = script.dataset.lang;
     const root = new URL('../', script.src);
-    const entry = new URL(lang + '/index.html', root).href;
+    const entry = new URL(lang + '/index.html', root);
+    if (lang === 'IT') {
+        entry.searchParams.set('dest', 'eat');
+        const current = window.location;
+        entry.searchParams.set('pagina', current.pathname + current.search + current.hash);
+    }
     function accepted() {
         try {
             if (lang === 'IT') {
