@@ -244,7 +244,6 @@
         for (const voce of [...acquisti].sort((a, b) => Number(Boolean(a.comprato)) - Number(Boolean(b.comprato)))) {
             const li = document.createElement('li');
             li.dataset.comprato = Boolean(voce.comprato);
-            li.dataset.esaurito = Boolean(voce.esaurito);
             const etichetta = document.createElement('label');
             const spunta = document.createElement('input');
             spunta.type = 'checkbox';

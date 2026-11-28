@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=lista-spesa"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=guida-lista-spesa"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -57,7 +57,6 @@
     #orto-acquisti label{display:flex;align-items:center;gap:12px;flex:1;min-width:0;min-height:44px;cursor:pointer;overflow-wrap:anywhere}
     #orto-acquisti input{flex:none;width:20px;height:20px;accent-color:var(--primary-color)}
     #orto-acquisti li[data-comprato="true"] label{color:var(--text-muted);text-decoration:line-through}
-    #orto-acquisti li[data-comprato="false"][data-esaurito="true"]{border-inline-start:4px solid #e77c7c}
     .orto-main .button{background:var(--primary-color);color:#101416}
     .orto-main button:not(.button){background:#253238;color:var(--text-color);border:1px solid #526474;border-radius:8px;padding:8px 12px;font:inherit}
     .orto-main :focus-visible{outline:2px solid var(--primary-color);outline-offset:4px}
@@ -255,11 +254,17 @@
     </section>
     <section class="orto-panel" id="acquisti-orto" data-orto-vista hidden>
       <h1>Lista della spesa dell’orto</h1>
-      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Spunto quello che metto nel carrello e lo ritrovo in fondo. Quando esaurisco un prodotto, nello Scarico posso confermare il riacquisto.»</p></div>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Spunto quello che metto nel carrello e lo ritrovo in fondo. Quando confermo nello Scarico che ho finito l’ultima scorta di un prodotto, OrtoFirst lo aggiunge automaticamente alla lista.»</p></div>
       <form id="orto-acquisto">
         <div class="orto-fields">
-          <label>Cosa comprare <input name="nome" required maxlength="100" placeholder="Es. Vasi da 20 cm"></label>
-          <label>Quantità <input name="quantita" maxlength="60" placeholder="Es. 3 vasi"></label>
+          <div class="orto-campo">
+            <label>Cosa comprare <input name="nome" required maxlength="100" placeholder="Es. Vasi da 20 cm"></label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Cosa comprare" data-guida-titolo="Cosa comprare" data-guida-testo="Scrivi il nome dell’articolo e, se ti serve per riconoscerlo in negozio, aggiungi la varietà o la misura. Poi premi «Aggiungi alla lista».">?</button>
+          </div>
+          <div class="orto-campo">
+            <label>Quantità <input name="quantita" maxlength="60" placeholder="Es. 3 vasi"></label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Quantità da comprare" data-guida-titolo="Quantità da comprare" data-guida-testo="Scrivi quanto ti serve, per esempio «3 vasi», «2 bustine» o «20 litri». Se decidi la quantità in negozio, lascia il campo vuoto.">?</button>
+          </div>
         </div>
         <button class="button" type="submit">Aggiungi alla lista</button>
       </form>
