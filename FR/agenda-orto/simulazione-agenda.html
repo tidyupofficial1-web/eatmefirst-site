@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Exemple d’agenda | OrtoFirst</title>
+  <script src="../../js/accesso-ortofirst-en.js?v=fr" data-lang="FR" data-protect></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="Langues"><a href="../../IT/agenda-orto/simulazione-agenda.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/simulazione-agenda.html" hreflang="en" lang="en">English</a> · <a href="../../FR/agenda-orto/simulazione-agenda.html" hreflang="fr" lang="fr" aria-current="page">Français</a></nav>
+    <a href="index.html#agenda">← Revenir à l’agenda</a>
+    <h1>Exemple d’agenda</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+      <p>« Je vais vous montrer comment je prépare une fiche pour mon basilic, où je la retrouve et comment je la reprogramme depuis les archives. » Les exemples sont en lecture seule.</p>
+    </div>
+    <nav class="demo-nav" aria-label="Écrans de l’exemple">
+      <a href="#compila">Formulaire</a>
+      <a href="#schede">Fiches</a>
+      <a href="#archivio">Archives</a>
+      <a href="#riprogramma">Nouvelle date</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>Remplir une fiche</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>Tâche</dt><dd>Repiquer le basilic</dd></div>
+        <div><dt>Date</dt><dd>18 mai 2027</dd></div>
+        <div><dt>Heure facultative</dt><dd>18 h 30</dd></div>
+        <div><dt>Catégorie</dt><dd>Repiquage et rempotage</dd></div>
+        <div><dt>Note</dt><dd>Préparer deux pots de 20 cm et utiliser du terreau neuf.</dd></div>
+        <div><dt>Répéter chaque semaine</dt><dd>Case non cochée</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>? Comment choisir la catégorie ?</summary><p>Choisissez une catégorie existante ou utilisez « + Ajouter une catégorie ». Vous pouvez par exemple créer « Serre » et la retrouver dans les filtres.</p></details>
+      <p class="demo-actions"><a href="#schede">Voir où la fiche apparaît après l’enregistrement →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>Fiches de l’agenda</h2>
+      <p>Les prochaines tâches sont classées par date. Filtrez par catégorie pour retrouver le travail souhaité.</p>
+      <article class="demo-scheda">
+        <h3>Vérifier les plateaux de semis</h3>
+        <p>Entretien du potager · 15 mai 2027 · Chaque semaine</p>
+        <p>Vérifier l’humidité du terreau.</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>Repiquer le basilic</h3>
+        <p>Repiquage et rempotage · 18 mai 2027 · 18 h 30</p>
+        <p>Préparer deux pots de 20 cm et utiliser du terreau neuf.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Que faire avec une fiche ?</summary><p>Dans l’agenda, vous pouvez modifier une fiche, l’archiver ou la supprimer après confirmation.</p></details>
+      <p class="demo-actions"><a href="#archivio">Voir la fiche une fois archivée →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>Archives de l’agenda</h2>
+      <article class="demo-scheda">
+        <h3>Repiquer le basilic</h3>
+        <p>Repiquage et rempotage · 18 mai 2027 · 18 h 30</p>
+        <p>Préparer deux pots de 20 cm et utiliser du terreau neuf.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Comment récupérer une fiche ?</summary><p>Dans les archives, vous pouvez filtrer par catégorie. Pour reprogrammer une fiche, choisissez « Modifier », changez la date et sélectionnez « Enregistrer et remettre dans l’agenda ».</p></details>
+      <p class="demo-actions"><a href="#riprogramma">Voir le résultat avec une nouvelle date →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>Fiche remise dans l’agenda</h2>
+      <article class="demo-scheda">
+        <h3>Repiquer le basilic</h3>
+        <p>Repiquage et rempotage · 20 mai 2028 · 18 h 30</p>
+        <p>Préparer deux pots de 20 cm et utiliser du terreau neuf.</p>
+      </article>
+      <p>La fiche revient dans les prochaines tâches à la nouvelle date, avec la catégorie et la note.</p>
+      <p class="demo-actions"><a href="#compila">Revoir le formulaire</a><a href="index.html#agenda">Revenir à l’agenda</a></p>
+    </section>
+  </main>
+</body>
+</html>
