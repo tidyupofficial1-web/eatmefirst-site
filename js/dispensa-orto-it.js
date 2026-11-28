@@ -188,7 +188,7 @@
         return elemento;
     }
 
-    function riga(voce, dettagli, ...pulsanti) {
+    function riga(voce, dettagli) {
         const li = document.createElement('li');
         const nome = document.createElement('strong');
         nome.textContent = voce.nome;
@@ -196,10 +196,6 @@
         const p = document.createElement('p');
         p.textContent = dettagli.filter(Boolean).join(' · ');
         if (p.textContent) li.append(p);
-        const azioni = document.createElement('div');
-        azioni.className = 'actions';
-        azioni.append(...pulsanti);
-        li.append(azioni);
         return li;
     }
 
@@ -207,6 +203,72 @@
         return aggiorna(dati => {
             dati.acquisti.push({id: crypto.randomUUID(), nome, quantita, comprato: false});
         }, statoAcquisto, 'Aggiunto alla lista acquisti.');
+    }
+
+    const nomeAcquisto = voce => voce.nome.trim().toLocaleLowerCase('it');
+
+    function suggerisciRiacquisto(dati, voce) {
+        const altraScorta = dati.some(altra => altra.id !== voce.id &&
+            (!haPezzi(altra) || altra.pezziRimasti > 0) &&
+            (voce.barcode && altra.barcode ? voce.barcode === altra.barcode : nomeAcquisto(voce) === nomeAcquisto(altra)));
+        return !altraScorta;
+    }
+
+    function registraEsaurito(dati, voce, riacquisto) {
+        const aggiungi = riacquisto && suggerisciRiacquisto(dati.scorte, voce);
+        dati.scorte = dati.scorte.filter(item => item.id !== voce.id);
+        if (!aggiungi) return;
+        const presente = dati.acquisti.find(item => nomeAcquisto(item) === nomeAcquisto(voce) && !item.comprato)
+            ?? dati.acquisti.find(item => nomeAcquisto(item) === nomeAcquisto(voce));
+        if (presente) {
+            presente.comprato = false;
+            presente.esaurito = true;
+        } else {
+            dati.acquisti.push({id: crypto.randomUUID(), nome: voce.nome, quantita: '', comprato: false, esaurito: true});
+        }
+    }
+
+    function confermaEsaurito(voce, riacquisto) {
+        return confirm('Scaricare l’ultima quantità di «' + voce.nome + '»?\n\nLista della spesa: ' +
+            (riacquisto ? 'da ricomprare.' : 'restano altre scorte.'));
+    }
+
+    function mostraAcquisti(acquisti) {
+        listaAcquisti.replaceChildren();
+        if (!acquisti.length) {
+            const vuota = document.createElement('li');
+            vuota.textContent = 'La lista della spesa è vuota.';
+            listaAcquisti.append(vuota);
+            return;
+        }
+        for (const voce of [...acquisti].sort((a, b) => Number(Boolean(a.comprato)) - Number(Boolean(b.comprato)))) {
+            const li = document.createElement('li');
+            li.dataset.comprato = Boolean(voce.comprato);
+            li.dataset.esaurito = Boolean(voce.esaurito);
+            const etichetta = document.createElement('label');
+            const spunta = document.createElement('input');
+            spunta.type = 'checkbox';
+            spunta.checked = Boolean(voce.comprato);
+            spunta.addEventListener('change', () => {
+                if (aggiorna(dati => {
+                    const item = dati.acquisti.find(v => v.id === voce.id);
+                    if (item) item.comprato = spunta.checked;
+                }, statoAcquisto, spunta.checked ? 'Articolo spuntato.' : 'Articolo da comprare.')) {
+                    [...listaAcquisti.querySelectorAll('input')].find(input => input.value === voce.id)?.focus();
+                } else {
+                    spunta.checked = Boolean(voce.comprato);
+                }
+            });
+            spunta.value = voce.id;
+            const testo = [voce.nome, voce.quantita, voce.esaurito && !voce.comprato && 'Esaurito'].filter(Boolean).join(' · ');
+            etichetta.append(spunta, testo);
+            const rimuovi = pulsante('×', () => {
+                aggiorna(dati => { dati.acquisti = dati.acquisti.filter(item => item.id !== voce.id); }, statoAcquisto, 'Voce rimossa.');
+            });
+            rimuovi.setAttribute('aria-label', 'Rimuovi ' + voce.nome);
+            li.append(etichetta, rimuovi);
+            listaAcquisti.append(li);
+        }
     }
 
     function mostraInventario() {
@@ -328,20 +390,7 @@
         }));
         if (scorte.some(voce => voce.id === selezione)) scarico.elements.id.value = selezione;
         selezionaScarico();
-        listaAcquisti.replaceChildren(...dati.acquisti.map(voce => {
-            const li = riga(voce, [voce.quantita],
-                pulsante(voce.comprato ? 'Segna da comprare' : 'Segna comprato', () => {
-                    aggiorna(stato => {
-                        const item = stato.acquisti.find(v => v.id === voce.id);
-                        if (item) item.comprato = !item.comprato;
-                    }, statoAcquisto, 'Lista aggiornata.');
-                }),
-                pulsante('Rimuovi', () => {
-                    aggiorna(stato => { stato.acquisti = stato.acquisti.filter(item => item.id !== voce.id); }, statoAcquisto, 'Voce rimossa.');
-                }));
-            li.dataset.comprato = voce.comprato;
-            return li;
-        }));
+        mostraAcquisti(dati.acquisti);
     }
 
     const riepilogo = document.getElementById('orto-riepilogo');
@@ -440,12 +489,15 @@
                 statoScarico.textContent = 'Indica quanti pezzi hai usato, entro la quantità disponibile.';
                 return;
             }
+            const esaurito = usati === prodotto.pezziRimasti;
+            const riacquisto = esaurito && suggerisciRiacquisto(scorte, prodotto);
+            if (esaurito && !confermaEsaurito(prodotto, riacquisto)) return;
             if (aggiorna(dati => {
                 const voce = dati.scorte.find(item => item.id === id);
                 if (!haPezzi(voce) || voce.pezziRimasti < usati) throw new Error('Quantità insufficiente');
                 voce.pezziRimasti -= usati;
-                if (!voce.pezziRimasti) delete voce.livelloPezzo;
-            }, statoScarico, 'Quantità rimanente aggiornata.')) usatiCampo.value = '';
+                if (!voce.pezziRimasti) registraEsaurito(dati, voce, riacquisto);
+            }, statoScarico, riacquisto ? 'Prodotto esaurito. Da ricomprare nella Lista della spesa.' : 'Quantità rimanente aggiornata.')) usatiCampo.value = '';
             return;
         }
         const resto = scarico.elements.resto.value.trim();
@@ -461,6 +513,10 @@
     });
     function salvaLivello(valore) {
         const id = scarico.elements.id.value;
+        const prodotto = scorte.find(item => item.id === id);
+        const esaurito = valore === 0 && confezioneParziale(prodotto, tipoParziale.value)?.totale <= 1;
+        const riacquisto = esaurito && suggerisciRiacquisto(scorte, prodotto);
+        if (esaurito && !confermaEsaurito(prodotto, riacquisto)) return;
         const posto = bloccoPostoParziale.hidden ? '' : postoParziale.value.trim();
         let selezione = id;
         if (aggiorna(dati => {
@@ -494,14 +550,14 @@
                 dati.scorte.splice(indice + 1, 0, aperta);
                 selezione = aperta.id;
             } else if (!intere && valore === 0) {
-                dati.scorte.splice(indice, 1);
+                registraEsaurito(dati, voce, riacquisto);
                 selezione = '';
             } else {
                 impostaQuantita(voce, intere, valore);
                 if (perPezzi) voce.tipoConfezione = confezione.tipo;
                 if (posto && !intere) voce.ubicazione = posto;
             }
-        }, statoScarico, 'Contenuto rimanente aggiornato.')) {
+        }, statoScarico, riacquisto ? 'Prodotto esaurito. Da ricomprare nella Lista della spesa.' : 'Contenuto rimanente aggiornato.')) {
             postoParziale.value = '';
             scarico.elements.id.value = selezione;
             selezionaScarico();
@@ -528,10 +584,12 @@
     });
     finito.addEventListener('click', () => {
         const voce = scorte.find(item => item.id === scarico.elements.id.value);
-        if (!voce || !confirm('Togliere «' + voce.nome + '» dall’inventario perché è finita?')) return;
+        if (!voce) return;
+        const riacquisto = suggerisciRiacquisto(scorte, voce);
+        if (!confermaEsaurito(voce, riacquisto)) return;
         if (aggiorna(dati => {
-            dati.scorte = dati.scorte.filter(item => item.id !== voce.id);
-        }, statoScarico, 'Scorta finita e rimossa dall’inventario.')) {
+            registraEsaurito(dati, voce, riacquisto);
+        }, statoScarico, riacquisto ? 'Prodotto esaurito. Da ricomprare nella Lista della spesa.' : 'Scorta finita e rimossa dall’inventario.')) {
             opzioneScarico(null);
             scarico.elements.resto.value = '';
             postoScarico.value = '';
