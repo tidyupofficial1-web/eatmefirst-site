@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Garden Planner Walkthrough | OrtoFirst</title>
+  <script src="../../js/accesso-ortofirst-en.js" data-protect></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="Languages"><a href="../../IT/agenda-orto/simulazione-agenda.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/simulazione-agenda.html" hreflang="en" lang="en" aria-current="page">English</a></nav>
+    <a href="index.html#agenda">← Back to the planner</a>
+    <h1>Garden Planner Walkthrough</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+      <p>“I’ll show you how I make a task card for my basil, where I find it later, and how I reschedule it from the archive.” The examples are read-only.</p>
+    </div>
+    <nav class="demo-nav" aria-label="Walkthrough screens">
+      <a href="#compila">Task form</a>
+      <a href="#schede">Task cards</a>
+      <a href="#archivio">Archive</a>
+      <a href="#riprogramma">New date</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>Fill in a task card</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>Task</dt><dd>Transplant the basil</dd></div>
+        <div><dt>Date</dt><dd>18 May 2027</dd></div>
+        <div><dt>Time (optional)</dt><dd>18:30</dd></div>
+        <div><dt>Category</dt><dd>Transplanting and repotting</dd></div>
+        <div><dt>Notes</dt><dd>Get two 20 cm pots ready and use fresh potting mix.</dd></div>
+        <div><dt>Repeat weekly</dt><dd>Box unchecked</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>? How do I choose a category?</summary><p>Choose an existing category or select “+ Add category”. For example, you could create “Greenhouse” and use it later to filter your cards.</p></details>
+      <p class="demo-actions"><a href="#schede">See where the card appears after saving →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>Planner cards</h2>
+      <p>Upcoming tasks are listed by date. Filter by category to find the job you’re looking for.</p>
+      <article class="demo-scheda">
+        <h3>Check the seed trays</h3>
+        <p>Garden care · 15 May 2027 · Every week</p>
+        <p>Check how moist the potting mix is.</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>Transplant the basil</h3>
+        <p>Transplanting and repotting · 18 May 2027 · 18:30</p>
+        <p>Get two 20 cm pots ready and use fresh potting mix.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? What can I do with a card?</summary><p>In the planner you can edit or archive a card. If you choose to delete it, the planner asks you to confirm.</p></details>
+      <p class="demo-actions"><a href="#archivio">See the card after archiving it →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>Planner archive</h2>
+      <article class="demo-scheda">
+        <h3>Transplant the basil</h3>
+        <p>Transplanting and repotting · 18 May 2027 · 18:30</p>
+        <p>Get two 20 cm pots ready and use fresh potting mix.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? How do I bring back a card?</summary><p>You can filter the archive by category. To reschedule a card, select “Edit”, change the date, and choose “Save and return to planner”.</p></details>
+      <p class="demo-actions"><a href="#riprogramma">See what happens when you choose a new date →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>Card returned to the planner</h2>
+      <article class="demo-scheda">
+        <h3>Transplant the basil</h3>
+        <p>Transplanting and repotting · 20 May 2028 · 18:30</p>
+        <p>Get two 20 cm pots ready and use fresh potting mix.</p>
+      </article>
+      <p>The card returns to your upcoming tasks on the new date, with its category and notes.</p>
+      <p class="demo-actions"><a href="#compila">See the form again</a><a href="index.html#agenda">Back to the planner</a></p>
+    </section>
+  </main>
+</body>
+</html>

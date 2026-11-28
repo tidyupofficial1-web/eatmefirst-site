@@ -1,6 +1,11 @@
 (() => {
     'use strict';
 
+    const lingua = document.documentElement.lang;
+    const en = lingua === 'en';
+    const trad = testo => en ? window.OrtoFirstEnglish?.[testo] ?? testo : testo;
+    const mostraCategoria = categoria => trad(categoria);
+
     const key = 'eat_dispensa_orto_it_v1';
     const scorta = document.getElementById('orto-scorta');
     const acquisto = document.getElementById('orto-acquisto');
@@ -68,12 +73,13 @@
             if (link.hash === (agenda ? '#agenda' : '#' + attiva)) link.setAttribute('aria-current', 'page');
             else link.removeAttribute('aria-current');
         }
+        for (const link of document.querySelectorAll('.orto-lingue a')) link.hash = attiva === 'home' ? '' : attiva;
     }
 
     function leggi() {
         if (prova) return prova;
         const stato = JSON.parse(localStorage.getItem(key) ?? '{"scorte":[],"acquisti":[]}');
-        if (!Array.isArray(stato?.scorte) || !Array.isArray(stato?.acquisti)) throw new Error('Formato non valido');
+        if (!Array.isArray(stato?.scorte) || !Array.isArray(stato?.acquisti)) throw new Error(trad('Formato non valido'));
         return stato;
     }
 
@@ -86,7 +92,7 @@
             stato.textContent = messaggio;
             return true;
         } catch {
-            stato.textContent = 'Il browser non è riuscito a salvare i dati dell’orto.';
+            stato.textContent = trad('Il browser non è riuscito a salvare i dati dell’orto.');
             return false;
         }
     }
@@ -100,30 +106,30 @@
         annullaRicerca();
         const codice = codiceCampo.value.replace(/\s+/g, '');
         if (!/^\d{8,14}$/.test(codice)) {
-            esitoCodice.textContent = 'Inserisci un codice numerico da 8 a 14 cifre, mantenendo gli zeri iniziali.';
+            esitoCodice.textContent = trad('Inserisci un codice numerico da 8 a 14 cifre, mantenendo gli zeri iniziali.');
             return;
         }
         codiceCampo.value = codice;
         const controller = new AbortController();
         ricerca = controller;
         const nomeIniziale = scorta.elements.nome.value;
-        esitoCodice.textContent = 'Ricerca negli archivi Open Facts…';
+        esitoCodice.textContent = trad('Ricerca negli archivi Open Facts…');
         try {
             const risultato = await EatRicercaProdotti.cerca(codice, controller.signal);
             if (controller.signal.aborted || codiceCampo.value !== codice) return;
             const nome = risultato.scheda?.nome;
             if (nome && scorta.elements.nome.value === nomeIniziale && !nomeIniziale.trim()) {
                 scorta.elements.nome.value = nome.slice(0, 100);
-                esitoCodice.textContent = 'Nome suggerito dal catalogo. Verifica che corrisponda alla confezione prima di salvare.';
+                esitoCodice.textContent = trad('Nome suggerito dal catalogo. Verifica che corrisponda alla confezione prima di salvare.');
             } else if (nome) {
-                esitoCodice.textContent = 'Nome trovato negli archivi: ' + nome + '. Il nome inserito è rimasto nel campo.';
+                esitoCodice.textContent = trad('Nome trovato negli archivi: ') + nome + trad('. Il nome inserito è rimasto nel campo.');
             } else {
                 esitoCodice.textContent = risultato.stato === 'non_trovato'
-                    ? 'Codice non trovato. Puoi registrare il prodotto a mano.'
-                    : 'Ricerca non disponibile. Puoi registrare il prodotto a mano.';
+                    ? trad('Codice non trovato. Puoi registrare il prodotto a mano.')
+                    : trad('Ricerca non disponibile. Puoi registrare il prodotto a mano.');
             }
         } catch {
-            if (!controller.signal.aborted) esitoCodice.textContent = 'Ricerca non disponibile. Puoi registrare il prodotto a mano.';
+            if (!controller.signal.aborted) esitoCodice.textContent = trad('Ricerca non disponibile. Puoi registrare il prodotto a mano.');
         }
     }
 
@@ -135,7 +141,7 @@
     document.getElementById('orto-leggi-barcode').addEventListener('click', async () => {
         if (avvioScanner || dialogoScanner.open) return;
         if (typeof Html5Qrcode !== 'function') {
-            esitoCodice.textContent = 'Scanner non disponibile. Puoi digitare il codice a barre.';
+            esitoCodice.textContent = trad('Scanner non disponibile. Puoi digitare il codice a barre.');
             return;
         }
         avvioScanner = true;
@@ -157,7 +163,7 @@
             if (!dialogoScanner.open) await fermaScanner();
         } catch {
             if (dialogoScanner.open) dialogoScanner.close();
-            esitoCodice.textContent = 'Fotocamera non disponibile. Puoi digitare il codice a barre.';
+            esitoCodice.textContent = trad('Fotocamera non disponibile. Puoi digitare il codice a barre.');
         } finally {
             avvioScanner = false;
         }
@@ -173,13 +179,25 @@
     });
 
     function noteProdotto(voce) {
-        return [voce.note, voce.semina && 'Destinazione di semina: ' + voce.semina].filter(Boolean).join('\n');
+        return [voce.note, voce.semina && trad('Destinazione di semina: ') + voce.semina].filter(Boolean).join('\n');
     }
     const haPezzi = voce => Number.isSafeInteger(voce?.pezziRimasti);
     const quantitaProdotto = voce => haPezzi(voce)
-        ? voce.pezziRimasti + (voce.pezziRimasti === 1 ? ' pezzo' : ' pezzi') +
-            (voce.livelloPezzo != null ? ' · uno al ' + voce.livelloPezzo + '%' : '')
-        : voce.quantita;
+        ? voce.pezziRimasti + (voce.pezziRimasti === 1 ? trad(' pezzo') : trad(' pezzi')) +
+            (voce.livelloPezzo != null ? trad(' · uno al ') + voce.livelloPezzo + '%' : '')
+        : mostraQuantita(voce.quantita);
+
+    function mostraQuantita(quantita) {
+        if (!en || !quantita) return quantita;
+        const parole = {'mezza bustina': 'Half a packet', 'mezza bottiglia': 'Half a bottle', 'una bustina': 'One packet', 'una bottiglia': 'One bottle'};
+        const testo = quantita.toLowerCase();
+        if (parole[testo]) return parole[testo];
+        const formato = testo.match(/^(\d+(?:[.,]\d+)?)\s+(bustin[ae]|bottigli[ae])$/);
+        if (!formato) return quantita;
+        const numero = Number(formato[1].replace(',', '.'));
+        const unita = formato[2].startsWith('bustin') ? 'packet' : 'bottle';
+        return new Intl.NumberFormat('en', {useGrouping: false}).format(numero) + ' ' + unita + (numero === 1 ? '' : 's');
+    }
 
     function pulsante(testo, azione) {
         const elemento = document.createElement('button');
@@ -203,7 +221,7 @@
     function aggiungiAcquisto(nome, quantita) {
         return aggiorna(dati => {
             dati.acquisti.push({id: crypto.randomUUID(), nome, quantita, comprato: false});
-        }, statoAcquisto, 'Aggiunto alla lista acquisti.');
+        }, statoAcquisto, trad('Aggiunto alla lista acquisti.'));
     }
 
     const nomeAcquisto = voce => voce.nome.trim().toLocaleLowerCase('it');
@@ -230,15 +248,15 @@
     }
 
     function confermaEsaurito(voce, riacquisto) {
-        return confirm('Scaricare l’ultima quantità di «' + voce.nome + '»?\n\nLista della spesa: ' +
-            (riacquisto ? 'da ricomprare.' : 'restano altre scorte.'));
+        return confirm(trad('Scaricare l’ultima quantità di «') + voce.nome + trad('»?\n\nLista della spesa: ') +
+            (riacquisto ? trad('da ricomprare.') : trad('restano altre scorte.')));
     }
 
     function mostraAcquisti(acquisti) {
         listaAcquisti.replaceChildren();
         if (!acquisti.length) {
             const vuota = document.createElement('li');
-            vuota.textContent = 'La lista della spesa è vuota.';
+            vuota.textContent = trad('La lista della spesa è vuota.');
             listaAcquisti.append(vuota);
             return;
         }
@@ -253,19 +271,19 @@
                 if (aggiorna(dati => {
                     const item = dati.acquisti.find(v => v.id === voce.id);
                     if (item) item.comprato = spunta.checked;
-                }, statoAcquisto, spunta.checked ? 'Articolo spuntato.' : 'Articolo da comprare.')) {
+                }, statoAcquisto, spunta.checked ? trad('Articolo spuntato.') : trad('Articolo da comprare.'))) {
                     [...listaAcquisti.querySelectorAll('input')].find(input => input.value === voce.id)?.focus();
                 } else {
                     spunta.checked = Boolean(voce.comprato);
                 }
             });
             spunta.value = voce.id;
-            const testo = [voce.nome, voce.quantita, voce.esaurito && !voce.comprato && 'Esaurito'].filter(Boolean).join(' · ');
+            const testo = [voce.nome, voce.quantita, voce.esaurito && !voce.comprato && trad('Esaurito')].filter(Boolean).join(' · ');
             etichetta.append(spunta, testo);
             const rimuovi = pulsante('×', () => {
-                aggiorna(dati => { dati.acquisti = dati.acquisti.filter(item => item.id !== voce.id); }, statoAcquisto, 'Voce rimossa.');
+                aggiorna(dati => { dati.acquisti = dati.acquisti.filter(item => item.id !== voce.id); }, statoAcquisto, trad('Voce rimossa.'));
             });
-            rimuovi.setAttribute('aria-label', 'Rimuovi ' + voce.nome);
+            rimuovi.setAttribute('aria-label', trad('Rimuovi ') + voce.nome);
             li.append(etichetta, rimuovi);
             listaAcquisti.append(li);
         }
@@ -273,41 +291,41 @@
 
     function mostraInventario() {
         const query = cerca.value.trim().toLocaleLowerCase('it');
-        const visibili = scorte.filter(voce => [voce.nome, voce.barcode, voce.categoria, voce.ubicazione, noteProdotto(voce)]
+        const visibili = scorte.filter(voce => [voce.nome, voce.barcode, mostraCategoria(voce.categoria), voce.ubicazione, noteProdotto(voce)]
             .some(valore => valore?.toLocaleLowerCase('it').includes(query)));
         listaScorte.replaceChildren(...visibili.map(voce => riga(voce, [
-            voce.categoria, quantitaProdotto(voce),
-            haPezzi(voce) && 'Formato originale: ' + voce.confezioni + ' × ' + voce.pezziPerConfezione,
-            voce.ubicazione && 'Conservazione: ' + voce.ubicazione,
-            voce.barcode && 'Codice: ' + voce.barcode,
-            voce.scadenza && 'Scadenza: ' + voce.scadenza.split('-').reverse().join('/'),
-            noteProdotto(voce) && 'Note: ' + noteProdotto(voce)
+            mostraCategoria(voce.categoria), quantitaProdotto(voce),
+            haPezzi(voce) && trad('Formato originale: ') + voce.confezioni + ' × ' + voce.pezziPerConfezione,
+            voce.ubicazione && trad('Conservazione: ') + voce.ubicazione,
+            voce.barcode && trad('Codice: ') + voce.barcode,
+            voce.scadenza && trad('Scadenza: ') + voce.scadenza.split('-').reverse().join('/'),
+            noteProdotto(voce) && trad('Note: ') + noteProdotto(voce)
         ])));
         if (!visibili.length) {
             const li = document.createElement('li');
-            li.textContent = query ? 'Nessun prodotto corrisponde alla ricerca.' : 'Nessun prodotto registrato. Comincia dal Carico.';
+            li.textContent = query ? trad('Nessun prodotto corrisponde alla ricerca.') : trad('Nessun prodotto registrato. Comincia dal Carico.');
             listaScorte.append(li);
         }
     }
 
     function bustine(voce) {
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
-        if (testo === 'mezza bustina') return 0.5;
-        if (testo === 'una bustina') return 1;
-        const numero = testo?.match(/^(\d+(?:[.,]\d+)?)\s*bustin[ae]$/)?.[1];
+        if ((testo === 'mezza bustina' || testo === 'half a packet')) return 0.5;
+        if ((testo === 'una bustina' || testo === 'one packet')) return 1;
+        const numero = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bustin[ae]|packets?)$/)?.[1];
         return numero === undefined ? null : Number(numero.replace(',', '.'));
     }
 
     function confezioneParziale(voce, tipoScelto) {
         if (!voce || voce.categoria === 'Piantine') return null;
         const descrizione = [voce.nome, voce.quantita].join(' ').toLocaleLowerCase('it');
-        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei])\b/.test(descrizione) ? 'bottiglia'
-            : (voce.categoria === 'Semi' || /\bbustin[ae]\b/.test(descrizione)) ? 'bustina' : tipoScelto);
+        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei]|bottles?)\b/.test(descrizione) ? 'bottiglia'
+            : (voce.categoria === 'Semi' || /\b(?:bustin[ae]|packets?)\b/.test(descrizione)) ? 'bustina' : tipoScelto);
         if (!tipo) return null;
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
-        const bottiglie = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei])$/)?.[1];
+        const bottiglie = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei]|bottles?)$/)?.[1];
         const totale = haPezzi(voce) ? voce.pezziRimasti : (tipo === 'bustina' ? bustine(voce) :
-            testo === 'mezza bottiglia' ? 0.5 : testo === 'una bottiglia' ? 1 :
+            (testo === 'mezza bottiglia' || testo === 'half a bottle') ? 0.5 : (testo === 'una bottiglia' || testo === 'one bottle') ? 1 :
                 bottiglie === undefined ? null : Number(bottiglie.replace(',', '.')));
         if (!totale || !Number.isFinite(totale)) return null;
         const livello = haPezzi(voce) ? (voce.livelloPezzo ?? 100) : Math.round((totale % 1 || 1) * 100);
@@ -346,7 +364,7 @@
             cursore.max = confezione.livello;
             cursore.value = confezione.livello;
             forma.dataset.forma = confezione.tipo;
-            oggettoLivello.textContent = 'Contenuto di una ' + confezione.tipo;
+            oggettoLivello.textContent = en ? (confezione.tipo === 'bottiglia' ? 'Contents of one bottle' : 'Contents of one packet') : 'Contenuto di una ' + confezione.tipo;
             aggiornaLivello();
         }
     }
@@ -365,7 +383,7 @@
         const perPezzi = haPezzi(voce);
         quantitaAttuale.hidden = !voce;
         quantitaAttuale.textContent = voce
-            ? 'Quantità attuale: ' + (quantitaProdotto(voce) || 'non indicata') + (voce.ubicazione ? ' · Conservazione: ' + voce.ubicazione : '')
+            ? trad('Quantità attuale: ') + (quantitaProdotto(voce) || trad('non indicata')) + (voce.ubicazione ? trad(' · Conservazione: ') + voce.ubicazione : '')
             : '';
         usatiCampo.max = perPezzi ? voce.pezziRimasti : '';
         configuraParziale(voce);
@@ -383,9 +401,9 @@
         posti.replaceChildren(...ubicazioni.sort((a, b) => a.localeCompare(b, 'it')).map(ubicazione => new Option(ubicazione, ubicazione)));
         mostraInventario();
         const selezione = scarico.elements.id.value;
-        scarico.elements.id.replaceChildren(new Option('Scegli un prodotto', ''), ...scorte.map(voce => {
+        scarico.elements.id.replaceChildren(new Option(trad('Scegli un prodotto'), ''), ...scorte.map(voce => {
             const confezione = confezioneParziale(voce);
-            const aperta = confezione?.livello < 100 ? ' · aperta, ' + confezione.livello + '%' : '';
+            const aperta = confezione?.livello < 100 ? trad(' · aperta, ') + confezione.livello + '%' : '';
             return new Option(voce.nome + (voce.ubicazione ? ' · ' + voce.ubicazione : '') + aperta, voce.id);
         }));
         if (scorte.some(voce => voce.id === selezione)) scarico.elements.id.value = selezione;
@@ -403,7 +421,7 @@
         if (!voce.nome) return;
         voce.barcode = voce.barcode.replace(/\s+/g, '');
         if (voce.barcode && !/^\d{8,14}$/.test(voce.barcode)) {
-            statoScorta.textContent = 'Controlla il codice a barre o lascia il campo vuoto.';
+            statoScorta.textContent = trad('Controlla il codice a barre o lascia il campo vuoto.');
             codiceCampo.focus();
             return;
         }
@@ -411,7 +429,7 @@
         const confezioni = scorta.elements.confezioni.valueAsNumber;
         const pezzi = scorta.elements.pezzi.valueAsNumber;
         if (Number.isFinite(confezioni) !== Number.isFinite(pezzi)) {
-            statoScorta.textContent = 'Per usare le confezioni, compila entrambi i campi.';
+            statoScorta.textContent = trad('Per usare le confezioni, compila entrambi i campi.');
             return;
         }
         if (Number.isSafeInteger(confezioni) && Number.isSafeInteger(pezzi)) {
@@ -426,9 +444,9 @@
         const elenco = document.getElementById('orto-riepilogo-dati');
         elenco.replaceChildren();
         const dettagli = [
-            ['Prodotto', voce.nome], ['Codice a barre', voce.barcode], ['Categoria', voce.categoria],
-            ['Quantità', quantitaProdotto(voce)], ['Ubicazione', voce.ubicazione],
-            ['Scadenza', voce.scadenza], ['Note', noteProdotto(voce)]
+            [trad('Prodotto'), voce.nome], [trad('Codice a barre'), voce.barcode], [trad('Categoria'), mostraCategoria(voce.categoria)],
+            [trad('Quantità'), quantitaProdotto(voce)], [trad('Ubicazione'), voce.ubicazione],
+            [trad('Scadenza'), voce.scadenza], [trad('Note'), noteProdotto(voce)]
         ];
         for (const [titolo, valore] of dettagli) {
             const termine = document.createElement('dt');
@@ -444,11 +462,11 @@
         if (!riepilogo.open) return;
         if (aggiorna(dati => {
             dati.scorte.push(prodottoDaSalvare);
-        }, statoRiepilogo, 'Prodotto salvato.')) {
+        }, statoRiepilogo, trad('Prodotto salvato.'))) {
             riepilogo.close();
             annullaRicerca();
             scorta.reset();
-            statoScorta.textContent = 'Prodotto salvato.';
+            statoScorta.textContent = trad('Prodotto salvato.');
         }
     });
     cerca.addEventListener('input', mostraInventario);
@@ -486,7 +504,7 @@
         if (haPezzi(prodotto)) {
             const usati = usatiCampo.valueAsNumber;
             if (!Number.isSafeInteger(usati) || usati < 1 || usati > prodotto.pezziRimasti) {
-                statoScarico.textContent = 'Indica quanti pezzi hai usato, entro la quantità disponibile.';
+                statoScarico.textContent = trad('Indica quanti pezzi hai usato, entro la quantità disponibile.');
                 return;
             }
             const esaurito = usati === prodotto.pezziRimasti;
@@ -494,22 +512,22 @@
             if (esaurito && !confermaEsaurito(prodotto, riacquisto)) return;
             if (aggiorna(dati => {
                 const voce = dati.scorte.find(item => item.id === id);
-                if (!haPezzi(voce) || voce.pezziRimasti < usati) throw new Error('Quantità insufficiente');
+                if (!haPezzi(voce) || voce.pezziRimasti < usati) throw new Error(trad('Quantità insufficiente'));
                 voce.pezziRimasti -= usati;
                 if (!voce.pezziRimasti) registraEsaurito(dati, voce, riacquisto);
-            }, statoScarico, riacquisto ? 'Prodotto esaurito. Da ricomprare nella Lista della spesa.' : 'Quantità rimanente aggiornata.')) usatiCampo.value = '';
+            }, statoScarico, riacquisto ? trad('Prodotto esaurito. Da ricomprare nella Lista della spesa.') : trad('Quantità rimanente aggiornata.'))) usatiCampo.value = '';
             return;
         }
         const resto = scarico.elements.resto.value.trim();
         if (!resto) {
-            statoScarico.textContent = 'Indica la quantità rimasta oppure usa «Scarica tutto».';
+            statoScarico.textContent = trad('Indica la quantità rimasta oppure usa «Scarica tutto».');
             return;
         }
         if (aggiorna(dati => {
             const voce = dati.scorte.find(item => item.id === id);
-            if (!voce) throw new Error('Scorta non trovata');
+            if (!voce) throw new Error(trad('Scorta non trovata'));
             voce.quantita = resto;
-        }, statoScarico, 'Quantità rimanente aggiornata.')) scarico.elements.resto.value = '';
+        }, statoScarico, trad('Quantità rimanente aggiornata.'))) scarico.elements.resto.value = '';
     });
     function salvaLivello(valore) {
         const id = scarico.elements.id.value;
@@ -523,7 +541,7 @@
             const indice = dati.scorte.findIndex(item => item.id === id);
             const voce = dati.scorte[indice];
             const confezione = confezioneParziale(voce, tipoParziale.value);
-            if (!confezione || valore < 0 || valore > confezione.livello) throw new Error('Quantità non valida');
+            if (!confezione || valore < 0 || valore > confezione.livello) throw new Error(trad('Quantità non valida'));
             const perPezzi = haPezzi(voce);
             const intere = perPezzi ? confezione.totale - 1 : Math.round(confezione.totale - confezione.livello / 100);
             const impostaQuantita = (prodotto, interi, livello) => {
@@ -557,7 +575,7 @@
                 if (perPezzi) voce.tipoConfezione = confezione.tipo;
                 if (posto && !intere) voce.ubicazione = posto;
             }
-        }, statoScarico, riacquisto ? 'Prodotto esaurito. Da ricomprare nella Lista della spesa.' : 'Contenuto rimanente aggiornato.')) {
+        }, statoScarico, riacquisto ? trad('Prodotto esaurito. Da ricomprare nella Lista della spesa.') : trad('Contenuto rimanente aggiornato.'))) {
             postoParziale.value = '';
             scarico.elements.id.value = selezione;
             selezionaScarico();
@@ -589,7 +607,7 @@
         if (!confermaEsaurito(voce, riacquisto)) return;
         if (aggiorna(dati => {
             registraEsaurito(dati, voce, riacquisto);
-        }, statoScarico, riacquisto ? 'Prodotto esaurito. Da ricomprare nella Lista della spesa.' : 'Scorta finita e rimossa dall’inventario.')) {
+        }, statoScarico, riacquisto ? trad('Prodotto esaurito. Da ricomprare nella Lista della spesa.') : trad('Scorta finita e rimossa dall’inventario.'))) {
             opzioneScarico(null);
             scarico.elements.resto.value = '';
             postoScarico.value = '';
@@ -599,24 +617,24 @@
         const id = scarico.elements.id.value;
         const posto = postoScarico.value.trim();
         if (!posto) {
-            statoScarico.textContent = 'Scrivi il nuovo posto dove conservi la scorta.';
+            statoScarico.textContent = trad('Scrivi il nuovo posto dove conservi la scorta.');
             postoScarico.focus();
             return;
         }
         if (aggiorna(dati => {
             const voce = dati.scorte.find(item => item.id === id);
-            if (!voce) throw new Error('Scorta non trovata');
+            if (!voce) throw new Error(trad('Scorta non trovata'));
             voce.ubicazione = posto;
-        }, statoScarico, 'Posto di conservazione aggiornato.')) postoScarico.value = '';
+        }, statoScarico, trad('Posto di conservazione aggiornato.'))) postoScarico.value = '';
     }
     function iniziaProva() {
         prova = {scorte: [
-            {id: 'vassoio-prova', nome: 'Piantine di lattuga', categoria: 'Piantine',
-                confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: 'Serra'},
-            {id: 'bottiglie-prova', nome: 'Bottiglie di concime', categoria: 'Terriccio e concimi',
-                confezioni: 1, pezziPerConfezione: 3, pezziRimasti: 3, ubicazione: 'Capanno'},
-            {id: 'bustine-prova', nome: 'Semi di basilico', categoria: 'Semi',
-                quantita: '2 bustine', ubicazione: 'Scatola dei semi'}
+            {id: 'vassoio-prova', nome: trad('Piantine di lattuga'), categoria: 'Piantine',
+                confezioni: 1, pezziPerConfezione: 12, pezziRimasti: 12, ubicazione: trad('Serra')},
+            {id: 'bottiglie-prova', nome: trad('Bottiglie di concime'), categoria: 'Terriccio e concimi',
+                confezioni: 1, pezziPerConfezione: 3, pezziRimasti: 3, ubicazione: trad('Capanno')},
+            {id: 'bustine-prova', nome: trad('Semi di basilico'), categoria: 'Semi',
+                quantita: '2 bustine', ubicazione: trad('Scatola dei semi')}
         ], acquisti: []};
         avvisoProva.hidden = false;
         scarico.reset();
@@ -644,7 +662,7 @@
         try {
             mostra(leggi());
         } catch {
-            statoScorta.textContent = 'I dati della dispensa e degli acquisti dell’orto non sono leggibili.';
+            statoScorta.textContent = trad('I dati della dispensa e degli acquisti dell’orto non sono leggibili.');
         }
     }
 

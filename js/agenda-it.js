@@ -18,7 +18,19 @@
     const texts = window.EatAgendaTexts?.[language] ?? window.EatAgendaTexts?.[language.toLowerCase().split('-')[0]];
     const form = get('event-form');
     const garden = form?.dataset.agenda === 'orto';
-    const gardenTexts = garden ? {
+    const gardenEnglish = garden && language === 'en';
+    const gardenTexts = gardenEnglish ? {
+        newTitle: 'New task', editTitle: 'Edit task',
+        stored: 'Garden tasks are stored in this browser.',
+        emptyUpcoming: 'No upcoming tasks.', emptyPast: 'No past tasks.',
+        titleRequired: 'Enter a task name.', saved: 'Task saved.', deleted: 'Task deleted.',
+        deleteBefore: 'Delete “', deleteAfter: '”?', edit: 'Edit', delete: 'Delete',
+        archive: 'Archive', archived: 'Card archived.', uncategorised: 'Uncategorised',
+        allCategories: 'All categories', archiveEmpty: 'No archived cards match this category.',
+        newCategoryRequired: 'Enter a name for the new category.',
+        taskMissing: 'This card has been deleted. Start a new card to save the task.',
+        restored: 'Card returned to the planner.'
+    } : garden ? {
         newTitle: 'Nuova attività',
         editTitle: 'Modifica attività',
         stored: 'Le attività dell’orto vengono salvate in questo browser.',
@@ -189,7 +201,7 @@
         title.textContent = event.title;
         when.textContent = formatter.format(dateFromKey(day)) +
             (event.time ? ' · ' + event.time : '') + (event.weekly ? ' · ' + t('weekly', 'Ogni settimana') : '');
-        if (list === deadlines || garden) when.textContent = (categories.get(event.category) || 'Senza categoria') + ' · ' + when.textContent;
+        if (list === deadlines || garden) when.textContent = (categories.get(event.category) || t('uncategorised', 'Senza categoria')) + ' · ' + when.textContent;
         note.textContent = event.note;
         actions.append(
             button(t('edit', 'Modifica'), () => {
@@ -216,9 +228,9 @@
             })
         );
         if (garden && !event.archived) {
-            actions.insertBefore(button('Archivia', () => {
+            actions.insertBefore(button(t('archive', 'Archivia'), () => {
                 const events = mode === 'example' ? example : readPersonal(new Date());
-                if (events) setEvents(events.map(item => item.id === event.id ? {...item, archived: true} : item), 'Scheda archiviata.');
+                if (events) setEvents(events.map(item => item.id === event.id ? {...item, archived: true} : item), t('archived', 'Scheda archiviata.'));
             }), actions.lastElementChild);
         }
         item.append(title, when);
@@ -256,7 +268,7 @@
                 fields.category.insertBefore(option, addOption);
             }
             for (const control of filters) {
-                control.replaceChildren(new Option('Tutte le categorie', ''), new Option('Senza categoria', '__senza'),
+                control.replaceChildren(new Option(t('allCategories', 'Tutte le categorie'), ''), new Option(t('uncategorised', 'Senza categoria'), '__senza'),
                     ...[...categories].map(([key, name]) => new Option(name, key)));
                 control.value = filter;
             }
@@ -276,7 +288,7 @@
                 .forEach(event => append(archived, event, event.day));
             if (!archived.children.length) {
                 const item = document.createElement('li');
-                item.textContent = 'Nessuna scheda archiviata per il filtro selezionato.';
+                item.textContent = t('archiveEmpty', 'Nessuna scheda archiviata per il filtro selezionato.');
                 archived.append(item);
             }
         }
@@ -351,7 +363,7 @@
             day: fields.day.value, time: fields.time.value, note: fields.note.value.trim(), weekly: fields.weekly.checked };
         const previous = events.find(entry => entry.id === editing);
         if (editing && !previous) {
-            get('status').textContent = 'La scheda è stata eliminata. Apri una nuova scheda per salvare l’attività.';
+            get('status').textContent = t('taskMissing', 'La scheda è stata eliminata. Apri una nuova scheda per salvare l’attività.');
             return;
         }
         let category = fields.category ? fields.category.value : previous?.category;
@@ -359,7 +371,7 @@
         if (garden && category === addCategory) {
             const name = fields.newCategory.value.trim();
             if (!name) {
-                get('status').textContent = 'Scrivi il nome della nuova categoria.';
+                get('status').textContent = t('newCategoryRequired', 'Scrivi il nome della nuova categoria.');
                 fields.newCategory.focus();
                 return;
             }
@@ -375,7 +387,7 @@
             t('saved', 'Impegno salvato.'), custom);
         if (saved && garden && previous) {
             const destination = get(item.archived ? 'orto-stato-archivio' : 'orto-stato-schede');
-            destination.textContent = restore ? 'Scheda riportata in agenda.' : t('saved', 'Attività salvata.');
+            destination.textContent = restore ? t('restored', 'Scheda riportata in agenda.') : t('saved', 'Attività salvata.');
             location.hash = item.archived ? 'agenda-archivio' : 'agenda-schede';
         }
     });
