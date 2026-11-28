@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Exemplo de agenda | OrtoFirst</title>
+  <script defer src="../../js/ingresso-ja-pt.js?v=orto-pt" data-proteggi></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="Idiomas"><a href="../../IT/agenda-orto/simulazione-agenda.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/simulazione-agenda.html" hreflang="en" lang="en">English</a> · <a href="../../FR/agenda-orto/simulazione-agenda.html" hreflang="fr" lang="fr">Français</a> · <a href="../../ES/agenda-orto/simulazione-agenda.html" hreflang="es" lang="es">Español</a> · <a href="../../PT/agenda-orto/simulazione-agenda.html" hreflang="pt-BR" lang="pt-BR" aria-current="page">Português (Brasil)</a></nav>
+    <a href="index.html#agenda">← Voltar à agenda</a>
+    <h1>Exemplo de agenda</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+      <p>«Vou mostrar como faço uma ficha para o manjericão, onde encontro essa ficha e como mudo a data pelo arquivo.» Os exemplos são apenas para consulta.</p>
+    </div>
+    <nav class="demo-nav" aria-label="Telas do exemplo">
+      <a href="#compila">Formulário</a>
+      <a href="#schede">Fichas</a>
+      <a href="#archivio">Arquivo</a>
+      <a href="#riprogramma">Nova data</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>Preencher uma ficha</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>Tarefa</dt><dd>Transplantar o manjericão</dd></div>
+        <div><dt>Data</dt><dd>18 de maio de 2027</dd></div>
+        <div><dt>Horário opcional</dt><dd>18h30</dd></div>
+        <div><dt>Categoria</dt><dd>Transplantes e trocas de vaso</dd></div>
+        <div><dt>Anotação</dt><dd>Separar dois vasos de 20 cm e usar substrato novo.</dd></div>
+        <div><dt>Repetir toda semana</dt><dd>Caixa desmarcada</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>? Como escolho a categoria?</summary><p>Escolha uma categoria existente ou use «+ Adicionar categoria». Por exemplo, você pode criar «Estufa» e encontrá-la depois nos filtros.</p></details>
+      <p class="demo-actions"><a href="#schede">Ver onde a ficha aparece depois de salvar →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>Fichas da agenda</h2>
+      <p>As próximas tarefas aparecem por data. Filtre por categoria para achar o que procura.</p>
+      <article class="demo-scheda">
+        <h3>Conferir as sementeiras</h3>
+        <p>Cuidados com a horta · 15 de maio de 2027 · Toda semana</p>
+        <p>Conferir a umidade do substrato.</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>Transplantar o manjericão</h3>
+        <p>Transplantes e trocas de vaso · 18 de maio de 2027 · 18h30</p>
+        <p>Separar dois vasos de 20 cm e usar substrato novo.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? O que posso fazer com uma ficha?</summary><p>Na agenda, é possível editar, arquivar ou excluir uma ficha após confirmar a exclusão.</p></details>
+      <p class="demo-actions"><a href="#archivio">Ver a ficha depois de arquivar →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>Arquivo da agenda</h2>
+      <article class="demo-scheda">
+        <h3>Transplantar o manjericão</h3>
+        <p>Transplantes e trocas de vaso · 18 de maio de 2027 · 18h30</p>
+        <p>Separar dois vasos de 20 cm e usar substrato novo.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Como recupero uma ficha?</summary><p>Você pode filtrar o arquivo por categoria. Para reagendar, escolha «Editar», altere a data e selecione «Salvar e devolver à agenda».</p></details>
+      <p class="demo-actions"><a href="#riprogramma">Ver o resultado com uma nova data →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>Ficha devolvida à agenda</h2>
+      <article class="demo-scheda">
+        <h3>Transplantar o manjericão</h3>
+        <p>Transplantes e trocas de vaso · 20 de maio de 2028 · 18h30</p>
+        <p>Separar dois vasos de 20 cm e usar substrato novo.</p>
+      </article>
+      <p>A ficha volta para as próximas tarefas com a nova data, a categoria e a anotação.</p>
+      <p class="demo-actions"><a href="#compila">Ver o formulário novamente</a><a href="index.html#agenda">Voltar à agenda</a></p>
+    </section>
+  </main>
+</body>
+</html>
