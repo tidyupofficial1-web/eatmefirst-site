@@ -10,7 +10,7 @@
   <script defer src="../../js/agenda-it.js?v=orto-en"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=orto-en"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=foto-catalogo"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -246,6 +246,8 @@
           <button type="button" id="orto-cerca-barcode">Cerca prodotto</button>
         </div>
         <p id="orto-esito-barcode" role="status"></p>
+        <button type="button" id="orto-usa-nome-catalogo" hidden>Usa il nome del catalogo</button>
+        <img id="orto-foto-catalogo" width="112" height="112" alt="Immagine del prodotto dal catalogo" referrerpolicy="no-referrer" style="object-fit:contain" hidden>
         <div class="orto-fields">
           <div class="orto-campo"><label>Prodotto <input name="nome" required maxlength="100" placeholder="Es. Semi di pomodoro"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Prodotto" data-guida-titolo="Prodotto" data-guida-testo="Se il prodotto non ha un codice a barre, come semi sfusi, piantine del mercato o una bustina scambiata con un vicino, lascia il codice vuoto e scrivi il nome a mano. Per esempio: «Semi di pomodoro San Marzano». Poi scegli la categoria, indica la quantità e salva. Puoi fare lo stesso se la ricerca del codice non trova il nome. Se invece il nome viene proposto, controllalo prima di salvare.">?</button></div>
           <div class="orto-campo"><label>Categoria <select name="categoria"><option>Semi</option><option>Piantine</option><option>Terriccio e concimi</option><option>Attrezzi</option><option>Insetticidi e cura delle piante</option><option>Altro</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Categoria" data-guida-titolo="Categoria" data-guida-testo="Scegli il gruppo che ti aiuterà a ritrovare il prodotto nell’Inventario, per esempio «Semi» o «Terriccio e concimi».">?</button></div>

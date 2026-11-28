@@ -12,7 +12,7 @@
   <script defer src="../../js/ricerca-prodotti-en.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
   <script defer src="../../js/ortofirst-ar.js"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=orto-ar"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=foto-catalogo"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -248,6 +248,8 @@
           <button type="button" id="orto-cerca-barcode">البحث عن المنتج</button>
         </div>
         <p id="orto-esito-barcode" role="status"></p>
+        <button type="button" id="orto-usa-nome-catalogo" hidden>استخدام الاسم المقترح من الكتالوج</button>
+        <img id="orto-foto-catalogo" width="112" height="112" alt="صورة المنتج من الكتالوج" referrerpolicy="no-referrer" style="object-fit:contain" hidden>
         <div class="orto-fields">
           <div class="orto-campo"><label>المنتج <input name="nome" required maxlength="100" placeholder="مثال: بذور طماطم"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="مساعدة: المنتج" data-guida-titolo="المنتج" data-guida-testo="إذا لم يكن للمنتج رمز شريطي، كما في البذور السائبة أو شتلات السوق أو كيس أعطاك إياه جار، اترك الرمز فارغًا واكتب الاسم، مثل «بذور طماطم سان مارزانو». اختر الفئة وأدخل الكمية ثم احفظ. اتبع الخطوات نفسها إذا لم يعثر البحث على اسم المنتج. إذا ظهر اسم مقترح فتحقّق منه قبل الحفظ.">?</button></div>
           <div class="orto-campo"><label>الفئة <select name="categoria"><option value="Semi">بذور</option><option value="Piantine">شتلات</option><option value="Terriccio e concimi">تربة الزراعة والأسمدة</option><option value="Attrezzi">أدوات</option><option value="Insetticidi e cura delle piante">مبيدات حشرية ومنتجات العناية بالنباتات</option><option value="Altro">أخرى</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="مساعدة: الفئة" data-guida-titolo="الفئة" data-guida-testo="اختر مجموعة تسهّل عليك العثور على المنتج في المخزون، مثل «بذور» أو «تربة الزراعة والأسمدة».">?</button></div>

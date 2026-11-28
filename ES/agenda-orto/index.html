@@ -12,7 +12,7 @@
   <script defer src="../../js/ricerca-prodotti-es.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
   <script defer src="../../js/ortofirst-es.js"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=orto-es"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=foto-catalogo"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -248,6 +248,8 @@
           <button type="button" id="orto-cerca-barcode">Buscar producto</button>
         </div>
         <p id="orto-esito-barcode" role="status"></p>
+        <button type="button" id="orto-usa-nome-catalogo" hidden>Usar el nombre del catálogo</button>
+        <img id="orto-foto-catalogo" width="112" height="112" alt="Imagen del producto del catálogo" referrerpolicy="no-referrer" style="object-fit:contain" hidden>
         <div class="orto-fields">
           <div class="orto-campo"><label>Producto <input name="nome" required maxlength="100" placeholder="P. ej., semillas de tomate"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Producto" data-guida-titolo="Producto" data-guida-testo="Si el producto no tiene código, como unas semillas a granel, plantones del mercado o un sobre que te dio un vecino, deja el código vacío y escribe el nombre, por ejemplo «Semillas de tomate San Marzano». Elige la categoría, indica la cantidad y guarda. Haz lo mismo si la búsqueda no encuentra el nombre. Si aparece un nombre sugerido, compruébalo antes de guardar.">?</button></div>
           <div class="orto-campo"><label>Categoría <select name="categoria"><option value="Semi">Semillas</option><option value="Piantine">Plantones</option><option value="Terriccio e concimi">Sustratos y abonos</option><option value="Attrezzi">Herramientas</option><option value="Insetticidi e cura delle piante">Insecticidas y cuidado de las plantas</option><option value="Altro">Otros</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Categoría" data-guida-titolo="Categoría" data-guida-testo="Elige el grupo que te ayudará a encontrar el producto en el inventario, como «Semillas» o «Sustratos y abonos».">?</button></div>

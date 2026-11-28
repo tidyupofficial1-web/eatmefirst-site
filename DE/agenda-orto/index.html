@@ -12,7 +12,7 @@
   <script defer src="../../js/ricerca-prodotti-de.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
   <script defer src="../../js/ortofirst-de.js"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=orto-de"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=foto-catalogo"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -248,6 +248,8 @@
           <button type="button" id="orto-cerca-barcode">Produkt suchen</button>
         </div>
         <p id="orto-esito-barcode" role="status"></p>
+        <button type="button" id="orto-usa-nome-catalogo" hidden>Katalognamen übernehmen</button>
+        <img id="orto-foto-catalogo" width="112" height="112" alt="Produktbild aus dem Katalog" referrerpolicy="no-referrer" style="object-fit:contain" hidden>
         <div class="orto-fields">
           <div class="orto-campo"><label>Produkt <input name="nome" required maxlength="100" placeholder="Z. B. Tomatensaatgut"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Hilfe: Produkt" data-guida-titolo="Produkt" data-guida-testo="Bei losem Saatgut, Jungpflanzen vom Markt oder einer Tüte vom Nachbarn lass das Feld für den Strichcode leer und gib den Namen ein, etwa „San-Marzano-Tomatensamen“. Wähle die Kategorie, gib die Menge ein und speichere. Gehe genauso vor, wenn die Suche nichts findet. Prüfe einen vorgeschlagenen Namen vor dem Speichern.">?</button></div>
           <div class="orto-campo"><label>Kategorie <select name="categoria"><option value="Semi">Saatgut</option><option value="Piantine">Jungpflanzen</option><option value="Terriccio e concimi">Pflanzerde und Dünger</option><option value="Attrezzi">Werkzeuge</option><option value="Insetticidi e cura delle piante">Insektizide und Pflanzenpflege</option><option value="Altro">Sonstiges</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Hilfe: Kategorie" data-guida-titolo="Kategorie" data-guida-testo="Wähle eine Gruppe, die dir bei der Suche im Bestand hilft, etwa „Saatgut“ oder „Pflanzerde und Dünger“.">?</button></div>

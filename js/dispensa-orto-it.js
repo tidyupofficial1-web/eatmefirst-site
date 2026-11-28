@@ -51,6 +51,9 @@
     const posti = document.getElementById('orto-posti');
     const codiceCampo = scorta.elements.barcode;
     const esitoCodice = document.getElementById('orto-esito-barcode');
+    const fotoCatalogo = document.getElementById('orto-foto-catalogo');
+    const usaNomeCatalogo = document.getElementById('orto-usa-nome-catalogo');
+    let suggerimentoCatalogo = null;
     const dialogoScanner = document.getElementById('orto-scanner');
     let ricerca;
     let scanner;
@@ -107,7 +110,21 @@
     function annullaRicerca() {
         ricerca?.abort();
         esitoCodice.textContent = '';
+        suggerimentoCatalogo = null;
+        if (usaNomeCatalogo) usaNomeCatalogo.hidden = true;
+        if (fotoCatalogo) {
+            fotoCatalogo.hidden = true;
+            fotoCatalogo.removeAttribute('src');
+        }
     }
+
+    usaNomeCatalogo?.addEventListener('click', () => {
+        if (!suggerimentoCatalogo || codiceCampo.value !== suggerimentoCatalogo.codice) return;
+        scorta.elements.nome.value = suggerimentoCatalogo.nome.slice(0, 100);
+        usaNomeCatalogo.hidden = true;
+        esitoCodice.textContent = trad('Nome suggerito dal catalogo. Verifica che corrisponda alla confezione prima di salvare.');
+    });
+    fotoCatalogo?.addEventListener('error', () => { fotoCatalogo.hidden = true; });
 
     async function cercaCodice() {
         annullaRicerca();
@@ -125,10 +142,17 @@
             const risultato = await EatRicercaProdotti.cerca(codice, controller.signal);
             if (controller.signal.aborted || codiceCampo.value !== codice) return;
             const nome = risultato.scheda?.nome;
+            const immagine = risultato.scheda?.immagine;
+            if (fotoCatalogo && typeof immagine === 'string' && /^https:\/\//i.test(immagine)) {
+                fotoCatalogo.src = immagine;
+                fotoCatalogo.hidden = false;
+            }
             if (nome && scorta.elements.nome.value === nomeIniziale && !nomeIniziale.trim()) {
                 scorta.elements.nome.value = nome.slice(0, 100);
                 esitoCodice.textContent = trad('Nome suggerito dal catalogo. Verifica che corrisponda alla confezione prima di salvare.');
             } else if (nome) {
+                suggerimentoCatalogo = {codice, nome};
+                if (usaNomeCatalogo) usaNomeCatalogo.hidden = scorta.elements.nome.value === nome;
                 esitoCodice.textContent = trad('Nome trovato negli archivi: ') + nome + trad('. Il nome inserito è rimasto nel campo.');
             } else {
                 esitoCodice.textContent = risultato.stato === 'non_trovato'
