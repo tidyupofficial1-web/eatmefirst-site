@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Beispielkalender | OrtoFirst</title>
+  <script src="../../js/accesso-ortofirst-en.js?v=de" data-lang="DE" data-protect></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="Sprachen"><a href="../../IT/agenda-orto/simulazione-agenda.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/simulazione-agenda.html" hreflang="en" lang="en">English</a> · <a href="../../FR/agenda-orto/simulazione-agenda.html" hreflang="fr" lang="fr">Français</a> · <a href="../../ES/agenda-orto/simulazione-agenda.html" hreflang="es" lang="es">Español</a> · <a href="../../PT/agenda-orto/simulazione-agenda.html" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a> · <a href="../../DE/agenda-orto/simulazione-agenda.html" hreflang="de" lang="de" aria-current="page">Deutsch</a></nav>
+    <a href="index.html#agenda">← Zurück zum Gartenkalender</a>
+    <h1>Beispielkalender</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+      <p>„Ich zeige dir, wie ich einen Eintrag für mein Basilikum anlege, wo ich ihn wiederfinde und wie ich ihn aus dem Archiv neu einplane.“ Die Beispiele dienen zum Anschauen.</p>
+    </div>
+    <nav class="demo-nav" aria-label="Ansichten des Beispielkalenders">
+      <a href="#compila">Formular</a>
+      <a href="#schede">Einträge</a>
+      <a href="#archivio">Archiv</a>
+      <a href="#riprogramma">Neues Datum</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>Einen Eintrag ausfüllen</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>Aufgabe</dt><dd>Basilikum umpflanzen</dd></div>
+        <div><dt>Datum</dt><dd>18. Mai 2027</dd></div>
+        <div><dt>Uhrzeit (optional)</dt><dd>18:30</dd></div>
+        <div><dt>Kategorie</dt><dd>Umpflanzen und Umtopfen</dd></div>
+        <div><dt>Notiz</dt><dd>Zwei 20-cm-Töpfe vorbereiten und frische Pflanzerde verwenden.</dd></div>
+        <div><dt>Wöchentlich wiederholen</dt><dd>Nicht angekreuzt</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>? Wie wähle ich die Kategorie?</summary><p>Wähle eine vorhandene Kategorie oder „+ Kategorie hinzufügen“. Du kannst etwa „Gewächshaus“ anlegen und später danach filtern.</p></details>
+      <p class="demo-actions"><a href="#schede">Ansehen, wo der Eintrag nach dem Speichern erscheint →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>Kalendereinträge</h2>
+      <p>Anstehende Aufgaben sind nach Datum sortiert. Mit dem Kategoriefilter findest du die gesuchte Arbeit.</p>
+      <article class="demo-scheda">
+        <h3>Anzuchtschalen kontrollieren</h3>
+        <p>Gartenpflege · 15. Mai 2027 · Jede Woche</p>
+        <p>Prüfen, wie feucht die Pflanzerde ist.</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>Basilikum umpflanzen</h3>
+        <p>Umpflanzen und Umtopfen · 18. Mai 2027 · 18:30</p>
+        <p>Zwei 20-cm-Töpfe vorbereiten und frische Pflanzerde verwenden.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Was kann ich mit einem Eintrag machen?</summary><p>Im Kalender kannst du ihn bearbeiten, archivieren oder nach einer Bestätigung löschen.</p></details>
+      <p class="demo-actions"><a href="#archivio">Den Eintrag nach dem Archivieren ansehen →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>Kalenderarchiv</h2>
+      <article class="demo-scheda">
+        <h3>Basilikum umpflanzen</h3>
+        <p>Umpflanzen und Umtopfen · 18. Mai 2027 · 18:30</p>
+        <p>Zwei 20-cm-Töpfe vorbereiten und frische Pflanzerde verwenden.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Wie hole ich einen Eintrag zurück?</summary><p>Im Archiv kannst du nach Kategorie filtern. Zum Umplanen wähle „Bearbeiten“, ändere das Datum und wähle „Speichern und zurück in den Kalender“.</p></details>
+      <p class="demo-actions"><a href="#riprogramma">Das Ergebnis mit einem neuen Datum ansehen →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>Eintrag zurück im Kalender</h2>
+      <article class="demo-scheda">
+        <h3>Basilikum umpflanzen</h3>
+        <p>Umpflanzen und Umtopfen · 20. Mai 2028 · 18:30</p>
+        <p>Zwei 20-cm-Töpfe vorbereiten und frische Pflanzerde verwenden.</p>
+      </article>
+      <p>Der Eintrag erscheint mit dem neuen Datum, seiner Kategorie und Notiz wieder bei den anstehenden Aufgaben.</p>
+      <p class="demo-actions"><a href="#compila">Formular erneut ansehen</a><a href="index.html#agenda">Zurück zum Gartenkalender</a></p>
+    </section>
+  </main>
+</body>
+</html>
