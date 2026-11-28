@@ -154,7 +154,7 @@
         return record ? daSituazione(record.prima) : null;
     }
     function nomeFile(file) {
-        const firma = normalizzaFirma(file.salvato_da || '').normalize('NFC').replace(/[^\p{L}\p{N}\p{M}-]/gu, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        const firma = normalizzaFirma(file.salvato_da || '').normalize('NFKD').replace(/(\p{Script=Latin})[\u0300-\u036f]+/gu, '$1').normalize('NFC').replace(/[^\p{L}\p{N}\p{M}-]/gu, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
         return 'EatMeFirst-dispensa-' + file.creato_il.replace(/[:.]/g, '-').replace('T', '_').replace('Z', '-UTC') + (firma ? '-' + firma : '') + '.json';
     }
     window.EatBackup = {crea, leggi, riepilogo, confronta, importa, precedente, nomeFile, daSituazione, leggiFirma, salvaFirma};

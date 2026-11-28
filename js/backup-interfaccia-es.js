@@ -39,7 +39,7 @@ function mostraAnteprimaBackup(file, nome, recupero = false) {
     importazioneInAttesa = {file, attesi, confronto, recupero};
     document.getElementById('titoloImportazione').textContent = recupero ? 'Recuperar la situación anterior' : 'Comprueba el archivo antes de sustituir los datos';
     document.getElementById('nomeImportazione').textContent = nome + ' · Archivo creado el ' + dataBackup(file.creato_il) + '. Para comparar cuenta la última modificación de los datos, no la creación del archivo.';
-    EatBackupNome.mostraAutore(file);
+    window.EatBackupNome?.mostraAutore(file);
     document.getElementById('riepilogoLocale').textContent = testoRiepilogoBackup(locale);
     document.getElementById('riepilogoFile').textContent = testoRiepilogoBackup(file);
     document.getElementById('confrontoImportazione').textContent = traduciConfrontoBackup(confronto.testo);
