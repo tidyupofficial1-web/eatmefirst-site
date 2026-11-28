@@ -32,18 +32,29 @@
     const t = (key, fallback) => gardenTexts?.[key] ?? texts?.[key] ?? fallback;
     const storageKey = garden ? 'eat_agenda_orto_it_v1' : 'eat_agenda_personale_it_v1';
     const reminder = get('agenda-reminder');
-    const categories = new Map(
+    const addCategory = '__aggiungi';
+    const baseCategories = new Map(
         Array.from(get('event-form')?.querySelector('select[name="category"]')?.options || [])
-            .filter(option => option.value)
+            .filter(option => option.value && option.value !== addCategory)
             .map(option => [option.value, option.textContent.trim()])
     );
+    let categories = new Map(baseCategories);
+    let personalCategories = [];
+    let exampleCategories = [];
 
     function readPersonal(now) {
         try {
-            const events = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            const events = garden && !Array.isArray(saved) ? saved?.events : saved;
             if (!Array.isArray(events) || events.some(event =>
                 !event || typeof event.day !== 'string' || typeof event.time !== 'string')) return null;
-            if (garden) return events;
+            if (garden) {
+                const custom = Array.isArray(saved) ? [] : saved.categories;
+                if (!Array.isArray(custom) || custom.some(entry => !Array.isArray(entry) ||
+                    entry.length !== 2 || typeof entry[0] !== 'string' || typeof entry[1] !== 'string')) return null;
+                personalCategories = custom;
+                return events;
+            }
             const cutoff = addDays(now, -7);
             const remaining = events.filter(event => event.weekly || categories.has(event.category) || !(eventEnd(event) <= cutoff));
             if (remaining.length !== events.length) {
@@ -95,6 +106,9 @@
     if (!form) return;
     const fields = form.elements;
     const deadlines = get('deadlines');
+    const archived = get('orto-archiviate');
+    const filters = [get('orto-filtro-schede'), get('orto-filtro-archivio')].filter(Boolean);
+    let filter = '';
     let mode = new URLSearchParams(location.search).get('prova') === '1' ? 'example' : 'personal';
     let editing = null;
     let personal = readPersonal(new Date());
@@ -126,21 +140,28 @@
         return events;
     }
 
-    function setEvents(events, message) {
+    const customCategories = () => mode === 'example' ? exampleCategories : personalCategories;
+
+    function setEvents(events, message, custom = customCategories()) {
+        const status = garden ? get(location.hash === '#agenda-archivio' ? 'orto-stato-archivio' :
+            location.hash === '#agenda-schede' ? 'orto-stato-schede' : 'status') : get('status');
         if (mode === 'example') {
             example = events;
+            exampleCategories = custom;
         } else {
             try {
-                localStorage.setItem(storageKey, JSON.stringify(events));
+                localStorage.setItem(storageKey, JSON.stringify(garden ? {events, categories: custom} : events));
                 personal = events;
+                if (garden) personalCategories = custom;
             } catch {
-                get('status').textContent = t('saveFailed', 'Il browser non è riuscito a salvare. Riprova.');
-                return;
+                status.textContent = t('saveFailed', 'Il browser non è riuscito a salvare. Riprova.');
+                return false;
             }
         }
         resetForm();
         render();
-        get('status').textContent = message;
+        status.textContent = message;
+        return true;
     }
 
     function resetForm() {
@@ -149,6 +170,17 @@
         fields.day.value = dateKey(new Date());
         get('form-heading').textContent = t('newTitle', 'Nuovo impegno');
         get('cancel-edit').hidden = true;
+        if (garden) {
+            get('orto-salva-ripristina').hidden = true;
+            updateNewCategory();
+        }
+    }
+
+    function updateNewCategory() {
+        const adding = fields.category.value === addCategory;
+        get('orto-nuova-categoria').hidden = !adding;
+        fields.newCategory.disabled = !adding;
+        fields.newCategory.required = adding;
     }
 
     function button(label, action) {
@@ -169,7 +201,7 @@
         title.textContent = event.title;
         when.textContent = formatter.format(dateFromKey(day)) +
             (event.time ? ' · ' + event.time : '') + (event.weekly ? ' · ' + t('weekly', 'Ogni settimana') : '');
-        if (list === deadlines || (garden && categories.has(event.category))) when.textContent = categories.get(event.category) + ' · ' + when.textContent;
+        if (list === deadlines || garden) when.textContent = (categories.get(event.category) || 'Senza categoria') + ' · ' + when.textContent;
         note.textContent = event.note;
         actions.append(
             button(t('edit', 'Modifica'), () => {
@@ -179,6 +211,13 @@
                 if (fields.category) fields.category.value = categories.has(event.category) ? event.category : '';
                 get('form-heading').textContent = t('editTitle', 'Modifica impegno');
                 get('cancel-edit').hidden = false;
+                if (garden) {
+                    get('orto-salva-ripristina').hidden = !event.archived;
+                    updateNewCategory();
+                    location.hash = 'agenda';
+                    requestAnimationFrame(() => fields.title.focus());
+                    return;
+                }
                 fields.title.focus();
             }),
             button(t('delete', 'Elimina'), () => {
@@ -188,6 +227,12 @@
                 }
             })
         );
+        if (garden && !event.archived) {
+            actions.insertBefore(button('Archivia', () => {
+                const events = mode === 'example' ? example : readPersonal(new Date());
+                if (events) setEvents(events.map(item => item.id === event.id ? {...item, archived: true} : item), 'Scheda archiviata.');
+            }), actions.lastElementChild);
+        }
         item.append(title, when);
         if (event.note) item.append(note);
         item.append(actions);
@@ -211,6 +256,22 @@
         form.hidden = events === null;
         get('mode').textContent = sampleMode ? t('demo', 'Stai usando gli esempi. Le modifiche di prova durano fino alla chiusura della pagina.') :
             events === null ? t('unreadable', 'L’agenda salvata non è leggibile in questo browser.') : t('stored', 'Gli impegni personali vengono salvati in questo browser.');
+        if (garden) {
+            document.querySelectorAll('.orto-agenda-prova').forEach(label => { label.hidden = !sampleMode; });
+            categories = new Map([...baseCategories, ...customCategories()]);
+            fields.category.querySelectorAll('[data-custom]').forEach(option => option.remove());
+            const addOption = fields.category.options[fields.category.options.length - 1];
+            for (const [key, name] of customCategories()) {
+                const option = new Option(name, key);
+                option.dataset.custom = '';
+                fields.category.insertBefore(option, addOption);
+            }
+            for (const control of filters) {
+                control.replaceChildren(new Option('Tutte le categorie', ''), new Option('Senza categoria', '__senza'),
+                    ...[...categories].map(([key, name]) => new Option(name, key)));
+                control.value = filter;
+            }
+        }
         const now = new Date();
         const today = dateKey(now);
         const upcoming = get('upcoming');
@@ -218,7 +279,19 @@
         upcoming.replaceChildren();
         past.replaceChildren();
         deadlines?.replaceChildren();
-        const dated = (events || []).map(event => {
+        const matches = event => !filter || (filter === '__senza' ? !categories.has(event.category) : event.category === filter);
+        if (archived) {
+            archived.replaceChildren();
+            (events || []).filter(event => event.archived && matches(event))
+                .sort((a, b) => b.day.localeCompare(a.day) || b.time.localeCompare(a.time))
+                .forEach(event => append(archived, event, event.day));
+            if (!archived.children.length) {
+                const item = document.createElement('li');
+                item.textContent = 'Nessuna scheda archiviata per il filtro selezionato.';
+                archived.append(item);
+            }
+        }
+        const dated = (events || []).filter(event => !garden || !event.archived && matches(event)).map(event => {
             let day = nextDay(event, today);
             if (event.weekly && event.time && new Date(day + 'T' + event.time) < now) {
                 day = dateKey(addDays(dateFromKey(day), 7));
@@ -247,6 +320,7 @@
 
     function switchMode(next) {
         mode = next;
+        filter = '';
         if (next === 'personal') personal = readPersonal(new Date());
         resetForm();
         render();
@@ -258,6 +332,20 @@
     get('clear-example').addEventListener('click', () => setEvents([], t('cleared', 'Agenda di prova azzerata.')));
     get('load-example').addEventListener('click', () => setEvents(samples(), t('reloaded', 'Esempi ripristinati.')));
     get('cancel-edit').addEventListener('click', resetForm);
+    if (garden) {
+        fields.category.addEventListener('change', () => {
+            updateNewCategory();
+            if (!fields.newCategory.disabled) fields.newCategory.focus();
+        });
+        for (const control of filters) {
+            control.addEventListener('change', () => {
+                filter = control.value;
+                const selected = fields.category.value;
+                render();
+                fields.category.value = selected;
+            });
+        }
+    }
     form.addEventListener('submit', event => {
         event.preventDefault();
         const title = fields.title.value.trim();
@@ -270,9 +358,35 @@
         if (!events) return;
         const item = { id: editing || String(Date.now()) + '-' + Math.random().toString(36).slice(2), title,
             day: fields.day.value, time: fields.time.value, note: fields.note.value.trim(), weekly: fields.weekly.checked };
-        const category = fields.category ? fields.category.value : events.find(entry => entry.id === editing)?.category;
-        if (categories.has(category)) item.category = category;
-        setEvents(editing ? events.map(entry => entry.id === editing ? item : entry) : [...events, item], t('saved', 'Impegno salvato.'));
+        const previous = events.find(entry => entry.id === editing);
+        if (editing && !previous) {
+            get('status').textContent = 'La scheda è stata eliminata. Apri una nuova scheda per salvare l’attività.';
+            return;
+        }
+        let category = fields.category ? fields.category.value : previous?.category;
+        let custom = customCategories();
+        if (garden && category === addCategory) {
+            const name = fields.newCategory.value.trim();
+            if (!name) {
+                get('status').textContent = 'Scrivi il nome della nuova categoria.';
+                fields.newCategory.focus();
+                return;
+            }
+            const sameName = ([, label]) => label.localeCompare(name, 'it', {sensitivity: 'accent'}) === 0;
+            const existing = [...baseCategories, ...custom].find(sameName);
+            category = existing?.[0] ?? crypto.randomUUID();
+            if (!existing) custom = [...custom, [category, name]];
+        }
+        if (categories.has(category) || custom.some(([key]) => key === category)) item.category = category;
+        const restore = garden && event.submitter?.id === 'orto-salva-ripristina';
+        if (garden && previous?.archived && !restore) item.archived = true;
+        const saved = setEvents(editing ? events.map(entry => entry.id === editing ? item : entry) : [...events, item],
+            t('saved', 'Impegno salvato.'), custom);
+        if (saved && garden && previous) {
+            const destination = get(item.archived ? 'orto-stato-archivio' : 'orto-stato-schede');
+            destination.textContent = restore ? 'Scheda riportata in agenda.' : t('saved', 'Attività salvata.');
+            location.hash = item.archived ? 'agenda-archivio' : 'agenda-schede';
+        }
     });
     resetForm();
     render();

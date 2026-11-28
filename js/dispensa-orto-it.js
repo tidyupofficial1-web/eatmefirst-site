@@ -61,10 +61,11 @@
         const hash = location.hash.slice(1);
         const richiesta = hash === 'dispensa-orto' ? 'inventario' : hash === 'agenda-attivita' ? 'agenda' : hash;
         const attiva = viste.find(vista => vista.id === richiesta)?.id ?? 'home';
-        if (attiva === 'agenda' && prova) terminaProva();
+        const agenda = attiva === 'agenda' || attiva.startsWith('agenda-');
+        if (agenda && prova) terminaProva();
         for (const vista of viste) vista.hidden = vista.id !== attiva;
         for (const link of document.querySelectorAll('.orto-nav a')) {
-            if (link.hash === '#' + attiva) link.setAttribute('aria-current', 'page');
+            if (link.hash === (agenda ? '#agenda' : '#' + attiva)) link.setAttribute('aria-current', 'page');
             else link.removeAttribute('aria-current');
         }
     }

@@ -7,10 +7,10 @@
   <title>OrtoFirst · L’orto di Max | EatMeFirst</title>
   <script src="../../js/accettazione-it.js?v=agenda-orto" data-proteggi data-destinazione="orto"></script>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-it.js?v=agenda-orto"></script>
+  <script defer src="../../js/agenda-it.js?v=schede-archivio"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
-  <script defer src="../../js/dispensa-orto-it.js?v=guida-lista-spesa"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=schede-archivio"></script>
   <style>
     :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
     body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
@@ -142,17 +142,8 @@
       <h1>Agenda dell’orto</h1>
       <div class="orto-intro">
         <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
-        <p>«Qui segno quando seminare, trapiantare, annaffiare e raccogliere. Mi annoto anche dove ho piantato una varietà e com’è andata, così la prossima stagione me lo ricordo. Se vuoi vedere qualche esempio, premi “Prova con Max”.»</p>
+        <p>«Qui segno semine, trapianti, annaffiature e raccolti. Mi annoto dove ho piantato una varietà e com’è andata. In “Vedi le schede” ritrovo le attività per data e archivio quelle che voglio conservare.»</p>
       </div>
-    <div class="actions" id="agenda-attivita">
-      <button type="button" id="example" aria-pressed="false">Prova con Max</button>
-      <button type="button" id="personal" aria-pressed="true">Il mio orto</button>
-    </div>
-    <p id="mode"></p>
-    <div class="actions" id="sample-controls" hidden>
-      <button type="button" id="clear-example">Azzera la prova</button>
-      <button type="button" id="load-example">Ricarica gli esempi</button>
-    </div>
     <form id="event-form" data-agenda="orto">
       <h2 id="form-heading">Nuova attività</h2>
       <div class="orto-fields">
@@ -170,14 +161,19 @@
         </div>
         <div class="orto-campo">
           <label>Categoria <select name="category">
-            <option value="">Altro</option>
+            <option value="">Senza categoria</option>
             <option value="semine">Semine</option>
             <option value="trapianti">Trapianti e rinvasi</option>
             <option value="cura">Cura dell’orto</option>
             <option value="raccolta">Raccolti</option>
             <option value="note">Osservazioni</option>
+            <option value="__aggiungi">+ Aggiungi categoria</option>
           </select></label>
-          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Categoria dell’attività" data-guida-titolo="Categoria dell’attività" data-guida-testo="Scegli il tipo di attività. Usa «Cura dell’orto» per lavori come annaffiare e «Osservazioni» per annotare come stanno crescendo le piante.">?</button>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Categoria dell’attività" data-guida-titolo="Categoria dell’attività" data-guida-testo="Scegli il tipo di attività oppure seleziona «+ Aggiungi categoria» e scrivi un nome. La nuova categoria sarà disponibile quando salvi la scheda.">?</button>
+        </div>
+        <div class="orto-campo" id="orto-nuova-categoria" hidden>
+          <label>Nome della nuova categoria <input name="newCategory" maxlength="50" placeholder="Es. Serra" disabled></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Nuova categoria" data-guida-titolo="Nuova categoria" data-guida-testo="Scrivi un nome breve con cui raggruppare più schede, per esempio «Serra» o «Alberi da frutto». Potrai usarlo anche come filtro.">?</button>
         </div>
         <div class="orto-campo orto-note">
           <label>Nota <input name="note" maxlength="250" placeholder="Es. Varietà, aiuola o quantità raccolta"></label>
@@ -188,12 +184,51 @@
           <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Ripeti ogni settimana" data-guida-titolo="Ripeti ogni settimana" data-guida-testo="Spunta la casella per un’attività che torna ogni settimana, come controllare i semenzai il sabato. Lascia la casella vuota per un’attività singola.">?</button>
         </div>
       </div>
-      <div class="actions"><button type="submit" class="button">Salva attività</button><button type="button" id="cancel-edit" hidden>Annulla modifica</button></div>
+      <div class="actions"><button type="submit" class="button">Salva attività</button><button type="submit" id="orto-salva-ripristina" hidden>Salva e riporta in agenda</button><button type="button" id="cancel-edit" hidden>Annulla modifica</button></div>
     </form>
     <p id="status" role="status"></p>
-    <h2>Oggi e prossime attività</h2>
-    <ul id="upcoming" class="advice-list"></ul>
-    <details><summary>Attività passate e appunti</summary><ul id="past" class="advice-list"></ul></details>
+    <div class="actions" id="agenda-attivita">
+      <a class="button" href="#agenda-schede">Vedi le schede</a>
+      <button type="button" id="example" aria-pressed="false">Prova con Max</button>
+      <button type="button" id="personal" aria-pressed="true">Il mio orto</button>
+    </div>
+    <p id="mode"></p>
+    <div class="actions" id="sample-controls" hidden>
+      <button type="button" id="clear-example">Azzera la prova</button>
+      <button type="button" id="load-example">Ricarica gli esempi</button>
+    </div>
+    </section>
+    <section id="agenda-schede" data-orto-vista hidden>
+      <h1>Schede dell’agenda</h1>
+      <p class="orto-agenda-prova" hidden>Stai consultando le schede di prova di Max.</p>
+      <div class="actions">
+        <a class="button" href="#agenda">Torna al modulo</a>
+        <a href="#agenda-archivio">Vedi archivio</a>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Azioni delle schede" data-guida-titolo="Azioni delle schede" data-guida-testo="Modifica riapre la scheda. Archivia la sposta nell’archivio. Elimina la cancella dopo una conferma.">?</button>
+      </div>
+      <div class="orto-fields"><div class="orto-campo">
+        <label>Filtra per categoria <select id="orto-filtro-schede"></select></label>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Filtro delle schede" data-guida-titolo="Filtro delle schede" data-guida-testo="Scegli una categoria per vedere soltanto le sue schede. Seleziona «Tutte le categorie» per tornare all’elenco completo.">?</button>
+      </div></div>
+      <p id="orto-stato-schede" role="status"></p>
+      <h2>Oggi e prossime attività</h2>
+      <ul id="upcoming" class="advice-list"></ul>
+      <h2>Attività passate e appunti</h2>
+      <ul id="past" class="advice-list"></ul>
+    </section>
+    <section id="agenda-archivio" data-orto-vista hidden>
+      <h1>Archivio dell’agenda</h1>
+      <p class="orto-agenda-prova" hidden>Stai consultando l’archivio di prova di Max.</p>
+      <div class="actions">
+        <a class="button" href="#agenda-schede">Torna alle schede</a>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Archivio" data-guida-titolo="Archivio" data-guida-testo="Le schede archiviate restano qui. Se vuoi riprogrammare un lavoro, apri Modifica, aggiorna la data e scegli «Salva e riporta in agenda». Usa Elimina per cancellare la scheda.">?</button>
+      </div>
+      <div class="orto-fields"><div class="orto-campo">
+        <label>Filtra per categoria <select id="orto-filtro-archivio"></select></label>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Filtro dell’archivio" data-guida-titolo="Filtro dell’archivio" data-guida-testo="Scegli la categoria delle schede archiviate che cerchi. Seleziona «Tutte le categorie» per vederle tutte.">?</button>
+      </div></div>
+      <p id="orto-stato-archivio" role="status"></p>
+      <ul id="orto-archiviate" class="advice-list"></ul>
     </section>
     <section class="orto-panel" id="carico" data-orto-vista hidden>
       <h1>Carico dell’orto</h1>
