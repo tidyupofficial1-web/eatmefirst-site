@@ -7,7 +7,7 @@
   <title>OrtoFirst · L’orto di Max | EatMeFirst</title>
   <script src="../../js/accettazione-it.js?v=agenda-orto" data-proteggi data-destinazione="orto"></script>
   <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
-  <script defer src="../../js/agenda-it.js?v=schede-archivio"></script>
+  <script defer src="../../js/agenda-it.js?v=simulazione-separata"></script>
   <script defer src="../../js/ricerca-prodotti-it.js"></script>
   <script async src="https://unpkg.com/html5-qrcode"></script>
   <script defer src="../../js/dispensa-orto-it.js?v=schede-archivio"></script>
@@ -189,18 +189,12 @@
     <p id="status" role="status"></p>
     <div class="actions" id="agenda-attivita">
       <a class="button" href="#agenda-schede">Vedi le schede</a>
-      <button type="button" id="example" aria-pressed="false">Prova con Max</button>
-      <button type="button" id="personal" aria-pressed="true">Il mio orto</button>
+      <a href="simulazione-agenda.html">Vuoi vedere una simulazione dell’Agenda?</a>
     </div>
     <p id="mode"></p>
-    <div class="actions" id="sample-controls" hidden>
-      <button type="button" id="clear-example">Azzera la prova</button>
-      <button type="button" id="load-example">Ricarica gli esempi</button>
-    </div>
     </section>
     <section id="agenda-schede" data-orto-vista hidden>
       <h1>Schede dell’agenda</h1>
-      <p class="orto-agenda-prova" hidden>Stai consultando le schede di prova di Max.</p>
       <div class="actions">
         <a class="button" href="#agenda">Torna al modulo</a>
         <a href="#agenda-archivio">Vedi archivio</a>
@@ -218,7 +212,6 @@
     </section>
     <section id="agenda-archivio" data-orto-vista hidden>
       <h1>Archivio dell’agenda</h1>
-      <p class="orto-agenda-prova" hidden>Stai consultando l’archivio di prova di Max.</p>
       <div class="actions">
         <a class="button" href="#agenda-schede">Torna alle schede</a>
         <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Archivio" data-guida-titolo="Archivio" data-guida-testo="Le schede archiviate restano qui. Se vuoi riprogrammare un lavoro, apri Modifica, aggiorna la data e scegli «Salva e riporta in agenda». Usa Elimina per cancellare la scheda.">?</button>

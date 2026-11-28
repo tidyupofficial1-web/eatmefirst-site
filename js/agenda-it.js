@@ -40,7 +40,6 @@
     );
     let categories = new Map(baseCategories);
     let personalCategories = [];
-    let exampleCategories = [];
 
     function readPersonal(now) {
         try {
@@ -109,21 +108,13 @@
     const archived = get('orto-archiviate');
     const filters = [get('orto-filtro-schede'), get('orto-filtro-archivio')].filter(Boolean);
     let filter = '';
-    let mode = new URLSearchParams(location.search).get('prova') === '1' ? 'example' : 'personal';
+    let mode = !garden && new URLSearchParams(location.search).get('prova') === '1' ? 'example' : 'personal';
     let editing = null;
     let personal = readPersonal(new Date());
-    let example = samples();
+    let example = garden ? [] : samples();
 
     function samples() {
         const now = new Date();
-        if (garden) {
-            return [
-                {id: 'semine', title: 'Controllare le bustine dei semi', day: dateKey(addDays(now, 1)), time: '', note: 'Annotare le varietà già disponibili prima di comprarne altre.', weekly: false, category: 'semine'},
-                {id: 'trapianti', title: 'Rinvasare il basilico', day: dateKey(addDays(now, 3)), time: '', note: 'Preparare due vasi e il terriccio.', weekly: false, category: 'trapianti'},
-                {id: 'cura', title: 'Controllare il terriccio dei vasi', day: dateKey(addDays(now, 4)), time: '', note: 'Verificare l’umidità prima di decidere se bagnare.', weekly: true, category: 'cura'},
-                {id: 'raccolta', title: 'Annotare il primo raccolto', day: dateKey(addDays(now, 6)), time: '', note: 'Scrivere quantità e varietà per il confronto con la prossima stagione.', weekly: false, category: 'raccolta'}
-            ];
-        }
         const friday = addDays(now, (5 - now.getDay() + 7) % 7 || 7);
         const events = [
             { id: 'judo', title: t('judo', 'Accompagnare Gianni a judo'), day: dateKey(friday), time: '17:30', note: t('belt', 'Mettere la cintura nella borsa.'), weekly: true },
@@ -140,14 +131,11 @@
         return events;
     }
 
-    const customCategories = () => mode === 'example' ? exampleCategories : personalCategories;
-
-    function setEvents(events, message, custom = customCategories()) {
+    function setEvents(events, message, custom = personalCategories) {
         const status = garden ? get(location.hash === '#agenda-archivio' ? 'orto-stato-archivio' :
             location.hash === '#agenda-schede' ? 'orto-stato-schede' : 'status') : get('status');
         if (mode === 'example') {
             example = events;
-            exampleCategories = custom;
         } else {
             try {
                 localStorage.setItem(storageKey, JSON.stringify(garden ? {events, categories: custom} : events));
@@ -250,18 +238,19 @@
     function render() {
         const sampleMode = mode === 'example';
         const events = sampleMode ? example : personal;
-        get('example').setAttribute('aria-pressed', String(sampleMode));
-        get('personal').setAttribute('aria-pressed', String(!sampleMode));
-        get('sample-controls').hidden = !sampleMode;
+        if (!garden) {
+            get('example').setAttribute('aria-pressed', String(sampleMode));
+            get('personal').setAttribute('aria-pressed', String(!sampleMode));
+            get('sample-controls').hidden = !sampleMode;
+        }
         form.hidden = events === null;
         get('mode').textContent = sampleMode ? t('demo', 'Stai usando gli esempi. Le modifiche di prova durano fino alla chiusura della pagina.') :
             events === null ? t('unreadable', 'L’agenda salvata non è leggibile in questo browser.') : t('stored', 'Gli impegni personali vengono salvati in questo browser.');
         if (garden) {
-            document.querySelectorAll('.orto-agenda-prova').forEach(label => { label.hidden = !sampleMode; });
-            categories = new Map([...baseCategories, ...customCategories()]);
+            categories = new Map([...baseCategories, ...personalCategories]);
             fields.category.querySelectorAll('[data-custom]').forEach(option => option.remove());
             const addOption = fields.category.options[fields.category.options.length - 1];
-            for (const [key, name] of customCategories()) {
+            for (const [key, name] of personalCategories) {
                 const option = new Option(name, key);
                 option.dataset.custom = '';
                 fields.category.insertBefore(option, addOption);
@@ -327,10 +316,12 @@
         get('status').textContent = '';
     }
 
-    get('example').addEventListener('click', () => switchMode('example'));
-    get('personal').addEventListener('click', () => switchMode('personal'));
-    get('clear-example').addEventListener('click', () => setEvents([], t('cleared', 'Agenda di prova azzerata.')));
-    get('load-example').addEventListener('click', () => setEvents(samples(), t('reloaded', 'Esempi ripristinati.')));
+    if (!garden) {
+        get('example').addEventListener('click', () => switchMode('example'));
+        get('personal').addEventListener('click', () => switchMode('personal'));
+        get('clear-example').addEventListener('click', () => setEvents([], t('cleared', 'Agenda di prova azzerata.')));
+        get('load-example').addEventListener('click', () => setEvents(samples(), t('reloaded', 'Esempi ripristinati.')));
+    }
     get('cancel-edit').addEventListener('click', resetForm);
     if (garden) {
         fields.category.addEventListener('change', () => {
@@ -364,7 +355,7 @@
             return;
         }
         let category = fields.category ? fields.category.value : previous?.category;
-        let custom = customCategories();
+        let custom = personalCategories;
         if (garden && category === addCategory) {
             const name = fields.newCategory.value.trim();
             if (!name) {

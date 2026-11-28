@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Simulazione dell’Agenda | OrtoFirst</title>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a href="index.html#agenda">← Torna all’Agenda</a>
+    <h1>Simulazione dell’Agenda</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+      <p>«Ti faccio vedere come preparo una scheda per il basilico, dove la ritrovo e come la riprogrammo dall’archivio.» I dati di esempio sono di sola lettura.</p>
+    </div>
+    <nav class="demo-nav" aria-label="Schermate della simulazione">
+      <a href="#compila">Modulo</a>
+      <a href="#schede">Schede</a>
+      <a href="#archivio">Archivio</a>
+      <a href="#riprogramma">Nuova data</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>Compila una scheda</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>Attività</dt><dd>Trapiantare il basilico</dd></div>
+        <div><dt>Data</dt><dd>18 maggio 2027</dd></div>
+        <div><dt>Ora facoltativa</dt><dd>18:30</dd></div>
+        <div><dt>Categoria</dt><dd>Trapianti e rinvasi</dd></div>
+        <div><dt>Nota</dt><dd>Preparare due vasi da 20 cm e usare terriccio nuovo.</dd></div>
+        <div><dt>Ripeti ogni settimana</dt><dd>Casella vuota</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>? Come scelgo la categoria?</summary><p>Puoi sceglierne una esistente oppure usare «+ Aggiungi categoria». Per esempio, puoi creare «Serra» e ritrovarla nei filtri.</p></details>
+      <p class="demo-actions"><a href="#schede">Vedi dove compare dopo il salvataggio →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>Schede dell’agenda</h2>
+      <p>Le prossime attività sono in ordine di data. Il filtro per categoria ti aiuta a trovare il lavoro che cerchi.</p>
+      <article class="demo-scheda">
+        <h3>Controllare i semenzai</h3>
+        <p>Cura dell’orto · 15 maggio 2027 · Ogni settimana</p>
+        <p>Controllare l’umidità del terriccio.</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>Trapiantare il basilico</h3>
+        <p>Trapianti e rinvasi · 18 maggio 2027 · 18:30</p>
+        <p>Preparare due vasi da 20 cm e usare terriccio nuovo.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Cosa posso fare con una scheda?</summary><p>Nell’Agenda puoi modificarla, archiviarla o eliminarla con una conferma.</p></details>
+      <p class="demo-actions"><a href="#archivio">Vedi la scheda dopo averla archiviata →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>Archivio dell’agenda</h2>
+      <article class="demo-scheda">
+        <h3>Trapiantare il basilico</h3>
+        <p>Trapianti e rinvasi · 18 maggio 2027 · 18:30</p>
+        <p>Preparare due vasi da 20 cm e usare terriccio nuovo.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? Come recupero una scheda?</summary><p>Nell’archivio puoi filtrare per categoria. Per riprogrammare una scheda, apri «Modifica», cambia la data e scegli «Salva e riporta in agenda».</p></details>
+      <p class="demo-actions"><a href="#riprogramma">Vedi il risultato con una nuova data →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>Scheda riportata in agenda</h2>
+      <article class="demo-scheda">
+        <h3>Trapiantare il basilico</h3>
+        <p>Trapianti e rinvasi · 20 maggio 2028 · 18:30</p>
+        <p>Preparare due vasi da 20 cm e usare terriccio nuovo.</p>
+      </article>
+      <p>La scheda torna tra le prossime attività alla nuova data, con la categoria e la nota.</p>
+      <p class="demo-actions"><a href="#compila">Rivedi il modulo</a><a href="index.html#agenda">Torna all’Agenda</a></p>
+    </section>
+  </main>
+</body>
+</html>
