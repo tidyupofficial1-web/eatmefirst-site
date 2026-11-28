@@ -154,6 +154,8 @@
                 suggerimentoCatalogo = {codice, nome};
                 if (usaNomeCatalogo) usaNomeCatalogo.hidden = scorta.elements.nome.value === nome;
                 esitoCodice.textContent = trad('Nome trovato negli archivi: ') + nome + trad('. Il nome inserito è rimasto nel campo.');
+            } else if (risultato.stato === 'trovato') {
+                esitoCodice.textContent = trad('Codice trovato, ma il catalogo non riporta un nome. Puoi inserirlo a mano.');
             } else {
                 esitoCodice.textContent = risultato.stato === 'non_trovato'
                     ? trad('Codice non trovato. Puoi registrare il prodotto a mano.')

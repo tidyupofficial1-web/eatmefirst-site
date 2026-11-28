@@ -72,5 +72,6 @@ window.OrtoFirstGerman = {
     "Insetticidi e cura delle piante": "Insektizide und Pflanzenpflege",
     "Altro": "Sonstiges",
     "Contents of one bottle": "Inhalt einer Flasche",
-    "Contents of one packet": "Inhalt einer Tüte"
+    "Contents of one packet": "Inhalt einer Tüte",
+    "Codice trovato, ma il catalogo non riporta un nome. Puoi inserirlo a mano.": "Strichcode gefunden, aber im Katalog fehlt der Name. Du kannst ihn selbst eingeben."
 };

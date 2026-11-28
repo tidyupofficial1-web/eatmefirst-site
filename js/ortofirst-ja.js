@@ -72,5 +72,6 @@ window.OrtoFirstJapanese = {
     "Insetticidi e cura delle piante": "殺虫剤・植物の手入れ用品",
     "Altro": "その他",
     "Contents of one bottle": "ボトル1本の中身",
-    "Contents of one packet": "袋1つの中身"
+    "Contents of one packet": "袋1つの中身",
+    "Codice trovato, ma il catalogo non riporta un nome. Puoi inserirlo a mano.": "バーコードは見つかりましたが、カタログに商品名がありません。名前を手入力できます。"
 };

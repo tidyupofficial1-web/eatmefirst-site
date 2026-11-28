@@ -72,5 +72,6 @@ window.OrtoFirstArabic = {
     "Insetticidi e cura delle piante": "مبيدات حشرية ومنتجات العناية بالنباتات",
     "Altro": "أخرى",
     "Contents of one bottle": "محتوى زجاجة واحدة",
-    "Contents of one packet": "محتوى كيس واحد"
+    "Contents of one packet": "محتوى كيس واحد",
+    "Codice trovato, ma il catalogo non riporta un nome. Puoi inserirlo a mano.": "عُثر على الرمز، لكن الكتالوج لا يذكر اسم المنتج. يمكنك إدخال الاسم يدويًا."
 };

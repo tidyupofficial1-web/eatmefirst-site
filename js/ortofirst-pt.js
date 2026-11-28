@@ -72,5 +72,6 @@ window.OrtoFirstPortuguese = {
     "Insetticidi e cura delle piante": "Inseticidas e cuidados com as plantas",
     "Altro": "Outros",
     "Contents of one bottle": "Conteúdo de uma garrafa",
-    "Contents of one packet": "Conteúdo de um sachê"
+    "Contents of one packet": "Conteúdo de um sachê",
+    "Codice trovato, ma il catalogo non riporta un nome. Puoi inserirlo a mano.": "Código encontrado, mas o catálogo não informa o nome. Você pode digitá-lo."
 };

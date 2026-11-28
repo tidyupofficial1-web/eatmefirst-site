@@ -70,5 +70,6 @@ window.OrtoFirstEnglish = {
     "Terriccio e concimi": "Potting mix and fertilisers",
     "Attrezzi": "Tools",
     "Insetticidi e cura delle piante": "Insecticides and plant care",
-    "Altro": "Other"
+    "Altro": "Other",
+    "Codice trovato, ma il catalogo non riporta un nome. Puoi inserirlo a mano.": "Barcode found, but the catalogue has no name for it. You can enter it yourself."
 };
