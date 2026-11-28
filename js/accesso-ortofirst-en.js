@@ -1,7 +1,7 @@
 (() => {
     'use strict';
     const script = document.currentScript;
-    const language = script.dataset.lang === 'FR' ? 'FR' : 'EN';
+    const language = ['FR', 'ES'].includes(script.dataset.lang) ? script.dataset.lang : 'EN';
     const entry = new URL('../' + language + '/index.html', script.src);
     const folder = new URL('./agenda-orto/', entry);
     const version = 'IT-2026-11-28-eat-orto-1';

@@ -3,7 +3,8 @@
 
     const lingua = document.documentElement.lang;
     const fr = lingua === 'fr';
-    const dizionario = fr ? window.OrtoFirstFrench : lingua === 'en' ? window.OrtoFirstEnglish : null;
+    const es = lingua === 'es';
+    const dizionario = es ? window.OrtoFirstSpanish : fr ? window.OrtoFirstFrench : lingua === 'en' ? window.OrtoFirstEnglish : null;
     const trad = testo => dizionario?.[testo] ?? testo;
     const mostraCategoria = categoria => trad(categoria);
 
@@ -190,14 +191,15 @@
 
     function mostraQuantita(quantita) {
         if (!dizionario || !quantita) return quantita;
-        const parole = fr ? {'mezza bustina': 'Demi-sachet', 'mezza bottiglia': 'Demi-bouteille', 'una bustina': 'Un sachet', 'una bottiglia': 'Une bouteille'} :
+        const parole = es ? {'mezza bustina': 'Medio sobre', 'mezza bottiglia': 'Media botella', 'una bustina': 'Un sobre', 'una bottiglia': 'Una botella'} :
+            fr ? {'mezza bustina': 'Demi-sachet', 'mezza bottiglia': 'Demi-bouteille', 'una bustina': 'Un sachet', 'una bottiglia': 'Une bouteille'} :
             {'mezza bustina': 'Half a packet', 'mezza bottiglia': 'Half a bottle', 'una bustina': 'One packet', 'una bottiglia': 'One bottle'};
         const testo = quantita.toLowerCase();
         if (parole[testo]) return parole[testo];
         const formato = testo.match(/^(\d+(?:[.,]\d+)?)\s+(bustin[ae]|bottigli[ae])$/);
         if (!formato) return quantita;
         const numero = Number(formato[1].replace(',', '.'));
-        const unita = formato[2].startsWith('bustin') ? (fr ? 'sachet' : 'packet') : (fr ? 'bouteille' : 'bottle');
+        const unita = formato[2].startsWith('bustin') ? (es ? 'sobre' : fr ? 'sachet' : 'packet') : (es ? 'botella' : fr ? 'bouteille' : 'bottle');
         return new Intl.NumberFormat(lingua, {useGrouping: false}).format(numero) + ' ' + unita + (numero === 1 ? '' : 's');
     }
 
@@ -312,23 +314,23 @@
 
     function bustine(voce) {
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
-        if (['mezza bustina', 'half a packet', 'demi-sachet', 'un demi-sachet'].includes(testo)) return 0.5;
-        if (['una bustina', 'one packet', 'un sachet'].includes(testo)) return 1;
-        const numero = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bustin[ae]|packets?|sachets?)$/)?.[1];
+        if (['mezza bustina', 'half a packet', 'demi-sachet', 'un demi-sachet', 'medio sobre'].includes(testo)) return 0.5;
+        if (['una bustina', 'one packet', 'un sachet', 'un sobre'].includes(testo)) return 1;
+        const numero = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bustin[ae]|packets?|sachets?|sobres?)$/)?.[1];
         return numero === undefined ? null : Number(numero.replace(',', '.'));
     }
 
     function confezioneParziale(voce, tipoScelto) {
         if (!voce || voce.categoria === 'Piantine') return null;
         const descrizione = [voce.nome, voce.quantita].join(' ').toLocaleLowerCase('it');
-        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?)\b/.test(descrizione) ? 'bottiglia'
-            : (voce.categoria === 'Semi' || /\b(?:bustin[ae]|packets?|sachets?)\b/.test(descrizione)) ? 'bustina' : tipoScelto);
+        const tipo = voce.tipoConfezione || (/\b(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?|botellas?)\b/.test(descrizione) ? 'bottiglia'
+            : (voce.categoria === 'Semi' || /\b(?:bustin[ae]|packets?|sachets?|sobres?)\b/.test(descrizione)) ? 'bustina' : tipoScelto);
         if (!tipo) return null;
         const testo = voce.quantita?.trim().toLocaleLowerCase('it');
-        const bottiglie = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?)$/)?.[1];
+        const bottiglie = testo?.match(/^(\d+(?:[.,]\d+)?)\s*(?:bottigli[ae]|flacon[ei]|bottles?|bouteilles?|botellas?)$/)?.[1];
         const totale = haPezzi(voce) ? voce.pezziRimasti : (tipo === 'bustina' ? bustine(voce) :
-            ['mezza bottiglia', 'half a bottle', 'demi-bouteille', 'une demi-bouteille'].includes(testo) ? 0.5 :
-                ['una bottiglia', 'one bottle', 'une bouteille'].includes(testo) ? 1 :
+            ['mezza bottiglia', 'half a bottle', 'demi-bouteille', 'une demi-bouteille', 'media botella'].includes(testo) ? 0.5 :
+                ['una bottiglia', 'one bottle', 'une bouteille', 'una botella'].includes(testo) ? 1 :
                 bottiglie === undefined ? null : Number(bottiglie.replace(',', '.')));
         if (!totale || !Number.isFinite(totale)) return null;
         const livello = haPezzi(voce) ? (voce.livelloPezzo ?? 100) : Math.round((totale % 1 || 1) * 100);

@@ -194,16 +194,17 @@
 <script defer src="../js/analytics-consenso.js?v=removed-20261116"></script>
 <script defer src="../js/contatore-visite.js" data-visita="apertura"></script>
 <link rel="stylesheet" href="../css/language-picker.css?v=2">
+<script src="../js/accesso-ortofirst-en.js?v=es" data-lang="ES"></script>
 </head>
 <body>
 
     <!-- SCRIPT DE CONTROL DE CONSENTIMIENTO INICIAL -->
     <script>
-        if (localStorage.getItem('eatmefirst_consent_es') === 'accepted' || localStorage.getItem('eatmefirst_consent') === 'accepted') {
+        if (OrtoFirstAccess.target ? OrtoFirstAccess.accepted() : (localStorage.getItem('eatmefirst_consent_es') === 'accepted' || localStorage.getItem('eatmefirst_consent') === 'accepted')) {
             if (!localStorage.getItem('eatmefirst_consent_date')) {
                 if (!localStorage.getItem('eatmefirst_consent_date')) localStorage.setItem('eatmefirst_consent_date', new Date().toISOString());
             }
-            window.location.href = 'menu.html';
+            window.location.href = OrtoFirstAccess.target || 'menu.html';
         }
 
         function accettaTermini() {
@@ -374,6 +375,10 @@
             
             localStorage.setItem('eatmefirst_consent_es', 'accepted');
             localStorage.setItem('eatmefirst_consent', 'accepted');
+            if (OrtoFirstAccess.target) {
+                event.preventDefault();
+                OrtoFirstAccess.accept();
+            }
             if (!localStorage.getItem('eatmefirst_consent_date')) localStorage.setItem('eatmefirst_consent_date', new Date().toISOString());
             
             const inputNome = document.getElementById('userName').value.trim();
@@ -382,6 +387,7 @@
             } else {
                 localStorage.removeItem('eatmefirst_username');
             }
+            if (OrtoFirstAccess.target) location.href = OrtoFirstAccess.target;
         }
     </script>
 <p style="text-align:center"><a href="../sito-bozza/ES/privacy-statistiche.html">Recuento de aperturas</a></p>

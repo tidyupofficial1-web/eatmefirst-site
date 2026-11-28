@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Ejemplo de agenda | OrtoFirst</title>
+  <script src="../../js/accesso-ortofirst-en.js?v=es" data-lang="ES" data-protect></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <style>
+    :root{color-scheme:dark;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#43505a;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--paper);color:var(--ink);font-family:var(--serif)}
+    main.wrap{max-width:760px;padding-block:20px 40px}
+    .demo-max{display:flex;gap:14px;align-items:center;margin-block:16px}
+    .demo-max img{border-radius:50%;flex:none;object-fit:cover}
+    .demo-max p{margin:0}
+    .demo-nav,.demo-actions{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+    .demo-nav{border-bottom:1px solid var(--line);padding-block:10px 16px}
+    .demo-nav a,.demo-actions a{padding-block:6px;color:var(--blue)}
+    .demo-schermata{display:none;scroll-margin-top:16px;margin-block:20px}
+    .demo-schermata:target,main:not(:has(.demo-schermata:target)) #compila{display:block}
+    .demo-scheda{padding:16px;margin-block:12px;border:1px solid var(--line);border-radius:12px;background:#1e272c;overflow-wrap:anywhere}
+    .demo-campi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;margin:0}
+    .demo-campi dt{font-weight:600}
+    .demo-campi dd{margin:4px 0 0;padding:8px;border:1px solid var(--line);border-radius:8px;background:#101416}
+    .demo-scheda h3{margin-top:0}
+    .demo-scheda > :last-child{margin-bottom:0}
+    .demo-aiuto{margin-block:14px}
+    .demo-aiuto summary{cursor:pointer;color:var(--blue)}
+    .demo-aiuto p{margin-block:8px 0}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav aria-label="Idiomas"><a href="../../IT/agenda-orto/simulazione-agenda.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/simulazione-agenda.html" hreflang="en" lang="en">English</a> · <a href="../../FR/agenda-orto/simulazione-agenda.html" hreflang="fr" lang="fr">Français</a> · <a href="../../ES/agenda-orto/simulazione-agenda.html" hreflang="es" lang="es" aria-current="page">Español</a></nav>
+    <a href="index.html#agenda">← Volver a la agenda</a>
+    <h1>Ejemplo de agenda</h1>
+    <div class="demo-max">
+      <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+      <p>«Te enseño cómo preparo una ficha para la albahaca, dónde la encuentro y cómo la reprogramo desde el archivo». Los ejemplos son de solo lectura.</p>
+    </div>
+    <nav class="demo-nav" aria-label="Pantallas del ejemplo">
+      <a href="#compila">Formulario</a>
+      <a href="#schede">Fichas</a>
+      <a href="#archivio">Archivo</a>
+      <a href="#riprogramma">Nueva fecha</a>
+    </nav>
+    <section class="demo-schermata" id="compila">
+      <h2>Rellenar una ficha</h2>
+      <dl class="demo-scheda demo-campi">
+        <div><dt>Tarea</dt><dd>Trasplantar la albahaca</dd></div>
+        <div><dt>Fecha</dt><dd>18 de mayo de 2027</dd></div>
+        <div><dt>Hora opcional</dt><dd>18:30</dd></div>
+        <div><dt>Categoría</dt><dd>Trasplantes y cambios de maceta</dd></div>
+        <div><dt>Nota</dt><dd>Preparar dos macetas de 20 cm y usar sustrato nuevo.</dd></div>
+        <div><dt>Repetir cada semana</dt><dd>Casilla sin marcar</dd></div>
+      </dl>
+      <details class="demo-aiuto"><summary>? ¿Cómo elijo la categoría?</summary><p>Elige una categoría existente o usa «+ Añadir categoría». Por ejemplo, puedes crear «Invernadero» y luego encontrarla en los filtros.</p></details>
+      <p class="demo-actions"><a href="#schede">Ver dónde aparece la ficha después de guardar →</a></p>
+    </section>
+    <section class="demo-schermata" id="schede">
+      <h2>Fichas de la agenda</h2>
+      <p>Las próximas tareas aparecen por fecha. El filtro por categoría te ayuda a encontrar la que buscas.</p>
+      <article class="demo-scheda">
+        <h3>Revisar los semilleros</h3>
+        <p>Cuidado del huerto · 15 de mayo de 2027 · Cada semana</p>
+        <p>Comprobar la humedad del sustrato.</p>
+      </article>
+      <article class="demo-scheda">
+        <h3>Trasplantar la albahaca</h3>
+        <p>Trasplantes y cambios de maceta · 18 de mayo de 2027 · 18:30</p>
+        <p>Preparar dos macetas de 20 cm y usar sustrato nuevo.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? ¿Qué puedo hacer con una ficha?</summary><p>En la agenda puedes editarla, archivarla o eliminarla tras confirmar.</p></details>
+      <p class="demo-actions"><a href="#archivio">Ver la ficha después de archivarla →</a></p>
+    </section>
+    <section class="demo-schermata" id="archivio">
+      <h2>Archivo de la agenda</h2>
+      <article class="demo-scheda">
+        <h3>Trasplantar la albahaca</h3>
+        <p>Trasplantes y cambios de maceta · 18 de mayo de 2027 · 18:30</p>
+        <p>Preparar dos macetas de 20 cm y usar sustrato nuevo.</p>
+      </article>
+      <details class="demo-aiuto"><summary>? ¿Cómo recupero una ficha?</summary><p>Puedes filtrar el archivo por categoría. Para reprogramar una ficha, elige «Editar», cambia la fecha y pulsa «Guardar y devolver a la agenda».</p></details>
+      <p class="demo-actions"><a href="#riprogramma">Ver el resultado con una fecha nueva →</a></p>
+    </section>
+    <section class="demo-schermata" id="riprogramma">
+      <h2>Ficha devuelta a la agenda</h2>
+      <article class="demo-scheda">
+        <h3>Trasplantar la albahaca</h3>
+        <p>Trasplantes y cambios de maceta · 20 de mayo de 2028 · 18:30</p>
+        <p>Preparar dos macetas de 20 cm y usar sustrato nuevo.</p>
+      </article>
+      <p>La ficha vuelve a las próximas tareas con la nueva fecha, su categoría y su nota.</p>
+      <p class="demo-actions"><a href="#compila">Volver a ver el formulario</a><a href="index.html#agenda">Volver a la agenda</a></p>
+    </section>
+  </main>
+</body>
+</html>

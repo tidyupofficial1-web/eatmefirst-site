@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>OrtoFirst · El huerto de Max | EatMeFirst</title>
+  <script src="../../js/accesso-ortofirst-en.js?v=es" data-lang="ES" data-protect></script>
+  <link rel="stylesheet" href="../../sito-bozza/assets/site.css">
+  <script defer src="../../js/agenda-texts.js"></script>
+  <script defer src="../../js/agenda-it.js?v=orto-es"></script>
+  <script defer src="../../js/ricerca-prodotti-es.js"></script>
+  <script async src="https://unpkg.com/html5-qrcode"></script>
+  <script defer src="../../js/ortofirst-es.js"></script>
+  <script defer src="../../js/dispensa-orto-it.js?v=orto-es"></script>
+  <style>
+    :root{color-scheme:dark;--bg-color:#12181b;--card-bg:#1e272c;--primary-color:#2ecc71;--text-color:#e0e6ed;--text-muted:#a0aec0;--border-color:#2d3748;--hover-card:#253238;--ink:#e0e6ed;--body:#e0e6ed;--paper:#12181b;--line:#2d3748;--blue:#8fdfb2;--serif:'Segoe UI',Tahoma,sans-serif}
+    body{background:var(--bg-color);color:var(--text-color);font-family:'Segoe UI',Tahoma,sans-serif}
+    body > .site-header{width:100%;max-width:none;background:#101416;border-bottom:1px solid var(--border-color);padding:12px max(16px,calc((100% - 1000px)/2));gap:12px}
+    .site-header .brand{display:block;width:clamp(110px,28vw,156px);aspect-ratio:4/1;overflow:hidden;flex:none}.site-header .brand img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:0;background:transparent}
+    .orto-main{max-width:1000px;padding-top:20px}
+    .orto-nav{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:22px}
+    .orto-nav a[aria-current]{font-weight:700;color:var(--primary-color)}
+    .orto-main [hidden]{display:none}
+    .orto-hero{background:var(--card-bg);border:1px solid var(--border-color);border-top:4px solid var(--primary-color);border-radius:12px;overflow:hidden;margin-bottom:26px;box-shadow:0 8px 20px #0006}
+    .orto-hero > img{display:block;width:100%;height:clamp(160px,30vw,290px);object-fit:cover}
+    .orto-hero div{padding:18px 24px}
+    .orto-hero h1{font-size:clamp(1.65rem,4vw,2.2rem);color:var(--primary-color);margin:0 0 10px}
+    .orto-hero .orto-max{float:left;width:58px;height:58px;object-fit:cover;border-radius:50%;margin:0 12px 6px 0}
+    .orto-hero p{margin:0 0 10px}.orto-hero p:first-of-type{min-height:58px}.orto-hero p:last-child{margin-bottom:0}
+    .orto-panel{margin-top:20px}
+    .orto-intro{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .orto-intro img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none}
+    .orto-intro p{margin:0}
+    .orto-livello{max-width:360px;margin:18px auto;text-align:center}
+    .orto-livello input{width:100%;accent-color:var(--primary-color)}
+    .orto-forma{position:relative;width:64px;height:95px;margin:20px auto 12px;border:2px solid #8fdfb2;border-radius:9px;background:linear-gradient(to top,#26734d var(--livello,100%),#9d383d var(--livello,100%));cursor:ns-resize;touch-action:none}
+    .orto-forma[data-forma="bottiglia"]{width:45px;border-radius:14px 14px 8px 8px}
+    .orto-forma[data-forma="bottiglia"]::before{content:"";position:absolute;top:-13px;left:11px;right:11px;height:12px;border:2px solid #8fdfb2;background:#253238;border-radius:4px}
+    .orto-livello small{color:var(--text-muted)}
+    .orto-badge{display:inline-block;padding:3px 8px;margin:2px;background:#253238;border-radius:6px}
+    .orto-badge-rimanente{color:#8fdfb2}
+    .orto-badge-usato{color:#ffb2b4}
+    .orto-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-bottom:14px}
+    .orto-fields label{display:grid;gap:4px;font-weight:600}
+    .orto-fields input,.orto-fields select,.orto-fields textarea,#event-form input:not([type=checkbox]),#event-form select{width:100%;min-width:0;padding:9px;border:1px solid var(--border-color);border-radius:8px;background:#101416;color:var(--ink);font:inherit}
+    .orto-fields .orto-note{grid-column:1/-1}
+    .orto-campo .orto-ripeti{display:flex;align-items:center;gap:8px}
+    .orto-ripeti input[type=checkbox]{width:auto;accent-color:var(--primary-color)}
+    .orto-campo{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
+    .orto-main button.orto-aiuto:not(.button){padding:0;width:28px;height:28px;line-height:1;border-radius:50%;color:#8fdfb2;font-weight:bold}
+    #orto-scanner,#orto-guida{width:min(440px,94vw);color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px}
+    #orto-scanner::backdrop,#orto-guida::backdrop{background:#0009}
+    #orto-riepilogo{width:min(720px,94vw);max-height:90dvh;color:var(--ink);background:var(--card-bg);border:1px solid var(--line);border-radius:12px;padding:20px}
+    #orto-riepilogo::backdrop{background:#0009}
+    #orto-riepilogo dd{margin:0 0 .6rem;overflow-wrap:anywhere;white-space:pre-wrap}
+    .orto-panel form,#event-form{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:18px}
+    .orto-panel ul{margin-top:16px}
+    .advice-list li:nth-child(n){background:var(--card-bg);border-color:var(--line);border-left-color:var(--primary-color)}
+    #orto-acquisti li{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    #orto-acquisti label{display:flex;align-items:center;gap:12px;flex:1;min-width:0;min-height:44px;cursor:pointer;overflow-wrap:anywhere}
+    #orto-acquisti input{flex:none;width:20px;height:20px;accent-color:var(--primary-color)}
+    #orto-acquisti li[data-comprato="true"] label{color:var(--text-muted);text-decoration:line-through}
+    .orto-acquisto-prodotto{grid-column:1/-1}
+    .orto-main .button{background:var(--primary-color);color:#101416}
+    .orto-main button:not(.button){background:#253238;color:var(--text-color);border:1px solid #526474;border-radius:8px;padding:8px 12px;font:inherit}
+    .orto-main :focus-visible{outline:2px solid var(--primary-color);outline-offset:4px}
+    @media(max-width:440px){.orto-hero div{padding:15px}.orto-nav{gap:10px;font-size:.92rem}}
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .menu-card:hover {
+            background-color: var(--hover-card);
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .card-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+    @media(prefers-reduced-motion:reduce){.menu-card{transition:none}.menu-card:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <header class="site-header wrap">
+    <a class="brand" href="#home"><img src="../../IT/agenda-orto/logo-ortofirst.png" width="180" height="45" alt="OrtoFirst"></a>
+    <nav class="orto-lingue" aria-label="Idiomas"><a href="../../IT/agenda-orto/index.html" hreflang="it" lang="it">Italiano</a> · <a href="../../EN/agenda-orto/index.html" hreflang="en" lang="en">English</a> · <a href="../../FR/agenda-orto/index.html" hreflang="fr" lang="fr">Français</a> · <a href="../../ES/agenda-orto/index.html" hreflang="es" lang="es" aria-current="page">Español</a></nav>
+    <nav class="actions" aria-label="Menú">
+      <a href="../../sito-bozza/ES/consigli-trio/max/index.html">Los consejos de Max</a>
+    </nav>
+  </header>
+  <main class="wrap section orto-main">
+    <nav class="actions orto-nav" aria-label="Secciones del huerto">
+      <a href="#home">Inicio</a><a href="#carico">Entradas</a><a href="#scarico">Salidas</a>
+      <a href="#inventario">Inventario</a><a href="#acquisti-orto">Compras</a><a href="#agenda">Agenda</a>
+    </nav>
+    <div id="orto-prova-attiva" class="actions" hidden>
+      <strong>Prueba con datos de ejemplo</strong>
+      <button type="button" id="orto-fine-prova">Volver a mi huerto</button>
+    </div>
+    <section id="home" data-orto-vista>
+      <div class="orto-hero">
+        <img src="../../sito-bozza/assets/consigli-max-orto.webp" width="1000" height="667" alt="Sobres de semillas y herramientas sobre la mesa del huerto">
+        <div><h1>El huerto de Max</h1><p><img class="orto-max" src="../../sito-bozza/assets/max.png" width="68" height="68" alt="">Soy Max. OrtoFirst es mi cuaderno del huerto, desde que vuelvo de la compra hasta que recojo la cosecha.</p>
+          <p>En <strong>Entradas</strong> anoto las semillas, el sustrato y las herramientas. Si hay un código de barras, lo escaneo. Apunto dónde guardo el producto y, si hace falta, la fecha de caducidad o una nota.</p>
+          <p>En <strong>Salidas</strong> anoto lo que he usado, hasta medio sobre, o cambio de sitio un envase. Antes de comprar más, consulto el<strong>Inventario</strong> y apunto lo que falta en la <strong>Lista de la compra</strong>. En la<strong>Agenda</strong> guardo las fechas de las tareas y las notas para la próxima temporada.</p></div>
+      </div>
+      <div class="menu-grid">
+        <a href="#carico" class="menu-card"><span class="card-icon" aria-hidden="true">📥</span><strong class="card-title">Entradas</strong><span class="card-desc">Registra sobres, plantones, sustrato, herramientas y productos para cuidar las plantas.</span></a>
+        <a href="#scarico" class="menu-card"><span class="card-icon" aria-hidden="true">📤</span><strong class="card-title">Salidas</strong><span class="card-desc">Anota lo que has usado, hasta medio sobre de semillas.</span></a>
+        <a href="#inventario" class="menu-card"><span class="card-icon" aria-hidden="true">📦</span><strong class="card-title">Inventario</strong><span class="card-desc">Consulta cuánto queda, dónde lo guardas y qué notas has escrito.</span></a>
+        <a href="#acquisti-orto" class="menu-card"><span class="card-icon" aria-hidden="true">🛒</span><strong class="card-title">Lista de la compra</strong><span class="card-desc">Apunta lo que falta y marca lo que ya has comprado.</span></a>
+        <a href="#agenda" class="menu-card"><span class="card-icon" aria-hidden="true">📅</span><strong class="card-title">Agenda</strong><span class="card-desc">Lleva un registro de siembras, trasplantes, tareas y cosechas.</span></a>
+        <a href="#eatmefirst" class="menu-card"><img src="../../IMG/logo_1024_white.png" width="48" height="48" alt=""><strong class="card-title">EatMeFirst</strong><span class="card-desc">Organiza gratis la despensa, las caducidades y la lista de la compra.</span></a>
+      </div>
+    </section>
+    <section class="orto-panel" id="eatmefirst" data-orto-vista hidden>
+      <h1>EatMeFirst</h1>
+      <div class="orto-intro">
+        <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+        <p>«Creamos OrtoFirst como una aplicación gratuita para el huerto a partir de las funciones de EatMeFirst. Con EatMeFirst puedes organizar la despensa, ver qué tienes, controlar las fechas de caducidad y preparar la lista de la compra. Las funciones básicas son gratuitas y los cambios se guardan al momento en el navegador».</p>
+      </div>
+      <div class="actions"><a class="button" href="../menu.html">Abrir EatMeFirst</a><a href="#home">Volver a las funciones del huerto</a></div>
+    </section>
+    <section id="agenda" data-orto-vista hidden>
+      <h1>Agenda del huerto</h1>
+      <div class="orto-intro">
+        <img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max">
+        <div>
+          <p>«He preparado una agenda de ejemplo para que veas cómo funciona y qué puedes escribir. Recorre sus pantallas para ver cómo apunto las siembras, los trasplantes, los riegos y las cosechas, y dónde encuentro las fichas guardadas.</p>
+          <p>Si te equivocas con una fecha o quieres corregir una nota, entra en “Ver fichas” y elige “Editar”. También puedes borrar la ficha y empezar de nuevo. Con un poco de práctica, la rellenarás en un momento».</p>
+        </div>
+      </div>
+    <form id="event-form" data-agenda="orto">
+      <h2 id="form-heading">Nueva tarea</h2>
+      <div class="orto-fields">
+        <div class="orto-campo orto-note">
+          <label>Tarea <input name="title" required maxlength="100" placeholder="P. ej., trasplantar la albahaca"></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Tarea" data-guida-titolo="Tarea" data-guida-testo="Escribe la tarea que vas a hacer o lo que quieres recordar, por ejemplo «Trasplantar la albahaca» o «Recogidos los primeros tomates».">?</button>
+        </div>
+        <div class="orto-campo">
+          <label>Fecha <input name="day" type="date" required></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Fecha" data-guida-titolo="Fecha" data-guida-testo="Elige el día previsto para la tarea. Si ya la hiciste, elige el día en que la realizaste.">?</button>
+        </div>
+        <div class="orto-campo">
+          <label>Hora opcional <input name="time" type="time"></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Hora opcional" data-guida-titolo="Hora opcional" data-guida-testo="Indica una hora si te sirve, por ejemplo las 7:00 para regar. Si basta la fecha, deja el campo en blanco.">?</button>
+        </div>
+        <div class="orto-campo">
+          <label>Categoría <select name="category">
+            <option value="">Sin categoría</option>
+            <option value="semine">Siembras</option>
+            <option value="trapianti">Trasplantes y cambios de maceta</option>
+            <option value="cura">Cuidado del huerto</option>
+            <option value="raccolta">Cosechas</option>
+            <option value="note">Observaciones</option>
+            <option value="__aggiungi">+ Añadir categoría</option>
+          </select></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Categoría de la tarea" data-guida-titolo="Categoría de la tarea" data-guida-testo="Elige una categoría o selecciona «+ Añadir categoría» y escribe un nombre. Podrás usar la nueva categoría al guardar la ficha.">?</button>
+        </div>
+        <div class="orto-campo" id="orto-nuova-categoria" hidden>
+          <label>Nombre de la nueva categoría <input name="newCategory" maxlength="50" placeholder="P. ej., invernadero" disabled></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Nueva categoría" data-guida-titolo="Nueva categoría" data-guida-testo="Escribe un nombre corto para agrupar fichas, como «Invernadero» o «Frutales». También podrás usarlo como filtro.">?</button>
+        </div>
+        <div class="orto-campo orto-note">
+          <label>Nota <input name="note" maxlength="250" placeholder="P. ej., variedad, bancal o cantidad recogida"></label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Nota" data-guida-titolo="Nota" data-guida-testo="Añade los detalles que quieras recordar, como la variedad sembrada, el bancal, la cantidad recogida o cómo salió la tarea. El campo es opcional.">?</button>
+        </div>
+        <div class="orto-campo orto-note">
+          <label class="orto-ripeti"><input name="weekly" type="checkbox"> Repetir cada semana</label>
+          <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Repetir cada semana" data-guida-titolo="Repetir cada semana" data-guida-testo="Marca la casilla para una tarea semanal, como revisar los semilleros los sábados. Déjala vacía para una tarea puntual.">?</button>
+        </div>
+      </div>
+      <div class="actions"><button type="submit" class="button">Guardar tarea</button><button type="submit" id="orto-salva-ripristina" hidden>Guardar y devolver a la agenda</button><button type="button" id="cancel-edit" hidden>Cancelar edición</button></div>
+    </form>
+    <p id="status" role="status"></p>
+    <div class="actions" id="agenda-attivita">
+      <a class="button" href="#agenda-schede">Ver fichas</a>
+      <a href="simulazione-agenda.html">¿Quieres ver un ejemplo de agenda?</a>
+    </div>
+    <p id="mode"></p>
+    </section>
+    <section id="agenda-schede" data-orto-vista hidden>
+      <h1>Fichas de la agenda</h1>
+      <div class="actions">
+        <a class="button" href="#agenda">Volver al formulario</a>
+        <a href="#agenda-archivio">Ver archivo</a>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Acciones de las fichas" data-guida-titolo="Acciones de las fichas" data-guida-testo="Editar abre de nuevo la ficha. Archivar la mueve al archivo. Eliminar la borra después de confirmar.">?</button>
+      </div>
+      <div class="orto-fields"><div class="orto-campo">
+        <label>Filtrar por categoría <select id="orto-filtro-schede"></select></label>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Filtrar fichas" data-guida-titolo="Filtrar fichas" data-guida-testo="Elige una categoría para ver solo sus fichas. Selecciona «Todas las categorías» para volver a la lista completa.">?</button>
+      </div></div>
+      <p id="orto-stato-schede" role="status"></p>
+      <h2>Hoy y próximas tareas</h2>
+      <ul id="upcoming" class="advice-list"></ul>
+      <h2>Tareas pasadas y notas</h2>
+      <ul id="past" class="advice-list"></ul>
+    </section>
+    <section id="agenda-archivio" data-orto-vista hidden>
+      <h1>Archivo de la agenda</h1>
+      <div class="actions">
+        <a class="button" href="#agenda-schede">Volver a las fichas</a>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Archivo" data-guida-titolo="Archivo" data-guida-testo="Las fichas archivadas se quedan aquí. Para reprogramar una tarea, elige Editar, cambia la fecha y pulsa «Guardar y devolver a la agenda». Elige Eliminar para borrar una ficha.">?</button>
+      </div>
+      <div class="orto-fields"><div class="orto-campo">
+        <label>Filtrar por categoría <select id="orto-filtro-archivio"></select></label>
+        <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Filtrar el archivo" data-guida-titolo="Filtrar el archivo" data-guida-testo="Elige la categoría de las fichas archivadas que buscas. Selecciona «Todas las categorías» para verlas todas.">?</button>
+      </div></div>
+      <p id="orto-stato-archivio" role="status"></p>
+      <ul id="orto-archiviate" class="advice-list"></ul>
+    </section>
+    <section class="orto-panel" id="carico" data-orto-vista hidden>
+      <h1>Entradas del huerto</h1>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>Al volver de la compra, registra los productos para el huerto. Escanea el código de barras si lo hay o escribe el nombre a mano.</p></div>
+      <form id="orto-scorta">
+        <div class="orto-fields"><div class="orto-campo"><label>Código de barras opcional <input name="barcode" inputmode="numeric" maxlength="24"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Código de barras" data-guida-titolo="Código de barras" data-guida-testo="Encuadra el código del envase o escribe sus cifras, incluidos los ceros iniciales. Pulsa «Buscar producto» para encontrar el nombre. Si no hay código o la búsqueda no da resultados, escribe el nombre a mano.">?</button></div></div>
+        <div class="actions">
+          <button type="button" id="orto-leggi-barcode" class="button">Escanear código de barras</button>
+          <button type="button" id="orto-cerca-barcode">Buscar producto</button>
+        </div>
+        <p id="orto-esito-barcode" role="status"></p>
+        <div class="orto-fields">
+          <div class="orto-campo"><label>Producto <input name="nome" required maxlength="100" placeholder="P. ej., semillas de tomate"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Producto" data-guida-titolo="Producto" data-guida-testo="Si el producto no tiene código, como unas semillas a granel, plantones del mercado o un sobre que te dio un vecino, deja el código vacío y escribe el nombre, por ejemplo «Semillas de tomate San Marzano». Elige la categoría, indica la cantidad y guarda. Haz lo mismo si la búsqueda no encuentra el nombre. Si aparece un nombre sugerido, compruébalo antes de guardar.">?</button></div>
+          <div class="orto-campo"><label>Categoría <select name="categoria"><option value="Semi">Semillas</option><option value="Piantine">Plantones</option><option value="Terriccio e concimi">Sustratos y abonos</option><option value="Attrezzi">Herramientas</option><option value="Insetticidi e cura delle piante">Insecticidas y cuidado de las plantas</option><option value="Altro">Otros</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Categoría" data-guida-titolo="Categoría" data-guida-testo="Elige el grupo que te ayudará a encontrar el producto en el inventario, como «Semillas» o «Sustratos y abonos».">?</button></div>
+          <div class="orto-campo"><label>Cantidad <input name="quantita" maxlength="60" placeholder="P. ej., 2 sobres"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Cantidad" data-guida-titolo="Cantidad" data-guida-testo="Indica cuánto guardas y en qué unidad, por ejemplo «2 sobres», «1 saco» o «10 litros». Si registras las semillas por sobres, puedes descontar medio sobre en Salidas.">?</button></div>
+          <div class="orto-campo"><label>Envases o bandejas <input name="confezioni" type="number" min="1" max="10000" step="1" placeholder="P. ej., 1"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Envases o bandejas" data-guida-titolo="Envases o bandejas" data-guida-testo="Indica cuántos envases o bandejas compraste. Para dos bandejas de 12 plantones, escribe 2 aquí y 12 en «Unidades por envase».">?</button></div>
+          <div class="orto-campo"><label>Unidades por envase <input name="pezzi" type="number" min="1" max="10000" step="1" placeholder="P. ej., 12"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Unidades por envase" data-guida-titolo="Unidades por envase" data-guida-testo="Indica cuántas unidades hay en cada envase. Una bandeja de 12 plantones tiene 12 unidades. Con dos bandejas verás 24 plantones en el inventario. En Salidas puedes descontar solo los que uses.">?</button></div>
+          <div class="orto-campo"><label>Lugar de almacenamiento <input name="conservazione-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="P. ej., caja de semillas"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Lugar de almacenamiento" data-guida-titolo="Lugar de almacenamiento" data-guida-testo="Escribe dónde guardas el envase, como «Caja de semillas» o «Estante del cobertizo». Si ya has usado ese lugar, puedes elegirlo entre las sugerencias.">?</button></div>
+          <datalist id="orto-posti"></datalist>
+          <div class="orto-campo"><label>Caducidad opcional <input name="scadenza" type="date"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Caducidad" data-guida-titolo="Caducidad" data-guida-testo="Escribe la fecha del envase si la hay. Si no hay fecha de caducidad, deja el campo en blanco.">?</button></div>
+          <div class="orto-campo orto-note"><label class="orto-note">Notas del producto <textarea name="note" maxlength="500" rows="3" placeholder="P. ej., el ajo del bancal 2 creció poco el año pasado."></textarea></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Notas del producto" data-guida-titolo="Notas del producto" data-guida-testo="Escribe lo que quieras recordar, por ejemplo «El ajo del bancal 2 creció poco el año pasado». Podrás consultar la nota en el inventario.">?</button></div>
+        </div>
+        <button class="button" type="submit">Guardar producto</button>
+      </form>
+      <dialog id="orto-scanner" aria-label="Lector de códigos de barras">
+        <button type="button" id="orto-chiudi-scanner">Cerrar lector</button>
+        <p>Encuadra todo el código de barras del envase y mantén el móvil quieto hasta que se lea.</p>
+        <div id="orto-scanner-camera"></div>
+      </dialog>
+      <p id="orto-stato-scorta" role="status"></p>
+    </section>
+    <section class="orto-panel" id="scarico" data-orto-vista hidden>
+      <h1>Salidas del huerto</h1>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Elijo un producto. Si solo he usado un poco de insecticida o unas semillas, pulso “Uso parcial” e indico cuánto queda en ese envase».</p></div>
+      <p><button type="button" id="orto-inizia-prova">Prueba con botellas, sobres y plantones</button></p>
+      <form id="orto-scarico">
+        <div class="orto-fields">
+          <div class="orto-campo"><label>Producto <select name="id" required></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Producto que vas a descontar" data-guida-titolo="Producto que vas a descontar" data-guida-testo="Elige el producto que has usado o movido. Si tienes varios envases del mismo producto, comprueba dónde están guardados.">?</button></div>
+        </div>
+        <p id="orto-quantita-attuale" hidden></p>
+        <div class="actions">
+          <button type="button" id="orto-finito">Descontar todo</button>
+          <button type="button" id="orto-apri-parziale" aria-expanded="false" aria-controls="orto-parziale">Uso parcial</button>
+          <button type="button" id="orto-apri-sposta" aria-expanded="false" aria-controls="orto-cambio-posto">Mover</button>
+        </div>
+        <div id="orto-parziale" hidden>
+          <div id="orto-riduzione-tipo" class="orto-fields" hidden>
+            <div class="orto-campo"><label>Tipo de salida parcial <select name="tipo-parziale"><option value="livello" id="orto-tipo-automatico">Contenido de un envase</option><option value="pezzi">Unidades enteras</option><option value="bottiglia">Contenido de una botella</option><option value="bustina">Contenido de un sobre</option></select></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Tipo de salida parcial" data-guida-titolo="Tipo de salida parcial" data-guida-testo="Elige el contenido para ajustar una sola botella o un solo sobre. Elige «Unidades enteras» para descontar un número concreto, como 6 plantones de una bandeja.">?</button></div>
+          </div>
+          <div id="orto-livello" class="orto-livello" hidden>
+            <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Cuando solo uso una parte, indico cuánto queda. En verde veo lo que queda y en rojo lo que ya he usado».</p></div>
+            <p id="orto-oggetto-livello"></p>
+            <div class="orto-forma" id="orto-forma" aria-hidden="true"></div>
+            <label for="orto-cursore">Contenido restante</label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Contenido restante" data-guida-titolo="Contenido restante" data-guida-testo="Arrastra el control o señala el nivel en la botella o el sobre. Para medio sobre, deja el 50 %. El rojo muestra la parte usada. Pulsa Guardar cuando el nivel sea el correcto.">?</button>
+            <input type="range" id="orto-cursore" name="percentuale" min="0" max="100" value="100">
+            <span class="orto-badge orto-badge-rimanente">Queda: <strong id="orto-rimanente">100%</strong></span>
+            <span class="orto-badge orto-badge-usato">Usado: <strong id="orto-consumato">0%</strong></span>
+            <div><small>Ajusta un solo envase. Al guardar, el envase abierto aparece por separado en el inventario y los demás quedan en su sitio.</small></div>
+          </div>
+          <div class="orto-fields" id="orto-pezzi-scarico" hidden><div class="orto-campo"><label>Unidades usadas <input name="pezzi-usati" type="number" min="1" step="1" placeholder="P. ej., 6"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Unidades usadas" data-guida-titolo="Unidades usadas" data-guida-testo="Indica cuántas unidades has usado. Si has cogido 6 plantones de una bandeja de 12, escribe 6 y pulsa Guardar.">?</button></div></div>
+          <div class="orto-fields">
+            <div class="orto-campo" id="orto-resto-libero"><label>Cantidad restante <input name="resto" maxlength="60" placeholder="P. ej., 5 litros de sustrato"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Cantidad restante" data-guida-titolo="Cantidad restante" data-guida-testo="Si registraste el producto con una cantidad libre, escribe cuánto queda, por ejemplo «5 litros». Si lo has agotado, elige «Descontar todo».">?</button></div>
+          </div>
+          <div class="actions">
+            <button type="button" id="orto-mezza" hidden>He sembrado medio sobre</button>
+          </div>
+          <div class="orto-fields" id="orto-posto-parziale" hidden><div class="orto-campo"><label>¿Dónde guardas el producto? <input name="posto-parziale-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="Déjalo en blanco para mantener el lugar actual"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Dónde guardar el producto" data-guida-titolo="Dónde guardar el producto" data-guida-testo="Si has movido la botella o el sobre abierto, indica el nuevo lugar. Deja el campo en blanco si lo has guardado donde estaba.">?</button></div></div>
+        </div>
+        <div id="orto-cambio-posto" hidden>
+          <div class="orto-fields">
+            <div class="orto-campo"><label>Nuevo lugar de almacenamiento <input name="posto-orto" autocomplete="off" list="orto-posti" maxlength="100" placeholder="P. ej., armario de herramientas"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Nuevo lugar de almacenamiento" data-guida-titolo="Nuevo lugar de almacenamiento" data-guida-testo="Escribe el nuevo lugar. Al mover el producto, la cantidad se mantiene.">?</button></div>
+          </div>
+        </div>
+        <p><button class="button" type="submit" id="orto-salva-scarico" disabled>Guardar</button></p>
+      </form>
+      <p id="orto-stato-scarico" role="status"></p>
+    </section>
+    <section class="orto-panel" id="inventario" data-orto-vista hidden>
+      <h1>Inventario del huerto</h1>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Aquí compruebo cuánto me queda y dónde lo he guardado. Cuando uso un producto, lo registro en Salidas».</p></div>
+      <p><a href="#scarico">Ir a Salidas</a></p>
+      <div class="orto-fields"><div class="orto-campo"><label>Buscar un producto <input id="orto-cerca" type="search" placeholder="Nombre, código, categoría o lugar"></label><button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Buscar un producto" data-guida-titolo="Buscar un producto" data-guida-testo="Escribe una parte del nombre, el código, la categoría o el lugar de almacenamiento. Borra la búsqueda para volver a ver todos los productos.">?</button></div></div>
+      <ul id="orto-scorte" class="advice-list"></ul>
+    </section>
+    <section class="orto-panel" id="acquisti-orto" data-orto-vista hidden>
+      <h1>Lista de la compra del huerto</h1>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Aquí puedes anotar lo que quieres comprar la próxima vez. La lista también se va rellenando cuando confirmas en Salidas que has agotado un producto. Marca cada artículo al meterlo en el carro. Aparecerá tachado al final de la lista».</p></div>
+      <form id="orto-acquisto">
+        <div class="orto-fields">
+          <div class="orto-campo orto-acquisto-prodotto">
+            <label>Qué comprar <textarea name="nome" required maxlength="300" rows="3" placeholder="P. ej., macetas de 20 cm con orificios de drenaje y platos"></textarea></label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Qué comprar" data-guida-titolo="Qué comprar" data-guida-testo="Escribe el nombre del artículo y los detalles que te ayuden a elegirlo en la tienda, como la variedad, la medida o el formato. Pulsa «Añadir a la lista».">?</button>
+          </div>
+          <div class="orto-campo">
+            <label>Cantidad <input name="quantita" maxlength="60" placeholder="P. ej., 3 macetas"></label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Ayuda: Cantidad que comprar" data-guida-titolo="Cantidad que comprar" data-guida-testo="Escribe cuánto necesitas, por ejemplo «3 macetas», «2 sobres» o «20 litros». Si vas a decidir la cantidad en la tienda, deja el campo en blanco.">?</button>
+          </div>
+        </div>
+        <button class="button" type="submit">Añadir a la lista</button>
+      </form>
+      <p id="orto-stato-acquisto" role="status"></p>
+      <ul id="orto-acquisti" class="advice-list"></ul>
+    </section>
+    <dialog id="orto-riepilogo" aria-labelledby="orto-riepilogo-titolo">
+      <h2 id="orto-riepilogo-titolo">Revisar el producto nuevo</h2>
+      <dl id="orto-riepilogo-dati"></dl>
+      <p>Sigue la etiqueta y las indicaciones del fabricante para usar o guardar los productos del huerto.</p>
+      <p id="orto-riepilogo-stato" role="status"></p>
+      <div class="actions">
+        <form method="dialog"><button type="submit" autofocus>Volver al formulario</button></form>
+        <button class="button" type="button" id="orto-conferma-prodotto">Confirmar y guardar</button>
+      </div>
+    </dialog>
+    <dialog id="orto-guida" aria-labelledby="orto-guida-titolo">
+      <h2 id="orto-guida-titolo"></h2>
+      <p id="orto-guida-testo"></p>
+      <form method="dialog"><button type="submit" autofocus>Cerrar ayuda</button></form>
+    </dialog>
+    <p><a href="../termini.html">Condiciones de uso de EatMeFirst y OrtoFirst</a></p>
+    <noscript>Activa JavaScript para usar la agenda del huerto.</noscript>
+  </main>
+</body>
+</html>

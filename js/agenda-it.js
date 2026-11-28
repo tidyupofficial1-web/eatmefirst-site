@@ -19,7 +19,18 @@
     const form = get('event-form');
     const garden = form?.dataset.agenda === 'orto';
     const gardenEnglish = garden && language === 'en';
-    const gardenTexts = garden && language === 'fr' ? {
+    const gardenTexts = garden && language === 'es' ? {
+        newTitle: 'Nueva tarea', editTitle: 'Editar tarea',
+        stored: 'Las tareas del huerto se guardan en este navegador.',
+        emptyUpcoming: 'No hay próximas tareas.', emptyPast: 'No hay tareas pasadas.',
+        titleRequired: 'Escribe el nombre de la tarea.', saved: 'Tarea guardada.', deleted: 'Tarea eliminada.',
+        deleteBefore: '¿Eliminar «', deleteAfter: '»?', edit: 'Editar', delete: 'Eliminar',
+        archive: 'Archivar', archived: 'Ficha archivada.', uncategorised: 'Sin categoría',
+        allCategories: 'Todas las categorías', archiveEmpty: 'No hay fichas archivadas que coincidan con este filtro.',
+        newCategoryRequired: 'Escribe el nombre de la nueva categoría.',
+        taskMissing: 'Esta ficha se ha eliminado. Abre una nueva ficha para guardar la tarea.',
+        restored: 'Ficha devuelta a la agenda.'
+    } : garden && language === 'fr' ? {
         newTitle: 'Nouvelle tâche', editTitle: 'Modifier la tâche',
         stored: 'Les tâches du potager sont enregistrées dans ce navigateur.',
         emptyUpcoming: 'Aucune tâche à venir.', emptyPast: 'Aucune tâche passée.',
