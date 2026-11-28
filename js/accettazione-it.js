@@ -1,7 +1,7 @@
 /* Unica accettazione locale delle condizioni italiane. Nessun invio esterno. */
 (function () {
     'use strict';
-    const versione = 'IT-2026-11-15-lancio-2';
+    const versione = 'IT-2026-11-28-eat-orto-1';
     window.EatLancioGratuitoIT = true;
     const script = document.currentScript;
     const ingresso = new URL('../IT/index.html', script.src);
@@ -9,7 +9,7 @@
     const ultimaApp = 'eatmefirst_ultima_app_it';
     const menuOrto = 'agenda-orto/index.html';
     const pagineApp = new Set([
-        'menu.html', 'agenda/index.html', menuOrto, 'agenda-orto/simulazione-agenda.html',
+        'menu.html', 'agenda/index.html', menuOrto, 'agenda-orto/simulazione-agenda.html', 'agenda-orto/presentazione.html',
         'carico/carico.html', 'carico/collegamento.html', 'carico/carico vecchio.html',
         'inventario/index.html', 'operazioni/index.html', 'scarico/index.html',
         'scarico/index vecchio.html', 'scarico/index vecchio 1.html', 'scarico/index vecchio 2.html',

@@ -16,7 +16,7 @@
         try {
             if (lang === 'IT') {
                 return localStorage.getItem('eatmefirst_consent') === 'accepted' &&
-                    localStorage.getItem('eatmefirst_terms_version') === 'IT-2026-11-15-lancio-2';
+                    localStorage.getItem('eatmefirst_terms_version') === 'IT-2026-11-28-eat-orto-1';
             }
             return localStorage.getItem('eatmefirst_consent') === 'accepted' ||
                 localStorage.getItem('eatmefirst_consent_' + lang.toLowerCase()) === 'accepted';
