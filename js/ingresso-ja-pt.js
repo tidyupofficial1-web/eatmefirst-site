@@ -5,7 +5,11 @@
     const cartella = {'ja': 'JA', 'pt-BR': 'PT', 'ar': 'AR'}[locale];
     const entry = new URL('../' + cartella + '/index.html', document.currentScript.src).href;
     const root = new URL('.', entry);
-    const requested = new URL(window.location.href).searchParams.get('next');
+    const params = new URL(window.location.href).searchParams;
+    const requested = params.get('next');
+    const lastAppKey = 'eatmefirst_ultima_app_it';
+    const menu = new URL('menu.html', root);
+    const orto = new URL('agenda-orto/', root);
 
     function destinazione() {
         if (requested) {
@@ -16,22 +20,25 @@
                 // An invalid destination falls back to the menu.
             }
         }
-        return new URL('menu.html', root).href;
+        if (!params.has('next') && params.get('dest') !== 'eat') {
+            try {
+                if (localStorage.getItem(lastAppKey) === 'orto') return new URL('index.html', orto).href;
+            } catch (_) { /* Memoria locale non disponibile. */ }
+        }
+        return menu.href;
     }
 
     const consentKey = 'eatmefirst_terms_' + locale;
     const termsVersion = locale === 'ar' ? 'ar-2026-11-launch-1' : 'IT-2026-11-15-lancio-2';
     const commonVersion = 'IT-2026-11-28-eat-orto-1';
-    const supportsOrto = ['pt-BR', 'ja', 'ar'].includes(locale);
-    const ortoRequested = supportsOrto &&
-        (window.location.pathname.startsWith(new URL('agenda-orto/', root).pathname) ||
-            new URL(destinazione()).pathname.startsWith(new URL('agenda-orto/', root).pathname));
+    const ortoOpened = window.location.pathname.startsWith(orto.pathname);
+    const ortoRequested = ortoOpened || new URL(destinazione()).pathname.startsWith(orto.pathname);
     const dateKey = 'eatmefirst_consent_date';
     const nameKey = 'eatmefirst_username';
 
     function accepted() {
         try {
-            if (supportsOrto && localStorage.getItem('eatmefirst_consent') === 'accepted' &&
+            if (localStorage.getItem('eatmefirst_consent') === 'accepted' &&
                 localStorage.getItem('eatmefirst_terms_version') === commonVersion) return true;
             if (ortoRequested) return false;
             return localStorage.getItem(consentKey) === termsVersion;
@@ -42,7 +49,12 @@
 
     if (document.currentScript.hasAttribute('data-proteggi')) {
         const check = () => {
-            if (accepted()) return;
+            if (accepted()) {
+                if (ortoOpened || window.location.pathname === menu.pathname) {
+                    try { localStorage.setItem(lastAppKey, ortoOpened ? 'orto' : 'eat'); } catch (_) { /* Memoria locale non disponibile. */ }
+                }
+                return;
+            }
             const url = new URL(entry);
             url.searchParams.set('next', window.location.pathname + window.location.search + window.location.hash);
             window.location.replace(url.href);

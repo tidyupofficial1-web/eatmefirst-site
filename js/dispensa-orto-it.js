@@ -10,6 +10,12 @@
     const ar = lingua === 'ar';
     const dizionario = ar ? window.OrtoFirstArabic : ja ? window.OrtoFirstJapanese : de ? window.OrtoFirstGerman : pt ? window.OrtoFirstPortuguese : es ? window.OrtoFirstSpanish : fr ? window.OrtoFirstFrench : lingua === 'en' ? window.OrtoFirstEnglish : null;
     const trad = testo => dizionario?.[testo] ?? testo;
+    const formatoData = new Intl.DateTimeFormat(lingua,
+        {day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC'});
+    function dataRegistrata(data) {
+        const valore = new Date(data + 'T00:00:00Z');
+        return Number.isNaN(valore.getTime()) ? data : formatoData.format(valore);
+    }
     const cifre = testo => testo.normalize('NFKC').replace(/[٠-٩۰-۹]/g, carattere => String(carattere.charCodeAt(0) & 15)).replace(/٫/g, '.');
     const mostraCategoria = categoria => trad(categoria);
 
@@ -345,7 +351,7 @@
             haPezzi(voce) && trad('Formato originale: ') + voce.confezioni + ' × ' + voce.pezziPerConfezione,
             voce.ubicazione && trad('Conservazione: ') + voce.ubicazione,
             voce.barcode && trad('Codice: ') + voce.barcode,
-            voce.scadenza && trad('Scadenza: ') + voce.scadenza.split('-').reverse().join('/'),
+            voce.scadenza && trad('Scadenza: ') + dataRegistrata(voce.scadenza),
             noteProdotto(voce) && trad('Note: ') + noteProdotto(voce)
         ])));
         if (!visibili.length) {

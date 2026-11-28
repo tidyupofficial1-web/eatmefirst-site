@@ -7,8 +7,9 @@
     const lang = script.dataset.lang;
     const root = new URL('../', script.src);
     const entry = new URL(lang + '/index.html', root);
+    const menu = new URL(lang + '/menu.html', root);
+    entry.searchParams.set('dest', 'eat');
     if (lang === 'IT') {
-        entry.searchParams.set('dest', 'eat');
         const current = window.location;
         entry.searchParams.set('pagina', current.pathname + current.search + current.hash);
     }
@@ -22,7 +23,15 @@
                 localStorage.getItem('eatmefirst_consent_' + lang.toLowerCase()) === 'accepted';
         } catch (_) { return false; }
     }
-    function check() { if (!accepted()) window.location.replace(entry); }
+    function check() {
+        if (!accepted()) {
+            window.location.replace(entry);
+            return;
+        }
+        if (location.pathname === menu.pathname) {
+            try { localStorage.setItem('eatmefirst_ultima_app_it', 'eat'); } catch (_) { /* Memoria locale non disponibile. */ }
+        }
+    }
     check();
     window.addEventListener('pageshow', check);
 })();
