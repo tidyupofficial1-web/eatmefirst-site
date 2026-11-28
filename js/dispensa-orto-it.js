@@ -114,7 +114,7 @@
             const nome = risultato.scheda?.nome;
             if (nome && scorta.elements.nome.value === nomeIniziale && !nomeIniziale.trim()) {
                 scorta.elements.nome.value = nome.slice(0, 100);
-                esitoCodice.textContent = 'Nome trovato. Controllalo prima di salvare.';
+                esitoCodice.textContent = 'Nome suggerito dal catalogo. Verifica che corrisponda alla confezione prima di salvare.';
             } else if (nome) {
                 esitoCodice.textContent = 'Nome trovato negli archivi: ' + nome + '. Il nome inserito è rimasto nel campo.';
             } else {

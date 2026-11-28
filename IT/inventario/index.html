@@ -442,7 +442,8 @@
                 </div>
                 <div style="font-size: 14px; color: var(--text-color); display: flex; flex-direction: column; gap: 8px; background: #0d1117; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
                     <div>${riepilogoQuantitaInventario(p)}</div>
-                    <div><strong>Scadenza:</strong><br>${EatScadenze.html(p)}</div>
+                    <div><strong>Scadenza registrata:</strong><br>${EatScadenze.html(p)}</div>
+                    <p>Per decidere se consumare il prodotto, controlla la data sulla confezione e le istruzioni di conservazione.</p>
                     <p><strong>Articolo Tassativo:</strong> ${p.tassativo ? 'Sì 🔒' : 'No'}</p>
                     ${EatPromemoria.html(p)}
                     <p><strong>Codice a Barre:</strong> ${EatCategorie.escape(p.barcode || 'Non inserito')}</p>

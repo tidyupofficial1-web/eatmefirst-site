@@ -883,7 +883,7 @@
             }
             document.getElementById('box-info-tecniche').style.display = 'block';
             document.getElementById('testo-info-tecniche').textContent = 'Informazioni recuperate: saranno consultabili nei dettagli in Inventario.';
-            esito.textContent = 'Dati da ' + scheda.fonte.nome + '. Controlla nome, categoria e pezzi prima di salvare.';
+            esito.textContent = 'Dati suggeriti da ' + scheda.fonte.nome + '. Prima di salvare, verifica nome, quantità e scadenza sulla confezione.';
             try {
                 if (completaFotoMancante(barcode, scheda.immagine, scheda.fonte)) esito.textContent += ' Foto mancante aggiunta anche ai prodotti già salvati: quantità e altri dati invariati.';
             } catch (errore) {
