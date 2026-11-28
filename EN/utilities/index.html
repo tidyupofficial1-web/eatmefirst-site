@@ -214,9 +214,27 @@
       <h2 class="section-title">💾 Export and import inventory</h2>
 <p><strong>Confirmed changes are saved automatically on your device, always free of charge.</strong></p><p>Export inventory creates a file you can open on another device with Import inventory. Exporting an external copy is optional.</p><p>Transfer is manual: devices do not synchronise automatically.</p>
 <p id="backupSituazione" style="margin:14px 0;color:#bfdbfe"></p>
+    <p><button type="button" class="btn-modal-cancel" onclick="EatBackupNome.apri()">Device name and backup help</button></p>
+    <dialog id="backupNomeDialogo" aria-labelledby="backupNomeTitolo" data-author="Exported by" data-unknown="Not specified" data-storage-error="The browser could not remember your choices." style="box-sizing:border-box;width:min(560px,94vw);max-height:88vh;overflow:auto;background:#161b22;color:#fff;border:2px solid #58a6ff;border-radius:14px;padding:24px">
+      <form id="backupNomeModulo">
+        <h2 id="backupNomeTitolo">Recognise your backup copies</h2>
+        <p>Choose a shared place for the current copy. Check the import preview before replacing your inventory. After exporting, check the download and put the new file in the agreed place.</p>
+        <p><a href="../../sito-bozza/EN/dispensa-in-famiglia.html" style="color:#8cc8ff">Device name and backup help ↗</a></p>
+        <label for="backupNomeFirma">Device name (optional)</label>
+        <input id="backupNomeFirma" type="text" maxlength="60" autocomplete="off" aria-describedby="backupNomePrivacy" style="display:block;box-sizing:border-box;width:100%;padding:12px;margin:10px 0;background:#0d1117;color:#fff;border:1px solid #58a6ff;border-radius:6px;font:inherit">
+        <p id="backupNomePrivacy">You can use a nickname, such as Eva — phone. Anyone who receives the file can read this name.</p>
+        <label><input type="checkbox" id="backupNomeSalta"> Remember the name and skip this explanation next time</label>
+        <p>To change the name later, open Device name and backup help in Utilities.</p>
+        <p id="backupNomeEsito" role="status"></p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <button type="button" class="btn-modal-cancel" onclick="EatBackupNome.chiudi()">Cancel</button>
+          <button type="submit" class="btn-modal-confirm">Export inventory</button>
+        </div>
+      </form>
+    </dialog>
 
 <div class="backup-comandi">
-        <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">Export inventory</button>
+        <button type="button" class="btn-modal-cancel backup-esporta" onclick="EatBackupNome.esporta()">Export inventory</button>
         <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">Import inventory</span>
           <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
         </label>
@@ -369,8 +387,9 @@
 
   <script src="../../js/errori-en.js"></script>
 <script src="../../js/storico-it.js"></script>
-  <script src="../../js/backup-it.js"></script>
-  <script src="../../js/backup-interfaccia-en.js"></script>
+  <script src="../../js/backup-it.js?v=nome-dispositivo"></script>
+  <script src="../../js/backup-interfaccia-en.js?v=nome-dispositivo"></script>
+  <script src="../../js/backup-nome.js"></script>
   <script src="../../js/reset-it.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {

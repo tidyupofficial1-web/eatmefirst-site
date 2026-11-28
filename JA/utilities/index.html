@@ -203,8 +203,26 @@
     <p>確定した変更は現在の端末に自動で保存され、いつでも無料です。外部コピーのエクスポートは任意です。端末間の転送はファイルを手動で行います。</p>
     <p>アジェンダの予定はこのバックアップの対象外です。</p>
     <p id="backupSituazione"></p>
+    <p><button type="button" class="btn-modal-cancel" onclick="EatBackupNome.apri()">端末名とバックアップのヘルプ</button></p>
+    <dialog id="backupNomeDialogo" aria-labelledby="backupNomeTitolo" data-author="書き出した人" data-unknown="未入力" data-storage-error="ブラウザに設定を保存できませんでした。" style="box-sizing:border-box;width:min(560px,94vw);max-height:88vh;overflow:auto;background:#161b22;color:#fff;border:2px solid #58a6ff;border-radius:14px;padding:24px">
+      <form id="backupNomeModulo">
+        <h2 id="backupNomeTitolo">バックアップを見分ける</h2>
+        <p>最新版を置く場所を決めましょう。在庫を置き換える前にプレビューを確認します。書き出したらダウンロードを確認し、決めた場所にファイルを置きます。</p>
+        <p><a href="../../sito-bozza/JA/dispensa-in-famiglia.html" style="color:#8cc8ff">端末名とバックアップのヘルプ ↗</a></p>
+        <label for="backupNomeFirma">端末名（任意）</label>
+        <input id="backupNomeFirma" type="text" maxlength="60" autocomplete="off" aria-describedby="backupNomePrivacy" style="display:block;box-sizing:border-box;width:100%;padding:12px;margin:10px 0;background:#0d1117;color:#fff;border:1px solid #58a6ff;border-radius:6px;font:inherit">
+        <p id="backupNomePrivacy">「エヴァのスマホ」などのニックネームも使えます。ファイルを受け取った人にもこの名前が表示されます。</p>
+        <label><input type="checkbox" id="backupNomeSalta"> 名前を記憶し、次回から説明を表示しない</label>
+        <p>名前を変えるには、ユーティリティの「端末名とバックアップのヘルプ」を開きます。</p>
+        <p id="backupNomeEsito" role="status"></p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <button type="button" class="btn-modal-cancel" onclick="EatBackupNome.chiudi()">キャンセル</button>
+          <button type="submit" class="btn-modal-confirm">在庫をエクスポート</button>
+        </div>
+      </form>
+    </dialog>
     <div class="backup-comandi">
-        <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">在庫をエクスポート</button>
+        <button type="button" class="btn-modal-cancel backup-esporta" onclick="EatBackupNome.esporta()">在庫をエクスポート</button>
         <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">在庫をインポート</span>
           <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
         </label>
@@ -251,10 +269,11 @@
 </dialog>
   <script src="../../js/errori-en.js"></script>
   <script src="../../js/storico-it.js"></script>
-  <script src="../../js/backup-it.js"></script>
+  <script src="../../js/backup-it.js?v=nome-dispositivo"></script>
   <script src="../../js/reset-it.js"></script>
   <script src="../../js/utilita-testi.js"></script>
-  <script src="../../js/backup-interfaccia-en.js"></script>
+  <script src="../../js/backup-interfaccia-en.js?v=nome-dispositivo"></script>
+  <script src="../../js/backup-nome.js"></script>
   <script src="../../js/utilita-reset.js"></script>
 </body>
 </html>

@@ -203,8 +203,26 @@
     <p>As alterações confirmadas são salvas automaticamente no dispositivo, sempre de graça. Exportar uma cópia externa é opcional. A transferência entre aparelhos é manual, por arquivo.</p>
     <p>Os compromissos da Agenda ficam fora desta cópia de segurança.</p>
     <p id="backupSituazione"></p>
+    <p><button type="button" class="btn-modal-cancel" onclick="EatBackupNome.apri()">Nome do aparelho e ajuda com as cópias</button></p>
+    <dialog id="backupNomeDialogo" aria-labelledby="backupNomeTitolo" data-author="Exportado por" data-unknown="Não informado" data-storage-error="O navegador não conseguiu lembrar suas escolhas." style="box-sizing:border-box;width:min(560px,94vw);max-height:88vh;overflow:auto;background:#161b22;color:#fff;border:2px solid #58a6ff;border-radius:14px;padding:24px">
+      <form id="backupNomeModulo">
+        <h2 id="backupNomeTitolo">Identifique suas cópias de segurança</h2>
+        <p>Combine onde deixar a cópia atualizada. Confira a prévia antes de substituir a despensa. Depois de exportar, confirme o download e guarde o arquivo no local combinado.</p>
+        <p><a href="../../sito-bozza/PT/dispensa-in-famiglia.html" style="color:#8cc8ff">Nome do aparelho e ajuda com as cópias ↗</a></p>
+        <label for="backupNomeFirma">Nome do aparelho (opcional)</label>
+        <input id="backupNomeFirma" type="text" maxlength="60" autocomplete="off" aria-describedby="backupNomePrivacy" style="display:block;box-sizing:border-box;width:100%;padding:12px;margin:10px 0;background:#0d1117;color:#fff;border:1px solid #58a6ff;border-radius:6px;font:inherit">
+        <p id="backupNomePrivacy">Você pode usar um apelido, como Eva — celular. Quem receber o arquivo poderá ler esse nome.</p>
+        <label><input type="checkbox" id="backupNomeSalta"> Lembrar o nome e pular esta explicação da próxima vez</label>
+        <p>Para alterar o nome, abra Nome do aparelho e ajuda com as cópias em Utilitários.</p>
+        <p id="backupNomeEsito" role="status"></p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <button type="button" class="btn-modal-cancel" onclick="EatBackupNome.chiudi()">Cancelar</button>
+          <button type="submit" class="btn-modal-confirm">Exportar inventário</button>
+        </div>
+      </form>
+    </dialog>
     <div class="backup-comandi">
-        <button type="button" class="btn-modal-cancel backup-esporta" onclick="esportaDispensa()">Exportar inventário</button>
+        <button type="button" class="btn-modal-cancel backup-esporta" onclick="EatBackupNome.esporta()">Exportar inventário</button>
         <label class="btn-modal-cancel backup-importa"><span class="backup-importa-titolo">Importar inventário</span>
           <input type="file" id="fileImportazione" accept=".json,application/json" onchange="preparaImportazione(event)">
         </label>
@@ -251,10 +269,11 @@
 </dialog>
   <script src="../../js/errori-en.js"></script>
   <script src="../../js/storico-it.js"></script>
-  <script src="../../js/backup-it.js"></script>
+  <script src="../../js/backup-it.js?v=nome-dispositivo"></script>
   <script src="../../js/reset-it.js"></script>
   <script src="../../js/utilita-testi.js"></script>
-  <script src="../../js/backup-interfaccia-en.js"></script>
+  <script src="../../js/backup-interfaccia-en.js?v=nome-dispositivo"></script>
+  <script src="../../js/backup-nome.js"></script>
   <script src="../../js/utilita-reset.js"></script>
 </body>
 </html>

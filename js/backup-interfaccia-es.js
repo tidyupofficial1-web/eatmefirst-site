@@ -15,9 +15,9 @@ function aggiornaSituazioneBackup() {
         document.getElementById('recuperaDispensa').disabled = !EatBackup.precedente();
     } catch (errore) { document.getElementById('backupEsito').textContent = EatErroriES(errore.message); }
 }
-function esportaDispensa() {
+function esportaDispensa(firma) {
     try {
-        const file = EatBackup.crea();
+        const file = EatBackup.crea(firma);
         const blob = new Blob([JSON.stringify(file, null, 2)], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -29,6 +29,7 @@ function esportaDispensa() {
         setTimeout(() => URL.revokeObjectURL(url), 1000);
         document.getElementById('backupEsito').textContent = 'Descarga iniciada. Comprueba que el archivo esté en Descargas antes de transferirlo.';
         aggiornaSituazioneBackup();
+        return true;
     } catch (errore) { document.getElementById('backupEsito').textContent = 'Exportación no realizada. ' + EatErroriES(errore.message); }
 }
 function mostraAnteprimaBackup(file, nome, recupero = false) {
@@ -38,6 +39,7 @@ function mostraAnteprimaBackup(file, nome, recupero = false) {
     importazioneInAttesa = {file, attesi, confronto, recupero};
     document.getElementById('titoloImportazione').textContent = recupero ? 'Recuperar la situación anterior' : 'Comprueba el archivo antes de sustituir los datos';
     document.getElementById('nomeImportazione').textContent = nome + ' · Archivo creado el ' + dataBackup(file.creato_il) + '. Para comparar cuenta la última modificación de los datos, no la creación del archivo.';
+    EatBackupNome.mostraAutore(file);
     document.getElementById('riepilogoLocale').textContent = testoRiepilogoBackup(locale);
     document.getElementById('riepilogoFile').textContent = testoRiepilogoBackup(file);
     document.getElementById('confrontoImportazione').textContent = traduciConfrontoBackup(confronto.testo);

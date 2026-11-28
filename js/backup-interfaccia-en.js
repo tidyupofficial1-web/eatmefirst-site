@@ -25,9 +25,9 @@ function aggiornaSituazioneBackup() {
         document.getElementById('recuperaDispensa').disabled = !EatBackup.precedente();
     } catch (errore) { document.getElementById('backupEsito').textContent = erroreBackup(errore); }
 }
-function esportaDispensa() {
+function esportaDispensa(firma) {
     try {
-        const file = EatBackup.crea();
+        const file = EatBackup.crea(firma);
         const blob = new Blob([JSON.stringify(file, null, 2)], {type: 'application/json'});
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -39,6 +39,7 @@ function esportaDispensa() {
         setTimeout(() => URL.revokeObjectURL(url), 1000);
         document.getElementById('backupEsito').textContent = testoBackup("Download started. Check the file is in your downloads before transferring it.");
         aggiornaSituazioneBackup();
+        return true;
     } catch (errore) { document.getElementById('backupEsito').textContent = testoBackup("Export failed. ") + erroreBackup(errore); }
 }
 function mostraAnteprimaBackup(file, nome, recupero = false) {
@@ -48,6 +49,7 @@ function mostraAnteprimaBackup(file, nome, recupero = false) {
     importazioneInAttesa = {file, attesi, confronto, recupero};
     document.getElementById('titoloImportazione').textContent = recupero ? testoBackup("Recover the previous situation") : testoBackup("Check the file before replacing data");
     document.getElementById('nomeImportazione').textContent = riepilogoUtilita('file', {name: nome, date: dataBackup(file.creato_il)}) ?? nome + ' · File created on '  + dataBackup(file.creato_il) + '. Comparison uses the last data change, not the time the file was created.';
+    EatBackupNome.mostraAutore(file);
     document.getElementById('riepilogoLocale').textContent = testoRiepilogoBackup(locale);
     document.getElementById('riepilogoFile').textContent = testoRiepilogoBackup(file);
     document.getElementById('confrontoImportazione').textContent = traduciConfrontoBackup(confronto.testo);
