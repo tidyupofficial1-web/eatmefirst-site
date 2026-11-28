@@ -57,6 +57,7 @@
     #orto-acquisti label{display:flex;align-items:center;gap:12px;flex:1;min-width:0;min-height:44px;cursor:pointer;overflow-wrap:anywhere}
     #orto-acquisti input{flex:none;width:20px;height:20px;accent-color:var(--primary-color)}
     #orto-acquisti li[data-comprato="true"] label{color:var(--text-muted);text-decoration:line-through}
+    .orto-acquisto-prodotto{grid-column:1/-1}
     .orto-main .button{background:var(--primary-color);color:#101416}
     .orto-main button:not(.button){background:#253238;color:var(--text-color);border:1px solid #526474;border-radius:8px;padding:8px 12px;font:inherit}
     .orto-main :focus-visible{outline:2px solid var(--primary-color);outline-offset:4px}
@@ -254,12 +255,12 @@
     </section>
     <section class="orto-panel" id="acquisti-orto" data-orto-vista hidden>
       <h1>Lista della spesa dell’orto</h1>
-      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Spunto quello che metto nel carrello e lo ritrovo in fondo. Quando confermo nello Scarico che ho finito l’ultima scorta di un prodotto, OrtoFirst lo aggiunge automaticamente alla lista.»</p></div>
+      <div class="orto-intro"><img src="../../sito-bozza/assets/max.png" width="56" height="56" alt="Max"><p>«Qui puoi annotare quello che vuoi comprare la prossima volta che vai a fare la spesa. Un primo elenco si crea da solo man mano che usi i prodotti e, nello Scarico, confermi che hai finito l’ultima scorta. Quando metti un articolo nel carrello, spuntalo. Lo ritrovi barrato in fondo alla lista.»</p></div>
       <form id="orto-acquisto">
         <div class="orto-fields">
-          <div class="orto-campo">
-            <label>Cosa comprare <input name="nome" required maxlength="100" placeholder="Es. Vasi da 20 cm"></label>
-            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Cosa comprare" data-guida-titolo="Cosa comprare" data-guida-testo="Scrivi il nome dell’articolo e, se ti serve per riconoscerlo in negozio, aggiungi la varietà o la misura. Poi premi «Aggiungi alla lista».">?</button>
+          <div class="orto-campo orto-acquisto-prodotto">
+            <label>Cosa comprare <textarea name="nome" required maxlength="300" rows="3" placeholder="Es. Vasi da 20 cm, con fori di drenaggio e sottovaso"></textarea></label>
+            <button type="button" class="orto-aiuto" aria-haspopup="dialog" aria-label="Guida: Cosa comprare" data-guida-titolo="Cosa comprare" data-guida-testo="Scrivi il nome dell’articolo e aggiungi i dettagli che ti aiutano a sceglierlo in negozio, come la varietà, la misura o il formato. Poi premi «Aggiungi alla lista».">?</button>
           </div>
           <div class="orto-campo">
             <label>Quantità <input name="quantita" maxlength="60" placeholder="Es. 3 vasi"></label>
